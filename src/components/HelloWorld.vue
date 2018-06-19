@@ -36,7 +36,7 @@
 
       <md-app-content>
     <div>
-      <form-login></form-login>
+
 
     </div>
       </md-app-content>
