@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "login",
+  name: "Login",
   data() {
     return {
       loading: false,
@@ -79,7 +79,7 @@ export default {
       margin: 0;
       margin-left: auto;
       margin-right: auto;
-      width: 6em
+      width: 6em;
     }
   }
   .form {

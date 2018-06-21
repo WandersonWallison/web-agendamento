@@ -36,7 +36,7 @@
 
       <md-app-content>
     <div>
-
+<form-add-user/>
 
     </div>
       </md-app-content>
@@ -46,14 +46,14 @@
 </template>
 
 <script>
-import FormLogin from './forms/FormLogin.vue'
+import FormAddUser from './forms/FormAddUser.vue'
 export default {
   name: "HelloWorld",
   components: {
-    FormLogin
+    FormAddUser,
   },
   data: () => ({
-    menuVisible: false
+    menuVisible: false,
   })
 };
 </script>
@@ -66,6 +66,9 @@ export default {
 .md-drawer {
   width: 230px;
   max-width: calc(100vw - 125px);
+}
+.md-toobar{
+  color: #f44336
 }
 
 </style>
