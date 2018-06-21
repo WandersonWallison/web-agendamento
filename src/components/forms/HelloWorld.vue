@@ -46,9 +46,10 @@
 </template>
 
 <script>
-import FormAddUser from './forms/FormAddUser.vue'
+import FormAddUser from './FormAddUser'
+import FormLogin from './FormLogin.vue'
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   components: {
     FormAddUser,
   },
@@ -64,7 +65,7 @@ export default {
   border: 1px solid rgba(#000, 0.12);
 }
 .md-drawer {
-  width: 230px;
+  width: 900px;
   max-width: calc(100vw - 125px);
 }
 .md-toobar{
