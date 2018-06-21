@@ -1,86 +1,70 @@
 <template>
-  <div class="centered-container">
-    <md-content class="md-elevation-3">
 
-      <div class="title">
-        <img src="https://vuematerial.io/assets/logo-color.png">
-        <div class="md-title">PROSPERIDADE</div>
+   <div class="centered-container">
 
-      </div>
-
-      <div class="form">
+     <md-content class="md-elevation-1 body-content">
         <md-field>
-          <label>E-mail</label>
-          <md-input v-model="login.email" autofocus></md-input>
+          <label>Escritorio</label>
+          <md-input v-model="company.nome" autofocus></md-input>
         </md-field>
-
-        <md-field md-has-password>
-          <label>Password</label>
-          <md-input v-model="login.password" type="password"></md-input>
+        <md-field>
+          <label>Responsável</label>
+          <md-input v-model="company.nome" autofocus></md-input>
         </md-field>
+         <label class="bg-0">Endereço</label>
+        <md-field>
+          <label>Rua</label>
+          <md-input v-model="company.nome" autofocus></md-input>
+        </md-field>
+        <md-field>
+          <label>Numero</label>
+          <md-input v-model="company.nome" autofocus></md-input>
+        </md-field>
+        <md-field>
+          <label>Bairro</label>
+          <md-input v-model="company.nome" autofocus></md-input>
+        </md-field>
+          <UF/>
+        <md-field>
+          <label>Cidade</label>
+          <md-input v-model="company.nome" autofocus></md-input>
+        </md-field>
+        <md-field>
+          <label>CEP</label>
+          <md-input v-model="company.nome" autofocus></md-input>
+        </md-field>
+        <div class="actions md-layout md-alignment-center-space-between">
+        <md-button class="md-raised md-primary" @click="auth">Cadastrar</md-button>
 
-        {{results}}
       </div>
-
-      <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="auth">Log in</md-button>
-
-      </div>
-
-      <div class="loading-overlay" v-if="loading">
-        <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
-      </div>
-
-    </md-content>
-    <div class="background" />
-  </div>
+     </md-content>
+    </div>
 </template>
 
 <script>
-import axios from 'axios';
-
-Vue.use(axios);
+import UF from '../forms-selects/SelectUF'
 
 export default {
-  name: 'login',
+  name: "company",
+  components: {
+    UF
+  },
   data() {
     return {
       loading: false,
-      login: {
-        email: '',
-        password: ''
+      company: {
+        nome: "",
+        responsavel: ""
       },
       results: null
     };
-  },
-  methods: {
-    auth() {
-      axios
-        .post("http://192.168.0.23:1337/login", {
-          body: {
-            email: this.login.email,
-            password: this.login.password
-          }
-        })
-        .then(function(params) {
-           results=>params;
-        });
-
-      // your code to login user
-      // this is only for example of loading
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 5000);
-    }
   }
 };
 </script>
-
 <style lang="scss">
 .centered-container {
   display: flex;
-  align-items: center;
+  align-items: left;
   justify-content: center;
   position: relative;
   height: 100vh;

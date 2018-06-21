@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import FormLogin from './forms/FormLogin.vue'
+import FormLogin from './FormLogin.vue'
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   components: {
     FormLogin
   },
@@ -64,7 +64,7 @@ export default {
   border: 1px solid rgba(#000, 0.12);
 }
 .md-drawer {
-  width: 230px;
+  width: 900px;
   max-width: calc(100vw - 125px);
 }
 
