@@ -7,10 +7,12 @@ import router from './router'
 import VueSessionstorage from 'vue-sessionstorage'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
+import 'vuetify/dist/vuetify.min.css'
+import Vuetify from 'vuetify'
 
 Vue.config.productionTip = false
 
-Vue.use(VueMaterial, VueSessionstorage)
+Vue.use(VueMaterial, VueSessionstorage, Vuetify)
 
 /* eslint-disable no-new */
 new Vue({
