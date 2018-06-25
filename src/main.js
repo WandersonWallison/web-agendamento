@@ -9,10 +9,11 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vuetify/dist/vuetify.min.css'
 import Vuetify from 'vuetify'
+import VueMask from 'vue-the-mask'
 
 Vue.config.productionTip = false
 
-Vue.use(VueMaterial, VueSessionstorage, Vuetify)
+Vue.use(VueMaterial, VueSessionstorage, Vuetify, VueMask)
 
 /* eslint-disable no-new */
 new Vue({
