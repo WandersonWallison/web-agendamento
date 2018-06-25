@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <md-app md-mode="hello">
-      <md-app-toolbar class="md-primary">
+      <md-app-toolbar class="md-toobar">
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
         </md-button>
@@ -69,7 +69,7 @@ export default {
   max-width: calc(100vw - 125px);
 }
 .md-toobar{
-  color: #f44336
+  background-color:#00FA9A;
 }
 
 </style>
