@@ -1,7 +1,7 @@
 <template>
     <md-field>
-          <label for="movie">Estados</label>
           <md-select v-model="estados" name="estado" id="estados" placeholder="Estados">
+            <md-option value="">Estados</md-option>
             <md-option value="ac">Acre</md-option>
             <md-option value="al">Alagoas</md-option>
             <md-option value="am">Amazonas</md-option>

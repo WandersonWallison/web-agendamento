@@ -1,38 +1,24 @@
 <template>
 
    <div class="centered-container">
-
      <md-content class="md-elevation-1 body-content">
         <md-field>
-          <label>Escritorio</label>
-          <md-input v-model="company.nome" autofocus></md-input>
+          <md-input v-model="company.nome" placeholder="Escritorio"></md-input>
         </md-field>
         <md-field>
-          <label>Responsável</label>
-          <md-input v-model="company.nome" autofocus></md-input>
+          <md-input v-model="company.responsavel" placeholder="Responsável" ></md-input>
         </md-field>
-         <label class="bg-0">Endereço</label>
-        <md-field>
-          <label>Rua</label>
-          <md-input v-model="company.nome" autofocus></md-input>
+         <md-field>
+          <md-input type="url" v-model="company.site" placeholder="Site"></md-input>
         </md-field>
         <md-field>
-          <label>Numero</label>
-          <md-input v-model="company.nome" autofocus></md-input>
+          <md-input type="number" v-model="company.fone" placeholder="Tefone"></md-input>
         </md-field>
         <md-field>
-          <label>Bairro</label>
-          <md-input v-model="company.nome" autofocus></md-input>
+          <md-input type="email" v-model="company.email" placeholder="E-mail"></md-input>
         </md-field>
-          <UF/>
-        <md-field>
-          <label>Cidade</label>
-          <md-input v-model="company.nome" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <label>CEP</label>
-          <md-input v-model="company.nome" autofocus></md-input>
-        </md-field>
+        <endereco/>
+        <br>
         <div class="actions md-layout md-alignment-center-space-between">
         <md-button class="md-raised md-primary" @click="auth">Cadastrar</md-button>
 
@@ -43,19 +29,21 @@
 
 
 <script>
-import UF from '../forms-selects/SelectUF'
-
+import endereco from "../forms-endereco/FormEndereco";
 export default {
   name: "company",
   components: {
-    UF
+    endereco
   },
   data() {
     return {
       loading: false,
       company: {
         nome: "",
-        responsavel: ""
+        responsavel: "",
+        site:"",
+        telefone:"",
+        email:""
       },
       results: null
     };
@@ -68,7 +56,8 @@ export default {
   align-items: left;
   justify-content: center;
   position: relative;
-  height: 100vh;
+  height: 160vh;
+
   .title {
     text-align: center;
     margin-bottom: 30px;
@@ -82,7 +71,7 @@ export default {
       margin: 0;
       margin-left: auto;
       margin-right: auto;
-      width: 6em;
+      width: 8em;
     }
   }
   .form {
@@ -103,7 +92,7 @@ export default {
     z-index: 1;
     padding: 40px;
     width: 100%;
-    max-width: 400px;
+    max-width: 1200px;
     position: relative;
   }
   .loading-overlay {
