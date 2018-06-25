@@ -18,7 +18,6 @@
           <label>Password</label>
           <md-input v-model="login.password" type="password"></md-input>
         </md-field>
-
         {{results}}
       </div>
 

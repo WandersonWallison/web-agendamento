@@ -3,19 +3,19 @@
    <div class="centered-container">
      <md-content class="md-elevation-1 body-content">
         <md-field>
-          <md-input v-model="company.nome" placeholder="Escritorio"></md-input>
+          <md-input v-model="company.nome" placeholder="Escritorio" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input v-model="company.responsavel" placeholder="Responsável" ></md-input>
+          <md-input v-model="company.responsavel" placeholder="Responsável" autofocus ></md-input>
         </md-field>
          <md-field>
-          <md-input type="url" v-model="company.site" placeholder="Site"></md-input>
+          <md-input type="url" v-model="company.site" placeholder="Site" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input type="number" v-model="company.fone" placeholder="Tefone"></md-input>
+          <md-input  type="tel" v-model="company.fone" placeholder="Telefone" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input type="email" v-model="company.email" placeholder="E-mail"></md-input>
+          <md-input type="email" v-model="company.email" placeholder="E-mail" autofocus></md-input>
         </md-field>
         <endereco/>
         <br>
