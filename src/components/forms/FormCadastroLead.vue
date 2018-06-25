@@ -1,93 +1,56 @@
 <template>
-  <div class="centered-container">
-    <md-content class="md-elevation-3">
 
-      <div class="title">
-        <img src="https://vuematerial.io/assets/logo-color.png">
-        <div class="md-title">PROSPERIDADE</div>
-
-      </div>
-
-      <div class="form">
+   <div class="centered-container">
+     <md-content class="md-elevation-1 body-content">
         <md-field>
-          <label>E-mail</label>
-          <md-input v-model="login.email" autofocus></md-input>
+          <md-input v-model="lead.nome" placeholder="Nome Completo"></md-input>
         </md-field>
-
-        <md-field md-has-password>
-          <label>Password</label>
-          <md-input v-model="login.password" type="password"></md-input>
+        <md-field>
+          <md-input v-model="lead.email" placeholder="E-mail" ></md-input>
         </md-field>
+        <md-field>
+          <md-input v-model="lead.telefone" placeholder="Telefone" ></md-input>
+        </md-field>
+         <md-field>
+          <md-input type="url" v-model="lead.redesocial" placeholder="Rede Social"></md-input>
+        </md-field>
+        <endereco/>
+        <br>
+        <div class="actions md-layout md-alignment-center-space-between">
+        <md-button class="md-raised md-primary" @click="auth">Cadastrar</md-button>
 
-        {{results}}
       </div>
-
-      <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="auth">Log in</md-button>
-
-      </div>
-
-      <div class="loading-overlay" v-if="loading">
-        <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
-      </div>
-
-    </md-content>
-    <div class="background" />
-  </div>
+     </md-content>
+    </div>
 </template>
 
-<script>
-import axios from 'axios';
 
-Vue.use(axios);
+<script>
 
 export default {
-
-  name: "Login",
+  name: "leads",
   data() {
     return {
       loading: false,
-      login: {
-        email: '',
-        password: ''
+      lead: {
+        nome: "",
+        telefone:"",
+        email:"",
+        redeSocial:""
       },
       results: null
     };
-  },
-  methods: {
-    auth() {
-
-      this.$router.push('/Home');
-      axios
-        .post("http://192.168.0.23:1337/login", {
-          body: {
-            email: this.login.email,
-            password: this.login.password
-          }
-        })
-        .then(function(params) {
-           results=>params;
-          // this.$router.push({ name: 'Home', query: { redirect: '/Home' } });
-           //this.$router.push('/Home')
-        });
-      // your code to login user
-      // this is only for example of loading
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 5000);
-    }
   }
 };
 </script>
-
 <style lang="scss">
 .centered-container {
   display: flex;
-  align-items: center;
+  align-items: left;
   justify-content: center;
   position: relative;
-  height: 100vh;
+  height: 80vh;
+
   .title {
     text-align: center;
     margin-bottom: 30px;
@@ -101,7 +64,7 @@ export default {
       margin: 0;
       margin-left: auto;
       margin-right: auto;
-      width: 6em;
+      width: 8em;
     }
   }
   .form {
@@ -122,7 +85,7 @@ export default {
     z-index: 1;
     padding: 40px;
     width: 100%;
-    max-width: 400px;
+    max-width: 1200px;
     position: relative;
   }
   .loading-overlay {

@@ -17,6 +17,7 @@
     "vue-material": "^1.0.0-beta-10.2",
     "vue-router": "^3.0.1",
     "vue-sessionstorage": "^1.0.0",
+    "vue-the-mask": "^0.11.1",
     "vuetify": "^1.0.19"
   },
   "devDependencies": {

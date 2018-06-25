@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '@/components/forms/FormLogin.vue'
 import Home from '@/components/forms/Home.vue'
 import CadEmpresa from '@/components/forms/FormCadastroEmpresa.vue'
+import CadLead from '@/components/forms/FormCadastroLead.vue'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/empresa',
       name: 'empresa',
       component: CadEmpresa
+    },
+    {
+      path: '/lead',
+      name: 'lead',
+      component: CadLead
     }
 
   ]
