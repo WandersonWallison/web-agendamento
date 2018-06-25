@@ -35,10 +35,6 @@
       </md-app-drawer>
 
       <md-app-content>
-    <div>
-<form-add-user/>
-
-    </div>
       </md-app-content>
     </md-app>
 
