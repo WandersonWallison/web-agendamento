@@ -27,7 +27,6 @@
     </div>
 </template>
 
-
 <script>
 import endereco from '../forms-endereco/FormEndereco'
 export default {

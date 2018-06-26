@@ -61,8 +61,8 @@ export default {
           }
         })
         .then(function (params) {
-           console.log(params)        
-        })
+           console.log(params)
+           })
       // your code to login user
       // this is only for example of loading
       this.loading = true

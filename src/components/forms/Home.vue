@@ -79,16 +79,12 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import FormAddUser from "./FormAddUser";
-import FormLogin from "./FormLogin.vue";
-import ListCliente from '../lists/ListCliente';
-import FormAddEmpresa  from './FormCadastroEmpresa.vue';
-=======
+
 import FormAddUser from './FormAddUser'
 import FormLogin from './FormLogin.vue'
 import ListCliente from '../lists/ListCliente'
->>>>>>> cf521352cf7a97d58096fb0ac6506a5dca8cbeeb
+import FormAddEmpresa from './FormCadastroEmpresa.vue'
+
 export default {
   name: 'HelloWorld',
   components: {
