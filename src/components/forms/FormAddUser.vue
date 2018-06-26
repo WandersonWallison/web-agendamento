@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-// import VueAxios from 'vue-axios'
 
 export default {
   name: 'app',
@@ -39,7 +37,7 @@ export default {
     }
   },
   mounted () {
-    axios
+    Axios
       .get('http://localhost:1337/profile')
       .then(response => (this.results = response))
   }

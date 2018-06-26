@@ -30,15 +30,15 @@
 
 <script>
 const toLower = text => {
-  return text.toString().toLowerCase();
+  return text.toString().toLowerCase()
 }
 
 const searchByName = (items, term) => {
   if (term) {
-    return items.filter(item => toLower(item.name).includes(toLower(term)));
+    return items.filter(item => toLower(item.name).includes(toLower(term)))
   }
 
-  return items;
+  return items
 }
 
 export default {
@@ -46,8 +46,8 @@ export default {
   data: () => ({
     search: null,
     searched: [],
-     users:[
-       {
+    users:[
+      {
         id: 1,
         name: 'Shawna Dubbin',
         email: 'sdubbin0@geocities.com',
@@ -200,7 +200,7 @@ export default {
   created () {
     this.searched = this.users
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

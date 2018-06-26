@@ -34,9 +34,9 @@
 </template>
 
 <script>
-   export default {
-  name: 'UF'
 
+export default{
+  name: 'UF'
 }
 </script>
 <style>

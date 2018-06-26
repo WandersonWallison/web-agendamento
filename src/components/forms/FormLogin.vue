@@ -36,9 +36,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
-Vue.use(axios)
 
 export default {
 
@@ -55,9 +52,8 @@ export default {
   },
   methods: {
     auth () {
-
       this.$router.push('/Home')
-      axios
+      Axios
         .post('http://192.168.0.23:1337/login', {
           body: {
             email: this.login.email,
@@ -65,9 +61,7 @@ export default {
           }
         })
         .then(function (params) {
-           results => params
-          // this.$router.push({ name: 'Home', query: { redirect: '/Home' } });
-          // this.$router.push('/Home')
+           console.log(params)        
         })
       // your code to login user
       // this is only for example of loading

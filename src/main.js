@@ -10,10 +10,11 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vuetify/dist/vuetify.min.css'
 import Vuetify from 'vuetify'
 import VueMask from 'vue-the-mask'
+import Axios from 'axios'
 
 Vue.config.productionTip = false
 
-Vue.use(VueMaterial, VueSessionstorage, Vuetify, VueMask)
+Vue.use(VueMaterial, VueSessionstorage, Vuetify, VueMask, Axios)
 
 /* eslint-disable no-new */
 new Vue({
