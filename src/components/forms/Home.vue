@@ -79,11 +79,11 @@
 </template>
 
 <script>
-import FormAddUser from "./FormAddUser";
-import FormLogin from "./FormLogin.vue";
-import ListCliente from '../lists/ListCliente';
+import FormAddUser from './FormAddUser'
+import FormLogin from './FormLogin.vue'
+import ListCliente from '../lists/ListCliente'
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   components: {
     FormAddUser,
     ListCliente
@@ -93,11 +93,11 @@ export default {
     showDialog: false
   }),
   methods: {
-    toggleMenu() {
-      this.menuVisible = !this.menuVisible;
+    toggleMenu( ) {
+      this.menuVisible = !this.menuVisible
     }
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

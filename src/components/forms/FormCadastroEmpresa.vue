@@ -46,9 +46,9 @@ export default {
         email:""
       },
       results: null
-    };
+    }
   }
-};
+}
 </script>
 <style lang="scss">
 .centered-container {

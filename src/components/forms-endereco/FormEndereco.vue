@@ -20,10 +20,10 @@
 </div>
 </template>
 <script>
-import UF from "../forms-selects/SelectUF";
+import UF from '../forms-selects/SelectUF'
 
 export default {
-  name: "endereco",
+  name: 'endereco',
   components: {
     UF
   },
@@ -31,16 +31,16 @@ export default {
     return {
       loading: false,
       endereco: {
-        rua: "",
-        numero: "",
-        bairro: "",
-        cidade: "",
-        cep: ""
+        rua: '',
+        numero: '',
+        bairro: '',
+        cidade: '',
+        cep: ''
       },
       results: null
-    };
+    }
   }
-};
+}
 </script>
 <style>
 </style>

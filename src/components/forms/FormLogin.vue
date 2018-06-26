@@ -36,9 +36,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
-Vue.use(axios);
+Vue.use(axios)
 
 export default {
 
@@ -51,12 +51,12 @@ export default {
         password: ''
       },
       results: null
-    };
+    }
   },
   methods: {
     auth() {
 
-      this.$router.push('/Home');
+      this.$router.push('/Home')
       axios
         .post("http://192.168.0.23:1337/login", {
           body: {
@@ -67,17 +67,17 @@ export default {
         .then(function(params) {
            results=>params;
           // this.$router.push({ name: 'Home', query: { redirect: '/Home' } });
-           //this.$router.push('/Home')
-        });
+           // this.$router.push('/Home')
+        })
       // your code to login user
       // this is only for example of loading
-      this.loading = true;
+      this.loading = true
       setTimeout(() => {
-        this.loading = false;
-      }, 5000);
+        this.loading = false
+      }, 5000)
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

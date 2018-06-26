@@ -28,20 +28,20 @@
 <script>
 
 export default {
-  name: "leads",
+  name: 'leads',
   data() {
     return {
       loading: false,
       lead: {
-        nome: "",
-        telefone:"",
-        email:"",
-        redeSocial:""
+        nome: '',
+        telefone: '',
+        email: '',
+        redeSocial: ''
       },
       results: null
-    };
+    }
   }
-};
+}
 </script>
 <style lang="scss">
 .centered-container {

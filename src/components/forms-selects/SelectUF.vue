@@ -37,7 +37,7 @@
    export default {
   name: 'UF'
 
-};
+}
 </script>
 <style>
 </style>
