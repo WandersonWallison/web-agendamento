@@ -49,11 +49,11 @@
       </md-app-drawer>
 
       <md-app-content>
-        <list-cliente/>
+       <list-cliente/>
       </md-app-content>
     </md-app>
     <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>Preferences</md-dialog-title>
+      <md-dialog-title>Cadastro Leads</md-dialog-title>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
         <md-button class="md-primary" @click="showDialog = false">Save</md-button>
@@ -82,11 +82,13 @@
 import FormAddUser from "./FormAddUser";
 import FormLogin from "./FormLogin.vue";
 import ListCliente from '../lists/ListCliente';
+import FormAddEmpresa  from './FormCadastroEmpresa.vue';
 export default {
   name: "HelloWorld",
   components: {
     FormAddUser,
-    ListCliente
+    ListCliente,
+    FormAddEmpresa
   },
   data: () => ({
     menuVisible: false,
@@ -113,7 +115,7 @@ export default {
   max-width: calc(100vw - 125px);
 }
 .md-toobar {
-  background-color: #48D1CC;
+  background-color: #33c490;
 }
 .md-fab {
   display: block;
