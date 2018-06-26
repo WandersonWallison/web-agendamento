@@ -28,21 +28,22 @@
 </template>
 
 <script>
-import axios from "axios";
-import VueAxios from "vue-axios";
+import axios from 'axios'
+// import VueAxios from 'vue-axios'
+
 export default {
-  name: "app",
-  data() {
+  name: 'app',
+  data () {
     return {
       results: null
-    };
+    }
   },
-  mounted() {
+  mounted () {
     axios
-      .get("http://localhost:1337/profile")
-      .then(response => (this.results = response));
+      .get('http://localhost:1337/profile')
+      .then(response => (this.results = response))
   }
-};
+}
 </script>
 
 <style lang="scss">

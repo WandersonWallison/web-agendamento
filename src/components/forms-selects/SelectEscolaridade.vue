@@ -12,7 +12,7 @@
 <script>
 export default {
   name: "estadoCivil"
-};
+}
 </script>
 <style>
 </style>

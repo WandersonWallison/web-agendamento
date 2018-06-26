@@ -11,7 +11,7 @@
    export default {
   name: 'Genero'
 
-};
+}
 </script>
 <style>
 </style>
