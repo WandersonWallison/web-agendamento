@@ -29,21 +29,21 @@
 
 
 <script>
-import endereco from "../forms-endereco/FormEndereco";
+import endereco from '../forms-endereco/FormEndereco'
 export default {
-  name: "company",
+  name: 'company',
   components: {
     endereco
   },
-  data() {
+  data () {
     return {
       loading: false,
       company: {
-        nome: "",
-        responsavel: "",
-        site:"",
-        telefone:"",
-        email:""
+        nome: '',
+        responsavel: '',
+        site: '',
+        telefone: '',
+        email: ''
       },
       results: null
     }

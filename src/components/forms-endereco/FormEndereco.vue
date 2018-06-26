@@ -27,7 +27,7 @@ export default {
   components: {
     UF
   },
-  data() {
+  data () {
     return {
       loading: false,
       endereco: {

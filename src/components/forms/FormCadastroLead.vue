@@ -29,7 +29,7 @@
 
 export default {
   name: 'leads',
-  data() {
+  data () {
     return {
       loading: false,
       lead: {

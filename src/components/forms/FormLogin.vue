@@ -42,8 +42,8 @@ Vue.use(axios)
 
 export default {
 
-  name: "Login",
-  data() {
+  name: 'Login',
+  data () {
     return {
       loading: false,
       login: {
@@ -54,20 +54,20 @@ export default {
     }
   },
   methods: {
-    auth() {
+    auth () {
 
       this.$router.push('/Home')
       axios
-        .post("http://192.168.0.23:1337/login", {
+        .post('http://192.168.0.23:1337/login', {
           body: {
             email: this.login.email,
             password: this.login.password
           }
         })
-        .then(function(params) {
-           results=>params;
+        .then(function (params) {
+           results => params
           // this.$router.push({ name: 'Home', query: { redirect: '/Home' } });
-           // this.$router.push('/Home')
+          // this.$router.push('/Home')
         })
       // your code to login user
       // this is only for example of loading

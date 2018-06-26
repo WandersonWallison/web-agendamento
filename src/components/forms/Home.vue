@@ -93,7 +93,7 @@ export default {
     showDialog: false
   }),
   methods: {
-    toggleMenu( ) {
+    toggleMenu () {
       this.menuVisible = !this.menuVisible
     }
   }
