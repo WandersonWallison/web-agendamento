@@ -3,8 +3,7 @@
     <md-content class="md-elevation-3">
 
       <div class="title">
-        <img src="https://vuematerial.io/assets/logo-color.png">
-        <div class="md-title">PROSPERIDADE</div>
+        <img src="../../assets/marca_branca_fundo_transparente.png">
 
       </div>
 
@@ -86,7 +85,7 @@ export default {
     margin-bottom: 30px;
     img {
       margin-bottom: 16px;
-      max-width: 80px;
+      max-width: 300px;
     }
   }
   .actions {
@@ -117,6 +116,7 @@ export default {
     width: 100%;
     max-width: 400px;
     position: relative;
+    background-color: #15da93;
   }
   .loading-overlay {
     z-index: 10;

@@ -5,7 +5,7 @@
         <md-button class="md-icon-button" @click="toggleMenu" v-if="!menuVisible">
           <md-icon>menu</md-icon>
         </md-button>
-         <img src='../../assets/logoProsperidade2.jpeg' class="container-img">
+         <img src='../../assets/marca_branca_fundo_transparente.png' class="container-img">
 
       <md-button>Sair</md-button>
       </md-app-toolbar>
