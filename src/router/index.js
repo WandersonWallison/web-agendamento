@@ -4,6 +4,7 @@ import Login from '@/components/forms/FormLogin.vue'
 import Home from '@/components/forms/Home.vue'
 import CadEmpresa from '@/components/forms/FormCadastroEmpresa.vue'
 import CadLead from '@/components/forms/FormCadastroLead.vue'
+import CadUsuario from '@/components/forms/FormAddUser.vue'
 
 Vue.use(Router)
 
@@ -28,6 +29,12 @@ export default new Router({
       path: '/lead',
       name: 'lead',
       component: CadLead
+    },
+    {
+      path: '/agente',
+      name: 'agente',
+      component: CadUsuario
+
     }
 
   ]
