@@ -1,5 +1,8 @@
 <template>
 <div>
+        <md-toolbar md-elevation="0" class="md-dense">
+          <span class="md-title">Endereço</span>
+        </md-toolbar>
         <md-field>
           <md-input v-model="endereco.rua" autofocus placeholder="Rua"></md-input>
         </md-field>
@@ -9,8 +12,7 @@
         <md-field>
           <md-input v-model="endereco.bairro" autofocus placeholder="Bairro"></md-input>
         </md-field>
-        <br>
-          <UF/>
+        <UF/>
         <md-field>
           <md-input v-model="endereco.cidade" autofocus placeholder="Cidade" ></md-input>
         </md-field>

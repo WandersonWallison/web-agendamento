@@ -2,6 +2,9 @@
 
    <div class="centered-container">
      <md-content class="md-elevation-1 body-content">
+        <md-toolbar md-elevation="0" class="md-dense">
+          <span class="md-title">Cadastro de Contato</span>
+        </md-toolbar>
         <md-field>
           <md-input v-model="lead.nome" placeholder="Nome Completo"></md-input>
         </md-field>

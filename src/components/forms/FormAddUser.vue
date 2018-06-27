@@ -2,50 +2,50 @@
 
    <div class="centered-container">
      <md-content class="md-elevation-1 body-content">
+       <md-toolbar md-elevation="0" class="md-dense">
+        <span class="md-title">Cadastro de Agente</span>
+      </md-toolbar>
+      <br>
         <md-field>
           <md-input v-model="agente.username" placeholder="Nome completo" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input v-model="agente.email" placeholder="E-mail" autofocus ></md-input>
+          <md-input type="email" v-model="agente.email" placeholder="E-mail" autofocus ></md-input>
         </md-field>
          <md-field>
-          <md-input type="url" v-model="agente.senha" placeholder="Senha" autofocus></md-input>
+          <md-input v-model="agente.senha" placeholder="Senha" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input  type="tel" v-model="agente.telefone" placeholder="Telefone" autofocus></md-input>
+          <md-input type="tel" v-model="agente.telefone" placeholder="Telefone" autofocus></md-input>
+        </md-field>
+        <md-datepicker type="date" v-model="agente.data_inicio" md-immediately>
+            <label>Data Inicio</label>
+        </md-datepicker>
+        <md-field>
+          <md-input v-model="agente.cvm" placeholder="CVM" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input type="email" v-model="agente.cvm" placeholder="CVM" autofocus></md-input>
+          <md-input v-model="agente.RG" placeholder="RG" autofocus ></md-input>
         </md-field>
         <md-field>
-          <md-input v-model="agente.data_nascimento" placeholder="Data Nascimento" autofocus></md-input>
+          <md-input v-model="agente.CPF" placeholder="CPF" autofocus ></md-input>
         </md-field>
+        <md-datepicker type="date" v-model="agente.data_nascimento" md-immediately>
+            <label>Data Nascimento</label>
+        </md-datepicker>
+        <genero></genero>
+        <escolaridade></escolaridade>
         <md-field>
           <md-input v-model="agente.nome_conjuge" placeholder="Nome Conjuge" autofocus ></md-input>
         </md-field>
          <md-field>
-          <md-input type="url" v-model="agente.nome_mae" placeholder="Site" autofocus></md-input>
+          <md-input v-model="agente.nome_mae" placeholder="Nome Mãe" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input  type="tel" v-model="agente.fone" placeholder="Telefone" autofocus></md-input>
+          <md-input v-model="agente.nome_pai" placeholder="Nome Pai" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input type="email" v-model="agente.email" placeholder="E-mail" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input v-model="agente.nome" placeholder="Escritorio" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input v-model="agente.responsavel" placeholder="Responsável" autofocus ></md-input>
-        </md-field>
-         <md-field>
-          <md-input type="url" v-model="agente.site" placeholder="Site" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input  type="tel" v-model="agente.fone" placeholder="Telefone" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input type="email" v-model="agente.email" placeholder="E-mail" autofocus></md-input>
+          <md-input type="Url" v-model="agente.rede_social" placeholder="Rede Social" autofocus></md-input>
         </md-field>
         <endereco/>
         <br>
@@ -59,12 +59,21 @@
 
 <script>
 import endereco from '../forms-endereco/FormEndereco'
+import UF from '../forms-selects/SelectUF'
+import genero from '../forms-selects/SelectGenero'
+import escolaridade from '../forms-selects/SelectEscolaridade'
+
 export default {
   name: 'agente',
   components: {
-    endereco
+    endereco,
+    UF,
+    genero,
+    escolaridade
   },
   data () {
+    data_inicio: new Date()
+    data_nascimento: new Date()
     return {
       loading: false,
       agente: {
@@ -96,7 +105,8 @@ export default {
   align-items: left;
   justify-content: center;
   position: relative;
-  height: 270vh;
+  height: 280vh;
+  flex-wrap: wrap;
 
   .title {
     text-align: center;
@@ -147,6 +157,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .elevation-demo {
+    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
   }
 
 }

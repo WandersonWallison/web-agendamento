@@ -1,6 +1,6 @@
 <template>
     <md-field>
-          <md-select v-model="genero" name="genero" id="genero" placeholder="Genero">
+          <md-select v-model="genero" name="genero" id="genero" placeholder="Gênero">
             <md-option value="1">Feminino</md-option>
             <md-option value="0">Masculino</md-option>
           </md-select>

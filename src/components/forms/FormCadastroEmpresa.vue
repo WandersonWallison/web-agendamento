@@ -2,8 +2,11 @@
 
    <div class="centered-container">
      <md-content class="md-elevation-1 body-content">
+        <md-toolbar md-elevation="0" class="md-dense">
+          <span class="md-title">Cadastro de Escritório</span>
+        </md-toolbar>
         <md-field>
-          <md-input v-model="company.nome" placeholder="Escritorio" autofocus></md-input>
+          <md-input v-model="company.nome" placeholder="Escritório" autofocus></md-input>
         </md-field>
         <md-field>
           <md-input v-model="company.responsavel" placeholder="Responsável" autofocus ></md-input>
