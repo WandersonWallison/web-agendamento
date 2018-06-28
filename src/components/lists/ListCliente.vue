@@ -1,9 +1,12 @@
 <template>
-  <div>
+  <div class="conteudo-alinhamento">
+    <md-toolbar md-elevation="0" class="md-dense">
+          <span class="md-title">Contatos</span>
+    </md-toolbar>
     <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
-          <h1 class="md-title">Leads</h1>
+          <h1 class="md-title"></h1>
         </div>
 
         <md-field md-clearable class="md-toolbar-section-end">
@@ -18,11 +21,11 @@
       </md-table-empty-state>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
-        <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
-        <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Gender" md-sort-by="gender">{{ item.gender }}</md-table-cell>
-        <md-table-cell md-label="Job Title" md-sort-by="title">{{ item.title }}</md-table-cell>
+        <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="Nome" md-sort-by="name">{{ item.name }}</md-table-cell>
+        <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
+        <md-table-cell md-label="Sexo" md-sort-by="gender">{{ item.gender }}</md-table-cell>
+        <md-table-cell md-label="Função" md-sort-by="title">{{ item.title }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -204,7 +207,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.md-field {
-  max-width: 300px;
-}
+  .md-field {
+    max-width: 300px;
+  }
+  .conteudo-alinhamento{
+     text-align: left;
+  }
 </style>
