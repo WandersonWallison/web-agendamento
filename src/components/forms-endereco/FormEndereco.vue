@@ -7,7 +7,7 @@
           <md-input v-model="endereco.rua" autofocus placeholder="Rua"></md-input>
         </md-field>
         <md-field>
-          <md-input type='number' v-model="endereco.numero" autofocus placeholder="Numero"></md-input>
+          <md-input type="number" maxlength="6" v-model="endereco.numero" autofocus placeholder="Numero"></md-input>
         </md-field>
         <md-field>
           <md-input v-model="endereco.bairro" autofocus placeholder="Bairro"></md-input>
@@ -17,7 +17,7 @@
           <md-input v-model="endereco.cidade" autofocus placeholder="Cidade" ></md-input>
         </md-field>
         <md-field>
-          <md-input type='Number' v-model="endereco.cep" autofocus placeholder="CEP"></md-input>
+          <md-input type="number" maxlength="10" v-model="endereco.cep" autofocus placeholder="CEP"></md-input>
         </md-field>
 </div>
 </template>

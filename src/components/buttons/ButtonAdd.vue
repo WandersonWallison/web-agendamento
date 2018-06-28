@@ -1,10 +1,20 @@
 <template>
   <div class="example">
+
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>Preferences</md-dialog-title>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
         <md-button class="md-primary" @click="showDialog = false">Save</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
+    <md-dialog :md-active.sync="formAgente">
+      <md-dialog-title></md-dialog-title>
+      <md-dialog-actions>
+        <CadAgente></CadAgente>
+        <md-button class="md-primary" @click="formAgente = false">Close</md-button>
+        <md-button class="md-primary" @click="formAgente = false">Save</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -18,9 +28,14 @@
         <md-button class="md-icon-button" @click="showDialog = true">
           <md-icon>note</md-icon>
         </md-button>
-
         <md-button class="md-icon-button" @click="showDialog = true" >
           <md-icon>event</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" @click="showDialog = true" >
+          <md-icon title="teste">event</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" @click="formAgente = true" >
+          <md-icon>account_circle</md-icon>
         </md-button>
       </md-speed-dial-content>
     </md-speed-dial>
@@ -29,8 +44,15 @@
 </template>
 
 <script>
+import CadEmpresa from '../forms/FormCadastroEmpresa'
+import CadAgente from '../forms/FormAddUser'
+
  export default {
     name: 'buttonAdd',
+    component:{
+      CadEmpresa,
+      CadAgente
+    },
     data: () => ({
       showDialog: false
     })
