@@ -35,7 +35,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
 
   name: 'Login',
@@ -51,23 +51,18 @@ export default {
   },
   methods: {
     auth () {
-      this.$router.push('/Home')
-      Axios
-        .post('http://192.168.0.23:1337/login', {
-          body: {
-            email: this.login.email,
-            password: this.login.password
-          }
-        })
-        .then(function (params) {
-           console.log(params)
-           })
+
+      axios.post('http://localhost:1337/login',this.login)
+      .then(response => (this.results = response.data.message))
+      .catch(error => console.log(error))
+      //this.$router.push('/Home')
       // your code to login user
       // this is only for example of loading
       this.loading = true
       setTimeout(() => {
         this.loading = false
       }, 5000)
+
     }
   }
 }
@@ -117,6 +112,7 @@ export default {
     max-width: 400px;
     position: relative;
     background-color: #15da93;
+    //background-color: #1a503a;
   }
   .loading-overlay {
     z-index: 10;

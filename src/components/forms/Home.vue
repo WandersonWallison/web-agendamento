@@ -1,25 +1,17 @@
 <template>
 <div class="page-container">
-    <md-app>
-      <md-app-toolbar class="md-toobar" md-elevation="0">
-        <md-button class="md-icon-button" @click="toggleMenu" v-if="!menuVisible">
+    <md-app md-mode="reveal">
+      <md-app-toolbar class="md-toobar">
+        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
-        </md-button>
-         <img src='../../assets/marca_branca_fundo_transparente.png' class="container-img">
 
-      <md-button>Sair</md-button>
+        </md-button>
+        <img src='../../assets/marca_branca_fundo_transparente.png' class="container-img">
+        <md-button>Sair</md-button>
       </md-app-toolbar>
 
-      <md-app-drawer :md-active.sync="menuVisible" md-persistent="mini">
-        <md-toolbar class="md-transparent" md-elevation="0">
-          <span>Menu</span>
-
-          <div class="md-toolbar-section-end">
-            <md-button class="md-icon-button md-dense" @click="toggleMenu">
-              <md-icon>keyboard_arrow_left</md-icon>
-            </md-button>
-          </div>
-        </md-toolbar>
+      <md-app-drawer :md-active.sync="menuVisible">
+        <md-toolbar class="md-transparent" md-elevation="0">Menu</md-toolbar>
 
         <md-list>
           <md-list-item>
@@ -49,13 +41,14 @@
       </md-app-drawer>
 
       <md-app-content>
-       <list-cliente/>
+        <list-cliente/>
+
       </md-app-content>
     </md-app>
     <button-add></button-add>
-
   </div>
 </template>
+
 
 <script>
 
