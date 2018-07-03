@@ -59,7 +59,7 @@ import FormAddEmpresa from './FormCadastroEmpresa.vue'
 import ButtonAdd from '../buttons/ButtonAdd'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   components: {
     FormAddUser,
     ListCliente,
