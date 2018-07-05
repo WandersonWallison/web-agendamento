@@ -52,9 +52,11 @@ export default {
         axios.post('http://localhost:1337/leads',newLead)
         .then((response) =>{
           this.results = response.data;
+           alert( "User cadastado com success" );
           console.log(response.data);
         })
         .catch((error) => {
+          alert(error.response.data.code);
           console.log(error.response.data);
         });
 
