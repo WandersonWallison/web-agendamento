@@ -12,15 +12,15 @@
           <md-input v-model="lead.email" placeholder="E-mail" ></md-input>
         </md-field>
         <md-field>
-          <md-input v-model="lead.telefone" placeholder="Telefone" ></md-input>
+          <md-input v-model="lead.cnh_rg" placeholder="CNH/RG" ></md-input>
         </md-field>
          <md-field>
-          <md-input type="url" v-model="lead.redesocial" placeholder="Rede Social"></md-input>
+          <md-input type="url" v-model="lead.data_emissao" placeholder="Data emissao"></md-input>
         </md-field>
         <endereco/>
         <br>
         <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="auth">Cadastrar</md-button>
+        <md-button class="md-raised md-primary" @click="add">Cadastrar</md-button>
 
       </div>
      </md-content>
@@ -29,20 +29,36 @@
 
 
 <script>
-
+import axios from 'axios'
 export default {
-  name: 'leads',
+  name: 'FormCadastroLead',
   data () {
     return {
-      loading: false,
       lead: {
-        nome: '',
-        telefone: '',
-        email: '',
-        redeSocial: ''
+        nome: '',email: '',cnh_rg:'', data_emissao:''
       },
-      results: null
+      results: []
     }
+  },
+  methods: {
+    add(){
+      let newLead = {
+        nome: this.lead.nome,
+        email: this.lead.email,
+        cnh_rg: this.lead.cnh_rg,
+        data_emissao:this.lead.data_emissao
+      }
+        console.log(newLead);
+        axios.post('http://localhost:1337/leads',newLead)
+        .then((response) =>{
+          this.results = response.data;
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+
+   }
   }
 }
 </script>
