@@ -24,10 +24,35 @@
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Sexo" md-sort-by="genero">{{ item.Genero }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone }}</md-table-cell>
+       <md-table-cell md-label="Status" md-sort-by="status">
+          <md-button class="md-icon-button md-raised md-primary">
+            <md-tooltip md-direction="top">Atendeu</md-tooltip>
+            <md-icon>phone</md-icon>
+          </md-button>
+          <md-button class="md-icon-button butoom-03 md-accent">
+            <md-tooltip md-direction="top">Não Atendeu</md-tooltip>
+            <md-icon>thumb_down</md-icon>
+          </md-button>
+          <md-button class="md-icon-button md-raised md-accent">
+            <md-tooltip md-direction="top">Dados incorretos</md-tooltip>
+            <md-icon>no_sim</md-icon>
+          </md-button>
+          <md-button class="md-icon-button butoom-02">
+            <md-tooltip md-direction="top">Não pode falar</md-tooltip>
+            <md-icon>mic_off</md-icon>
+          </md-button>
+          <md-button class="md-icon-button butoom-04">
+            <md-tooltip md-direction="top">Não aceita visita</md-tooltip>
+            <md-icon>voice_over_off</md-icon>
+          </md-button>
+            <md-button class="md-raised md-primary">Agendamento</md-button>
+          </md-table-cell>
+
       </md-table-row>
+
     </md-table>
+
   </div>
 </template>
 
@@ -79,5 +104,14 @@ export default {
   }
   .conteudo-alinhamento{
      text-align: left;
+  }
+  .butoom-02{
+    background-color: green;
+  }
+  .butoom-03{
+    background-color: rgb(220, 235, 13);
+  }
+  .butoom-04{
+    background-color: rgb(235, 102, 13);
   }
 </style>
