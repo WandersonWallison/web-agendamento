@@ -10,10 +10,20 @@ import ListaAgentes from '../components/lists/ListaAgentes.vue'
 Vue.use(Router)
 
 export default new Router({
+
   routes: [
+
     {
       path: '/',
       name: 'login',
+      beforeEnter: function (to, from, next) {
+        const token = localStorage.getItem('Usuario')
+        if (!token) {
+          next('/login')
+        } else {
+          next()
+        }
+      },
       component: Login
     },
     {

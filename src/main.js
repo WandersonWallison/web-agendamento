@@ -12,7 +12,6 @@ import Vuetify from 'vuetify'
 import VueMask from 'vue-the-mask'
 import Axios from 'axios'
 
-
 Vue.config.productionTip = false
 
 Vue.use(VueMaterial, VueSessionstorage, Vuetify, VueMask, Axios)

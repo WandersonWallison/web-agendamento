@@ -8,6 +8,8 @@
 export default {
   name: 'App'
 }
+
+console.log('Teste wellington')
 </script>
 
 <style>

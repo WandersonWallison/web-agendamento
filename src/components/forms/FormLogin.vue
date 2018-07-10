@@ -17,11 +17,16 @@
           <label>Password</label>
           <md-input v-model="login.password" type="password"></md-input>
         </md-field>
+        {{menssage}}
+        <br>
         {{results}}
+        <br>
+        {{inicio}}
+
       </div>
 
       <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="auth">Log in</md-button>
+        <md-button class="md-raised md-primary" @click="auth">Entrar</md-button>
 
       </div>
 
@@ -35,37 +40,58 @@
 </template>
 
 <script>
-import axios from 'axios'
-export default {
+import axios from "axios";
 
-  name: 'Login',
-  data () {
+export default {
+  name: "Login",
+  data() {
     return {
       loading: false,
       login: {
-        email: '',
-        password: ''
+        email: "",
+        password: ""
       },
-      results: null
-    }
+      results: null,
+      inicio: null,
+      menssage: null
+    };
   },
   methods: {
-    auth () {
+    auth() {
 
-      axios.post('http://localhost:1337/login',this.login)
-      .then(response => (this.results = response.data.message))
-      .catch(error => console.log(error))
-      //this.$router.push('/Home')
-      // your code to login user
-      // this is only for example of loading
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-      }, 5000)
+      //this.inicio = 'E-mail: '+this.login.email
+      //this.results = 'Password: '+this.login.password
+      this.results = ''
+      if (this.login.email != "" && this.login.password != "") {
+        axios
+          .post("http://165.227.188.44:1337/login", this.login)
+          .then(response => {
+            if (response.data.user == false) {
+              this.$router.push("/");
+              this.menssage = response.data.message;
+            } else {
+              this.results = response.data.message;
+              localStorage.setItem("Usuario", response.data.user.createdAt)
+              this.$router.push("/home");
+            }
+          })
+          .catch(error => {
+            this.results = error.response.data;
+            console.log(error.response.data);
+          });
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+        }, 2000);
+      } else {
 
+        this.$router.push("/")
+        this.menssage = "Por favor incluir e-mail e password"
+
+      }
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
