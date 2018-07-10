@@ -1,18 +1,8 @@
 <template>
   <div class="example">
 
-    <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>Preferences</md-dialog-title>
-      <md-dialog-actions>
-
-        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-        <md-button class="md-primary" @click="showDialog = false">Save</md-button>
-      </md-dialog-actions>
-
-    </md-dialog>
 
     <md-speed-dial class="md-bottom-right" md-direction="top">
-      <cad-empresa/>
 
       <md-speed-dial-target>
         <md-icon class="md-morph-initial">add</md-icon>
@@ -23,10 +13,10 @@
         <md-button class="md-icon-button" @click="showDialog = true">
           <md-icon>note</md-icon>
         </md-button>
-        <md-button class="md-icon-button" @click="showDialog = true" >
+        <md-button class="md-icon-button">
           <md-icon>event</md-icon>
         </md-button>
-        <md-button class="md-icon-button" @click="showDialog = true" >
+        <md-button class="md-icon-button">
           <md-icon>account_circle</md-icon>
         </md-button>
       </md-speed-dial-content>

@@ -49,7 +49,7 @@ export default {
         data_emissao:this.lead.data_emissao
       }
         console.log(newLead);
-        axios.post('http://localhost:1337/leads',newLead)
+        axios.post('http://165.227.188.44:1337/leads',newLead)
         .then((response) =>{
           this.results = response.data;
            alert( "User cadastado com success" );
