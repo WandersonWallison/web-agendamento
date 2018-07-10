@@ -42,10 +42,9 @@
 
       <md-app-content>
         <list-cliente/>
-
       </md-app-content>
     </md-app>
-    <button-add></button-add>
+<button-add></button-add>
   </div>
 </template>
 

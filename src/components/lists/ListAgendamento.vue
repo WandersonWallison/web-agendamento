@@ -1,7 +1,7 @@
 <template>
   <div class="conteudo-alinhamento">
     <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Contatos</span>
+          <span class="md-title">Confimação de Agendamento</span>
     </md-toolbar>
     <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
@@ -27,47 +27,24 @@
         <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone }}</md-table-cell>
        <md-table-cell md-label="Status" md-sort-by="status">
           <md-button class="md-icon-button md-raised md-primary">
-            <md-tooltip md-direction="top">Atendeu</md-tooltip>
-            <md-icon>phone</md-icon>
-          </md-button>
-          <md-button class="md-icon-button butoom-03 md-accent">
-            <md-tooltip md-direction="top">Não Atendeu</md-tooltip>
-            <md-icon>thumb_down</md-icon>
+            <md-tooltip md-direction="top">Aceito</md-tooltip>
+            <md-icon>thumb_up</md-icon>
           </md-button>
           <md-button class="md-icon-button md-raised md-accent">
-            <md-tooltip md-direction="top">Dados incorretos</md-tooltip>
-            <md-icon>no_sim</md-icon>
+            <md-tooltip md-direction="top">Não aceito</md-tooltip>
+            <md-icon>thumb_down</md-icon>
           </md-button>
-          <md-button class="md-icon-button butoom-02">
-            <md-tooltip md-direction="top">Não pode falar</md-tooltip>
-            <md-icon>mic_off</md-icon>
-          </md-button>
-          <md-button class="md-icon-button butoom-04">
-            <md-tooltip md-direction="top">Não aceita visita</md-tooltip>
-            <md-icon>voice_over_off</md-icon>
-          </md-button>
-            <md-button class="md-raised md-primary" @click="showDialog = true">Agendamento</md-button>
           </md-table-cell>
 
       </md-table-row>
 
     </md-table>
-    <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>Cadastrar Agenda</md-dialog-title>
-        <endereco/>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-        <md-button class="md-primary" @click="showDialog = false">Save</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
 
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import Endereco from '../forms/FormCadastroLead.vue'
 const toLower = text => {
   return text.toString().toLowerCase()
 }
@@ -81,15 +58,11 @@ const searchByName = (items, term) => {
 }
 
 export default {
-  name: 'list',
-  components: {
-    Endereco
-  },
+  name: 'listAgendamento',
   data: () => ({
     search: null,
     searched: [],
-    users:[],
-    showDialog: false
+    users:[]
   }),
   mounted () {
     axios.get('http://165.227.188.44:1337/leads')

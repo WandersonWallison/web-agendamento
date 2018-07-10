@@ -1,7 +1,5 @@
 <template>
   <div class="example">
-
-
     <md-speed-dial class="md-bottom-right" md-direction="top">
 
       <md-speed-dial-target>
@@ -13,31 +11,34 @@
         <md-button class="md-icon-button" @click="showDialog = true">
           <md-icon>note</md-icon>
         </md-button>
-        <md-button class="md-icon-button">
-          <md-icon>event</md-icon>
-        </md-button>
-        <md-button class="md-icon-button">
-          <md-icon>account_circle</md-icon>
-        </md-button>
+
       </md-speed-dial-content>
     </md-speed-dial>
+
+
+  <md-dialog :md-active.sync="showDialog">
+      <md-dialog-title>Cadastrar Agenda</md-dialog-title>
+        <cad-lead/>
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showDialog = false">Save</md-button>
+      </md-dialog-actions>
+    </md-dialog>
   </div>
 </template>
 
+
 <script>
-import FormAddEmpresa from '../forms/FormCadastroEmpresa.vue'
-import CadAgente from '../forms/FormAddUser'
-import FormCadastroLead from '../forms/FormCadastroLead.vue'
+import CadLead from '../forms/FormCadastroLead.vue'
 
  export default {
     name: 'buttonAdd',
-    component:{
-      FormAddEmpresa,
-      CadAgente,
-      FormCadastroLead
+    components:{
+      CadLead,
     },
     data: () => ({
-      showDialog: false
+      showDialog: false,
+      cadformlead:false
     })
   }
 </script>

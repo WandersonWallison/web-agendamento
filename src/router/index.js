@@ -3,9 +3,10 @@ import Router from 'vue-router'
 import Login from '../components/forms/FormLogin.vue'
 import Home from '@/components/forms/Home.vue'
 import CadEmpresa from '@/components/forms/FormCadastroEmpresa.vue'
-import CadLead from '@/components/forms/CadastroLead.vue'
+import CadLead from '@/components/forms/FormCadastroLead.vue'
 import CadUsuario from '@/components/forms/FormAddUser.vue'
 import ListaAgentes from '../components/lists/ListaAgentes.vue'
+import Agendamento from '../components/lists/ListAgendamento.vue'
 
 Vue.use(Router)
 
@@ -50,6 +51,11 @@ export default new Router({
       path: '/listaAgente',
       name: 'listaAgente',
       component: ListaAgentes
+    },
+    {
+      path: '/Agendamento',
+      name: 'agendamento',
+      component: Agendamento
     }
 
   ]
