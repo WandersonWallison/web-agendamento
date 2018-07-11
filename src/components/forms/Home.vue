@@ -6,10 +6,9 @@
           <md-icon>menu</md-icon>
 
         </md-button>
-        <md-avatar>
-        <img src='../../assets/marca_branca_fundo_transparente.png'>
-        </md-avatar>
-        <md-button>Sair</md-button>
+        <span class="md-title">Prosperidade</span>
+        <!-- <img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'> -->
+        <md-button >Sair</md-button>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
@@ -99,11 +98,5 @@ export default {
   float: right;
   margin-top: 200px;
 }
-.container-img {
-    max-width:200px;
-    max-height:150px;
-    margin-right:40%;
-    margin-left:40%;
 
-}
 </style>

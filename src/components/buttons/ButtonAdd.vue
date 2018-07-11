@@ -14,45 +14,57 @@
         <md-button class="md-icon-button" @click="showAgente = true">
           <md-icon>people</md-icon>
         </md-button>
+        <md-button class="md-icon-button" @click="showEmpresa = true">
+          <md-icon>location_city</md-icon>
+        </md-button>
 
       </md-speed-dial-content>
     </md-speed-dial>
 
-    <md-dialog :md-active.sync="showAgente">
+    <md-dialog :md-active.sync="showAgente" class="div">
       <cad-user/>
     </md-dialog>
-    <md-dialog :md-active.sync="showDialog">
+    <md-dialog :md-active.sync="showDialog" class="div">
       <cad-lead/>
+    </md-dialog>
+    <md-dialog :md-active.sync="showEmpresa" class="div">
+      <cad-empresa/>
     </md-dialog>
   </div>
 </template>
 
 
 <script>
-import CadLead from '../forms/FormCadastroLead.vue'
-import CadUser from '../forms/FormAddUser.vue'
+import CadLead from '../forms/FormCadastroLead.vue';
+import CadUser from '../forms/FormAddUser.vue';
+import CadEmpresa from '../forms/FormCadastroEmpresa.vue';
 
- export default {
-    name: 'buttonAdd',
-    components:{
-      CadLead,
-      CadUser
-    },
-    data: () => ({
-      showDialog: false,
-      showAgente:false
-    })
-  }
+export default {
+  name: 'buttonAdd',
+  components: {
+    CadLead,
+    CadUser,
+    CadEmpresa
+  },
+  data: () => ({
+    showDialog: false,
+    showAgente: false,
+    showEmpresa: false
+  })
+};
 </script>
 
-<style lang="scss" scoped>
-  .example {
-    min-height: 40%;
-  }
-  .md-dialog {
-    width:70%;
-    height: 50%;
-    max-width: 100%;
-  }
+<style lang='scss' scoped>
+.example {
+  min-height: 40%;
+}
+.md-dialog {
+  width: 70%;
+  height: 70%;
+  max-width: 100%;
+}
+.div{
+  overflow: auto;
+}
 </style>
 

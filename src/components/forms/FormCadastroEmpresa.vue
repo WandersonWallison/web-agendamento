@@ -84,7 +84,7 @@ export default {
     padding: 40px;
     width: 100%;
     max-width: 1200px;
-    position: relative;
+    position: absolute;
   }
 }
 </style>
