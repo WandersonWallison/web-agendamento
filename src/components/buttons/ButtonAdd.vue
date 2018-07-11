@@ -11,11 +11,16 @@
         <md-button class="md-icon-button" @click="showDialog = true">
           <md-icon>note</md-icon>
         </md-button>
+        <md-button class="md-icon-button" @click="showAgente = true">
+          <md-icon>people</md-icon>
+        </md-button>
 
       </md-speed-dial-content>
     </md-speed-dial>
 
-
+    <md-dialog :md-active.sync="showAgente">
+      <cad-user/>
+    </md-dialog>
     <md-dialog :md-active.sync="showDialog">
       <cad-lead/>
     </md-dialog>
@@ -25,15 +30,17 @@
 
 <script>
 import CadLead from '../forms/FormCadastroLead.vue'
+import CadUser from '../forms/FormAddUser.vue'
 
  export default {
     name: 'buttonAdd',
     components:{
       CadLead,
+      CadUser
     },
     data: () => ({
       showDialog: false,
-      cadformlead:false
+      showAgente:false
     })
   }
 </script>
