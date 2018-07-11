@@ -16,13 +16,8 @@
     </md-speed-dial>
 
 
-  <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>Cadastrar Agenda</md-dialog-title>
-        <cad-lead/>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-        <md-button class="md-primary" @click="showDialog = false">Save</md-button>
-      </md-dialog-actions>
+    <md-dialog :md-active.sync="showDialog">
+      <cad-lead/>
     </md-dialog>
   </div>
 </template>
@@ -45,10 +40,11 @@ import CadLead from '../forms/FormCadastroLead.vue'
 
 <style lang="scss" scoped>
   .example {
-    min-height: 180px;
+    min-height: 40%;
   }
   .md-dialog {
-    max-width: 768px;
+    width:80%;
+    max-width: 100%;
   }
 </style>
 
