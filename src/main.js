@@ -9,12 +9,19 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vuetify/dist/vuetify.min.css'
 import Vuetify from 'vuetify'
+import BootstrapVue from 'bootstrap-vue'
 import VueMask from 'vue-the-mask'
 import Axios from 'axios'
 
+
 Vue.config.productionTip = false
 
-Vue.use(VueMaterial, VueSessionstorage, Vuetify, VueMask, Axios)
+Vue.use(VueMaterial,
+       VueSessionstorage,
+       Vuetify,
+       VueMask,
+       BootstrapVue,
+       Axios)
 
 /* eslint-disable no-new */
 new Vue({
