@@ -6,7 +6,9 @@
           <md-icon>menu</md-icon>
 
         </md-button>
-        <img src='../../assets/marca_branca_fundo_transparente.png' class="container-img">
+        <md-avatar>
+        <img src='../../assets/marca_branca_fundo_transparente.png'>
+        </md-avatar>
         <md-button>Sair</md-button>
       </md-app-toolbar>
 
@@ -104,5 +106,4 @@ export default {
     margin-left:40%;
 
 }
-
 </style>

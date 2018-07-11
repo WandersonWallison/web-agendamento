@@ -43,7 +43,8 @@ import CadLead from '../forms/FormCadastroLead.vue'
     min-height: 40%;
   }
   .md-dialog {
-    width:80%;
+    width:70%;
+    height: 50%;
     max-width: 100%;
   }
 </style>
