@@ -7,6 +7,7 @@ import CadLead from '@/components/forms/FormCadastroLead.vue'
 import CadUsuario from '@/components/forms/FormAddUser.vue'
 import ListaAgentes from '../components/lists/ListaAgentes.vue'
 import Agendamento from '../components/lists/ListAgendamento.vue'
+import CadAgendamento from '../components/forms/FormAgendamento.vue'
 
 Vue.use(Router)
 
@@ -26,7 +27,7 @@ export default new Router({
           next()
         }
       }
-      },
+    },
     {
       path: '/Home',
       name: 'home',
@@ -56,6 +57,12 @@ export default new Router({
       path: '/Agendamento',
       name: 'agendamento',
       component: Agendamento
+    },
+    {
+      path: '/Agenda',
+      name: 'cadastroAgendamento',
+      component: CadAgendamento
+
     }
 
   ]
