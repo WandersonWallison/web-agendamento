@@ -1,60 +1,45 @@
 <template>
-
-   <div class="centered-container">
-     <md-content class="md-elevation-1 body-content">
-        <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Agendamento</span>
-        </md-toolbar>
-        <md-field>
-          <md-input v-model="company.nome" placeholder="Escritório" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input v-model="company.responsavel" placeholder="Responsável" autofocus ></md-input>
-        </md-field>
-         <md-field>
-          <md-input type="url" v-model="company.site" placeholder="Site" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input  type="tel" v-model="company.fone" maxlength="12" placeholder="Telefone" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input type="email" v-model="company.email" placeholder="E-mail" autofocus></md-input>
-        </md-field>
-        <endereco/>
-        <br>
-        <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="auth">Cadastrar</md-button>
-
-      </div>
-     </md-content>
-    </div>
+	<div id="app" class="centered-container">
+  	<calendar-view
+			:show-date="showDate"
+			@show-date-change="setShowDate"
+			class="holiday-us-traditional holiday-us-official"
+		/>
+    </md-content>
+	</div>
+  
 </template>
-
 <script>
 
-import endereco from '../forms-endereco/FormEndereco'
-export default {
-  name: 'company',
-  components: {
-    endereco
-  },
-  data () {
-    return {
-      loading: false,
-      company: {
-        nome: '',
-        responsavel: '',
-        site: '',
-        telefone: '',
-        email: ''
-      },
-      results: null
-    }
-  }
-}
+ 	import CalendarView from "vue-simple-calendar"
+	require("vue-simple-calendar/dist/static/css/default.css")
+	require("vue-simple-calendar/dist/static/css/holidays-us.css")
+
+	export default {
+		name: 'app',
+		data: function() {
+			return { showDate: new Date() }
+		},
+		components: {
+			CalendarView
+		},
+		methods: {
+			setShowDate(d) {
+				this.showDate = d;
+			},
+		}
+	}
 </script>
-<style lang="scss">
-.centered-container {
+<style>
+	#app {
+		font-family: 'Avenir', Helvetica, Arial, sans-serif;
+		color: #2c3e50;
+		height: 60vh;
+		width: 75vw;
+		margin-left: auto;
+		margin-right: auto;
+	}
+  .centered-container {
   display: flex;
   align-items: left;
   justify-content: center;
@@ -74,18 +59,18 @@ export default {
       margin: 0;
       margin-left: auto;
       margin-right: auto;
-      width: 8em;
+      width: 10em;
     }
   }
   .form {
-    margin-bottom: 60px;
+    margin-bottom: 6%;
   }
   .md-content {
     z-index: 1;
     padding: 40px;
     width: 100%;
-    max-width: 1200px;
-    position: relative;
+    max-width: 100%;
+    position: absolute;
   }
 }
 </style>
