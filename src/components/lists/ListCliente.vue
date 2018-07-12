@@ -54,7 +54,7 @@
     </md-table>
     <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>Cadastrar Agenda</md-dialog-title>
-        <endereco/>
+        <agenda/>
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
         <md-button class="md-primary" @click="showDialog = false">Save</md-button>
@@ -67,7 +67,7 @@
 
 <script>
 import axios from 'axios'
-import Endereco from '../forms/FormCadastroLead.vue'
+import Agenda from '../forms/FormAgendamento.vue'
 const toLower = text => {
   return text.toString().toLowerCase()
 }
@@ -83,7 +83,7 @@ const searchByName = (items, term) => {
 export default {
   name: 'list',
   components: {
-    Endereco
+    Agenda
   },
   data: () => ({
     search: null,

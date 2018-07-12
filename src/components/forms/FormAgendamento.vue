@@ -3,11 +3,11 @@
   	<calendar-view
 			:show-date="showDate"
 			@show-date-change="setShowDate"
-			class="holiday-us-traditional holiday-us-official"
-		/>
-    </md-content>
+			class="holiday-us-traditional holiday-us-official">
+  	</calendar-view>
+
 	</div>
-  
+
 </template>
 <script>
 
@@ -30,7 +30,7 @@
 		}
 	}
 </script>
-<style>
+<style lang="scss" scoped>
 	#app {
 		font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		color: #2c3e50;
