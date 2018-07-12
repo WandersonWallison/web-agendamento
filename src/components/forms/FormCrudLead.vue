@@ -42,7 +42,7 @@
       </md-app-drawer>
 
       <md-app-content>
-        <list-cliente/>
+        <list-crud-lead/>
       </md-app-content>
     </md-app>
 <button-add></button-add>
@@ -54,15 +54,15 @@
 
 import FormAddUser from './FormAddUser'
 import FormLogin from './FormLogin.vue'
-import ListCliente from '../lists/ListCliente'
+import ListCrudLead from '../lists/ListCrudLead'
 import FormAddEmpresa from './FormCadastroEmpresa.vue'
 import ButtonAdd from '../buttons/ButtonAdd'
 
 export default {
-  name: 'Home',
+  name: 'FormCrudLead',
   components: {
     FormAddUser,
-    ListCliente,
+    ListCrudLead,
     FormAddEmpresa,
     ButtonAdd
   },
