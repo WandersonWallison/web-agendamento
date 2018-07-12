@@ -12,7 +12,7 @@ import Vuetify from 'vuetify'
 import BootstrapVue from 'bootstrap-vue'
 import VueMask from 'vue-the-mask'
 import Axios from 'axios'
-
+import FullCalendar from 'vue-full-calendar'
 
 Vue.config.productionTip = false
 
@@ -21,7 +21,8 @@ Vue.use(VueMaterial,
        Vuetify,
        VueMask,
        BootstrapVue,
-       Axios)
+       Axios,
+       FullCalendar)
 
 /* eslint-disable no-new */
 new Vue({

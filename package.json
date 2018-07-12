@@ -15,10 +15,12 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "vue": "^2.5.2",
     "vue-axios": "^2.1.1",
+    "vue-full-calendar": "^4.0.0-1",
     "vue-material": "^1.0.0-beta-10.2",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
     "vue-sessionstorage": "^1.0.0",
+    "vue-simple-calendar": "^3.0.2",
     "vue-the-mask": "^0.11.1",
     "vuejs-datepicker": "^1.5.2",
     "vuetify": "^1.0.19"
