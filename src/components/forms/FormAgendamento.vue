@@ -1,16 +1,15 @@
 <template>
-	<div id="app" class="centered-container">
-  	<calendar-view
-			:show-date="showDate"
-			@show-date-change="setShowDate"
-			class="holiday-us-traditional holiday-us-official">
-  	</calendar-view>
-
-	</div>
+    <div id="app" class="centered-container md-content">
+      <calendar-view
+        :show-date="showDate"
+        @show-date-change="setShowDate"
+        class="holiday-us-traditional holiday-us-official">
+      </calendar-view>
+  </div>
 
 </template>
 <script>
-
+  import endereco from '../forms-endereco/FormEndereco'
  	import CalendarView from "vue-simple-calendar"
 	require("vue-simple-calendar/dist/static/css/default.css")
 	require("vue-simple-calendar/dist/static/css/holidays-us.css")
@@ -21,7 +20,8 @@
 			return { showDate: new Date() }
 		},
 		components: {
-			CalendarView
+      CalendarView,
+      endereco
 		},
 		methods: {
 			setShowDate(d) {
@@ -38,6 +38,7 @@
 		width: 75vw;
 		margin-left: auto;
 		margin-right: auto;
+    padding: auto;
 	}
   .centered-container {
   display: flex;
@@ -45,6 +46,7 @@
   justify-content: center;
   position: relative;
   height: 170vh;
+  padding: auto;
 
   .title {
     text-align: center;

@@ -17,12 +17,8 @@ import FullCalendar from 'vue-full-calendar'
 Vue.config.productionTip = false
 
 Vue.use(VueMaterial,
-       VueSessionstorage,
-       Vuetify,
-       VueMask,
-       BootstrapVue,
-       Axios,
-       FullCalendar)
+  VueSessionstorage,
+  Vuetify, VueMask, BootstrapVue, Axios, FullCalendar)
 
 /* eslint-disable no-new */
 new Vue({
