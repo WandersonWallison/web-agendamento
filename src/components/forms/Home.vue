@@ -42,7 +42,7 @@
       </md-app-drawer>
 
       <md-app-content>
-        <list-cliente/>
+        <list-cliente ref="ListCliente"></list-cliente>
       </md-app-content>
     </md-app>
 <button-add></button-add>

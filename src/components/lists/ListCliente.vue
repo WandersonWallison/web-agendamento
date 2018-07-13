@@ -89,7 +89,8 @@ export default {
     search: null,
     searched: [],
     users:[],
-    showDialog: false
+    showDialog: false,
+    teste: "wanderson"
   }),
   mounted () {
     axios.get('http://165.227.188.44:1337/leads')
