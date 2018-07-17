@@ -77,7 +77,7 @@ import axios from 'axios'
       atual:[]
     }),
     mounted () {
-    axios.get('http://165.227.188.44:1337/leads?where={"ativo": true}')
+    axios.get('http://165.227.188.44:1337/leads?where={"ativo": false}')
       .then(response => {
         this.people = response.data
         })
@@ -88,15 +88,16 @@ import axios from 'axios'
       },
       onConfirm(){
         let newLead = {
-        ativo: false
+        ativo: true
       }
       for (var i = 0; i <= this.selected.length; i++) {
          axios.put('http://165.227.188.44:1337/leads/' + this.selected[i].id,newLead)
         .then(response => {
-        console.log(i + "alterado")
+        console.log(i + "alterado");
+        window.location.reload();
         })
       }
-        window.location.reload();
+
       },
       onSelect (items) {
         this.selected = items
