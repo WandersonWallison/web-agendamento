@@ -93,7 +93,7 @@ export default {
     teste: "wanderson"
   }),
   mounted () {
-    axios.get('http://165.227.188.44:1337/leads')
+    axios.get('http://localhost:1337/leads')
       .then(response => {
         this.users = response.data,
         this.searched = response.data

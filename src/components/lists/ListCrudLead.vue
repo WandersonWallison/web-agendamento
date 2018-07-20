@@ -24,7 +24,7 @@
         <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
-        <md-table-cell md-label="Rede Social" md-sort-by="rede_social">{{ item.rede_social }}</md-table-cell>
+        <md-table-cell md-label="Cpf" md-sort-by="cpf">{{ item.cpf }}</md-table-cell>
       </md-table-row>
     </md-table>
   <div>
@@ -43,8 +43,10 @@
       </md-table-row>
     </md-table>
   </div>
-    <md-dialog :md-active.sync="showUpdateLead" class="div">
-      <up-lead/>
+    <md-dialog :md-active.sync="showUpdateLead">
+      <div class="div">
+      <up-lead :selected="selected"></up-lead>
+      </div>
     </md-dialog>
 
     <md-dialog-confirm
@@ -66,10 +68,11 @@ import UpLead from '../forms/FormUpdateLead.vue';
 import axios from 'axios'
   export default {
     name: 'listCrudLead',
+    props: ['selected'],
     components: {
       UpLead
     },
-    data: () => ({
+      data: () => ({
       selected: [],
       people: [],
       showUpdateLead: false,
@@ -77,7 +80,7 @@ import axios from 'axios'
       atual:[]
     }),
     mounted () {
-    axios.get('http://165.227.188.44:1337/leads?where={"ativo": false}')
+    axios.get('http://localhost:1337/leads?where={"ativo": true}')
       .then(response => {
         this.people = response.data
         })
@@ -88,10 +91,10 @@ import axios from 'axios'
       },
       onConfirm(){
         let newLead = {
-        ativo: true
+        ativo: false
       }
       for (var i = 0; i <= this.selected.length; i++) {
-         axios.put('http://165.227.188.44:1337/leads/' + this.selected[i].id,newLead)
+         axios.put('http://localhost:1337/leads/' + this.selected[i].id,newLead)
         .then(response => {
         console.log(i + "alterado");
         window.location.reload();
@@ -119,8 +122,15 @@ import axios from 'axios'
   .md-table + .md-table {
     margin-top: 16px
   }
+  .md-dialog {
+  width: 70%;
+  height: 70%;
+  max-width: 100%;
+}
 
   .div{
   overflow: auto;
+  margin-left: 2%;
+
 }
 </style>

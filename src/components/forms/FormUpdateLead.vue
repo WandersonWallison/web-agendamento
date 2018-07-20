@@ -1,30 +1,84 @@
 <template>
 
-   <div class="centered-container">
      <md-content class="md-elevation-1 body-content">
         <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Alterar Contato</span>
         </md-toolbar>
         <md-field>
+          <label>Nome Completo</label>
           <md-input v-model="lead.nome" placeholder="Nome Completo"></md-input>
         </md-field>
+        <label>Data Nascimento</label>
+          <md-datepicker v-model="lead.data_nascimento" md-immediately/>
         <md-field>
+          <label>Email</label>
           <md-input v-model="lead.email" placeholder="E-mail" ></md-input>
         </md-field>
         <md-field>
-          <md-input v-model="lead.cnh_rg" placeholder="CNH/RG" ></md-input>
+          <label>CPF</label>
+          <md-input v-model="lead.cpf" placeholder="CPF" ></md-input>
         </md-field>
-         <md-field>
-          <md-input type="url" v-model="lead.data_emissao" placeholder="Data emissao"></md-input>
+        <md-field>
+          <label>RG</label>
+          <md-input v-model="lead.cnh_rg" placeholder="RG" ></md-input>
         </md-field>
-        <endereco/>
+           <label>Data Emissão</label>
+          <md-datepicker v-model="lead.data_emissao" md-immediately/>
+        <md-field>
+          <label>Telefone</label>
+          <md-input v-model="lead.telefone" placeholder="Telefone"></md-input>
+        </md-field>
+        <md-field>
+          <label>Gênero</label>
+          <div class="md-layout-item">
+          <md-select v-model="lead.genero" name='genero' id='genero' placeholder='Gênero'>
+            <md-option value='F'>Feminino</md-option>
+            <md-option value='M'>Masculino</md-option>
+          </md-select>
+          </div>
+        </md-field>
+        <md-field>
+          <label>Estado Civil</label>
+          <div class="md-layout-item">
+          <md-select v-model="lead.estado_civil" name='estadoCivil' id='estadoCivil' placeholder='Estado Civil'>
+            <md-option value="Solteiro">Solteiro</md-option>
+            <md-option value="Casado">Casado</md-option>
+            <md-option value="Divorciado">Divorciado</md-option>
+            <md-option value="Divorciado">Divorciado</md-option>
+            <md-option value="Outros">Outros</md-option>
+          </md-select>
+          </div>
+        </md-field>
+        <md-field>
+          <label>Nome Cônjuge </label>
+          <md-input v-model="lead.nome_conjuge" placeholder='Nome Cônjuge'></md-input>
+        </md-field>
+        <md-field>
+          <label>Nome da mãe </label>
+          <md-input v-model="lead.nome_mae" placeholder='Nome da mãe'></md-input>
+        </md-field>
+        <md-field>
+          <label>Nome do pai </label>
+          <md-input v-model="lead.nome_pai" placeholder='Nome do pai'></md-input>
+        </md-field>
+        <md-field>
+          <label>Escolaridade</label>
+          <div class="md-layout-item">
+          <md-select v-model="lead.escolaridade" name="escolaridade" id="escolaridade" placeholder="Escolaridade">
+            <md-option value="Ensino Fundamental">Ensino Fundamental</md-option>
+            <md-option value="Ensino Medio">Ensino médio</md-option>
+            <md-option value=" Ensino Superior">Ensino Superior</md-option>
+            <md-option value="Ensino pós superior">Ensino pós superior</md-option>
+          </md-select>
+          </div>
+        </md-field>
         <br>
         <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="add">Atualizar</md-button>
+        <md-button class="md-raised md-primary" @click="update">Atualizar</md-button>
 
-      </div>
+        </div>
      </md-content>
-    </div>
+
 </template>
 
 
@@ -32,39 +86,67 @@
 import axios from 'axios'
 export default {
   name: 'FormUpdadeLead',
+  props: ['selected'],
   data () {
     return {
       lead: {
-        nome: '',email: '',cnh_rg:'', data_emissao:''
+        nome: this.selected[0].nome,
+        data_nascimento: this.selected[0].data_nascimento,
+        data_emissao: this.selected[0].data_emissao,
+        email: this.selected[0].email,
+        cpf: this.selected[0].cpf,
+        cnh_rg: this.selected[0].cnh_rg,
+        telefone: this.selected[0].telefone,
+        genero: this.selected[0].genero,
+        estado_civil: this.selected[0].estado_civil,
+        nome_conjuge: this.selected[0].nome_conjuge,
+        nome_mae: this.selected[0].nome_mae,
+        nome_pai: this.selected[0].nome_pai,
+        escolaridade: this.selected[0].escolaridade
+
+
       },
       results: []
     }
   },
+
   methods: {
-    add(){
+    update(){
       let newLead = {
         nome: this.lead.nome,
+        data_nascimento: this.lead.data_nascimento,
         email: this.lead.email,
+        cpf: this.lead.cpf,
         cnh_rg: this.lead.cnh_rg,
-        data_emissao:this.lead.data_emissao
+        data_emissao: this.lead.data_emissao,
+        telefone: this.lead.telefone,
+        genero: this.lead.genero,
+        estado_civil: this.lead.estado_civil,
+        nome_conjuge: this.lead.nome_conjuge,
+        nome_mae: this.lead.nome_mae,
+        nome_pai: this.lead.nome_pai,
+        escolaridade: this.lead.escolaridade,
+        tipo: 'Cliente'
+
       }
-        console.log(newLead);
-        axios.post('http://165.227.188.44:1337/leads',newLead)
+      console.log(newLead);
+        axios.put('http://localhost:1337/leads/'+ this.selected[0].id ,newLead)
         .then((response) =>{
           this.results = response.data;
-           alert( "User cadastado com success" );
-          console.log(response.data);
+           alert( "User alterado com success" );
+           window.location.reload();
         })
         .catch((error) => {
           alert(error.response.data.code);
           console.log(error.response.data);
+          console.log();
         });
 
    }
   }
 }
 </script>
-<style lang="scss">
+<style lang='scss'>
 .centered-container {
   display: flex;
   align-items: left;
