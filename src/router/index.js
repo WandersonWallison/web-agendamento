@@ -9,6 +9,7 @@ import ListaAgentes from '../components/lists/ListaAgentes.vue'
 import Agendamento from '../components/lists/ListAgendamento.vue'
 import FormCrudLead from '@/components/forms/FormCrudLead.vue'
 import CadAgendamento from '../components/forms/FormAgendamento.vue'
+import Calendario from '../components/forms/FormCalendario.vue'
 
 Vue.use(Router)
 
@@ -68,6 +69,12 @@ export default new Router({
       path: '/Agenda',
       name: 'cadastroAgendamento',
       component: CadAgendamento
+
+    },
+    {
+      path: '/FormCalendario',
+      name: 'FormCalendario',
+      component: Calendario
 
     }
 
