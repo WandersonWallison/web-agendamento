@@ -91,7 +91,7 @@ export default {
     return {
       lead: {
         nome: this.selected[0].nome,
-        data_nascimento: this.selected[0].data_nascimento,
+        //data_nascimento: this.selected[0].data_nascimento,
         data_emissao: this.selected[0].data_emissao,
         email: this.selected[0].email,
         cpf: this.selected[0].cpf,

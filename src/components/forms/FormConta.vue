@@ -2,31 +2,34 @@
 
    <div class="centered-container">
      <md-content class="md-elevation-1 body-content">
-        <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Cadastro de Contato</span>
+       <md-toolbar md-elevation="0" class="md-dense">
+          <span class="md-title">Adicionar Conta</span>
         </md-toolbar>
-        <md-field>
-          <label>Nome Completo</label>
-          <md-input v-model="lead.nome" placeholder="Nome Completo"></md-input>
+     <md-field>
+          <label>Nome</label>
+          <md-input v-model="conta.nome" autofocus placeholder='Nome'></md-input>
         </md-field>
         <md-field>
-          <label>Email</label>
-          <md-input v-model="lead.email" placeholder="E-mail" ></md-input>
+          <label>AG</label>
+          <md-input type="number" v-model="conta.ag" autofocus placeholder="ag"></md-input>
         </md-field>
         <md-field>
-          <label>RG</label>
-          <md-input v-model="lead.cnh_rg" placeholder="CNH/RG" ></md-input>
+          <label>Numero Conta</label>
+          <md-input type="number" v-model="conta.n_conta" autofocus placeholder="conta"></md-input>
         </md-field>
-         <md-field>
-           <label>Data Emissão</label>
-          <md-datepicker v-model="lead.data_emissao" md-immediately/>
+        <md-field>
+          <label>Renda</label>
+          <md-input type="number" v-model="conta.renda" autofocus placeholder="Renda"></md-input>
         </md-field>
-        <endereco/>
-        <br>
-        <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="add">Cadastrar</md-button>
+        <md-field>
+          <label>Aplicação</label>
+          <md-input type="number" v-model="conta.aplicacao" autofocus placeholder="Aplicação"></md-input>
+        </md-field>
 
-      </div>
+        <div class="actions md-layout md-alignment-center-space-between">
+        <md-button class="md-raised md-primary" @click="add">Adicionar</md-button>
+
+        </div>
      </md-content>
     </div>
 </template>
@@ -35,30 +38,35 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'FormCadastroLead',
+  name: 'conta',
+  props: ['selected'],
   data () {
     return {
-      lead: {
-        nome: '',email: '',cnh_rg:'', data_emissao:''
+      conta: {
+        nome: '',
+        ag: '',
+        n_conta: '',
+        renda: '',
+        aplicacao: ''
       },
       results: []
     }
   },
   methods: {
     add(){
-      let newLead = {
-        nome: this.lead.nome,
-        email: this.lead.email,
-        cnh_rg: this.lead.cnh_rg,
-        data_emissao:this.lead.data_emissao,
-        tipo: 'Lead',
-        data_nascimento: null
+      let newConta = {
+        nome: this.conta.nome,
+        ag: this.conta.ag,
+        n_conta: this.conta.n_conta,
+        renda: this.conta.renda,
+        aplicacao: this.conta.aplicacao,
+        leads_bank: this.selected[0].id
       }
-        console.log(newLead);
-        axios.post('http://localhost:1337/leads',newLead)
+        console.log(newConta);
+        axios.post('http://localhost:1337/bank',newConta)
         .then((response) =>{
           this.results = response.data;
-           alert( "User cadastado com success" );
+           alert( 'Conta adicionado ' + this.selected[0].nome + ' com success' );
            window.location.reload();
           console.log(response.data);
         })

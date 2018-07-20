@@ -10,11 +10,21 @@
         <div class="md-toolbar-section-end">
           <div v-if="count == 1">
             <md-button class="md-icon-button" @click="showUpdateLead = true">
+            <md-tooltip md-direction="top">Atualizar</md-tooltip>
             <md-icon>update</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" @click="showEndereco = true">
+            <md-tooltip md-direction="top">Endereço</md-tooltip>
+            <md-icon>location_on</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" @click="showConta = true">
+            <md-tooltip md-direction="top">Conta</md-tooltip>
+            <md-icon>attach_money</md-icon>
             </md-button>
 
           </div>
           <md-button @click="desativar = true" class="md-icon-button">
+            <md-tooltip md-direction="top">Destivar</md-tooltip>
             <md-icon>delete</md-icon>
           </md-button>
         </div>
@@ -49,6 +59,17 @@
       </div>
     </md-dialog>
 
+    <md-dialog :md-active.sync="showEndereco">
+      <div class="div">
+      <endereco :selected="selected"></endereco>
+      </div>
+    </md-dialog>
+    <md-dialog :md-active.sync="showConta">
+      <div class="div">
+      <conta :selected="selected"></conta>
+      </div>
+    </md-dialog>
+
     <md-dialog-confirm
       :md-active.sync="desativar"
       md-title="Deseja realmete desativar estas contatos?"
@@ -65,17 +86,23 @@
 
 <script>
 import UpLead from '../forms/FormUpdateLead.vue';
+import Endereco from '../forms-endereco/FormEndereco.vue';
+import Conta from '../forms/FormConta.vue';
 import axios from 'axios'
   export default {
     name: 'listCrudLead',
     props: ['selected'],
     components: {
-      UpLead
+      UpLead,
+      Endereco,
+      Conta
     },
       data: () => ({
       selected: [],
       people: [],
       showUpdateLead: false,
+      showEndereco: false,
+      showConta: false,
       desativar:false,
       atual:[]
     }),
