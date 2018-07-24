@@ -63,7 +63,7 @@ export default {
         leads_bank: this.selected[0].id
       }
         console.log(newConta);
-        axios.post('http://localhost:1337/bank',newConta)
+        axios.post('http://178.128.65.214:1337/bank',newConta)
         .then((response) =>{
           this.results = response.data;
            alert( 'Conta adicionado ' + this.selected[0].nome + ' com success' );

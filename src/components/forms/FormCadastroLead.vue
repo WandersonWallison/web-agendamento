@@ -33,6 +33,7 @@
 
 
 <script>
+import moment from 'moment'
 import axios from 'axios'
 export default {
   name: 'FormCadastroLead',
@@ -50,12 +51,12 @@ export default {
         nome: this.lead.nome,
         email: this.lead.email,
         cnh_rg: this.lead.cnh_rg,
-        data_emissao:this.lead.data_emissao,
+        data_emissao: moment(this.lead.data_emissao).format('YYYY-MM-DD'),
         tipo: 'Lead',
         data_nascimento: null
       }
         console.log(newLead);
-        axios.post('http://localhost:1337/leads',newLead)
+        axios.post('http://178.128.65.214:1337/leads',newLead)
         .then((response) =>{
           this.results = response.data;
            alert( "User cadastado com success" );

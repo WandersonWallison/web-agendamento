@@ -95,7 +95,7 @@ export default {
         leads_address: this.selected[0].id
       }
         console.log(newEndereco);
-        axios.post('http://localhost:1337/address',newEndereco)
+        axios.post('http://178.128.65.214:1337/address',newEndereco)
         .then((response) =>{
           this.results = response.data;
            alert( 'Endereço adicionado ' + this.selected[0].nome + ' com success' );

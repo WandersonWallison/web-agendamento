@@ -83,6 +83,7 @@
 
 
 <script>
+import moment from 'moment'
 import axios from 'axios'
 export default {
   name: 'FormUpdadeLead',
@@ -91,7 +92,7 @@ export default {
     return {
       lead: {
         nome: this.selected[0].nome,
-        //data_nascimento: this.selected[0].data_nascimento,
+        data_nascimento: this.selected[0].data_nascimento,
         data_emissao: this.selected[0].data_emissao,
         email: this.selected[0].email,
         cpf: this.selected[0].cpf,
@@ -114,11 +115,11 @@ export default {
     update(){
       let newLead = {
         nome: this.lead.nome,
-        data_nascimento: this.lead.data_nascimento,
+        data_nascimento: moment(this.lead.data_nascimento).format('YYYY-MM-DD'),
         email: this.lead.email,
         cpf: this.lead.cpf,
         cnh_rg: this.lead.cnh_rg,
-        data_emissao: this.lead.data_emissao,
+        data_emissao: moment(this.lead.data_emissao).format('YYYY-MM-DD'),
         telefone: this.lead.telefone,
         genero: this.lead.genero,
         estado_civil: this.lead.estado_civil,
@@ -130,7 +131,7 @@ export default {
 
       }
       console.log(newLead);
-        axios.put('http://localhost:1337/leads/'+ this.selected[0].id ,newLead)
+        axios.put('http://178.128.65.214:1337/leads/'+ this.selected[0].id ,newLead)
         .then((response) =>{
           this.results = response.data;
            alert( "User alterado com success" );
