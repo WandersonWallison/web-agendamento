@@ -2,10 +2,10 @@
 
    <div class="centered-container">
      <md-content class="md-elevation-1 body-content">
-       <md-toolbar md-elevation="0" class="md-dense">
+        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Adicionar Endereço</span>
         </md-toolbar>
-     <md-field>
+        <md-field>
           <label>Cep</label>
           <md-input type="number" maxlength="10" v-model="endereco.cep" autofocus placeholder="CEP"></md-input>
         </md-field>

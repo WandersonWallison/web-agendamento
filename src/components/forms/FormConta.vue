@@ -5,7 +5,7 @@
        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Adicionar Conta</span>
         </md-toolbar>
-     <md-field>
+        <md-field>
           <label>Nome</label>
           <md-input v-model="conta.nome" autofocus placeholder='Nome'></md-input>
         </md-field>
