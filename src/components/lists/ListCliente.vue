@@ -20,7 +20,7 @@
         <md-button class="md-primary md-raised" @click="newUser">Create New User</md-button>
       </md-table-empty-state>
 
-      <md-table-row slot="md-table-row" slot-scope="{ item }"  md-selectable="single">
+      <md-table-row slot="md-table-row" slot-scope="{ item }"  md-selectable="single" :class="getClass(item)">
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
@@ -46,7 +46,7 @@
             <md-tooltip md-direction="top">Não aceita visita</md-tooltip>
             <md-icon>voice_over_off</md-icon>
           </md-button>
-            <md-button class="md-raised md-primary" @click="showDialog = true">Agendamento</md-button>
+            <md-button class="md-raised md-primary" @click="addSelected">Agendamento</md-button>
           </md-table-cell>
 
       </md-table-row>
@@ -54,7 +54,7 @@
     </md-table>
     <md-dialog :md-active.sync="showDialog">
       <div class="div">
-          <agenda :selected="selected"></agenda>
+          <agenda :leadProps="leadProps"></agenda>
       </div>
     </md-dialog>
 
@@ -79,7 +79,7 @@ const searchByName = (items, term) => {
 
 export default {
   name: 'list',
-  props: ['selected'],
+  props: ['lead_props'],
   components: {
     Agenda
   },
@@ -89,24 +89,34 @@ export default {
     searched: [],
     users:[],
     showDialog: false,
-    teste: "wanderson"
+    leadProps: {}
+
   }),
   mounted () {
-<<<<<<< HEAD
-    axios.get('http://178.128.65.214:1337/leads')
-=======
     axios.get('http://192.168.0.22:1337/leads')
->>>>>>> 6d8e95507f36e71223feea136eebd4ae64a40590
       .then(response => {
         this.users = response.data,
         this.searched = response.data
         })
   },
   methods: {
+    getClass: ({ id }) => ({
+        'md-primary': id
+      }),
+    addSelected(){
+      if (!this.selected){
+        alert('Selecione um contato da lista')
+      }else{
+      this.showDialog = true
+      this.leadProps = this.selected
+      }
+    },
     newUser () {
       window.alert('Noop')
     },
     onMouseOver (item) {
+
+
         this.selected = item
       },
     searchOnTable () {
@@ -139,4 +149,5 @@ export default {
     overflow: auto;
     margin-left: 2%;
   }
+
 </style>

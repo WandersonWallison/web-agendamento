@@ -148,7 +148,7 @@ import {
 
 export default {
   name: "FormAgenda",
-   props: ['selected'],
+   props: ['leadProps'],
   mixins: [validationMixin],
   data: () => ({
     form: {

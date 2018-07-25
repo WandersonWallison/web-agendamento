@@ -23,8 +23,7 @@ Vue.use(
   Vuetify,
   VueMask,
   BootstrapVue,
-  Axios,
-  FullCalendar)
+  Axios)
 
 /* eslint-disable no-new */
 new Vue({
