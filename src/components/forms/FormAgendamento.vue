@@ -147,7 +147,8 @@ import {
 } from "vuelidate/lib/validators";
 
 export default {
-  name: "FormValidation",
+  name: "FormAgenda",
+   props: ['selected'],
   mixins: [validationMixin],
   data: () => ({
     form: {

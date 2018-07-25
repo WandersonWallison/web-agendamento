@@ -107,7 +107,7 @@ import axios from 'axios'
       atual:[]
     }),
     mounted () {
-    axios.get('http://localhost:1337/leads?where={"ativo": true}')
+    axios.get('http://192.168.0.22:1337/leads?where={"ativo": true}')
       .then(response => {
         this.people = response.data
         })
@@ -121,7 +121,7 @@ import axios from 'axios'
         ativo: false
       }
       for (var i = 0; i <= this.selected.length; i++) {
-         axios.put('http://localhost:1337/leads/' + this.selected[i].id,newLead)
+         axios.put('http://192.168.0.22:1337/leads/' + this.selected[i].id,newLead)
         .then(response => {
         console.log(i + "alterado");
         window.location.reload();
@@ -153,11 +153,9 @@ import axios from 'axios'
   width: 70%;
   height: 70%;
   max-width: 100%;
-}
-
+  }
   .div{
-  overflow: auto;
-  margin-left: 2%;
-
-}
+    overflow: auto;
+   margin-left: 2%;
+  }
 </style>

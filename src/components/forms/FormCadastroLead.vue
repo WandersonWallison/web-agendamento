@@ -55,7 +55,7 @@ export default {
         data_nascimento: null
       }
         console.log(newLead);
-        axios.post('http://localhost:1337/leads',newLead)
+        axios.post('http://192.168.0.22:1337/leads',newLead)
         .then((response) =>{
           this.results = response.data;
            alert( "User cadastado com success" );

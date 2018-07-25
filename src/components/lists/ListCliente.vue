@@ -3,7 +3,7 @@
     <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Contatos</span>
     </md-toolbar>
-    <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header @md-selected="onMouseOver">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <h1 class="md-title"></h1>
@@ -20,7 +20,7 @@
         <md-button class="md-primary md-raised" @click="newUser">Create New User</md-button>
       </md-table-empty-state>
 
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
+      <md-table-row slot="md-table-row" slot-scope="{ item }"  md-selectable="single">
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
@@ -53,12 +53,9 @@
 
     </md-table>
     <md-dialog :md-active.sync="showDialog">
-      <md-dialog-title>Cadastrar Agenda</md-dialog-title>
-        <agenda/>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-        <md-button class="md-primary" @click="showDialog = false">Save</md-button>
-      </md-dialog-actions>
+      <div class="div">
+          <agenda :selected="selected"></agenda>
+      </div>
     </md-dialog>
 
 
@@ -82,18 +79,20 @@ const searchByName = (items, term) => {
 
 export default {
   name: 'list',
+  props: ['selected'],
   components: {
     Agenda
   },
   data: () => ({
     search: null,
+    selected: {},
     searched: [],
     users:[],
     showDialog: false,
     teste: "wanderson"
   }),
   mounted () {
-    axios.get('http://localhost:1337/leads')
+    axios.get('http://192.168.0.22:1337/leads')
       .then(response => {
         this.users = response.data,
         this.searched = response.data
@@ -103,6 +102,9 @@ export default {
     newUser () {
       window.alert('Noop')
     },
+    onMouseOver (item) {
+        this.selected = item
+      },
     searchOnTable () {
       this.searched = searchByName(this.users, this.search)
     }
@@ -128,5 +130,9 @@ export default {
   }
   .butoom-04{
     background-color: rgb(235, 102, 13);
+  }
+  .div{
+    overflow: auto;
+    margin-left: 2%;
   }
 </style>

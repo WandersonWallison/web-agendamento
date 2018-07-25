@@ -130,7 +130,7 @@ export default {
 
       }
       console.log(newLead);
-        axios.put('http://localhost:1337/leads/'+ this.selected[0].id ,newLead)
+        axios.put('http://192.168.0.22:1337/leads/'+ this.selected[0].id ,newLead)
         .then((response) =>{
           this.results = response.data;
            alert( "User alterado com success" );
