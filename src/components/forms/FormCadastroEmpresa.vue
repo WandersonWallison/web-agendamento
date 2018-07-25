@@ -1,5 +1,4 @@
 <template>
-
    <div class="centered-container">
      <md-content class="md-elevation-1 body-content">
         <md-toolbar md-elevation="0" class="md-dense">

@@ -5,7 +5,7 @@
        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Adicionar Conta</span>
         </md-toolbar>
-     <md-field>
+        <md-field>
           <label>Nome</label>
           <md-input v-model="conta.nome" autofocus placeholder='Nome'></md-input>
         </md-field>
@@ -63,7 +63,7 @@ export default {
         leads_bank: this.selected[0].id
       }
         console.log(newConta);
-        axios.post('http://178.128.65.214:1337/bank',newConta)
+        axios.post('http://192.168.0.22:1337/bank',newConta)
         .then((response) =>{
           this.results = response.data;
            alert( 'Conta adicionado ' + this.selected[0].nome + ' com success' );

@@ -1,78 +1,252 @@
 <template>
-    <div id="app" class="centered-container md-content">
-      <calendar-view
-        :show-date="showDate"
-        @show-date-change="setShowDate"
-        class="holiday-us-traditional holiday-us-official">
-      </calendar-view>
+  <div>
+    <form novalidate class="md-layout" @submit.prevent="validateUser">
+      <md-card class="md-layout-item md-size-100 md-small-size-100">
+       <md-toolbar md-elevation="0" class="md-dense">
+          <span class="md-title">Agendamento</span>
+        </md-toolbar>
+
+        <md-card-content>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-datepicker id="data" name="data" date="true" time="true" v-model="selectedDate" :md-disabled-dates="disabledDates" :class="getValidationClass('data')">
+                 <label>Data Agendamento</label>
+                 <span class="md-error" v-if="!$v.form.data.required">Data deve ser preenchido</span>
+              </md-datepicker>
+
+            </div>
+             <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('horario')">
+                <label for="horario">Horário</label>
+                <md-select name="horario" id="horario" v-model="form.horario" md-dense :disabled="sending">
+                  <md-option  value=""></md-option>
+                  <md-option value="1">08:00</md-option>
+                  <md-option value="2">09:00</md-option>
+                  <md-option value="3">10:00</md-option>
+                  <md-option value="4">11:00</md-option>
+                  <md-option value="5">14:00</md-option>
+                  <md-option value="6">15:00</md-option>
+                  <md-option value="7">16:00</md-option>
+                  <md-option value="8">17:00</md-option>
+                  <md-option value="9">18:00</md-option>
+                  <md-option value="10">19:00</md-option>
+                  <md-option value="11">20:00</md-option>
+                  <md-option value="12">21:00</md-option>
+                  <md-option value="13">22:00</md-option>
+                </md-select>
+                <span class="md-error">Hórario de Agendamento deve ser informado</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('rua')">
+                <label for="rua">Rua</label>
+                <md-input id="rua" name="rua" autocomplete="rua" v-model="form.rua" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.rua.required">Rua deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.rua.age.maxlength">Invalid rua</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('numero')">
+                <label for="numero">Número</label>
+                <md-input  type="number" id="numero" name="numero" autocomplete="numero" v-model="form.numero" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cep.required">Número deve ser preenchido</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cep')">
+                <label for="cep">CEP</label>
+                <md-input  type="number" id="cep" name="cep" autocomplete="cep" v-model="form.cep" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.cep.age.maxlength">Cep invalido</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('bairro')">
+                <label for="bairro">Bairro</label>
+                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.rua.age.maxlength">Invalid Bairro</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cidade')">
+                <label for="cidade">Cidade</label>
+                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('estado')">
+                <label for="estado">Estado</label>
+                <md-select name="estado" id="estado" v-model="form.estado" md-dense :disabled="sending">
+                  <md-option velue=""></md-option>
+                    <md-option value="ac">Acre</md-option>
+                    <md-option value="al">Alagoas</md-option>
+                    <md-option value="am">Amazonas</md-option>
+                    <md-option value="ap">Amapá</md-option>
+                    <md-option value="ba">Bahia</md-option>
+                    <md-option value="ce">Ceará</md-option>
+                    <md-option value="df">Distrito Federal</md-option>
+                    <md-option value="es">Espírito Santo</md-option>
+                    <md-option value="go">Goiás</md-option>
+                    <md-option value="ma">Maranhão</md-option>
+                    <md-option value="mt">Mato Grosso</md-option>
+                    <md-option value="ms">Mato Grosso do Sul</md-option>
+                    <md-option value="mg">Minas Gerais</md-option>
+                    <md-option value="pa">Pará</md-option>
+                    <md-option value="pb">Paraíba</md-option>
+                    <md-option value="pr">Paraná</md-option>
+                    <md-option value="pe">Pernambuco</md-option>
+                    <md-option value="pi">Piauí</md-option>
+                    <md-option value="rj">Rio de Janeiro</md-option>
+                    <md-option value="rn">Rio Grande do Norte</md-option>
+                    <md-option value="ro">Rondônia</md-option>
+                    <md-option value="rs">Rio Grande do Sul</md-option>
+                    <md-option value="rr">Roraima</md-option>
+                    <md-option value="sc">Santa Catarina</md-option>
+                    <md-option value="se">Sergipe</md-option>
+                    <md-option value="sp">São Paulo</md-option>
+                    <md-option value="to">Tocantins</md-option>
+                </md-select>
+                <span class="md-error">Estado não selecioando</span>
+              </md-field>
+            </div>
+          </div>
+          <md-field :class="getValidationClass('observacao')">
+            <label for="observacao">Observação</label>
+            <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
+          </md-field>
+        </md-card-content>
+        <md-progress-bar md-mode="indeterminate" v-if="sending" />
+        <md-card-actions>
+        <div class="actions md-layout md-alignment-center-space-between">
+          <md-button class="md-raised md-primary" type="submit" :disabled="sending">Agendar</md-button>
+        </div>
+        </md-card-actions>
+      </md-card>
+      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
+    </form>
   </div>
-
 </template>
+
 <script>
-  import endereco from '../forms-endereco/FormEndereco'
- 	import CalendarView from "vue-simple-calendar"
-	require("vue-simple-calendar/dist/static/css/default.css")
-	require("vue-simple-calendar/dist/static/css/holidays-us.css")
+import { validationMixin } from "vuelidate";
+import {
+  required,
+  email,
+  minLength,
+  maxLength
+} from "vuelidate/lib/validators";
 
-	export default {
-		name: 'app',
-		data: function() {
-			return { showDate: new Date() }
-		},
-		components: {
-      CalendarView,
-      endereco
-		},
-		methods: {
-			setShowDate(d) {
-				this.showDate = d;
-			},
-		}
-	}
+export default {
+  name: "FormAgenda",
+   props: ['selected'],
+  mixins: [validationMixin],
+  data: () => ({
+    form: {
+      data: null,
+      horario:null,
+      cep: null,
+      rua: null,
+      numero: null,
+      estado: null,
+      cidade: null,
+      bairro: null,
+      observacao: null
+    },
+    userSaved: false,
+    sending: false,
+    lastUser: null
+  }),
+  validations: {
+    form: {
+      data: {
+        minLength: minLength(2)
+      },
+      horario:{
+        required
+      },
+      rua: {
+        required,
+        minLength: minLength(8)
+      },
+      numero: {
+        required
+      },
+      cep: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(9)
+      },
+      cidade: {
+        required,
+        maxLength: maxLength(3)
+      },
+      estado: {
+        required
+      },
+      bairro: {
+        required
+      }
+    }
+  },
+  methods: {
+    getValidationClass(fieldName) {
+      const field = this.$v.form[fieldName];
+
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
+    },
+    clearForm() {
+      this.$v.$reset();
+      this.form.data = null;
+      this.form.horario = null;
+      this.form.email = null;
+      this.form.cep = null;
+      this.form.rua = null;
+      this.form.numero = null;
+      this.form.cidade = null;
+      this.form.estado = null;
+      this.form.observacao = null;
+    },
+    saveUser() {
+      this.sending = true;
+
+      // Instead of this timeout, here you can call your API
+      window.setTimeout(() => {
+        this.lastUser = `${this.form.firstName} ${this.form.lastName}`;
+        this.userSaved = true;
+        this.sending = false;
+        this.clearForm();
+      }, 1500);
+    },
+    validateUser() {
+      this.$v.$touch();
+
+      if (!this.$v.$invalid) {
+        this.saveUser();
+      }
+    }
+  }
+};
 </script>
-<style lang="scss" scoped>
-	#app {
-		font-family: 'Avenir', Helvetica, Arial, sans-serif;
-		color: #2c3e50;
-		height: 60vh;
-		width: 75vw;
-		margin-left: auto;
-		margin-right: auto;
-    padding: auto;
-	}
-  .centered-container {
-  display: flex;
-  align-items: left;
-  justify-content: center;
-  position: relative;
-  height: 170vh;
-  padding: auto;
 
-  .title {
-    text-align: center;
-    margin-bottom: 30px;
-    img {
-      margin-bottom: 16px;
-      max-width: 80px;
-    }
-  }
-  .actions {
-    .md-button {
-      margin: 0;
-      margin-left: auto;
-      margin-right: auto;
-      width: 10em;
-    }
-  }
-  .form {
-    margin-bottom: 6%;
-  }
-  .md-content {
-    z-index: 1;
-    padding: 40px;
-    width: 100%;
-    max-width: 100%;
-    position: absolute;
-  }
+<style lang="scss" scoped>
+.md-progress-bar {
+  position:relative;
+  top: 0;
+  right: 0;
+  left: 0;
 }
 </style>

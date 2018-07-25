@@ -64,7 +64,7 @@ export default {
       this.results = ''
       if (this.login.email != "" && this.login.password != "") {
         axios
-          .post("http://165.227.188.44:1337/login", this.login)
+          .post("http://192.168.0.22:1337/login", this.login)
           .then(response => {
             if (response.data.user == false) {
               this.$router.push("/");
@@ -153,5 +153,9 @@ export default {
     align-items: center;
     justify-content: center;
   }
+  .input_white{
+    color: #eeeeee;
+  }
+
 }
 </style>

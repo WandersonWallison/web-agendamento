@@ -107,7 +107,11 @@ import axios from 'axios'
       atual:[]
     }),
     mounted () {
+<<<<<<< HEAD
     axios.get('http://178.128.65.214:1337/leads?where={"ativo": true}')
+=======
+    axios.get('http://192.168.0.22:1337/leads?where={"ativo": true}')
+>>>>>>> 6d8e95507f36e71223feea136eebd4ae64a40590
       .then(response => {
         this.people = response.data
         })
@@ -121,7 +125,11 @@ import axios from 'axios'
         ativo: false
       }
       for (var i = 0; i <= this.selected.length; i++) {
+<<<<<<< HEAD
          axios.put('http://178.128.65.214:1337/leads/' + this.selected[i].id,newLead)
+=======
+         axios.put('http://192.168.0.22:1337/leads/' + this.selected[i].id,newLead)
+>>>>>>> 6d8e95507f36e71223feea136eebd4ae64a40590
         .then(response => {
         console.log(i + "alterado");
         window.location.reload();
@@ -153,11 +161,9 @@ import axios from 'axios'
   width: 70%;
   height: 70%;
   max-width: 100%;
-}
-
+  }
   .div{
-  overflow: auto;
-  margin-left: 2%;
-
-}
+    overflow: auto;
+   margin-left: 2%;
+  }
 </style>

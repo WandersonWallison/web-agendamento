@@ -2,10 +2,10 @@
 
    <div class="centered-container">
      <md-content class="md-elevation-1 body-content">
-       <md-toolbar md-elevation="0" class="md-dense">
+        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Adicionar Endereço</span>
         </md-toolbar>
-     <md-field>
+        <md-field>
           <label>Cep</label>
           <md-input type="number" maxlength="10" v-model="endereco.cep" autofocus placeholder="CEP"></md-input>
         </md-field>
@@ -95,7 +95,7 @@ export default {
         leads_address: this.selected[0].id
       }
         console.log(newEndereco);
-        axios.post('http://178.128.65.214:1337/address',newEndereco)
+        axios.post('http://192.168.0.22:1337/address',newEndereco)
         .then((response) =>{
           this.results = response.data;
            alert( 'Endereço adicionado ' + this.selected[0].nome + ' com success' );

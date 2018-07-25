@@ -12,7 +12,8 @@ import Vuetify from 'vuetify'
 import BootstrapVue from 'bootstrap-vue'
 import VueMask from 'vue-the-mask'
 import Axios from 'axios'
-import FullCalendar from 'vue-full-calendar'
+import vueCalendar from 'vue2-simple-calendar'
+import './assets/vue2-simple-calendar.css'
 
 Vue.config.productionTip = false
 

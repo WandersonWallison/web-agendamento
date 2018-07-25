@@ -131,8 +131,8 @@ export default {
 
       }
       console.log(newLead);
-        axios.put('http://178.128.65.214:1337/leads/'+ this.selected[0].id ,newLead)
-        .then((response) =>{
+        axios.put('http://192.168.0.22:1337/leads/'+ this.selected[0].id ,newLead)
+       .then((response) =>{
           this.results = response.data;
            alert( "User alterado com success" );
            window.location.reload();
