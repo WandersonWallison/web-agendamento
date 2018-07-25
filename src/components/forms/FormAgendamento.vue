@@ -220,8 +220,20 @@ export default {
       this.form.estado = null;
       this.form.observacao = null;
     },
-    saveUser() {
-      this.sending = true;
+    saveAgenda() {
+      let newAgenda = {
+         data:this.form.data,
+         hora:this.form.horario,
+         obs:this.form.observacao
+      }
+      let newEndereco = {
+        rua: this.form.rua,
+        numero: this.form.numero,
+        bairro: this.form.bairro,
+        cidade:this.form.cidade,
+        cep: this.form.cep,
+        schedule_address: this.selected[0].id
+      }
 
       // Instead of this timeout, here you can call your API
       window.setTimeout(() => {
@@ -235,7 +247,7 @@ export default {
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        this.saveUser();
+        this.saveAgenda();
       }
     }
   }
