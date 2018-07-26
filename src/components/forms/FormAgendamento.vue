@@ -9,11 +9,10 @@
         <md-card-content>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-datepicker id="data" name="data" date="true" time="true" v-model="selectedDate" :md-disabled-dates="disabledDates" :class="getValidationClass('data')">
+              <md-datepicker id="data" name="data" date="true" time="true" v-model="form.data" :md-disabled-dates="disabledDates" :class="getValidationClass('data')">
                  <label>Data Agendamento</label>
                  <span class="md-error" v-if="!$v.form.data.required">Data deve ser preenchido</span>
               </md-datepicker>
-
             </div>
              <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('horario')">
@@ -42,9 +41,9 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('rua')">
                 <label for="rua">Rua</label>
-                <md-input id="rua" name="rua" autocomplete="rua" v-model="form.rua" :disabled="sending" />
+                <md-input id="rua" name="rua" v-model="form.rua" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.rua.required">Rua deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.age.maxlength">Invalid rua</span>
+                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid rua</span>
               </md-field>
             </div>
           </div>
@@ -61,7 +60,7 @@
                 <label for="cep">CEP</label>
                 <md-input  type="number" id="cep" name="cep" autocomplete="cep" v-model="form.cep" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.cep.age.maxlength">Cep invalido</span>
+                <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
               </md-field>
             </div>
           </div>
@@ -71,7 +70,7 @@
                 <label for="bairro">Bairro</label>
                 <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.age.maxlength">Invalid Bairro</span>
+                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid Bairro</span>
               </md-field>
             </div>
           </div>
@@ -120,7 +119,7 @@
               </md-field>
             </div>
           </div>
-          <md-field :class="getValidationClass('observacao')">
+          <md-field>
             <label for="observacao">Observação</label>
             <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
           </md-field>
@@ -138,6 +137,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { validationMixin } from "vuelidate";
 import {
   required,
@@ -148,12 +148,12 @@ import {
 
 export default {
   name: "FormAgenda",
-   props: ['leadProps'],
+  props: ["leadProps"],
   mixins: [validationMixin],
   data: () => ({
     form: {
       data: null,
-      horario:null,
+      horario: null,
       cep: null,
       rua: null,
       numero: null,
@@ -169,32 +169,35 @@ export default {
   validations: {
     form: {
       data: {
-        minLength: minLength(2)
-      },
-      horario:{
         required
+      },
+      horario: {
+        required,
+        minLength: minLength(1)
       },
       rua: {
         required,
-        minLength: minLength(8)
+        minLength: minLength(4)
       },
       numero: {
-        required
+        required,
+        minLength: minLength(1)
       },
       cep: {
         required,
-        minLength: minLength(3),
-        maxLength: maxLength(9)
+        minLength: minLength(5)
       },
       cidade: {
         required,
-        maxLength: maxLength(3)
+        minLength: minLength(3)
       },
       estado: {
-        required
+        required,
+        minLength: minLength(2)
       },
       bairro: {
-        required
+        required,
+        minLength: minLength(3)
       }
     }
   },
@@ -203,6 +206,10 @@ export default {
       const field = this.$v.form[fieldName];
 
       if (field) {
+        //console.log('field: '+field)
+        console.log("field.$invalid: " + field.$invalid);
+        // console.log('field.$dirty: '+field.$dirty)
+
         return {
           "md-invalid": field.$invalid && field.$dirty
         };
@@ -222,29 +229,57 @@ export default {
     },
     saveAgenda() {
       let newAgenda = {
-         data:this.form.data,
-         hora:this.form.horario,
-         obs:this.form.observacao
-      }
+        data: this.form.data,
+        hora: this.form.horario,
+        obs: this.form.observacao,
+        lead: this.leadProps.id
+      };
       let newEndereco = {
         rua: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
-        cidade:this.form.cidade,
+        cidade: this.form.cidade,
         cep: this.form.cep,
-        schedule_address: this.selected[0].id
-      }
+        uf: this.form.estado,
+        schedule_address: 15
+      };
+      let New_schedule_address
+      axios
+        .post("http://192.168.0.22:1337/schedule", newAgenda)
+        .then(response => {
+          New_schedule_address = response.data.id;
+          console.log("Novo Endereço: " + newEndereco);
+        })
+        .catch(error => {
+          alert("agenda " + error.response.data.code);
+          console.log(error.response.data);
+        });
+
+      //newEndereco.schedule_address = New_schedule_address
+
+      axios
+        .post("http://192.168.0.22:1337/address", newEndereco)
+        .then(response => {
+          alert("Agendamento cadastado com success");
+          window.location.reload();
+          console.log(response.data);
+        })
+        .catch(error => {
+          alert("Erro endereco " + error);
+
+        });
 
       // Instead of this timeout, here you can call your API
       window.setTimeout(() => {
-        this.lastUser = `${this.form.firstName} ${this.form.lastName}`;
         this.userSaved = true;
         this.sending = false;
         this.clearForm();
       }, 1500);
     },
     validateUser() {
+      console.log("this.$v.$invalid " + this.$v.$invalid);
       this.$v.$touch();
+      //this.saveAgenda();
 
       if (!this.$v.$invalid) {
         this.saveAgenda();
@@ -256,7 +291,7 @@ export default {
 
 <style lang="scss" scoped>
 .md-progress-bar {
-  position:relative;
+  position: relative;
   top: 0;
   right: 0;
   left: 0;
