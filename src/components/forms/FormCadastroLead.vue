@@ -56,6 +56,7 @@ export default {
         tipo: 'Lead',
         data_nascimento: null
       }
+
         console.log(newLead);
         axios.post('http://192.168.0.22:1337/leads',newLead)
         .then((response) =>{
