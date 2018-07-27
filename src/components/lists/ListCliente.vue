@@ -70,6 +70,7 @@
 
 <script>
 import axios from "axios";
+import moment from 'moment'
 import Agenda from "../forms/FormAgendamento.vue";
 const toLower = text => {
   return text.toString().toLowerCase();
@@ -85,7 +86,7 @@ const searchByName = (items, term) => {
 
 export default {
   name: "list",
-  props: ["lead_props"],
+  props: ["leadProps"],
   components: {
     Agenda
   },
@@ -95,7 +96,8 @@ export default {
     searched: [],
     users: [],
     showDialog: false,
-    leadProps: {}
+    leadProps: {},
+    data_atendimento: Date.now(),
   }),
   mounted() {
     axios.get("http://192.168.0.22:1337/leads").then(response => {
@@ -103,6 +105,23 @@ export default {
     });
   },
   methods: {
+    atendeu(){
+      let newLead = {
+        data_atendimento: moment(this.data_atendimento).format(),
+      }
+      console.log(newLead);
+        axios.put('http://192.168.0.22:1337/leads/'+ this.selected.id ,newLead)
+       .then((response) =>{
+          this.results = response.data;
+           alert( "Cliente atendeu a ligação" );
+        })
+        .catch((error) => {
+          alert(error.response.data.code);
+          console.log(error.response.data);
+          console.log();
+        });
+
+   },
     getClass: ({ id }) => ({
       "md-primary": id
     }),
