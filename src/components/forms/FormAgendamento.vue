@@ -52,7 +52,7 @@
               <md-field :class="getValidationClass('numero')">
                 <label for="numero">Número</label>
                 <md-input  type="number" id="numero" name="numero" autocomplete="numero" v-model="form.numero" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cep.required">Número deve ser preenchido</span>
+                <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -217,7 +217,7 @@ export default {
     },
     clearForm() {
       this.$v.$reset();
-      this.form.data = null;
+      this.form.data = "";
       this.form.horario = null;
       this.form.email = null;
       this.form.cep = null;
@@ -226,6 +226,7 @@ export default {
       this.form.cidade = null;
       this.form.estado = null;
       this.form.observacao = null;
+      this.form.bairro = null;
     },
     saveAgenda() {
       let newAgenda = {
@@ -241,14 +242,26 @@ export default {
         cidade: this.form.cidade,
         cep: this.form.cep,
         uf: this.form.estado,
-        schedule_address: 15
+        schedule_address: ""
       };
-      let New_schedule_address
+      let New_schedule_address;
       axios
         .post("http://192.168.0.22:1337/schedule", newAgenda)
         .then(response => {
-          New_schedule_address = response.data.id;
-          console.log("Novo Endereço: " + newEndereco);
+          newEndereco.schedule_address = response.data.id;
+          axios
+            .post("http://192.168.0.22:1337/address", newEndereco)
+            .then(response => {
+              alert("Agendamento cadastado com success");
+              this.userSaved = true;
+              this.sending = false;
+              this.clearForm();
+              window.location.reload();
+            })
+            .catch(error => {
+              alert("Erro endereco " + error);
+              console.log(error.response.data);
+            });
         })
         .catch(error => {
           alert("agenda " + error.response.data.code);
@@ -257,24 +270,7 @@ export default {
 
       //newEndereco.schedule_address = New_schedule_address
 
-      axios
-        .post("http://192.168.0.22:1337/address", newEndereco)
-        .then(response => {
-          alert("Agendamento cadastado com success");
-          window.location.reload();
-          console.log(response.data);
-        })
-        .catch(error => {
-          alert("Erro endereco " + error);
-
-        });
-
       // Instead of this timeout, here you can call your API
-      window.setTimeout(() => {
-        this.userSaved = true;
-        this.sending = false;
-        this.clearForm();
-      }, 1500);
     },
     validateUser() {
       console.log("this.$v.$invalid " + this.$v.$invalid);
