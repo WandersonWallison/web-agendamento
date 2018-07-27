@@ -26,7 +26,7 @@
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone }}</md-table-cell>
        <md-table-cell md-label="Status" md-sort-by="status">
-          <md-button class="md-icon-button md-raised md-primary">
+          <md-button class="md-icon-button md-raised md-primary" @click="atendeu">
             <md-tooltip md-direction="top">Atendeu</md-tooltip>
             <md-icon>phone</md-icon>
           </md-button>
@@ -46,8 +46,14 @@
             <md-tooltip md-direction="top">Não aceita visita</md-tooltip>
             <md-icon>voice_over_off</md-icon>
           </md-button>
-            <md-button class="md-raised md-primary" @click="addSelected">Agendamento</md-button>
           </md-table-cell>
+          <md-table-cell md-label="Marcar Agendamento" md-sort-by="marcar">
+              <md-button class="md-icon-button butoom-05" @click="addSelected">
+            <md-tooltip md-direction="top">Agendamento</md-tooltip>
+            <md-icon>schedule</md-icon>
+          </md-button>
+          </md-table-cell>
+
 
       </md-table-row>
 
@@ -63,23 +69,23 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Agenda from '../forms/FormAgendamento.vue'
+import axios from "axios";
+import Agenda from "../forms/FormAgendamento.vue";
 const toLower = text => {
-  return text.toString().toLowerCase()
-}
+  return text.toString().toLowerCase();
+};
 
 const searchByName = (items, term) => {
   if (term) {
-    return items.filter(item => toLower(item.nome).includes(toLower(term)))
+    return items.filter(item => toLower(item.nome).includes(toLower(term)));
   }
 
-  return items
-}
+  return items;
+};
 
 export default {
-  name: 'list',
-  props: ['lead_props'],
+  name: "list",
+  props: ["lead_props"],
   components: {
     Agenda
   },
@@ -87,67 +93,64 @@ export default {
     search: null,
     selected: {},
     searched: [],
-    users:[],
+    users: [],
     showDialog: false,
     leadProps: {}
-
   }),
-  mounted () {
-    axios.get('http://192.168.0.22:1337/leads')
-      .then(response => {
-        this.users = response.data,
-        this.searched = response.data
-        })
+  mounted() {
+    axios.get("http://192.168.0.22:1337/leads").then(response => {
+      (this.users = response.data), (this.searched = response.data);
+    });
   },
   methods: {
     getClass: ({ id }) => ({
-        'md-primary': id
-      }),
-    addSelected(){
-      if (!this.selected){
-        alert('Selecione um contato da lista')
-      }else{
-      this.showDialog = true
-      this.leadProps = this.selected
+      "md-primary": id
+    }),
+    addSelected() {
+      if (!this.selected) {
+        alert("Selecione um contato da lista");
+      } else {
+        this.showDialog = true;
+        this.leadProps = this.selected;
       }
     },
-    newUser () {
-      window.alert('Noop')
+    newUser() {
+      window.alert("Noop");
     },
-    onMouseOver (item) {
-
-
-        this.selected = item
-      },
-    searchOnTable () {
-      this.searched = searchByName(this.users, this.search)
+    onMouseOver(item) {
+      this.selected = item;
+    },
+    searchOnTable() {
+      this.searched = searchByName(this.users, this.search);
     }
   },
-  created () {
-    this.searched = this.users
+  created() {
+    this.searched = this.users;
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-  .md-field {
-    max-width: 300px;
-  }
-  .conteudo-alinhamento{
-     text-align: left;
-  }
-  .butoom-02{
-    background-color: green;
-  }
-  .butoom-03{
-    background-color: rgb(220, 235, 13);
-  }
-  .butoom-04{
-    background-color: rgb(235, 102, 13);
-  }
-  .div{
-    overflow: auto;
-    margin-left: 2%;
-  }
-
+.md-field {
+  max-width: 300px;
+}
+.conteudo-alinhamento {
+  text-align: left;
+}
+.butoom-02 {
+  background-color: green;
+}
+.butoom-03 {
+  background-color: rgb(220, 235, 13);
+}
+.butoom-04 {
+  background-color: rgb(235, 102, 13);
+}
+.butoom-05 {
+  background-color: #15da93;
+}
+.div {
+  overflow: auto;
+  margin-left: 2%;
+}
 </style>

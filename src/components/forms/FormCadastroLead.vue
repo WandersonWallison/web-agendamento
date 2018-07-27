@@ -40,7 +40,7 @@ export default {
   data () {
     return {
       lead: {
-        nome: '',email: '',cnh_rg:'', data_emissao:''
+        nome: '',email: '',cnh_rg:'', data_emissao:'', data_criacao: Date.now(),
       },
       results: []
     }
@@ -52,6 +52,7 @@ export default {
         email: this.lead.email,
         cnh_rg: this.lead.cnh_rg,
         data_emissao: moment(this.lead.data_emissao).format('YYYY-MM-DD'),
+        data_criacao: moment(this.lead.data_criacao).format(),
         tipo: 'Lead',
         data_nascimento: null
       }
