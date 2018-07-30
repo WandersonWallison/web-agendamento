@@ -216,19 +216,19 @@ export default {
       }
     },
     clearForm() {
-      this.$v.$reset();
-      this.form.data = "";
-      this.form.horario = null;
-      this.form.email = null;
-      this.form.cep = null;
-      this.form.rua = null;
-      this.form.numero = null;
-      this.form.cidade = null;
-      this.form.estado = null;
-      this.form.observacao = null;
-      this.form.bairro = null;
+      this.$v.$reset()
+      this.form.data = ""
+      this.form.horario = null
+      this.form.email = null
+      this.form.cep = null
+      this.form.rua = null
+      this.form.numero = null
+      this.form.cidade = null
+      this.form.estado = null
+      this.form.observacao = null
+      this.form.bairro = null
     },
-    saveAgenda() {
+    saveAgenda (){
       let newAgenda = {
         data: this.form.data,
         hora: this.form.horario,
@@ -242,43 +242,37 @@ export default {
         cidade: this.form.cidade,
         cep: this.form.cep,
         uf: this.form.estado,
-        schedule_address: ""
+        schedule_address: ''
       };
       let New_schedule_address;
-      axios
-        .post("http://192.168.0.22:1337/schedule", newAgenda)
+      axios.post(process.env.API+'schedule', newAgenda)
         .then(response => {
-          newEndereco.schedule_address = response.data.id;
-          axios
-            .post("http://192.168.0.22:1337/address", newEndereco)
+          newEndereco.schedule_address = response.data.id
+          axios.post(process.env.API+'address', newEndereco)
             .then(response => {
-              alert("Agendamento cadastado com success");
-              this.userSaved = true;
-              this.sending = false;
-              this.clearForm();
-              window.location.reload();
+              alert('Agendamento cadastado com success')
+              this.userSaved = true
+              this.sending = false
+              this.clearForm()
+              window.location.reload()
             })
             .catch(error => {
-              alert("Erro endereco " + error);
-              console.log(error.response.data);
-            });
+              alert('Erro endereco '+error)
+              console.log(error.response.data)
+            })
         })
         .catch(error => {
-          alert("agenda " + error.response.data.code);
-          console.log(error.response.data);
-        });
-
+          alert("agenda " + error.response.data.code)
+          console.log(error.response.data)
+        })
       //newEndereco.schedule_address = New_schedule_address
-
       // Instead of this timeout, here you can call your API
     },
     validateUser() {
-      console.log("this.$v.$invalid " + this.$v.$invalid);
-      this.$v.$touch();
-      //this.saveAgenda();
-
+      console.log('this.$v.$invalid ' + this.$v.$invalid)
+      this.$v.$touch()
       if (!this.$v.$invalid) {
-        this.saveAgenda();
+        this.saveAgenda()
       }
     }
   }

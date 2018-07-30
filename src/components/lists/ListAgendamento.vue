@@ -48,26 +48,23 @@ import axios from 'axios'
 const toLower = text => {
   return text.toString().toLowerCase()
 }
-
 const searchByName = (items, term) => {
   if (term) {
     return items.filter(item => toLower(item.nome).includes(toLower(term)))
   }
-
   return items
 }
-
 export default {
   name: 'listAgendamento',
   data: () => ({
     search: null,
     searched: [],
-    users:[]
+    users: []
   }),
   mounted () {
-    axios.get('http://192.168.0.22:1337/leads')
+    axios.get(process.env.API+'leads')
       .then(response => {
-        this.users = response.data,
+        this.users = response.data
         this.searched = response.data
         })
   },

@@ -53,37 +53,30 @@
             <md-icon>schedule</md-icon>
           </md-button>
           </md-table-cell>
-
-
       </md-table-row>
-
     </md-table>
     <md-dialog :md-active.sync="showDialog">
       <div class="div">
           <agenda :leadProps="leadProps"></agenda>
       </div>
     </md-dialog>
-
-
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 import moment from 'moment'
-import Agenda from "../forms/FormAgendamento.vue";
+import Agenda from '../forms/FormAgendamento.vue'
 const toLower = text => {
-  return text.toString().toLowerCase();
-};
+  return text.toString().toLowerCase()
+}
 
 const searchByName = (items, term) => {
   if (term) {
-    return items.filter(item => toLower(item.nome).includes(toLower(term)));
+    return items.filter(item => toLower(item.nome).includes(toLower(term)))
   }
-
-  return items;
-};
-
+  return items
+}
 export default {
   name: "list",
   props: ["leadProps"],
@@ -100,53 +93,53 @@ export default {
     data_atendimento: Date.now(),
   }),
   mounted() {
-    axios.get("http://192.168.0.22:1337/leads").then(response => {
-      (this.users = response.data), (this.searched = response.data);
-    });
+    axios.get(process.env.API+'leads').then(response => {
+      (this.users = response.data), (this.searched = response.data)
+    })
   },
   methods: {
-    atendeu(){
+    atendeu (){
       let newLead = {
         data_atendimento: moment(this.data_atendimento).format(),
       }
-      console.log(newLead);
-        axios.put('http://192.168.0.22:1337/leads/'+ this.selected.id ,newLead)
-       .then((response) =>{
-          this.results = response.data;
-           alert( "Cliente atendeu a ligação" );
+      console.log(newLead)
+        axios.put(process.env.API+'leads/'+ this.selected.id, newLead)
+        .then((response) => {
+          this.results = response.data
+           alert('Cliente atendeu a ligação')
         })
         .catch((error) => {
-          alert(error.response.data.code);
-          console.log(error.response.data);
-          console.log();
-        });
-
-   },
+          alert(error.response.data.code)
+          console.log(error.response.data)
+          console.log()
+        })
+    },
     getClass: ({ id }) => ({
-      "md-primary": id
+      'md-primary': id
     }),
-    addSelected() {
-      if (!this.selected) {
-        alert("Selecione um contato da lista");
-      } else {
-        this.showDialog = true;
-        this.leadProps = this.selected;
+    addSelected (){
+      if (!this.selected){
+        alert('Selecione um contato da lista')
+      }
+      else {
+        this.showDialog = true
+        this.leadProps = this.selected
       }
     },
-    newUser() {
-      window.alert("Noop");
+    newUser () {
+      window.alert('Noop')
     },
     onMouseOver(item) {
-      this.selected = item;
+      this.selected = item
     },
     searchOnTable() {
-      this.searched = searchByName(this.users, this.search);
+      this.searched = searchByName(this.users, this.search)
     }
   },
   created() {
-    this.searched = this.users;
+    this.searched = this.users
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

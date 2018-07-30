@@ -83,12 +83,12 @@
 
 
 <script>
-import moment from 'moment'
-import axios from 'axios'
+import moment from "moment";
+import axios from "axios";
 export default {
-  name: 'FormUpdadeLead',
-  props: ['selected'],
-  data () {
+  name: "FormUpdadeLead",
+  props: ["selected"],
+  data() {
     return {
       lead: {
         nome: this.selected[0].nome,
@@ -104,22 +104,20 @@ export default {
         nome_mae: this.selected[0].nome_mae,
         nome_pai: this.selected[0].nome_pai,
         escolaridade: this.selected[0].escolaridade
-
-
       },
       results: []
-    }
+    };
   },
 
   methods: {
-    update(){
+    update() {
       let newLead = {
         nome: this.lead.nome,
-        data_nascimento: moment(this.lead.data_nascimento).format('YYYY-MM-DD'),
+        data_nascimento: moment(this.lead.data_nascimento).format("YYYY-MM-DD"),
         email: this.lead.email,
         cpf: this.lead.cpf,
         cnh_rg: this.lead.cnh_rg,
-        data_emissao: moment(this.lead.data_emissao).format('YYYY-MM-DD'),
+        data_emissao: moment(this.lead.data_emissao).format("YYYY-MM-DD"),
         telefone: this.lead.telefone,
         genero: this.lead.genero,
         estado_civil: this.lead.estado_civil,
@@ -127,25 +125,23 @@ export default {
         nome_mae: this.lead.nome_mae,
         nome_pai: this.lead.nome_pai,
         escolaridade: this.lead.escolaridade,
-        tipo: 'Cliente'
-
-      }
+        tipo: "Cliente"
+      };
       console.log(newLead);
-        axios.put('http://192.168.0.22:1337/leads/'+ this.selected[0].id ,newLead)
-       .then((response) =>{
-          this.results = response.data;
-           alert( "User alterado com success" );
-           window.location.reload();
+      axios
+        .put(process.env.API+'leads/'+ this.selected[0].id, newLead)
+        .then(response => {
+          this.results = response.data
+          alert('User alterado com success')
+          window.location.reload()
         })
-        .catch((error) => {
-          alert(error.response.data.code);
-          console.log(error.response.data);
-          console.log();
-        });
-
-   }
+        .catch(error => {
+          alert(error.response.data.code)
+          console.log(error.response.data)
+        })
+    }
   }
-}
+};
 </script>
 <style lang='scss'>
 .centered-container {

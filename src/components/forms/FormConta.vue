@@ -40,7 +40,7 @@ import axios from 'axios'
 export default {
   name: 'conta',
   props: ['selected'],
-  data () {
+  data() {
     return {
       conta: {
         nome: '',
@@ -50,10 +50,10 @@ export default {
         aplicacao: ''
       },
       results: []
-    }
+    };
   },
   methods: {
-    add(){
+    add() {
       let newConta = {
         nome: this.conta.nome,
         ag: this.conta.ag,
@@ -62,22 +62,21 @@ export default {
         aplicacao: this.conta.aplicacao,
         leads_bank: this.selected[0].id
       }
-        console.log(newConta);
-        axios.post('http://192.168.0.22:1337/bank',newConta)
-        .then((response) =>{
-          this.results = response.data;
-           alert( 'Conta adicionado ' + this.selected[0].nome + ' com success' );
-           window.location.reload();
-          console.log(response.data);
+      console.log(newConta)
+      axios.post(process.env.API+'bank', newConta)
+        .then(response => {
+          this.results = response.data
+          alert("Conta adicionado " + this.selected[0].nome + " com success")
+          window.location.reload()
+          console.log(response.data)
         })
-        .catch((error) => {
-          alert(error.response.data.code);
-          console.log(error.response.data);
-        });
-
-   }
+        .catch(error => {
+          alert(error.response.data.code)
+          console.log(error.response.data)
+        })
+    }
   }
-}
+};
 </script>
 <style lang="scss">
 .centered-container {

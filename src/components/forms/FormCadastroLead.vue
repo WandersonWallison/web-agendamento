@@ -40,13 +40,13 @@ export default {
   data () {
     return {
       lead: {
-        nome: '',email: '',cnh_rg:'', data_emissao:'', data_criacao: Date.now(),
+        nome: '', email: '', cnh_rg: '', data_emissao: '', data_criacao: Date.now()
       },
       results: []
     }
   },
   methods: {
-    add(){
+    add (){
       let newLead = {
         nome: this.lead.nome,
         email: this.lead.email,
@@ -57,17 +57,17 @@ export default {
         data_nascimento: null
       }
 
-        console.log(newLead);
-        axios.post('http://192.168.0.22:1337/leads',newLead)
+        console.log(newLead)
+        axios.post(process.env.API+'leads',newLead)
         .then((response) =>{
-          this.results = response.data;
-           alert( "User cadastado com success" );
-           window.location.reload();
-          console.log(response.data);
+          this.results = response.data
+           alert( "User cadastado com success" )
+           window.location.reload()
+          console.log(response.data)
         })
         .catch((error) => {
-          alert(error.response.data.code);
-          console.log(error.response.data);
+          alert(error.response.data.code)
+          console.log(error.response.data)
         });
 
    }

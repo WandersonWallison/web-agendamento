@@ -17,6 +17,9 @@
         <md-button class="md-icon-button" @click="showEmpresa = true">
           <md-icon>location_city</md-icon>
         </md-button>
+        <md-button class="md-icon-button" @click="showAgendamento = true">
+          <md-icon>location_city</md-icon>
+        </md-button>
 
       </md-speed-dial-content>
     </md-speed-dial>
@@ -30,26 +33,33 @@
     <md-dialog :md-active.sync="showEmpresa" class="div">
       <cad-empresa/>
     </md-dialog>
+    <md-dialog :md-active.sync="showAgendamento" class="div">
+      <cad-agendamento/>
+    </md-dialog>
   </div>
 </template>
 
 
 <script>
-import CadLead from '../forms/FormCadastroLead.vue';
-import CadUser from '../forms/FormAddUser.vue';
-import CadEmpresa from '../forms/FormCadastroEmpresa.vue';
+import CadLead from '../forms/FormCadastroLead.vue'
+import CadUser from '../forms/FormAddUser.vue'
+import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
+import CadAgendamento from '../forms/FormAgendamento'
+
 
 export default {
   name: 'buttonAdd',
   components: {
     CadLead,
     CadUser,
-    CadEmpresa
+    CadEmpresa,
+    CadAgendamento
   },
   data: () => ({
     showDialog: false,
     showAgente: false,
-    showEmpresa: false
+    showEmpresa: false,
+    showAgendamento: false
   })
 };
 </script>

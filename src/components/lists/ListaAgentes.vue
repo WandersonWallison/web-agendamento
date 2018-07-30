@@ -202,7 +202,7 @@
         this.searched = searchByName(this.users, this.search)
       }
     },
-    created () {
+    created (){
       this.searched = this.users
     }
   }

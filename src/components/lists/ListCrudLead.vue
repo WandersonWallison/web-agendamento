@@ -78,16 +78,13 @@
       md-cancel-text="Não"
       @md-cancel="onCancel"
       @md-confirm="onConfirm" />
-
-
   </div>
-
 </template>
 
 <script>
-import UpLead from '../forms/FormUpdateLead.vue';
-import Endereco from '../forms-endereco/FormEndereco.vue';
-import Conta from '../forms/FormConta.vue';
+import UpLead from '../forms/FormUpdateLead.vue'
+import Endereco from '../forms-endereco/FormEndereco.vue'
+import Conta from '../forms/FormConta.vue'
 import axios from 'axios'
   export default {
     name: 'listCrudLead',
@@ -107,7 +104,7 @@ import axios from 'axios'
       atual:[]
     }),
     mounted () {
-    axios.get('http://192.168.0.22:1337/leads?where={"ativo": true}')
+    axios.get(process.env.API+'alertleads?where={"ativo": true}')
       .then(response => {
         this.people = response.data
         })
@@ -121,11 +118,10 @@ import axios from 'axios'
         ativo: false
       }
       for (var i = 0; i <= this.selected.length; i++) {
-         axios.put('http://192.168.0.22:1337/leads/' + this.selected[i].id,newLead)
+         axios.put(process.env.API+'leads/' + this.selected[i].id,newLead)
         .then(response => {
-        console.log(i + "alterado");
-        window.location.reload();
-        })
+          console.log(i + "alterado")
+          window.location.reload()})
       }
 
       },
@@ -137,7 +133,7 @@ import axios from 'axios'
 
         if (count > 1) {
           plural = 's'
-        }
+          }
 
         return `${count} user${plural} selected`
       }

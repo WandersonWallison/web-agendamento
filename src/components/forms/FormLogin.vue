@@ -43,13 +43,13 @@
 import axios from "axios";
 
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
       loading: false,
       login: {
-        email: "",
-        password: ""
+        email: '',
+        password: ''
       },
       results: null,
       inicio: null,
@@ -58,21 +58,23 @@ export default {
   },
   methods: {
     auth() {
-
+      this.menssage = null
+      console.log("Valor API: "+process.env.API+"login")
       //this.inicio = 'E-mail: '+this.login.email
       //this.results = 'Password: '+this.login.password
       this.results = ''
       if (this.login.email != "" && this.login.password != "") {
         axios
-          .post("http://192.168.0.22:1337/login", this.login)
+          .post(process.env.API+"login", this.login)
           .then(response => {
+            console.log('Valor Response '+response.data.user)
             if (response.data.user == false) {
-              this.$router.push("/");
-              this.menssage = response.data.message;
+              this.$router.push('/')
+              this.menssage = response.data.message
             } else {
               this.results = response.data.message;
-              localStorage.setItem("Usuario", response.data.user.createdAt)
-              this.$router.push("/home");
+              localStorage.setItem('Usuario', response.data.user.createdAt)
+              this.$router.push('/home');
             }
           })
           .catch(error => {
@@ -84,10 +86,8 @@ export default {
           this.loading = false;
         }, 2000);
       } else {
-
-        this.$router.push("/")
-        this.menssage = "Por favor incluir e-mail e password"
-
+        this.$router.push('/')
+        this.menssage = 'Por favor incluir e-mail e password'
       }
     }
   }
