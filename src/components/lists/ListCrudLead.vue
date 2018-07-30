@@ -86,59 +86,56 @@ import UpLead from '../forms/FormUpdateLead.vue'
 import Endereco from '../forms-endereco/FormEndereco.vue'
 import Conta from '../forms/FormConta.vue'
 import axios from 'axios'
-  export default {
-    name: 'listCrudLead',
-    props: ['selected'],
-    components: {
-      UpLead,
-      Endereco,
-      Conta
-    },
-      data: () => ({
-      selected: [],
-      people: [],
-      showUpdateLead: false,
-      showEndereco: false,
-      showConta: false,
-      desativar:false,
-      atual:[]
-    }),
-    mounted () {
-    axios.get(process.env.API+'alertleads?where={"ativo": true}')
-      .then(response => {
-        this.people = response.data
-        })
+export default {
+  name: 'listCrudLead',
+  props: ['selected'],
+  components: {
+    UpLead,
+    Endereco,
+    Conta
   },
-    methods: {
-      onCancel () {
-        this.value = 'Disagreed'
-      },
-      onConfirm(){
-        let newLead = {
+  data: () => ({
+    selected: [],
+    people: [],
+    showUpdateLead: false,
+    showEndereco: false,
+    showConta: false,
+    desativar: false,
+    atual: []
+  }),
+  mounted () {
+  axios.get(process.env.API + 'leads?where={"ativo": true}')
+  .then(response => {
+    this.people = response.data
+  })
+  },
+  methods: {
+    onCancel () {
+      this.value = 'Disagreed'
+    },
+    onConfirm(){
+      let newLead = {
         ativo: false
       }
       for (var i = 0; i <= this.selected.length; i++) {
-         axios.put(process.env.API+'leads/' + this.selected[i].id,newLead)
-        .then(response => {
-          console.log(i + "alterado")
-          window.location.reload()})
+        axios.put(process.env.API+'leads/' + this.selected[i].id, newLead)
+          .then(response => {
+            console.log(i + 'alterado')
+            window.location.reload()})
       }
-
-      },
-      onSelect (items) {
-        this.selected = items
-      },
-      getAlternateLabel (count) {
-        let plural = ''
-
-        if (count > 1) {
-          plural = 's'
-          }
-
-        return `${count} user${plural} selected`
-      }
+    },
+    onSelect (items) {
+      this.selected = items
+    },
+    getAlternateLabel (count) {
+      let plural = ''
+      if (count > 1) {
+        plural = 's'
+        }
+      return `${count} user${plural} selected`
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

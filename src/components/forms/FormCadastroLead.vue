@@ -25,13 +25,10 @@
         <br>
         <div class="actions md-layout md-alignment-center-space-between">
         <md-button class="md-raised md-primary" @click="add">Cadastrar</md-button>
-
       </div>
      </md-content>
     </div>
 </template>
-
-
 <script>
 import moment from 'moment'
 import axios from 'axios'
@@ -46,31 +43,28 @@ export default {
     }
   },
   methods: {
-    add (){
-      let newLead = {
-        nome: this.lead.nome,
-        email: this.lead.email,
-        cnh_rg: this.lead.cnh_rg,
-        data_emissao: moment(this.lead.data_emissao).format('YYYY-MM-DD'),
-        data_criacao: moment(this.lead.data_criacao).format(),
-        tipo: 'Lead',
-        data_nascimento: null
-      }
-
-        console.log(newLead)
-        axios.post(process.env.API+'leads',newLead)
-        .then((response) =>{
+    add () {
+        let newLead = {
+          nome: this.lead.nome,
+          email: this.lead.email,
+          cnh_rg: this.lead.cnh_rg,
+          data_emissao: moment(this.lead.data_emissao).format('YYYY-MM-DD'),
+          data_criacao: moment(this.lead.data_criacao).format(),
+          tipo: 'Lead',
+          data_nascimento: null
+        }
+        axios.post(process.env.API + 'leads', newLead)
+        .then((response) => {
           this.results = response.data
-           alert( "User cadastado com success" )
-           window.location.reload()
+          alert('User cadastado com success')
+          window.location.reload()
           console.log(response.data)
         })
         .catch((error) => {
           alert(error.response.data.code)
           console.log(error.response.data)
-        });
-
-   }
+        })
+    }
   }
 }
 </script>

@@ -75,19 +75,16 @@
         <br>
         <div class="actions md-layout md-alignment-center-space-between">
         <md-button class="md-raised md-primary" @click="update">Atualizar</md-button>
-
         </div>
      </md-content>
-
 </template>
 
-
 <script>
-import moment from "moment";
-import axios from "axios";
+import moment from 'moment'
+import axios from 'axios'
 export default {
-  name: "FormUpdadeLead",
-  props: ["selected"],
+  name: 'FormUpdadeLead',
+  props: ['selected'],
   data() {
     return {
       lead: {
@@ -108,7 +105,6 @@ export default {
       results: []
     };
   },
-
   methods: {
     update() {
       let newLead = {

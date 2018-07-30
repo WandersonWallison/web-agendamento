@@ -65,8 +65,6 @@
      </md-content>
     </div>
 </template>
-
-
 <script>
 import axios from 'axios'
 export default {
@@ -85,29 +83,27 @@ export default {
     }
   },
   methods: {
-    add(){
+    add (){
       let newEndereco = {
         rua: this.endereco.rua,
         numero: this.endereco.numero,
         bairro: this.endereco.bairro,
-        cidade:this.endereco.cidade,
+        cidade: this.endereco.cidade,
         cep: this.endereco.cep,
         leads_address: this.selected[0].id
       }
-        console.log(newEndereco);
-        axios.post(process.env.API+'address',newEndereco)
-        .then((response) =>{
-          this.results = response.data;
-           alert( 'Endereço adicionado ' + this.selected[0].nome + ' com success' );
-           window.location.reload();
-          console.log(response.data);
-        })
-        .catch((error) => {
-          alert(error.response.data.code);
-          console.log(error.response.data);
-        });
-
-   }
+      axios.post(process.env.API + 'address', newEndereco)
+      .then((response) => {
+        this.results = response.data
+        alert( 'Endereço adicionado ' + this.selected[0].nome + ' com success' );
+        window.location.reload()
+        console.log(response.data)
+      })
+      .catch((error) => {
+        alert(error.response.data.code)
+        console.log(error.response.data)
+      })
+    }
   }
 }
 </script>

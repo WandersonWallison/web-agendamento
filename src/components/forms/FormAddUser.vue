@@ -18,7 +18,7 @@
         <md-field>
           <md-input type="tel" v-model="agente.telefone" placeholder="Telefone" autofocus></md-input>
         </md-field>
-        <md-datepicker type="date" v-model="agente.data_inicio" md-immediately>
+        <md-datepicker type="date" v-model="agente.dataInicio" md-immediately>
             <label>Data Inicio</label>
         </md-datepicker>
         <md-field>
@@ -30,22 +30,22 @@
         <md-field>
           <md-input v-model="agente.CPF" placeholder="CPF" autofocus ></md-input>
         </md-field>
-        <md-datepicker type="date" v-model="agente.data_nascimento" md-immediately>
+        <md-datepicker type="date" v-model="agente.dataNascimento" md-immediately>
             <label>Data Nascimento</label>
         </md-datepicker>
         <genero></genero>
         <escolaridade></escolaridade>
         <md-field>
-          <md-input v-model="agente.nome_conjuge" placeholder="Nome Conjuge" autofocus ></md-input>
+          <md-input v-model="agente.nomeConjuge" placeholder="Nome Conjuge" autofocus ></md-input>
         </md-field>
          <md-field>
-          <md-input v-model="agente.nome_mae" placeholder="Nome Mãe" autofocus></md-input>
+          <md-input v-model="agente.nomeMae" placeholder="Nome Mãe" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input v-model="agente.nome_pai" placeholder="Nome Pai" autofocus></md-input>
+          <md-input v-model="agente.nomePai" placeholder="Nome Pai" autofocus></md-input>
         </md-field>
         <md-field>
-          <md-input type="Url" v-model="agente.rede_social" placeholder="Rede Social" autofocus></md-input>
+          <md-input type="Url" v-model="agente.redeSocial" placeholder="Rede Social" autofocus></md-input>
         </md-field>
         <endereco/>
         <br>
@@ -72,8 +72,7 @@ export default {
     escolaridade
   },
   data () {
-    data_inicio: new Date()
-    data_nascimento: new Date()
+
     return {
       loading: false,
       agente: {
@@ -81,18 +80,18 @@ export default {
         email: '',
         senha: '',
         cvm: '',
-        data_inicio: '',
+        dataInicio: '',
         UF: '',
         genero: '',
         telefone: '',
-        rede_social: '',
-        nome_conjuge: '',
-        nome_mae: '',
-        nome_pai: '',
-        data_nascimento: '',
+        redeSocial: '',
+        nomeConjuge: '',
+        nomeMae: '',
+        nomePai: '',
+        dataNascimento: '',
         CPF: '',
         RG: '',
-        escolaridade:''
+        escolaridade: ''
       },
       results: null
     }

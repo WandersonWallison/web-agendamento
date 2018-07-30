@@ -42,7 +42,6 @@
 
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 const toLower = text => {
@@ -62,11 +61,11 @@ export default {
     users: []
   }),
   mounted () {
-    axios.get(process.env.API+'leads')
+    axios.get(process.env.API + 'leads')
       .then(response => {
         this.users = response.data
         this.searched = response.data
-        })
+      })
   },
   methods: {
     newUser () {

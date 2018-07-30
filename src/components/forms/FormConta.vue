@@ -34,13 +34,12 @@
     </div>
 </template>
 
-
 <script>
 import axios from 'axios'
 export default {
   name: 'conta',
   props: ['selected'],
-  data() {
+  data () {
     return {
       conta: {
         nome: '',
@@ -50,10 +49,10 @@ export default {
         aplicacao: ''
       },
       results: []
-    };
+    }
   },
   methods: {
-    add() {
+    add () {
       let newConta = {
         nome: this.conta.nome,
         ag: this.conta.ag,
@@ -63,10 +62,10 @@ export default {
         leads_bank: this.selected[0].id
       }
       console.log(newConta)
-      axios.post(process.env.API+'bank', newConta)
+      axios.post(process.env.API + 'bank', newConta)
         .then(response => {
           this.results = response.data
-          alert("Conta adicionado " + this.selected[0].nome + " com success")
+          alert('Conta adicionado ' + this.selected[0].nome + 'com success')
           window.location.reload()
           console.log(response.data)
         })
@@ -76,7 +75,7 @@ export default {
         })
     }
   }
-};
+}
 </script>
 <style lang="scss">
 .centered-container {

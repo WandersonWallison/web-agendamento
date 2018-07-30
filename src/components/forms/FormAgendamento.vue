@@ -137,18 +137,16 @@
 </template>
 
 <script>
-import axios from "axios";
-import { validationMixin } from "vuelidate";
+import axios from 'axios'
+import { validationMixin } from 'vuelidate'
 import {
   required,
-  email,
-  minLength,
-  maxLength
-} from "vuelidate/lib/validators";
+  minLength
+} from 'vuelidate/lib/validators'
 
 export default {
-  name: "FormAgenda",
-  props: ["leadProps"],
+  name: 'FormAgenda',
+  props: ['leadProps'],
   mixins: [validationMixin],
   data: () => ({
     form: {
@@ -202,22 +200,20 @@ export default {
     }
   },
   methods: {
-    getValidationClass(fieldName) {
-      const field = this.$v.form[fieldName];
-
+    getValidationClass (fieldName) {
+      const field = this.$v.form[fieldName]
       if (field) {
-        //console.log('field: '+field)
-        console.log("field.$invalid: " + field.$invalid);
+        // console.log('field: '+field)
+        console.log('field.$invalid: ' + field.$invalid)
         // console.log('field.$dirty: '+field.$dirty)
-
         return {
-          "md-invalid": field.$invalid && field.$dirty
-        };
+          'md-invalid': field.$invalid && field.$dirty
+        }
       }
     },
-    clearForm() {
+    clearForm () {
       this.$v.$reset()
-      this.form.data = ""
+      this.form.data = ''
       this.form.horario = null
       this.form.email = null
       this.form.cep = null
@@ -228,13 +224,13 @@ export default {
       this.form.observacao = null
       this.form.bairro = null
     },
-    saveAgenda (){
+    saveAgenda () {
       let newAgenda = {
         data: this.form.data,
         hora: this.form.horario,
         obs: this.form.observacao,
         lead: this.leadProps.id
-      };
+      }
       let newEndereco = {
         rua: this.form.rua,
         numero: this.form.numero,
@@ -243,32 +239,29 @@ export default {
         cep: this.form.cep,
         uf: this.form.estado,
         schedule_address: ''
-      };
-      let New_schedule_address;
-      axios.post(process.env.API+'schedule', newAgenda)
+      }
+      axios.post(process.env.API + 'schedule', newAgenda)
         .then(response => {
           newEndereco.schedule_address = response.data.id
-          axios.post(process.env.API+'address', newEndereco)
-            .then(response => {
-              alert('Agendamento cadastado com success')
-              this.userSaved = true
-              this.sending = false
-              this.clearForm()
-              window.location.reload()
-            })
-            .catch(error => {
-              alert('Erro endereco '+error)
-              console.log(error.response.data)
-            })
+          axios.post(process.env.API + 'address', newEndereco)
+          .then(response => {
+            alert('Agendamento cadastado com success')
+            this.userSaved = true
+            this.sending = false
+            this.clearForm()
+            window.location.reload()
+          })
+          .catch(error => {
+            alert('Erro endereco ' + error)
+            console.log(error.response.data)
+          })
         })
         .catch(error => {
-          alert("agenda " + error.response.data.code)
+          alert('agenda ' + error.response.data.code)
           console.log(error.response.data)
         })
-      //newEndereco.schedule_address = New_schedule_address
-      // Instead of this timeout, here you can call your API
     },
-    validateUser() {
+    validateUser () {
       console.log('this.$v.$invalid ' + this.$v.$invalid)
       this.$v.$touch()
       if (!this.$v.$invalid) {
@@ -276,7 +269,7 @@ export default {
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

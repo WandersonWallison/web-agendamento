@@ -8,9 +8,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'Genero'
-  }
+export default {
+  name: 'Genero'
+}
 </script>
 <style>
 </style>

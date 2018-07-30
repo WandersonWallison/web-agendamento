@@ -48,12 +48,8 @@
 <button-add></button-add>
   </div>
 </template>
-
-
 <script>
-
 import FormAddUser from './FormAddUser'
-import FormLogin from './FormLogin.vue'
 import ListCrudLead from '../lists/ListCrudLead'
 import FormAddEmpresa from './FormCadastroEmpresa.vue'
 import ButtonAdd from '../buttons/ButtonAdd'
@@ -68,7 +64,7 @@ export default {
   },
   data: () => ({
     menuVisible: false,
-    showDialog: false,
+    showDialog: false
   }),
   methods: {
     toggleMenu () {

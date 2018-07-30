@@ -40,8 +40,7 @@
 </template>
 
 <script>
-import axios from "axios";
-
+import axios from 'axios'
 export default {
   name: 'Login',
   data() {
@@ -54,44 +53,44 @@ export default {
       results: null,
       inicio: null,
       menssage: null
-    };
+    }
   },
   methods: {
     auth() {
       this.menssage = null
-      console.log("Valor API: "+process.env.API+"login")
+      console.log('Valor API: ' + process.env.API + 'login')
       //this.inicio = 'E-mail: '+this.login.email
       //this.results = 'Password: '+this.login.password
       this.results = ''
-      if (this.login.email != "" && this.login.password != "") {
+      if (this.login.email != '' && this.login.password != '') {
         axios
-          .post(process.env.API+"login", this.login)
+          .post(process.env.API + 'login', this.login)
           .then(response => {
-            console.log('Valor Response '+response.data.user)
+            console.log('Valor Response ' + response.data.user)
             if (response.data.user == false) {
-              this.$router.push('/')
+              //this.$router.push('/')
               this.menssage = response.data.message
             } else {
-              this.results = response.data.message;
+              this.results = response.data.message
               localStorage.setItem('Usuario', response.data.user.createdAt)
-              this.$router.push('/home');
+
             }
           })
           .catch(error => {
-            this.results = error.response.data;
-            console.log(error.response.data);
-          });
-        this.loading = true;
+            this.results = error.response.data
+            console.log(error.response.data)
+          })
+        this.loading = true
         setTimeout(() => {
-          this.loading = false;
-        }, 2000);
+          this.loading = false
+        }, 2000)
       } else {
         this.$router.push('/')
         this.menssage = 'Por favor incluir e-mail e password'
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

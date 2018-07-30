@@ -38,14 +38,11 @@
     </md-dialog>
   </div>
 </template>
-
-
 <script>
 import CadLead from '../forms/FormCadastroLead.vue'
 import CadUser from '../forms/FormAddUser.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
 import CadAgendamento from '../forms/FormAgendamento'
-
 
 export default {
   name: 'buttonAdd',
@@ -61,7 +58,7 @@ export default {
     showEmpresa: false,
     showAgendamento: false
   })
-};
+}
 </script>
 
 <style lang='scss' scoped>
@@ -77,4 +74,3 @@ export default {
   overflow: auto;
 }
 </style>
-

@@ -78,8 +78,8 @@ const searchByName = (items, term) => {
   return items
 }
 export default {
-  name: "list",
-  props: ["leadProps"],
+  name: 'list',
+  props: ['leadProps'],
   components: {
     Agenda
   },
@@ -90,23 +90,24 @@ export default {
     users: [],
     showDialog: false,
     leadProps: {},
-    data_atendimento: Date.now(),
+    data_atendimento: Date.now()
   }),
-  mounted() {
+  mounted () {
     axios.get(process.env.API+'leads').then(response => {
-      (this.users = response.data), (this.searched = response.data)
+      (this.users = response.data),
+      (this.searched = response.data)
     })
   },
   methods: {
-    atendeu (){
+    atendeu () {
       let newLead = {
-        data_atendimento: moment(this.data_atendimento).format(),
+        data_atendimento: moment(this.data_atendimento).format()
       }
       console.log(newLead)
-        axios.put(process.env.API+'leads/'+ this.selected.id, newLead)
+      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
-           alert('Cliente atendeu a ligação')
+          alert('Cliente atendeu a ligação')
         })
         .catch((error) => {
           alert(error.response.data.code)
@@ -117,7 +118,7 @@ export default {
     getClass: ({ id }) => ({
       'md-primary': id
     }),
-    addSelected (){
+    addSelected () {
       if (!this.selected){
         alert('Selecione um contato da lista')
       }
@@ -136,7 +137,7 @@ export default {
       this.searched = searchByName(this.users, this.search)
     }
   },
-  created() {
+  created () {
     this.searched = this.users
   }
 }
