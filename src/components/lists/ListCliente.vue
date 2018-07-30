@@ -30,19 +30,19 @@
             <md-tooltip md-direction="top">Atendeu</md-tooltip>
             <md-icon>phone</md-icon>
           </md-button>
-          <md-button class="md-icon-button butoom-03 md-accent">
+          <md-button class="md-icon-button butoom-03 md-accent" @click="naoAtendeu">
             <md-tooltip md-direction="top">Não Atendeu</md-tooltip>
             <md-icon>thumb_down</md-icon>
           </md-button>
-          <md-button class="md-icon-button md-raised md-accent">
+          <md-button class="md-icon-button md-raised md-accent" @click="dadosIncorretos">
             <md-tooltip md-direction="top">Dados incorretos</md-tooltip>
             <md-icon>no_sim</md-icon>
           </md-button>
-          <md-button class="md-icon-button butoom-02">
+          <md-button class="md-icon-button butoom-02" @click="naoPodeFalar">
             <md-tooltip md-direction="top">Não pode falar</md-tooltip>
             <md-icon>mic_off</md-icon>
           </md-button>
-          <md-button class="md-icon-button butoom-04">
+          <md-button class="md-icon-button butoom-04" @click="naoAceitaVisita">
             <md-tooltip md-direction="top">Não aceita visita</md-tooltip>
             <md-icon>voice_over_off</md-icon>
           </md-button>
@@ -93,7 +93,7 @@ export default {
     data_atendimento: Date.now()
   }),
   mounted () {
-    axios.get(process.env.API+'leads').then(response => {
+    axios.get(process.env.API+'leads/'+ '?sort=data_criacao ASC&ativo=true').then(response => {
       (this.users = response.data),
       (this.searched = response.data)
     })
@@ -108,6 +108,77 @@ export default {
         .then((response) => {
           this.results = response.data
           alert('Cliente atendeu a ligação')
+          window.location.reload()
+        })
+        .catch((error) => {
+          alert(error.response.data.code)
+          console.log(error.response.data)
+          console.log()
+        })
+    },
+     naoAtendeu () {
+      let newLead = {
+        data_criacao: moment(this.data_atendimento).format()
+      }
+      console.log(newLead)
+      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+        .then((response) => {
+          this.results = response.data
+          alert('Cliente Não atendeu a ligação')
+          window.location.reload()
+        })
+        .catch((error) => {
+          alert(error.response.data.code)
+          console.log(error.response.data)
+          console.log()
+        })
+    },
+    dadosIncorretos () {
+      let newLead = {
+        status: 'Dados Incorrtos',
+        ativo: false
+      }
+      console.log(newLead)
+      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+        .then((response) => {
+          this.results = response.data
+          alert('Cliente com os dados incorreto')
+          window.location.reload()
+        })
+        .catch((error) => {
+          alert(error.response.data.code)
+          console.log(error.response.data)
+          console.log()
+        })
+    },
+    naoPodeFalar () {
+      let newLead = {
+        data_criacao: moment(this.data_atendimento).format()
+      }
+      console.log(newLead)
+      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+        .then((response) => {
+          this.results = response.data
+          alert('No Momento não pode falar')
+          window.location.reload()
+        })
+        .catch((error) => {
+          alert(error.response.data.code)
+          console.log(error.response.data)
+          console.log()
+        })
+    },
+    naoAceitaVisita () {
+      let newLead = {
+        status: 'Não Aceita Visita',
+        ativo: false
+      }
+      console.log(newLead)
+      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+        .then((response) => {
+          this.results = response.data
+          alert('Cliente Não Aceita Visita')
+          window.location.reload()
         })
         .catch((error) => {
           alert(error.response.data.code)
