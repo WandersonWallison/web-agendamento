@@ -93,7 +93,8 @@ export default {
     data_atendimento: Date.now()
   }),
   mounted () {
-    axios.get(process.env.API+'leads/'+ '?sort=data_criacao ASC&ativo=true').then(response => {
+    axios.get(process.env.API+'leads/'+ '?sort=data_criacao ASC&ativo=true')
+    .then(response => {
       (this.users = response.data),
       (this.searched = response.data)
     })

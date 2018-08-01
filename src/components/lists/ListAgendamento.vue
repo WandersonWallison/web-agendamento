@@ -35,11 +35,8 @@
             <md-icon>thumb_down</md-icon>
           </md-button>
           </md-table-cell>
-
       </md-table-row>
-
     </md-table>
-
   </div>
 </template>
 <script>

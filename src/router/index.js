@@ -22,7 +22,8 @@ export default new Router({
       name: 'login',
       component: Login,
       beforeEach: function (to, from, next) {
-        const token = localStorage.getItem('Usuario')
+        const token = JSON.parse(localStorage.getItem('Usuario'))
+        alert('token do usuario: ' + token.id)
         if (!token) {
           next('/')
         } else {

@@ -48,7 +48,7 @@ export default {
           nome: this.lead.nome,
           email: this.lead.email,
           cnh_rg: this.lead.cnh_rg,
-          data_emissao: moment(this.lead.data_emissao).format('YYYY-MM-DD'),
+          data_emissao: moment(this.lead.data_emissao).format(),
           data_criacao: moment(this.lead.data_criacao).format(),
           tipo: 'Lead',
           data_nascimento: null

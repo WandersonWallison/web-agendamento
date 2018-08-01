@@ -1,216 +1,152 @@
 <template>
   <div>
-    <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Agentes</span>
-    </md-toolbar>
-    <div class="conteudo-alinhamento">
-    <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    <md-table v-model="people" md-card @md-selected="onSelect">
       <md-table-toolbar>
-        <div class="md-toolbar-section-start">
-          <h1 class="md-title"></h1>
-        </div>
-
-        <md-field md-clearable class="md-toolbar-section-end">
-          <md-input placeholder="Buscar por Nome..." v-model="search" @input="searchOnTable" />
-        </md-field>
+        <h1 class="md-title">Lista de Agentes</h1>
       </md-table-toolbar>
 
-      <md-table-empty-state
-        md-label="No users found"
-        :md-description="`No user found for this '${search}' query. Try a different search term or create a new user.`">
-        <md-button class="md-primary md-raised" @click="newUser">Create New User</md-button>
-      </md-table-empty-state>
-
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
-        <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+      <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
+        <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
+        <div class="md-toolbar-section-end">
+          <div v-if="count == 1">
+            <md-button class="md-icon-button" @click="showUpdateLead = true">
+            <md-tooltip md-direction="top">Atualizar</md-tooltip>
+            <md-icon>update</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" @click="showEndereco = true">
+            <md-tooltip md-direction="top">Endereço</md-tooltip>
+            <md-icon>location_on</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" @click="showConta = true">
+            <md-tooltip md-direction="top">Conta</md-tooltip>
+            <md-icon>attach_money</md-icon>
+            </md-button>
+          </div>
+          <md-button @click="desativar = true" class="md-icon-button">
+            <md-tooltip md-direction="top">Destivar</md-tooltip>
+            <md-icon>delete</md-icon>
+          </md-button>
+        </div>
+      </md-table-toolbar>
+      <md-table-row slot="md-table-row" slot-scope="{ item }" :md-disabled="item.username.includes('Stave')" md-selectable="multiple" md-auto-select>
+        <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.username }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Gender" md-sort-by="gender">{{ item.gender }}</md-table-cell>
-        <md-table-cell md-label="Job Title" md-sort-by="title">{{ item.title }}</md-table-cell>
+        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
+        <md-table-cell md-label="Cpf" md-sort-by="cpf">{{ item.cpf }}</md-table-cell>
       </md-table-row>
     </md-table>
-    </div>
+  <div>
+    <md-table v-model="selected" md-card>
+      <md-table-toolbar>
+        <h1 class="md-title">Detalhe</h1>
+      </md-table-toolbar>
+
+      <md-table-row slot="md-table-row" slot-scope="{ item }">
+         <md-card>
+      <md-card-header>
+        <div class="md-title">{{ item.nome }}</div>
+        <div class="md-subhead">{{ item.email }}</div>
+      </md-card-header>
+    </md-card>
+      </md-table-row>
+    </md-table>
+  </div>
+    <md-dialog :md-active.sync="showUpdateLead">
+      <div class="div">
+      <up-lead :selected="selected"></up-lead>
+      </div>
+    </md-dialog>
+
+    <md-dialog :md-active.sync="showEndereco">
+      <div class="div">
+      <endereco :selected="selected"></endereco>
+      </div>
+    </md-dialog>
+    <md-dialog :md-active.sync="showConta">
+      <div class="div">
+      <conta :selected="selected"></conta>
+      </div>
+    </md-dialog>
+    <md-dialog-confirm
+      :md-active.sync="desativar"
+      md-title="Deseja realmete desativar estas contatos?"
+      md-content="Ele (s) não serão mais exibidos na lista"
+      md-confirm-text="Sim"
+      md-cancel-text="Não"
+      @md-cancel="onCancel"
+      @md-confirm="onConfirm" />
   </div>
 </template>
 
 <script>
-const toLower = text => {
-  return text.toString().toLowerCase()
-}
-const searchByName = (items, term) => {
-  if (term) {
-    return items.filter(item => toLower(item.name).includes(toLower(term)))
-  }
-  return items
-}
-
+import UpLead from '../forms/FormUpdateLead.vue'
+import Endereco from '../forms-endereco/FormEndereco.vue'
+import Conta from '../forms/FormConta.vue'
+import axios from 'axios'
 export default {
-  name: 'TableSearch',
-  data: () => ({
-    search: null,
-    searched: [],
-    users: [
-      {
-        id: 1,
-        name: 'Shawna Dubbin',
-        email: 'sdubbin0@geocities.com',
-        gender: 'Male',
-        title: 'Assistant Media Planner'
-      },
-      {
-        id: 2,
-        name: 'Odette Demageard',
-        email: 'odemageard1@spotify.com',
-        gender: 'Female',
-        title: 'Account Coordinator'
-      },
-      {
-        id: 3,
-        name: 'Vera Taleworth',
-        email: 'vtaleworth2@google.ca',
-        gender: 'Male',
-        title: 'Community Outreach Specialist'
-      },
-      {
-        id: 4,
-        name: 'Lonnie Izkovitz',
-        email: 'lizkovitz3@youtu.be',
-        gender: 'Female',
-        title: 'Operator'
-      },
-      {
-        id: 5,
-        name: 'Thatcher Stave',
-        email: 'tstave4@reference.com',
-        gender: 'Male',
-        title: 'Software Test Engineer III'
-      },
-      {
-        id: 6,
-        name: 'Karim Chipping',
-        email: 'kchipping5@scribd.com',
-        gender: 'Female',
-        title: 'Safety Technician II'
-      },
-      {
-        id: 7,
-        name: 'Helge Holyard',
-        email: 'hholyard6@howstuffworks.com',
-        gender: 'Female',
-        title: 'Internal Auditor'
-      },
-      {
-        id: 8,
-        name: 'Rod Titterton',
-        email: 'rtitterton7@nydailynews.com',
-        gender: 'Male',
-        title: 'Technical Writer'
-      },
-      {
-        id: 9,
-        name: 'Gawen Applewhite',
-        email: 'gapplewhite8@reverbnation.com',
-        gender: 'Female',
-        title: 'GIS Technical Architect'
-      },
-      {
-        id: 10,
-        name: 'Nero Mulgrew',
-        email: 'nmulgrew9@plala.or.jp',
-        gender: 'Female',
-        title: 'Staff Scientist'
-      },
-      {
-        id: 11,
-        name: 'Cybill Rimington',
-        email: 'crimingtona@usnews.com',
-        gender: 'Female',
-        title: 'Assistant Professor'
-      },
-      {
-        id: 12,
-        name: 'Maureene Eggleson',
-        email: 'megglesonb@elpais.com',
-        gender: 'Male',
-        title: 'Recruiting Manager'
-      },
-      {
-        id: 13,
-        name: 'Cortney Caulket',
-        email: 'ccaulketc@cbsnews.com',
-        gender: 'Male',
-        title: 'Safety Technician IV'
-      },
-      {
-        id: 14,
-        name: 'Selig Swynfen',
-        email: 'sswynfend@cpanel.net',
-        gender: 'Female',
-        title: 'Environmental Specialist'
-      },
-      {
-        id: 15,
-        name: 'Ingar Raggles',
-        email: 'iragglese@cbc.ca',
-        gender: 'Female',
-        title: 'VP Sales'
-      },
-      {
-        id: 16,
-        name: 'Karmen Mines',
-        email: 'kminesf@topsy.com',
-        gender: 'Male',
-        title: 'Administrative Officer'
-      },
-      {
-        id: 17,
-        name: 'Salome Judron',
-        email: 'sjudrong@jigsy.com',
-        gender: 'Male',
-        title: 'Staff Scientist'
-      },
-      {
-        id: 18,
-        name: 'Clarinda Marieton',
-        email: 'cmarietonh@theatlantic.com',
-        gender: 'Male',
-        title: 'Paralegal'
-      },
-      {
-        id: 19,
-        name: 'Paxon Lotterington',
-        email: 'plotteringtoni@netvibes.com',
-        gender: 'Female',
-        title: 'Marketing Assistant'
-      },
-      {
-        id: 20,
-        name: 'Maura Thoms',
-        email: 'mthomsj@webeden.co.uk',
-        gender: 'Male',
-        title: 'Actuary'
-      }
-    ]
-  }),
-  methods: {
-    newUser () {
-      window.alert('Noop')
-    },
-    searchOnTable () {
-      this.searched = searchByName(this.users, this.search)
-    }
+  name: 'listCrudLead',
+  props: ['selected'],
+  components: {
+    UpLead,
+    Endereco,
+    Conta
   },
-  created (){
-    this.searched = this.users
+  data: () => ({
+    selected: [],
+    people: [],
+    showUpdateLead: false,
+    showEndereco: false,
+    showConta: false,
+    desativar: false,
+    atual: []
+  }),
+  mounted () {
+  axios.get(process.env.API + 'user?id_profile=2')
+  .then(response => {
+    console.log('response: ' + response.data)
+    this.people = response.data
+  })
+  },
+  methods: {
+    onCancel () {
+      this.value = 'Disagreed'
+    },
+    onConfirm(){
+      let newLead = {
+        ativo: false
+      }
+      for (var i = 0; i <= this.selected.length; i++) {
+        axios.put(process.env.API+'user/' + this.selected[i].id, newLead)
+          .then(response => {
+            console.log(i + 'alterado')
+            window.location.reload()})
+      }
+    },
+    onSelect (items) {
+      this.selected = items
+    },
+    getAlternateLabel (count) {
+      let plural = ''
+      if (count > 1) {
+        plural = 's'
+        }
+      return `${count} user${plural} selected`
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .md-field {
-    max-width: 300px;
+  .md-table + .md-table {
+    margin-top: 16px
   }
-  .conteudo-alinhamento{
-     text-align: left;
+  .md-dialog {
+  width: 70%;
+  height: 70%;
+  max-width: 100%;
+  }
+  .div{
+    overflow: auto;
+   margin-left: 2%;
   }
 </style>
