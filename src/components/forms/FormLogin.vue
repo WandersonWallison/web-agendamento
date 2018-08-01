@@ -4,7 +4,6 @@
 
       <div class="title">
         <img src="../../assets/marca_branca_fundo_transparente.png">
-
       </div>
 
       <div class="form">
@@ -57,23 +56,24 @@ export default {
   },
   methods: {
     auth() {
+      alert('chegou no entrar!')
       this.menssage = null
       console.log('Valor API: ' + process.env.API + 'login')
-      //this.inicio = 'E-mail: '+this.login.email
-      //this.results = 'Password: '+this.login.password
+
       this.results = ''
       if (this.login.email != '' && this.login.password != '') {
         axios
           .post(process.env.API + 'login', this.login)
           .then(response => {
-            console.log('Valor Response ' + response.data.user)
-            if (response.data.user == false) {
-              //this.$router.push('/')
+
+            this.inicio = response.data
+            if (response.data.user === false) {
+              this.$router.push('/')
               this.menssage = response.data.message
             } else {
               this.results = response.data.message
-              localStorage.setItem('Usuario', response.data.user.createdAt)
-
+              localStorage.setItem('Usuario', response.data.user)
+              this.$router.push('/home')
             }
           })
           .catch(error => {
@@ -86,7 +86,14 @@ export default {
         }, 2000)
       } else {
         this.$router.push('/')
-        this.menssage = 'Por favor incluir e-mail e password'
+        if(this.login.email == ''){
+          this.menssage = 'Por favor incluir e-mail'
+        }else if(this.login.password == ''){
+          this.menssage = 'Por favor incluir a senha'
+        }
+        setTimeout(() => {
+          this.menssage = ''
+        }, 2000)
       }
     }
   }
@@ -105,7 +112,8 @@ export default {
     margin-bottom: 30px;
     img {
       margin-bottom: 16px;
-      max-width: 300px;
+      max-width: 100%;
+      width: 100%;
     }
   }
   .actions {
@@ -133,9 +141,10 @@ export default {
   .md-content {
     z-index: 1;
     padding: 40px;
-    width: 100%;
-    max-width: 400px;
-    position: relative;
+    width: 50%;
+    max-width: 100%;
+    position: absolute;
+    height: 90%;
     background-color: #15da93;
     //background-color: #1a503a;
   }
