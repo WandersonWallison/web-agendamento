@@ -56,16 +56,13 @@ export default {
   },
   methods: {
     auth() {
-      alert('chegou no entrar!')
       this.menssage = null
       console.log('Valor API: ' + process.env.API + 'login')
-
       this.results = ''
       if (this.login.email != '' && this.login.password != '') {
         axios
           .post(process.env.API + 'login', this.login)
           .then(response => {
-
             this.inicio = response.data
             if (response.data.user === false) {
               this.$router.push('/')
@@ -77,7 +74,7 @@ export default {
             }
           })
           .catch(error => {
-            this.results = error.response.data
+            this.results = 'Usuario não encontrado. Por favor verirficar os dados digitados'
             console.log(error.response.data)
           })
         this.loading = true
@@ -105,15 +102,15 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  height: 100vh;
+  position: static;
+  height: 95vh;
   .title {
     text-align: center;
     margin-bottom: 30px;
     img {
       margin-bottom: 16px;
-      max-width: 100%;
-      width: 100%;
+      max-width: 70%;
+      width: auto;
     }
   }
   .actions {
@@ -141,10 +138,10 @@ export default {
   .md-content {
     z-index: 1;
     padding: 40px;
-    width: 50%;
+    width: 500px;
     max-width: 100%;
     position: absolute;
-    height: 90%;
+    height: 500px;
     background-color: #15da93;
     //background-color: #1a503a;
   }
