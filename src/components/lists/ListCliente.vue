@@ -1,8 +1,6 @@
 <template>
   <div class="conteudo-alinhamento">
-    <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Contatos</span>
-    </md-toolbar>
+  <md-conteiner>
     <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header @md-selected="onMouseOver">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
@@ -60,6 +58,7 @@
           <agenda :leadProps="leadProps"></agenda>
       </div>
     </md-dialog>
+  </md-conteiner>
   </div>
 </template>
 
