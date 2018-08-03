@@ -1,6 +1,5 @@
 <template>
 <div class="page-container">
-  <router-view/>
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-toobar">
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">

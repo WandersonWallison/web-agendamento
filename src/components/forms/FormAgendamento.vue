@@ -137,6 +137,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
 import {
@@ -226,7 +227,7 @@ export default {
     },
     saveAgenda () {
       let newAgenda = {
-        data: this.form.data,
+        data: moment(this.form.data).format(),
         hora: this.form.horario,
         obs: this.form.observacao,
         lead: this.leadProps.id
