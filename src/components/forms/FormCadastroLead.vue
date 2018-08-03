@@ -7,29 +7,6 @@
         </md-toolbar>
         <md-card-content>
           <div class="md-layout md-gutter">
-
-             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('horario')">
-                <label for="horario">Horário</label>
-                <md-select name="horario" id="horario" v-model="form.horario" md-dense :disabled="sending">
-                  <md-option  value=""></md-option>
-                  <md-option value="1">08:00</md-option>
-                  <md-option value="2">09:00</md-option>
-                  <md-option value="3">10:00</md-option>
-                  <md-option value="4">11:00</md-option>
-                  <md-option value="5">14:00</md-option>
-                  <md-option value="6">15:00</md-option>
-                  <md-option value="7">16:00</md-option>
-                  <md-option value="8">17:00</md-option>
-                  <md-option value="9">18:00</md-option>
-                  <md-option value="10">19:00</md-option>
-                  <md-option value="11">20:00</md-option>
-                  <md-option value="12">21:00</md-option>
-                  <md-option value="13">22:00</md-option>
-                </md-select>
-                <span class="md-error">Hórario de Agendamento deve ser informado</span>
-              </md-field>
-            </div>
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">

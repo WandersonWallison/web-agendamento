@@ -18,10 +18,8 @@
           <md-button @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
-
       <md-app-drawer :md-active.sync="menuVisible">
         <md-toolbar class="md-transparent" md-elevation="0">Menu</md-toolbar>
-
         <md-list>
           <md-list-item md-expand>
             <md-icon>dashboard</md-icon>
@@ -34,20 +32,16 @@
             <md-icon>gavel</md-icon>
             <span class="md-list-item-text">Admin</span>
           </md-list-item>
-
           <md-list-item md-expand>
             <md-icon>contacts</md-icon>
             <span class="md-list-item-text">Contatos</span>
-
           <md-list slot="md-expand">
             <md-button to="/lead/list">Listar</md-button>
             <md-button class="md-inset">Adicionar</md-button>
           </md-list>
           </md-list-item>
-
         </md-list>
       </md-app-drawer>
-
       <md-app-content>
         <list-cliente ref="ListCliente"></list-cliente>
       </md-app-content>
@@ -94,7 +88,6 @@ export default {
   min-height: 350px;
   border: 1px solid rgba(#000, 0.12);
 }
-
 // Demo purposes only
 .md-drawer {
   width: 230px;
@@ -108,5 +101,4 @@ export default {
   float: right;
   margin-top: 200px;
 }
-
 </style>
