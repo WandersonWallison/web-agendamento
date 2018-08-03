@@ -69,7 +69,7 @@ export default {
               this.menssage = response.data.message
             } else {
               this.results = response.data.message
-              localStorage.setItem('Usuario', response.data.user)
+              localStorage.setItem('Usuario', JSON.stringify(response.data.user))
               this.$router.push('/home')
             }
           })

@@ -12,24 +12,15 @@ import CadAgendamento from '../components/forms/FormAgendamento.vue'
 import Calendario from '../components/forms/FormCalendario.vue'
 
 Vue.use(Router)
+const token = JSON.stringify(localStorage.getItem('Usuario'))
+console.log('Token do localstorage: ' + token)
 
-export default new Router({
-
+const router = new Router({
   routes: [
-
     {
       path: '/',
       name: 'login',
-      component: Login,
-      beforeEach: function (to, from, next) {
-        const token = JSON.parse(localStorage.getItem('Usuario'))
-        alert('token do usuario: ' + token.id)
-        if (!token) {
-          next('/')
-        } else {
-          next()
-        }
-      }
+      component: Login
     },
     {
       path: '/Home',
@@ -70,14 +61,27 @@ export default new Router({
       path: '/Agenda',
       name: 'cadastroAgendamento',
       component: CadAgendamento
-
     },
     {
       path: '/FormCalendario',
       name: 'FormCalendario',
       component: Calendario
-
     }
-
   ]
+
 })
+router.beforeEach((to, from, next) => {
+  console.log(to)
+  if (to.meta.requiresAuth) {
+    const authUser = JSON.parse(window.localStorage.getItem('Usuario'))
+    console.log('Usuario Autenticado: ' + authUser)
+    if (authUser && authUser.id) {
+      next()
+    } else {
+      next({name: '/home'})
+    }
+  }
+  next()
+})
+
+export default router
