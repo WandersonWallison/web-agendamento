@@ -10,7 +10,6 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vuetify/dist/vuetify.min.css'
 import Vuetify from 'vuetify'
 import BootstrapVue from 'bootstrap-vue'
-import VueMask from 'vue-the-mask'
 import Axios from 'axios'
 import './assets/vue2-simple-calendar.css'
 
@@ -20,9 +19,9 @@ Vue.use(
   VueMaterial,
   VueSessionstorage,
   Vuetify,
-  VueMask,
   BootstrapVue,
-  Axios)
+  Axios
+)
 
 /* eslint-disable no-new */
 new Vue({

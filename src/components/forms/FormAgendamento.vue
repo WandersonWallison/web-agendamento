@@ -5,7 +5,6 @@
        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Agendamento</span>
         </md-toolbar>
-
         <md-card-content>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">

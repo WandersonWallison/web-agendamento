@@ -1,172 +1,118 @@
 <template>
-  <div>
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
-      <md-card class="md-layout-item md-size-100 md-small-size-100">
-       <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Cadastro de Contato</span>
-        </md-toolbar>
-        <md-card-content>
-          <div class="md-layout md-gutter">
+  <div class="div-tamanho">
+    <md-conteiner>
+      <form novalidate class="md-layout div-tamanho" @submit.prevent="validateUser">
+        <md-card class="md-layout-item md-size-100 md-small-size-80">
+          <md-toolbar md-elevation="0" class="md-dense">
+            <span class="md-title">Cadastro de Contato</span>
+          </md-toolbar>
+          <md-card-content >
+            <div class="md-layout md-gutter">
+            </div>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('nomeCompleto')">
+                  <label for="nomeCompleto">Nome Completo</label>
+                  <md-input id="nomeCompleto" name="nomeCompleto" v-model="form.nomeCompleto" :disabled="sending" />
+                  <span class="md-error" v-if="!$v.form.nomeCompleto.required">Nome deve ser preenchido</span>
+                  <span class="md-error" v-else-if="!$v.form.nomeCompleto.maxlength">Invalid Nome Completo</span>
+                </md-field>
+              </div>
+              <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('telefone')">
+                  <label for="cep">Telefone</label>
+                  <md-input  type="number" v-mask="'##/##/####'" id="telefone" name="telefone" autocomplete="telefone"  v-model="form.telefone" :disabled="sending" />
+                  <span class="md-error" v-if="!$v.form.telefone.required">Telefone deve ser preenchido</span>
+                  <span class="md-error" v-else-if="!$v.form.telefone.maxlength">telefone invalido</span>
+                </md-field>
+              </div>
+              <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('celular')">
+                  <label for="celular">Celular</label>
+                  <md-input  type="number" :mask="['(##) ####-####', '(##) #####-####']" id="celular" name="celular" autocomplete="celular" v-model="form.celular" :disabled="sending" />
+                  <span class="md-error" v-if="!$v.form.celular.required">Celular deve ser preenchido</span>
+                  <span class="md-error" v-else-if="!$v.form.celular.maxlength">Invalid celular</span>
+                </md-field>
+              </div>
+            </div>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('email')">
+                  <label for="email">E-mail</label>
+                  <md-input  type="email" id="email" name="email" autocomplete="email" v-model="form.email" :disabled="sending" />
+                  <span class="md-error" v-if="!$v.form.email.required">E-mail deve ser preenchido</span>
+                </md-field>
+              </div>
+            </div>
+            <div class="md-layout md-gutter">
+            </div>
+            <md-field>
+              <label for="observacao">Observação</label>
+              <md-textarea type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
+              <md-icon>description</md-icon>
+            </md-field>
+          </md-card-content>
+          <md-progress-bar md-mode="indeterminate" v-if="sending" />
+          <md-card-actions>
+          <div class="actions md-layout">
+            <md-button class="md-raised md-primary botao" type="submit" :disabled="sending">Cadastrar</md-button>
           </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('rua')">
-                <label for="rua">Rua</label>
-                <md-input id="rua" name="rua" v-model="form.rua" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Rua deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid rua</span>
-              </md-field>
-            </div>
-          </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('numero')">
-                <label for="numero">Número</label>
-                <md-input  type="number" id="numero" name="numero" autocomplete="numero" v-model="form.numero" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cep')">
-                <label for="cep">CEP</label>
-                <md-input  type="number" id="cep" name="cep" autocomplete="cep" v-model="form.cep" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
-              </md-field>
-            </div>
-          </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('bairro')">
-                <label for="bairro">Bairro</label>
-                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid Bairro</span>
-              </md-field>
-            </div>
-          </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cidade')">
-                <label for="cidade">Cidade</label>
-                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('estado')">
-                <label for="estado">Estado</label>
-                <md-select name="estado" id="estado" v-model="form.estado" md-dense :disabled="sending">
-                  <md-option velue=""></md-option>
-                    <md-option value="ac">Acre</md-option>
-                    <md-option value="al">Alagoas</md-option>
-                    <md-option value="am">Amazonas</md-option>
-                    <md-option value="ap">Amapá</md-option>
-                    <md-option value="ba">Bahia</md-option>
-                    <md-option value="ce">Ceará</md-option>
-                    <md-option value="df">Distrito Federal</md-option>
-                    <md-option value="es">Espírito Santo</md-option>
-                    <md-option value="go">Goiás</md-option>
-                    <md-option value="ma">Maranhão</md-option>
-                    <md-option value="mt">Mato Grosso</md-option>
-                    <md-option value="ms">Mato Grosso do Sul</md-option>
-                    <md-option value="mg">Minas Gerais</md-option>
-                    <md-option value="pa">Pará</md-option>
-                    <md-option value="pb">Paraíba</md-option>
-                    <md-option value="pr">Paraná</md-option>
-                    <md-option value="pe">Pernambuco</md-option>
-                    <md-option value="pi">Piauí</md-option>
-                    <md-option value="rj">Rio de Janeiro</md-option>
-                    <md-option value="rn">Rio Grande do Norte</md-option>
-                    <md-option value="ro">Rondônia</md-option>
-                    <md-option value="rs">Rio Grande do Sul</md-option>
-                    <md-option value="rr">Roraima</md-option>
-                    <md-option value="sc">Santa Catarina</md-option>
-                    <md-option value="se">Sergipe</md-option>
-                    <md-option value="sp">São Paulo</md-option>
-                    <md-option value="to">Tocantins</md-option>
-                </md-select>
-                <span class="md-error">Estado não selecioando</span>
-              </md-field>
-            </div>
-          </div>
-          <md-field>
-            <label for="observacao">Observação</label>
-            <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
-          </md-field>
-        </md-card-content>
-        <md-progress-bar md-mode="indeterminate" v-if="sending" />
-        <md-card-actions>
-        <div class="actions md-layout md-alignment-center-space-between">
-          <md-button class="md-raised md-primary" type="submit" :disabled="sending">Agendar</md-button>
-        </div>
-        </md-card-actions>
-      </md-card>
-      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
-    </form>
+          </md-card-actions>
+        </md-card>
+      </form>
+    </md-conteiner>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
+import { TheMask } from 'vue-the-mask'
 import {
   required,
-  minLength
+  minLength,
+  email
 } from 'vuelidate/lib/validators'
+import moment from 'moment'
 
 export default {
-  name: 'FormAgenda',
+  name: 'FormCadastroLead',
   props: ['leadProps'],
   mixins: [validationMixin],
   data: () => ({
     form: {
-      data: null,
-      horario: null,
-      cep: null,
-      rua: null,
-      numero: null,
-      estado: null,
-      cidade: null,
-      bairro: null,
+      nomeCompleto: null,
+      email: null,
+      telefone: null,
+      celular: null,
       observacao: null
     },
     userSaved: false,
     sending: false,
     lastUser: null
   }),
+  component: {
+    TheMask
+  },
+  directives: {
+    TheMask
+  },
   validations: {
     form: {
-      data: {
+      nomeCompleto: {
         required
       },
-      horario: {
+      email: {
         required,
-        minLength: minLength(1)
+        minLength: minLength(5),
+        email
       },
-      rua: {
+      telefone: {
         required,
         minLength: minLength(4)
       },
-      numero: {
+      celular: {
         required,
         minLength: minLength(1)
-      },
-      cep: {
-        required,
-        minLength: minLength(5)
-      },
-      cidade: {
-        required,
-        minLength: minLength(3)
-      },
-      estado: {
-        required,
-        minLength: minLength(2)
-      },
-      bairro: {
-        required,
-        minLength: minLength(3)
       }
     }
   },
@@ -184,51 +130,38 @@ export default {
     },
     clearForm () {
       this.$v.$reset()
-      this.form.data = ''
-      this.form.horario = null
+      this.form.nomeCompleto = null
+      this.form.telefone = null
       this.form.email = null
-      this.form.cep = null
-      this.form.rua = null
-      this.form.numero = null
-      this.form.cidade = null
-      this.form.estado = null
+      this.form.celular = null
       this.form.observacao = null
-      this.form.bairro = null
     },
-    saveAgenda () {
-      let newAgenda = {
-        data: this.form.data,
-        hora: this.form.horario,
+    somenteNumeros (num) {
+        var er = /[^0-9.]/;
+        er.lastIndex = 0;
+        var campo = num;
+        if (er.test(campo.value)) {
+          campo.value = "";
+        }
+    },
+    saveContato () {
+      let newLead = {
+        nome: this.form.nomeCompleto,
+        email: this.form.email,
+        telefone: this.form.telefone,
+        celular: this.form.celular,
         obs: this.form.observacao,
-        lead: this.leadProps.id
+        data_criacao: moment(Date.now()).format()
       }
-      let newEndereco = {
-        rua: this.form.rua,
-        numero: this.form.numero,
-        bairro: this.form.bairro,
-        cidade: this.form.cidade,
-        cep: this.form.cep,
-        uf: this.form.estado,
-        schedule_address: ''
-      }
-      axios.post(process.env.API + 'schedule', newAgenda)
+      axios.post(process.env.API + 'leads', newLead)
         .then(response => {
-          newEndereco.schedule_address = response.data.id
-          axios.post(process.env.API + 'address', newEndereco)
-          .then(response => {
-            alert('Agendamento cadastado com success')
-            this.userSaved = true
-            this.sending = false
-            this.clearForm()
-            window.location.reload()
-          })
-          .catch(error => {
-            alert('Erro endereco ' + error)
-            console.log(error.response.data)
-          })
+          this.userSaved = true
+          this.sending = false
+          alert('Cantato cadastado com success')
+          this.clearForm()
         })
         .catch(error => {
-          alert('agenda ' + error.response.data.code)
+          alert('Cantato ' + error.response.data.message)
           console.log(error.response.data)
         })
     },
@@ -236,18 +169,23 @@ export default {
       console.log('this.$v.$invalid ' + this.$v.$invalid)
       this.$v.$touch()
       if (!this.$v.$invalid) {
-        this.saveAgenda()
+        this.saveContato()
       }
     }
   }
 }
 </script>
-
 <style lang="scss" scoped>
-.md-progress-bar {
-  position: relative;
-  top: 0;
-  right: 0;
-  left: 0;
-}
+  .md-progress-bar {
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+  .div-tamanho {
+    height: 80%;
+  }
+  .botão{
+     margin-left: 2%
+  }
 </style>

@@ -104,8 +104,8 @@ export default {
     atual: []
   }),
   mounted () {
-  axios.get(process.env.API + 'leads?where={"ativo": true}')
-  .then(response => {
+    axios.get(process.env.API + 'leads?where={"ativo": true}')
+    .then(response => {
     this.people = response.data
   })
   },

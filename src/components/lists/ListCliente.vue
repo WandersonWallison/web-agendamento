@@ -1,6 +1,6 @@
 <template>
-  <div class="conteudo-alinhamento">
-  <md-conteiner>
+  <div class="conteudo-alinhamento conteiner">
+  <md-conteiner class="conteiner" >
     <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header @md-selected="onMouseOver">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
@@ -236,5 +236,8 @@ export default {
 .div {
   overflow: auto;
   margin-left: 2%;
+}
+.conteiner {
+  height: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="centered-container">
+  <div class="centered-container" @keyup.enter="auth">
     <md-content class="md-elevation-3">
 
       <div class="title">
@@ -21,18 +21,13 @@
         {{results}}
         <br>
         {{inicio}}
-
       </div>
-
       <div class="actions md-layout md-alignment-center-space-between">
         <md-button class="md-raised md-primary" @click="auth">Entrar</md-button>
-
       </div>
-
       <div class="loading-overlay" v-if="loading">
-        <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
+        <md-progress-spinner md-mode='indeterminate' md-diameter='50' :md-stroke='4'></md-progress-spinner>
       </div>
-
     </md-content>
     <div class="background" />
   </div>
@@ -40,6 +35,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   name: 'Login',
   data() {
@@ -67,10 +63,17 @@ export default {
             if (response.data.user === false) {
               this.$router.push('/')
               this.menssage = response.data.message
+              setTimeout(() => {
+                  this.login.email = ''
+                  this.login.password = ''
+                  this.inicio = ''
+                  this.menssage =  ''
+              }, 3000);
             } else {
               this.results = response.data.message
+              console.log('response:' + response.data)
               localStorage.setItem('Usuario', JSON.stringify(response.data.user))
-              this.$router.push('/home')
+              //this.$router.push('/home')
             }
           })
           .catch(error => {
@@ -90,6 +93,8 @@ export default {
         }
         setTimeout(() => {
           this.menssage = ''
+          this.inicio = ''
+          this.results = ''
         }, 2000)
       }
     }
@@ -146,7 +151,7 @@ export default {
     //background-color: #1a503a;
   }
   .loading-overlay {
-    z-index: 10;
+    z-index: 5;
     top: 0;
     left: 0;
     right: 0;
@@ -154,7 +159,7 @@ export default {
     width: 100%;
     height: 100%;
     background: rgba(255, 255, 255, 0.9);
-    display: flex;
+    display: -webkit-box;
     align-items: center;
     justify-content: center;
   }

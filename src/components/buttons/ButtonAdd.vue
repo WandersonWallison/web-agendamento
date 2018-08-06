@@ -53,8 +53,8 @@ export default {
   min-height: 40%;
 }
 .md-dialog {
-  width: 70%;
-  height: 70%;
+  width: 90%;
+  height: 90%;
   max-width: 100%;
 }
 .div{
