@@ -19,6 +19,16 @@
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('email')">
+                  <label for="email">E-mail</label>
+                  <md-input  type="email" id="email" name="email" autocomplete="email" v-model="form.email" :disabled="sending" />
+                  <span class="md-error" v-if="!$v.form.email.required">E-mail deve ser preenchido</span>
+                </md-field>
+              </div>
+
+            </div>
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('telefone')">
                   <label for="cep">Telefone</label>
                   <md-input  type="number" v-mask="'##/##/####'" id="telefone" name="telefone" autocomplete="telefone"  v-model="form.telefone" :disabled="sending" />
@@ -32,15 +42,6 @@
                   <md-input  type="number" :mask="['(##) ####-####', '(##) #####-####']" id="celular" name="celular" autocomplete="celular" v-model="form.celular" :disabled="sending" />
                   <span class="md-error" v-if="!$v.form.celular.required">Celular deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.celular.maxlength">Invalid celular</span>
-                </md-field>
-              </div>
-            </div>
-            <div class="md-layout md-gutter">
-              <div class="md-layout-item md-small-size-100">
-                <md-field :class="getValidationClass('email')">
-                  <label for="email">E-mail</label>
-                  <md-input  type="email" id="email" name="email" autocomplete="email" v-model="form.email" :disabled="sending" />
-                  <span class="md-error" v-if="!$v.form.email.required">E-mail deve ser preenchido</span>
                 </md-field>
               </div>
             </div>
@@ -183,7 +184,7 @@ export default {
     left: 0;
   }
   .div-tamanho {
-    height: 80%;
+    height: 100%;
   }
   .botão{
      margin-left: 2%

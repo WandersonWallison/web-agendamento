@@ -17,11 +17,11 @@
         </md-button>
       </md-speed-dial-content>
     </md-speed-dial>
-    <md-dialog :md-active.sync="showAgente" class="div">
-      <cad-user/>
-    </md-dialog>
     <md-dialog :md-active.sync="showDialog" class="div">
       <cad-lead/>
+    </md-dialog>
+    <md-dialog :md-active.sync="showAgente" class="div">
+      <cad-user/>
     </md-dialog>
     <md-dialog :md-active.sync="showEmpresa" class="div">
       <cad-empresa/>
@@ -50,14 +50,17 @@ export default {
 </script>
 <style lang='scss' scoped>
 .example {
-  min-height: 40%;
+  min-height: 60%;
 }
 .md-dialog {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   max-width: 100%;
 }
 .div{
   overflow: auto;
+  height: 70%;
+  width: 70%;
+
 }
 </style>
