@@ -12,9 +12,11 @@ import CadAgendamento from '../components/forms/FormAgendamento.vue'
 import Calendario from '../components/forms/FormCalendario.vue'
 
 Vue.use(Router)
-const token = JSON.stringify(localStorage.getItem('Usuario'))
+const token = JSON.parse(localStorage.getItem('Usuario'))
 console.log('Token do localstorage: ' + token)
-
+if (!token) {
+  console.log('não veio o token')
+}
 const router = new Router({
   routes: [
     {

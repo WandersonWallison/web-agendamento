@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
+    <form novalidate class="md-layout" @submit.prevent="validateEmpresa">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Cadastro de Escritorio</span>
@@ -310,7 +310,7 @@ export default {
           console.log(error.response.data)
         })
     },
-    validateUser () {
+    validateEmpresa () {
       console.log('this.$v.$invalid ' + this.$v.$invalid)
       this.$v.$touch()
       if (!this.$v.$invalid) {

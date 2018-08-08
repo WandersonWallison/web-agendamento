@@ -1,167 +1,499 @@
 <template>
-
-   <div class="centered-container">
-     <md-content class="md-elevation-1 body-content">
-       <md-toolbar md-elevation="0" class="md-dense">
-        <span class="md-title">Cadastro de Agente</span>
-      </md-toolbar>
-      <br>
-        <md-field>
-          <md-input v-model="agente.username" placeholder="Nome completo" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input type="email" v-model="agente.email" placeholder="E-mail" autofocus ></md-input>
-        </md-field>
-         <md-field>
-          <md-input v-model="agente.senha" placeholder="Senha" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input type="tel" v-model="agente.telefone" placeholder="Telefone" autofocus></md-input>
-        </md-field>
-        <md-datepicker type="date" v-model="agente.dataInicio" md-immediately>
-            <label>Data Inicio</label>
-        </md-datepicker>
-        <md-field>
-          <md-input v-model="agente.cvm" placeholder="CVM" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input v-model="agente.RG" placeholder="RG" autofocus ></md-input>
-        </md-field>
-        <md-field>
-          <md-input v-model="agente.CPF" placeholder="CPF" autofocus ></md-input>
-        </md-field>
-        <md-datepicker type="date" v-model="agente.dataNascimento" md-immediately>
-            <label>Data Nascimento</label>
-        </md-datepicker>
-        <genero></genero>
-        <escolaridade></escolaridade>
-        <md-field>
-          <md-input v-model="agente.nomeConjuge" placeholder="Nome Conjuge" autofocus ></md-input>
-        </md-field>
-         <md-field>
-          <md-input v-model="agente.nomeMae" placeholder="Nome Mãe" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input v-model="agente.nomePai" placeholder="Nome Pai" autofocus></md-input>
-        </md-field>
-        <md-field>
-          <md-input type="Url" v-model="agente.redeSocial" placeholder="Rede Social" autofocus></md-input>
-        </md-field>
-        <endereco/>
-        <br>
+  <div>
+    <form novalidate class='md-layout' @submit.prevent='validateUser'>
+      <md-card class='md-layout-item md-size-100 md-small-size-100'>
+       <md-toolbar md-elevation='0' class='md-dense'>
+          <span class='md-title'>Cadastro de Agente</span>
+        </md-toolbar>
+        <md-card-content>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('nomeAgente')">
+                <label for="nomeAgente">Nome Completo</label>
+                <md-input id="nomeAgente" name="nomeAgente" v-model="form.nomeAgente" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.nomeAgente.required">Nome do Agente deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.nomeAgente.maxlength">Invalid Escritorio</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('email')">
+                  <label for="email">E-mail</label>
+                  <md-input type='email' id="email" name="email" v-model="form.email" :disabled="sending" />
+                  <span class="md-error" v-if="!$v.form.email.required">E-mail deve ser preenchido</span>
+                  <span class="md-error" v-else-if="!$v.form.email.maxlength">Invalid email</span>
+                </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('telefone')">
+                <label for="telefone">Telefone</label>
+                <md-input type="number" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Invalid telefone</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('celular')">
+                <label for="celular">Celular</label>
+                <md-input type="number" id="celular" name="celular" v-model="form.celular" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.celular.required">celular deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.celular.maxlength">Invalid celular</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label for="redeSocial">Rede Sociais</label>
+                <md-input id="redeSocial" name="redeSocial" v-model="form.redeSocial" :disabled="sending" />
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+                <md-datepicker :class="getValidationClass('dataInicio')" id="dataInicio" name="dataInicio" date="true" time="true" v-model="form.dataInicio">
+                    <label>Data Inicio</label>
+                    <span class="md-error" v-if="!$v.form.dataInicio.required">Data Inicio deve ser preenchido</span>
+                </md-datepicker>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+                <md-datepicker :class="getValidationClass('dataNascimento')"  id="dataNascimento" name="dataNascimento" date="true" time="true" v-model="form.dataNascimento">
+                  <label>Data Nascimento</label>
+                  <span class="md-error" v-if="!$v.form.dataNascimento.required">Data Nascimento deve ser preenchido</span>
+                </md-datepicker>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cvm')">
+                <label for="cvm">CVM</label>
+                <md-input type="number" id="cvm" name="cvm" v-model="form.cvm" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cvm.required">CVM deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.cvm.maxlength">Invalid cvm</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('rg')">
+                <label for="rg">RG</label>
+                <md-input type="number" id="rg" name="rg" v-model="form.rg" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.rg.required">RG deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.rg.maxlength">Invalid rg</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cpf')">
+                <label for="cpf">CPF</label>
+                <md-input type="number" id="cpf" name="cpf" v-model="form.cpf" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cpf.required">cpf deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.cpf.maxlength">Invalid cpf</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+              <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('genero')">
+                  <label for="genero">Gênero</label>
+                  <md-select v-model="form.genero" name="genero" id="genero">
+                    <md-option value=""></md-option>
+                    <md-option value="0">Feminino</md-option>
+                    <md-option value="1">Masculino</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.form.genero.required">Gênero deve ser selecionado</span>
+                </md-field>
+              </div>
+              <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('escolaridade')">
+                  <label for="escolaridade">Escolaridade</label>
+                  <md-select v-model="form.escolaridade" name="escolaridade" id="escolaridade">
+                    <md-option value=""></md-option>
+                    <md-option value="Ensino Fundamental">Ensino Fundamental</md-option>
+                    <md-option value="Ensino Medio">Ensino médio</md-option>
+                    <md-option value=" Ensino Superior">Ensino Superior</md-option>
+                    <md-option value="Ensino pós superior">Ensino pós superior</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.form.escolaridade.required">Escolaridade deve ser selecionado</span>
+                </md-field>
+              </div>
+              <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('estadoCivil')">
+                  <label for="estadoCivil">Estado Civil</label>
+                  <md-select v-model="form.estadoCivil" name="estadoCivil" id="estadoCivil">
+                    <md-option value=""></md-option>
+                    <md-option value="0">Solteiro</md-option>
+                    <md-option value="1">Casado</md-option>
+                    <md-option value="2">Divorciado</md-option>
+                    <md-option value="3">Viúvo</md-option>
+                    <md-option value="4">Outros</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.form.estadoCivil.required">Estado Civil deve ser selecionado</span>
+                </md-field>
+              </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label for="nomeConjuge">Nome Conjuge</label>
+                  <md-input id="nomeConjuge" name="nomeConjuge" v-model="form.nomeConjuge" :disabled="sending" />
+                </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('nomeMae')">
+                <label for="nomeMae">Nome Mãe</label>
+                <md-input id="nomeMae" name="nomeMae" v-model="form.nomeMae" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.nomeMae.required">Nome Mãe deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.nomeMae.maxlength">Invalid nome Mae</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label for="nomePai">Nome Pai</label>
+                <md-input id="nomePai" name="nomePai" v-model="form.nomePai" :disabled="sending" />
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+          </div>
+          <md-toolbar md-elevation="0" class="md-dense">
+            <span class="md-title">Endereço</span>
+          </md-toolbar>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('rua')">
+                <label for="rua">Rua</label>
+                <md-input id="rua" name="rua" v-model="form.rua" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.rua.required">Rua deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid rua</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('numero')">
+                <label for="numero">Número</label>
+                <md-input  type="number" id="numero" name="numero" autocomplete="numero" v-model="form.numero" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cep')">
+                <label for="cep">CEP</label>
+                <md-input  type="number" id="cep" name="cep" autocomplete="cep" v-model="form.cep" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('bairro')">
+                <label for="bairro">Bairro</label>
+                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid Bairro</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cidade')">
+                <label for="cidade">Cidade</label>
+                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('estado')">
+                <label for="estado">Estado</label>
+                <md-select name="estado" id="estado" v-model="form.estado" md-dense :disabled="sending">
+                  <md-option velue=""></md-option>
+                    <md-option value="ac">Acre</md-option>
+                    <md-option value="al">Alagoas</md-option>
+                    <md-option value="am">Amazonas</md-option>
+                    <md-option value="ap">Amapá</md-option>
+                    <md-option value="ba">Bahia</md-option>
+                    <md-option value="ce">Ceará</md-option>
+                    <md-option value="df">Distrito Federal</md-option>
+                    <md-option value="es">Espírito Santo</md-option>
+                    <md-option value="go">Goiás</md-option>
+                    <md-option value="ma">Maranhão</md-option>
+                    <md-option value="mt">Mato Grosso</md-option>
+                    <md-option value="ms">Mato Grosso do Sul</md-option>
+                    <md-option value="mg">Minas Gerais</md-option>
+                    <md-option value="pa">Pará</md-option>
+                    <md-option value="pb">Paraíba</md-option>
+                    <md-option value="pr">Paraná</md-option>
+                    <md-option value="pe">Pernambuco</md-option>
+                    <md-option value="pi">Piauí</md-option>
+                    <md-option value="rj">Rio de Janeiro</md-option>
+                    <md-option value="rn">Rio Grande do Norte</md-option>
+                    <md-option value="ro">Rondônia</md-option>
+                    <md-option value="rs">Rio Grande do Sul</md-option>
+                    <md-option value="rr">Roraima</md-option>
+                    <md-option value="sc">Santa Catarina</md-option>
+                    <md-option value="se">Sergipe</md-option>
+                    <md-option value="sp">São Paulo</md-option>
+                    <md-option value="to">Tocantins</md-option>
+                </md-select>
+                <span class="md-error">Estado não selecioando</span>
+              </md-field>
+            </div>
+          </div>
+          <md-field>
+            <label for="observacao">Observação</label>
+            <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
+          </md-field>
+        </md-card-content>
+        <md-progress-bar md-mode="indeterminate" v-if="sending" />
+        <md-card-actions>
         <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="auth">Cadastrar</md-button>
-
-      </div>
-     </md-content>
-    </div>
+          <md-button class="md-raised md-primary" type="submit" :disabled="sending">Cadastrar</md-button>
+        </div>
+        </md-card-actions>
+      </md-card>
+      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
+    </form>
+  </div>
 </template>
 
 <script>
-import endereco from '../forms-endereco/FormEndereco'
-import UF from '../forms-selects/SelectUF'
-import genero from '../forms-selects/SelectGenero'
-import escolaridade from '../forms-selects/SelectEscolaridade'
+import axios from 'axios'
+import { validationMixin } from 'vuelidate'
+import {
+  required,
+  minLength,
+  email
+} from 'vuelidate/lib/validators'
 
 export default {
-  name: 'agente',
-  components: {
-    endereco,
-    UF,
-    genero,
-    escolaridade
-  },
-  data () {
+  name: 'FormEmpresa',
+  props: ['leadProps'],
+  mixins: [validationMixin],
+  data: () => ({
+    form: {
+      nomeAgente: null,
+      email : null,
+      senha : null,
+      telefone:null,
+      celular : null,
+      dataInicio : null,
+      dataNascimento: null,
+      cvm : null,
+      nomeConjuge : null,
+      nomeMae : null,
+      nomePai : null,
+      redeSocial : null,
+      rg : null,
+      cpf : null,
+      cep : null,
+      rua : null,
+      numero : null,
+      estado : null,
+      cidade : null,
+      bairro : null,
+      observacao : null,
+      qtdVisitas : null,
+      metaAnual : null,
+      estadoCivil : null,
+      escolaridade : null,
+      genero : null
 
-    return {
-      loading: false,
-      agente: {
-        username: '',
-        email: '',
-        senha: '',
-        cvm: '',
-        dataInicio: '',
-        UF: '',
-        genero: '',
-        telefone: '',
-        redeSocial: '',
-        nomeConjuge: '',
-        nomeMae: '',
-        nomePai: '',
-        dataNascimento: '',
-        CPF: '',
-        RG: '',
-        escolaridade: ''
+    },
+    userSaved : false,
+    sending : false,
+    lastUser : null
+  }),
+  validations: {
+    form: {
+
+      nomeAgente: {
+        required
       },
-      results: null
+      email: {
+        required,
+        minLength: minLength(1),
+        email
+      },
+      dataInicio: {
+        required
+      },
+      dataNascimento: {
+        required
+      },
+      telefone: {
+        required,
+        minLength: minLength(1)
+      },
+      celular: {
+        required,
+        minLength: minLength(1)
+      },
+      cvm: {
+        required,
+        minLength: minLength(1)
+      },
+      rg: {
+        required,
+        minLength: minLength(1)
+      },
+      cpf: {
+        required,
+        minLength: minLength(1)
+      },
+      nomeMae: {
+        required,
+        minLength: minLength(1)
+      },
+       rua: {
+        required,
+        minLength: minLength(4)
+      },
+      numero: {
+        required,
+        minLength: minLength(1)
+      },
+      cep: {
+        required,
+        minLength: minLength(5)
+      },
+      cidade: {
+        required,
+        minLength: minLength(3)
+      },
+      estado: {
+        required,
+        minLength: minLength(2)
+      },
+      bairro: {
+        required,
+        minLength: minLength(3)
+      },
+      genero: {
+        required
+      },
+      escolaridade: {
+        required
+      },
+      estadoCivil: {
+        required
+      }
+    }
+  },
+  methods: {
+    getValidationClass (fieldName) {
+      const field = this.$v.form[fieldName]
+      if (field) {
+        //console.log('Campo: ' + fieldName)
+        //console.log('field.$invalid: ' + field.$invalid)
+        return {
+          'md-invalid': field.$invalid && field.$dirty
+        }
+      }
+    },
+    clearForm () {
+      this.$v.$reset()
+      this.form.cep = null
+      this.form.rua = null
+      this.form.numero = null
+      this.form.cidade = null
+      this.form.estado = null
+      this.form.bairro = null
+      this.form.nomeAgente = null
+      this.form.email = null
+      this.form.senha = null
+      this.form.telefone = null
+      this.form.celular = null
+      this.form.dataInicio = null
+      this.form.cvm = null
+      this.form.rg = null
+      this.form.cpf = null
+      this.form.dataNascimento = null
+      this.form.genero = null
+      this.form.estadoCivi = null
+      this.form.escolaridade = null
+      this.form.nomeConjuge  = null
+      this.form.nomeMae = null
+      this.form.nomePai = null
+      this.form.redeSocial = null
+      this.form.observacao = null
+    },
+    saveEmpresa () {
+
+      alert('Chegou no save')
+      this.form.senha = geradorPassword()
+      console.log('Senha: '+ this.form.senha)
+      let newAgente = {
+        username : this.form.nomeAgente,
+        email : this.form.email,
+        password : this.form.senha,
+        telefone : this.form.telefone,
+        celular : this.form.celular,
+        data_inicio : this.form.dataInicio,
+        cvm : this.form.cvm,
+        cnh_rg  : this.form.rg,
+        cpf : this.form.cpf,
+        data_nascimento : this.form.dataNascimento,
+        nome_conjuge : this.form.nomeConjuge ,
+        nome_mae : this.form.nomeMae,
+        nome_pai : this.form.nomePai,
+        rede_social : this.form.redeSocial,
+        id_profile : 1
+      }
+      let newEndereco = {
+        rua: this.form.rua,
+        numero: this.form.numero,
+        bairro: this.form.bairro,
+        cidade: this.form.cidade,
+        cep: this.form.cep,
+        uf: this.form.estado
+      }
+      axios.post(process.env.API + 'user', newAgente)
+        .then(response => {
+          newEndereco.schedule_address = response.data.id
+          axios.post(process.env.API + 'address', newEndereco)
+          .then(response => {
+            alert('Agente cadastado com success')
+            this.userSaved = true
+            this.sending = false
+            this.clearForm()
+            window.location.reload()
+          })
+          .catch(error => {
+            alert('Erro endereco ' + error)
+            console.log(error.response.data)
+          })
+        })
+        .catch(error => {
+          alert('agenda ' + error.response.data.code)
+          console.log(error.response.data)
+        })
+    },
+    validateUser () {
+      console.log('chegou aqui')
+      console.log('this.$v.$invalid:' + this.$v.$invalid)
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        this.saveEmpresa()
+      }
+    },
+     geradorPassword () {
+      this.pass = "";
+      this.generate = function(chars) {
+        for (var i= 0; i<chars; i++) {
+          this.pass += this.getRandomChar();
+        }
+      return this.pass;
+      }
+      this.getRandomChar = function() {
+        var ascii = [[48, 57],[64,90],[97,122]]
+        var i = Math.floor(Math.random()*ascii.length)
+        return String.fromCharCode(Math.floor(Math.random()*(ascii[i][1]-ascii[i][0]))+ascii[i][0])
+      }
     }
   }
 }
 </script>
-<style lang="scss">
-.centered-container {
-  display: flex;
-  align-items: left;
-  justify-content: center;
+<style lang="scss" scoped>
+.md-progress-bar {
   position: relative;
-  height: 280vh;
-  flex-wrap: wrap;
-
-  .title {
-    text-align: center;
-    margin-bottom: 30px;
-    img {
-      margin-bottom: 16px;
-      max-width: 80px;
-    }
-  }
-  .actions {
-    .md-button {
-      margin: 0;
-      margin-left: auto;
-      margin-right: auto;
-      width: 8em;
-    }
-  }
-  .form {
-    margin-bottom: 60px;
-  }
-  .background {
-    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIwIiBoZWlnaHQ9IjEwODAiPgogIDxwYXRoIGZpbGw9IiNmM2YzZjMiIHN0cm9rZT0iI2YzZjNmMyIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTQ0LTQ5Nmw2MjcgMTY3IDI1OSA2eiIvPgogIDxwYXRoIGZpbGw9IiNlM2UzZTMiIHN0cm9rZT0iI2UzZTNlMyIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNNDczIDE1MjZsLTcxMCAxNDQgMTU0OS02NHoiLz4KICA8cGF0aCBmaWxsPSIjZWVlIiBzdHJva2U9IiNlZWUiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTEwMzAtMzIzaDU5MWwzODMtMTU5eiIvPgogIDxwYXRoIGZpbGw9IiNmMWYxZjEiIHN0cm9rZT0iI2YxZjFmMSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTQ0LTQ5Nmw4ODYgMTczIDk3NC0xNTl6Ii8+CiAgPHBhdGggZmlsbD0iI2UwZTBlMCIgc3Ryb2tlPSIjZTBlMGUwIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0yMjMxIDQ5NWwtNjIgMjA1IDEwNCAzMTJ6Ii8+CiAgPHBhdGggZmlsbD0iI2U2ZTZlNiIgc3Ryb2tlPSIjZTZlNmU2IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xOTc4LTQybDI1MyA1MzcgNjEtNzQ1eiIvPgogIDxwYXRoIGZpbGw9IiNlZmVmZWYiIHN0cm9rZT0iI2VmZWZlZiIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTQ0LTQ5NmwxODYwIDE0IDUzNC05MnoiLz4KICA8cGF0aCBmaWxsPSIjZjVmNWY1IiBzdHJva2U9IiNmNWY1ZjUiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTS01OTgtNTYxbDc0MiA2NSAyMzk0LTc4eiIvPgogIDxwYXRoIGZpbGw9IiNlMGUwZTAiIHN0cm9rZT0iI2UwZTBlMCIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMjI3MyAxMDEybC0xOSA0NDkgMjg0LTIwMzV6Ii8+CiAgPHBhdGggZmlsbD0iI2VhZWFlYSIgc3Ryb2tlPSIjZWFlYWVhIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0yMDA0LTQ4MmwyODggMjMyIDI0Ni0zMjR6Ii8+CiAgPHBhdGggZmlsbD0iI2U2ZTZlNiIgc3Ryb2tlPSIjZTZlNmU2IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0yMjkyLTI1MGwtNjEgNzQ1IDMwNy0xMDY5eiIvPgogIDxwYXRoIGZpbGw9IiNlM2UzZTMiIHN0cm9rZT0iI2UzZTNlMyIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMjIzMSA0OTVsNDIgNTE3IDI2NS0xNTg2eiIvPgogIDxwYXRoIGZpbGw9IiNkZGQiIHN0cm9rZT0iI2RkZCIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTg0OSAxMDAzbC0xMDMgNDEyIDIyOSAxNDF6Ii8+CiAgPHBhdGggZmlsbD0iI2U0ZTRlNCIgc3Ryb2tlPSIjZTRlNGU0IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xOTc4LTQybC05MyA1MzAgMzQ2IDd6Ii8+CiAgPHBhdGggZmlsbD0iI2RjZGNkYyIgc3Ryb2tlPSIjZGNkY2RjIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xODQ5IDEwMDNsMTI2IDU1MyAyNzktOTV6Ii8+CiAgPHBhdGggZmlsbD0iI2RkZCIgc3Ryb2tlPSIjZGRkIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xODQ5IDEwMDNsNDA1IDQ1OCAxOS00NDl6Ii8+CiAgPHBhdGggZmlsbD0iI2RmZGZkZiIgc3Ryb2tlPSIjZGZkZmRmIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0yMTY5IDcwMGwtMzIwIDMwMyA0MjQgOXoiLz4KICA8cGF0aCBmaWxsPSIjZWFlYWVhIiBzdHJva2U9IiNlYWVhZWEiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTIwMDQtNDgybC0yNiA0NDAgMzE0LTIwOHoiLz4KICA8cGF0aCBmaWxsPSIjZTJlMmUyIiBzdHJva2U9IiNlMmUyZTIiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTE4ODUgNDg4bDI4NCAyMTIgNjItMjA1eiIvPgogIDxwYXRoIGZpbGw9IiNlMmUyZTIiIHN0cm9rZT0iI2UyZTJlMiIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTg4NSA0ODhsLTgzIDEzMyAzNjcgNzl6Ii8+CiAgPHBhdGggZmlsbD0iI2UxZTFlMSIgc3Ryb2tlPSIjZTFlMWUxIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xODAyIDYyMWw0NyAzODIgMzIwLTMwM3oiLz4KICA8cGF0aCBmaWxsPSIjZGZkZmRmIiBzdHJva2U9IiNkZmRmZGYiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTE2ODUgMTEzOWw2MSAyNzYgMTAzLTQxMnoiLz4KICA8cGF0aCBmaWxsPSIjZTJlMmUyIiBzdHJva2U9IiNlMmUyZTIiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTE4MDIgNjIxbC02MiA2OCAxMDkgMzE0eiIvPgogIDxwYXRoIGZpbGw9IiNkY2RjZGMiIHN0cm9rZT0iI2RjZGNkYyIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTc0NiAxNDE1bC00MzQgMTkxIDY2My01MHoiLz4KICA8cGF0aCBmaWxsPSIjZTdlN2U3IiBzdHJva2U9IiNlN2U3ZTciIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTE2MTcgMTcybDI2OCAzMTYgOTMtNTMweiIvPgogIDxwYXRoIGZpbGw9IiNlYmViZWIiIHN0cm9rZT0iI2ViZWJlYiIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTYyMS0zMjNsMzU3IDI4MSAyNi00NDB6Ii8+CiAgPHBhdGggZmlsbD0iI2VhZWFlYSIgc3Ryb2tlPSIjZWFlYWVhIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xNjIxLTMyM2wtNCA0OTUgMzYxLTIxNHoiLz4KICA8cGF0aCBmaWxsPSIjZWJlYmViIiBzdHJva2U9IiNlYmViZWIiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTE0MTAtNDlsMjA3IDIyMSA0LTQ5NXoiLz4KICA8cGF0aCBmaWxsPSIjZTVlNWU1IiBzdHJva2U9IiNlNWU1ZTUiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTE2MTcgMTcybDE4NSA0NDkgODMtMTMzeiIvPgogIDxwYXRoIGZpbGw9IiNlNWU1ZTUiIHN0cm9rZT0iI2U1ZTVlNSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTYxNyAxNzJsMTIzIDUxNyA2Mi02OHoiLz4KICA8cGF0aCBmaWxsPSIjZTFlMWUxIiBzdHJva2U9IiNlMWUxZTEiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTE3NDAgNjg5bC01NSA0NTAgMTY0LTEzNnoiLz4KICA8cGF0aCBmaWxsPSIjZTZlNmU2IiBzdHJva2U9IiNlNmU2ZTYiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTE2MTcgMTcybC0zOTMgNDUxIDUxNiA2NnoiLz4KICA8cGF0aCBmaWxsPSIjZTJlMmUyIiBzdHJva2U9IiNlMmUyZTIiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTEyNDQgOTYybDQ0MSAxNzcgNTUtNDUweiIvPgogIDxwYXRoIGZpbGw9IiNlNWU1ZTUiIHN0cm9rZT0iI2U1ZTVlNSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTIyNCA2MjNsMjAgMzM5IDQ5Ni0yNzN6Ii8+CiAgPHBhdGggZmlsbD0iI2RmZGZkZiIgc3Ryb2tlPSIjZGZkZmRmIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xNjg1IDExMzlsLTM3MyA0NjcgNDM0LTE5MXoiLz4KICA8cGF0aCBmaWxsPSIjZTFlMWUxIiBzdHJva2U9IiNlMWUxZTEiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTEyNDQgOTYybDY4IDY0NCAzNzMtNDY3eiIvPgogIDxwYXRoIGZpbGw9IiNlYWVhZWEiIHN0cm9rZT0iI2VhZWFlYSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTQxMC00OWwtMzQyIDE3NSA1NDkgNDZ6Ii8+CiAgPHBhdGggZmlsbD0iI2U5ZTllOSIgc3Ryb2tlPSIjZTllOWU5IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xMDY4IDEyNmwxNTYgNDk3IDM5My00NTF6Ii8+CiAgPHBhdGggZmlsbD0iI2VkZWRlZCIgc3Ryb2tlPSIjZWRlZGVkIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xMDMwLTMyM2wzODAgMjc0IDIxMS0yNzR6Ii8+CiAgPHBhdGggZmlsbD0iI2VhZWFlYSIgc3Ryb2tlPSIjZWFlYWVhIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xMDY4IDEyNmwtNzkgODIgMjM1IDQxNXoiLz4KICA8cGF0aCBmaWxsPSIjZTRlNGU0IiBzdHJva2U9IiNlNGU0ZTQiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTkzNyA5NjJsLTE4NSA0MDkgNDkyLTQwOXoiLz4KICA8cGF0aCBmaWxsPSIjZTJlMmUyIiBzdHJva2U9IiNlMmUyZTIiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTEyNDQgOTYybC00OTIgNDA5IDU2MCAyMzV6Ii8+CiAgPHBhdGggZmlsbD0iI2VkZWRlZCIgc3Ryb2tlPSIjZWRlZGVkIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xMDMwLTMyM2wzOCA0NDkgMzQyLTE3NXoiLz4KICA8cGF0aCBmaWxsPSIjZTVlNWU1IiBzdHJva2U9IiNlNWU1ZTUiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTEyMjQgNjIzTDkzNyA5NjJoMzA3eiIvPgogIDxwYXRoIGZpbGw9IiNlMmUyZTIiIHN0cm9rZT0iI2UyZTJlMiIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNNzUyIDEzNzFsLTI3OSAxNTUgODM5IDgweiIvPgogIDxwYXRoIGZpbGw9IiNlYWVhZWEiIHN0cm9rZT0iI2VhZWFlYSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNOTg5IDIwOEw3ODMgNDAxbDQ0MSAyMjJ6Ii8+CiAgPHBhdGggZmlsbD0iI2U3ZTdlNyIgc3Ryb2tlPSIjZTdlN2U3IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik03NDggNzg5bDE4OSAxNzMgMjg3LTMzOXoiLz4KICA8cGF0aCBmaWxsPSIjZTllOWU5IiBzdHJva2U9IiNlOWU5ZTkiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTc4MyA0MDFsLTM1IDM4OCA0NzYtMTY2eiIvPgogIDxwYXRoIGZpbGw9IiNmMGYwZjAiIHN0cm9rZT0iI2YwZjBmMCIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNNzcxLTMyOWwtMTIgNDU0IDI3MS00NDh6Ii8+CiAgPHBhdGggZmlsbD0iI2VlZSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xMDMwLTMyM0w3NTkgMTI1bDMwOSAxeiIvPgogIDxwYXRoIGZpbGw9IiNlY2VjZWMiIHN0cm9rZT0iI2VjZWNlYyIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNNzU5IDEyNWwyMzAgODMgNzktODJ6Ii8+CiAgPHBhdGggZmlsbD0iI2U1ZTVlNSIgc3Ryb2tlPSIjZTVlNWU1IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik00ODEgMTEwNWwyNzEgMjY2IDE4NS00MDl6Ii8+CiAgPHBhdGggZmlsbD0iI2VjZWNlYyIgc3Ryb2tlPSIjZWNlY2VjIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik03NTkgMTI1bDI0IDI3NiAyMDYtMTkzeiIvPgogIDxwYXRoIGZpbGw9IiNlN2U3ZTciIHN0cm9rZT0iI2U3ZTdlNyIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNNzQ4IDc4OWwtMjY3IDMxNiA0NTYtMTQzeiIvPgogIDxwYXRoIGZpbGw9IiNlOGU4ZTgiIHN0cm9rZT0iI2U4ZThlOCIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNNTE5IDc4MmwtMzggMzIzIDI2Ny0zMTZ6Ii8+CiAgPHBhdGggZmlsbD0iI2YxZjFmMSIgc3Ryb2tlPSIjZjFmMWYxIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0zMzUtMTQ4bDQyNCAyNzMgMTItNDU0eiIvPgogIDxwYXRoIGZpbGw9IiNmNGY0ZjQiIHN0cm9rZT0iI2Y0ZjRmNCIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTcyLTQyOGwxNjMgMjgwIDQzNi0xODF6Ii8+CiAgPHBhdGggZmlsbD0iI2Y2ZjZmNiIgc3Ryb2tlPSIjZjZmNmY2IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0xNDQtNDk2bDI4IDY4IDU5OSA5OXoiLz4KICA8cGF0aCBmaWxsPSIjZWFlYWVhIiBzdHJva2U9IiNlYWVhZWEiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTUxOSA3ODJsMjI5IDcgMzUtMzg4eiIvPgogIDxwYXRoIGZpbGw9IiNlZWUiIHN0cm9rZT0iI2VlZSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNNzU5IDEyNUwyMDIgMjU5bDU4MSAxNDJ6Ii8+CiAgPHBhdGggZmlsbD0iI2VjZWNlYyIgc3Ryb2tlPSIjZWNlY2VjIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0yMDIgMjU5bDMxNyA1MjMgMjY0LTM4MXoiLz4KICA8cGF0aCBmaWxsPSIjZjBmMGYwIiBzdHJva2U9IiNmMGYwZjAiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTMzNS0xNDhMMjAyIDI1OWw1NTctMTM0eiIvPgogIDxwYXRoIGZpbGw9IiNlNWU1ZTUiIHN0cm9rZT0iI2U1ZTVlNSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNNDgxIDExMDVsLTggNDIxIDI3OS0xNTV6Ii8+CiAgPHBhdGggZmlsbD0iI2U4ZThlOCIgc3Ryb2tlPSIjZThlOGU4IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0tMTc5IDEwNDZsNjUyIDQ4MCA4LTQyMXoiLz4KICA8cGF0aCBmaWxsPSIjZWNlY2VjIiBzdHJva2U9IiNlY2VjZWMiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTS01IDU5M2wtMTc0IDQ1MyA2NjAgNTl6Ii8+CiAgPHBhdGggZmlsbD0iI2ViZWJlYiIgc3Ryb2tlPSIjZWJlYmViIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0tNSA1OTNsNDg2IDUxMiAzOC0zMjN6Ii8+CiAgPHBhdGggZmlsbD0iI2VlZSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0yMDIgMjU5TC01IDU5M2w1MjQgMTg5eiIvPgogIDxwYXRoIGZpbGw9IiNlOGU4ZTgiIHN0cm9rZT0iI2U4ZThlOCIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNLTE3OSAxMDQ2bC01OCA2MjQgNzEwLTE0NHoiLz4KICA8cGF0aCBmaWxsPSIjZjNmM2YzIiBzdHJva2U9IiNmM2YzZjMiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTS0xMDktMjNsMzExIDI4MiAxMzMtNDA3eiIvPgogIDxwYXRoIGZpbGw9IiNmNWY1ZjUiIHN0cm9rZT0iI2Y1ZjVmNSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNMTcyLTQyOEwtMTA5LTIzbDQ0NC0xMjV6Ii8+CiAgPHBhdGggZmlsbD0iI2VlZSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0tMjQ1IDc3Mmw2NiAyNzRMLTUgNTkzeiIvPgogIDxwYXRoIGZpbGw9IiNmMWYxZjEiIHN0cm9rZT0iI2YxZjFmMSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNLTk2IDI5N2w5MSAyOTYgMjA3LTMzNHoiLz4KICA8cGF0aCBmaWxsPSIjZjNmM2YzIiBzdHJva2U9IiNmM2YzZjMiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTS0xMDktMjNsMTMgMzIwIDI5OC0zOHoiLz4KICA8cGF0aCBmaWxsPSIjZjdmN2Y3IiBzdHJva2U9IiNmN2Y3ZjciIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTTE0NC00OTZMLTEwOS0yM2wyODEtNDA1eiIvPgogIDxwYXRoIGZpbGw9IiNmOWY5ZjkiIHN0cm9rZT0iI2Y5ZjlmOSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNLTU5OC01NjFsNDg5IDUzOCAyNTMtNDczeiIvPgogIDxwYXRoIGZpbGw9IiNlYmViZWIiIHN0cm9rZT0iI2ViZWJlYiIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNLTU1NCAxMzkybDMxNyAyNzggNTgtNjI0eiIvPgogIDxwYXRoIGZpbGw9IiNmNGY0ZjQiIHN0cm9rZT0iI2Y0ZjRmNCIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNLTEwOS0yM2wtMjQ4IDE1MSAyNjEgMTY5eiIvPgogIDxwYXRoIGZpbGw9IiNmMGYwZjAiIHN0cm9rZT0iI2YwZjBmMCIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNLTk2IDI5N2wtMTQ5IDQ3NUwtNSA1OTN6Ii8+CiAgPHBhdGggZmlsbD0iI2VkZWRlZCIgc3Ryb2tlPSIjZWRlZGVkIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0tNTUwIDExODFsLTQgMjExIDM3NS0zNDZ6Ii8+CiAgPHBhdGggZmlsbD0iI2Y4ZjhmOCIgc3Ryb2tlPSIjZjhmOGY4IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0tNTk4LTU2MWwyNDEgNjg5IDI0OC0xNTF6Ii8+CiAgPHBhdGggZmlsbD0iI2YyZjJmMiIgc3Ryb2tlPSIjZjJmMmYyIiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0tNDM1IDIwN2wxOTAgNTY1IDE0OS00NzV6Ii8+CiAgPHBhdGggZmlsbD0iI2Y0ZjRmNCIgc3Ryb2tlPSIjZjRmNGY0IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0tMzU3IDEyOGwtNzggNzkgMzM5IDkweiIvPgogIDxwYXRoIGZpbGw9IiNlZWUiIHN0cm9rZT0iI2VlZSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNLTI0NSA3NzJsLTMwNSA0MDkgMzcxLTEzNXoiLz4KICA8cGF0aCBmaWxsPSIjZjFmMWYxIiBzdHJva2U9IiNmMWYxZjEiIHN0cm9rZS13aWR0aD0iMS41MSIgZD0iTS00MzUgMjA3bC0xMTUgOTc0IDMwNS00MDl6Ii8+CiAgPHBhdGggZmlsbD0iI2Y4ZjhmOCIgc3Ryb2tlPSIjZjhmOGY4IiBzdHJva2Utd2lkdGg9IjEuNTEiIGQ9Ik0tNTk4LTU2MWwxNjMgNzY4IDc4LTc5eiIvPgogIDxwYXRoIGZpbGw9IiNmNWY1ZjUiIHN0cm9rZT0iI2Y1ZjVmNSIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNLTU5OC01NjFsNDggMTc0MiAxMTUtOTc0eiIvPgogIDxwYXRoIGZpbGw9IiNmMmYyZjIiIHN0cm9rZT0iI2YyZjJmMiIgc3Ryb2tlLXdpZHRoPSIxLjUxIiBkPSJNLTU5OC01NjFsNDQgMTk1MyA0LTIxMXoiLz4KPC9zdmc+Cg==);
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    z-index: 0;
-  }
-  .md-content {
-    z-index: 1;
-    padding: 40px;
-    width: 100%;
-    max-width: 1200px;
-    position: relative;
-  }
-  .loading-overlay {
-    z-index: 10;
-    top: 0;
-    left: 0;
-    right: 0;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .elevation-demo {
-    padding: 16px;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
+  top: 0;
+  right: 0;
+  left: 0;
 }
 </style>

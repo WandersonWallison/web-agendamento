@@ -6,7 +6,7 @@
             <md-option value=" Ensino Superior">Ensino Superior</md-option>
             <md-option value="Ensino pós superior">Ensino pós superior</md-option>
           </md-select>
-        </md-field>
+      </md-field>
 </template>
 
 <script>
