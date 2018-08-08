@@ -246,6 +246,11 @@
           <md-button class="md-raised md-primary" type="submit" :disabled="sending">Cadastrar</md-button>
         </div>
         </md-card-actions>
+        <md-card-actions>
+        <div class="actions md-layout md-alignment-center-space-between">
+          <md-button class="md-raised md-primary" @click='geradorPassword' :disabled="sending">Teste</md-button>
+        </div>
+        </md-card-actions>
       </md-card>
       <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
     </form>
@@ -416,8 +421,10 @@ export default {
     saveEmpresa () {
 
       alert('Chegou no save')
-      this.form.senha = geradorPassword()
-      console.log('Senha: '+ this.form.senha)
+      let senhaGerada
+      senhaGerada = this.geradorPassword()
+      console.log('Senha: '+ senhaGerada)
+      alert(this.form.senha)
       let newAgente = {
         username : this.form.nomeAgente,
         email : this.form.email,
@@ -474,17 +481,16 @@ export default {
     },
      geradorPassword () {
       this.pass = "";
-      this.generate = function(chars) {
-        for (var i= 0; i<chars; i++) {
-          this.pass += this.getRandomChar();
-        }
-      return this.pass;
+      for (var i= 0; i<8; i++) {
+        this.pass += this.getRandomChar()
       }
-      this.getRandomChar = function() {
-        var ascii = [[48, 57],[64,90],[97,122]]
+      console.log('Senha gerada: '+this.pass)
+      return this.pass
+    },
+    getRandomChar(){
+       var ascii = [[48, 57],[64,90],[97,122]]
         var i = Math.floor(Math.random()*ascii.length)
         return String.fromCharCode(Math.floor(Math.random()*(ascii[i][1]-ascii[i][0]))+ascii[i][0])
-      }
     }
   }
 }
