@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
+    <form novalidate class="md-layout" @submit.prevent="validateEscritorio">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Cadastro de Escritorio</span>
@@ -10,17 +10,17 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('nomeEscritorio')">
                 <label for="nomeEscritorio">Nome Escritorio</label>
-                <md-input id="nomeEscritorio" name="nomeEscritorio" v-model="form.nomeEscritorio" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.nomeEscritorio.required">Nome do Escritorio deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.nomeEscritorio.maxlength">Invalid Escritorio</span>
+                <md-input id="nomeEscritorio" name="nomeEscritorio" v-model="form.nome" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.nome.required">Nome do Escritorio deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.nome.maxlength">Invalid Escritorio</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('responsavelEscritorio')">
                 <label for="responsavelEscritorio">Responsavel Escritorio</label>
-                <md-input id="responsavelEscritorio" name="responsavelEscritorio" v-model="form.responsavelEscritorio" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.responsavelEscritorio.required">Responsavel do Escritorio deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.responsavelEscritorio.maxlength">Invalid Responsavel</span>
+                <md-input id="responsavelEscritorio" name="responsavelEscritorio" v-model="form.responsavel" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.responsavel.required">Responsavel do Escritorio deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.responsavel.maxlength">Invalid Responsavel</span>
               </md-field>
             </div>
           </div>
@@ -176,9 +176,9 @@ export default {
   mixins: [validationMixin],
   data: () => ({
     form: {
-      nomeEscritorio: null,
-      responsavelEscritorio: null,
-      site : null,
+      nome: null,
+      responsavel: null,
+      cnpj : null,
       telefone:null,
       email:null,
       cep: null,
@@ -188,7 +188,7 @@ export default {
       cidade: null,
       bairro: null,
       observacao: null,
-      qtdVisitas: null,
+      qtd_visita_dia: null,
       metaAnual: null
     },
     userSaved: false,
@@ -197,10 +197,10 @@ export default {
   }),
   validations: {
     form: {
-      nomeEscritorio: {
+      nome: {
         required
       },
-      responsavelEscritorio: {
+      responsavel: {
         required,
         minLength: minLength(1)
       },
@@ -262,8 +262,8 @@ export default {
       this.form.observacao = null
       this.form.bairro = null
 
-      this.form.nomeEscritorio = null
-      this.form.responsavelEscritorio = null
+      this.form.nome = null
+      this.form.responsavel = null
       this.form.site = null
       this.form.telefone = null
       this.form.email = null
@@ -272,8 +272,8 @@ export default {
     },
     saveEmpresa () {
       let newEmpresa = {
-        nome: this.form.nomeEscritorio,
-        responsavel: this.form.responsavelEscritorio,
+        nome: this.form.nome,
+        responsavel: this.form.responsavel,
         site : this.form.site,
         telefone: this.form.telefone,
         email: this.form.email,
@@ -289,12 +289,12 @@ export default {
         cep: this.form.cep,
         uf: this.form.estado
       }
-      axios.post(process.env.API + 'schedule', newAgenda)
+      axios.post(process.env.API + 'office', newAgenda)
         .then(response => {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
           .then(response => {
-            alert('Agendamento cadastado com success')
+            alert('Escritorio cadastado com success')
             this.userSaved = true
             this.sending = false
             this.clearForm()
@@ -310,7 +310,7 @@ export default {
           console.log(error.response.data)
         })
     },
-    validateUser () {
+    validateEscritorio () {
       console.log('this.$v.$invalid ' + this.$v.$invalid)
       this.$v.$touch()
       if (!this.$v.$invalid) {
