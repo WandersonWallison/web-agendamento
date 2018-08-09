@@ -1,10 +1,6 @@
 <template>
   <div>
-<<<<<<< HEAD
-    <form novalidate class="md-layout" @submit.prevent="validateEscritorio">
-=======
     <form novalidate class="md-layout" @submit.prevent="validateEmpresa">
->>>>>>> 7e21a482a151104f410b3e359e4a25c5410603da
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Cadastro de Escritorio</span>
@@ -314,11 +310,7 @@ export default {
           console.log(error.response.data)
         })
     },
-<<<<<<< HEAD
-    validateEscritorio () {
-=======
     validateEmpresa () {
->>>>>>> 7e21a482a151104f410b3e359e4a25c5410603da
       console.log('this.$v.$invalid ' + this.$v.$invalid)
       this.$v.$touch()
       if (!this.$v.$invalid) {

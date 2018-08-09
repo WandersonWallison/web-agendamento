@@ -94,8 +94,8 @@
                   <label for="genero">Gênero</label>
                   <md-select v-model="form.genero" name="genero" id="genero">
                     <md-option value=""></md-option>
-                    <md-option value="0">Feminino</md-option>
-                    <md-option value="1">Masculino</md-option>
+                    <md-option value="F">Feminino</md-option>
+                    <md-option value="M">Masculino</md-option>
                   </md-select>
                   <span class="md-error" v-if="!$v.form.genero.required">Gênero deve ser selecionado</span>
                 </md-field>
@@ -104,7 +104,6 @@
                 <md-field :class="getValidationClass('escolaridade')">
                   <label for="escolaridade">Escolaridade</label>
                   <md-select v-model="form.escolaridade" name="escolaridade" id="escolaridade">
-                    <md-option value=""></md-option>
                     <md-option value="Ensino Fundamental">Ensino Fundamental</md-option>
                     <md-option value="Ensino Medio">Ensino médio</md-option>
                     <md-option value=" Ensino Superior">Ensino Superior</md-option>
@@ -118,11 +117,11 @@
                   <label for="estadoCivil">Estado Civil</label>
                   <md-select v-model="form.estadoCivil" name="estadoCivil" id="estadoCivil">
                     <md-option value=""></md-option>
-                    <md-option value="0">Solteiro</md-option>
-                    <md-option value="1">Casado</md-option>
-                    <md-option value="2">Divorciado</md-option>
-                    <md-option value="3">Viúvo</md-option>
-                    <md-option value="4">Outros</md-option>
+                    <md-option value="Solteiro">Solteiro</md-option>
+                    <md-option value="Casado">Casado</md-option>
+                    <md-option value="Divorciado">Divorciado</md-option>
+                    <md-option value="Viúvo">Viúvo</md-option>
+                    <md-option value="Outros">Outros</md-option>
                   </md-select>
                   <span class="md-error" v-if="!$v.form.estadoCivil.required">Estado Civil deve ser selecionado</span>
                 </md-field>
@@ -246,11 +245,7 @@
           <md-button class="md-raised md-primary" type="submit" :disabled="sending">Cadastrar</md-button>
         </div>
         </md-card-actions>
-        <md-card-actions>
-        <div class="actions md-layout md-alignment-center-space-between">
-          <md-button class="md-raised md-primary" @click='geradorPassword' :disabled="sending">Teste</md-button>
-        </div>
-        </md-card-actions>
+
       </md-card>
       <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
     </form>
@@ -420,12 +415,9 @@ export default {
       this.form.observacao = null
     },
     saveEmpresa () {
-
-      alert('Chegou no save')
       let senhaGerada
       senhaGerada = this.geradorPassword()
       console.log('Senha Gerada: '+ senhaGerada)
-      alert(this.form.senha)
       let newAgente = {
         username : this.form.nomeAgente,
         email : this.form.email,
@@ -437,14 +429,17 @@ export default {
         cnh_rg  : this.form.rg,
         cpf : this.form.cpf,
         data_nascimento : this.form.dataNascimento,
+        escolaridade : this.form.escolaridade,
+        estado_civil: this.form.estadoCivil,
         nome_conjuge : this.form.nomeConjuge ,
         nome_mae : this.form.nomeMae,
         nome_pai : this.form.nomePai,
         rede_social : this.form.redeSocial,
+        genero: this.form.genero,
         id_profile : 1
       }
       let newEndereco = {
-        rua: this.form.rua,
+        logradouro: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
         cidade: this.form.cidade,
@@ -456,12 +451,15 @@ export default {
           newEndereco.user_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
           .then(response => {
-            alert('Agente cadastado com success')
+            alert('Agente cadastado com success ' +
+                  'Dados de Acesso do Agente ' +
+                   this.form.nomeAgente +
+                  ' Usuario: ' +
+                   this.form.email +
+                  'Senha: '+
+                   senhaGerada )
             this.userSaved = true
             this.sending = false
-            alert("Dados de Acesso do Agente "+ this.form.nomeAgente +
-                  " Usuario: " + this.form.email +
-                  "Senha: "+ senhaGerada)
             this.clearForm()
             window.location.reload()
           })
@@ -476,8 +474,6 @@ export default {
         })
     },
     validateUser () {
-      console.log('chegou aqui')
-      console.log('this.$v.$invalid:' + this.$v.$invalid)
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.saveEmpresa()
@@ -488,8 +484,6 @@ export default {
       for (var i= 0; i<8; i++) {
         this.pass += this.getRandomChar()
       }
-      alert('Senha: '+this.pass)
-      console.log('Senha gerada: '+this.pass)
       return this.pass
     },
     getRandomChar(){
