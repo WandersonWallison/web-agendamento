@@ -31,7 +31,7 @@
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('telefone')">
                   <label for="cep">Telefone</label>
-                  <md-input  type="number" v-mask="'##/##/####'" id="telefone" name="telefone" autocomplete="telefone"  v-model="form.telefone" :disabled="sending" />
+                  <md-input  type="number" id="telefone" name="telefone" autocomplete="telefone"  v-model="form.telefone" :disabled="sending" />
                   <span class="md-error" v-if="!$v.form.telefone.required">Telefone deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.telefone.maxlength">telefone invalido</span>
                 </md-field>
@@ -39,7 +39,7 @@
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('celular')">
                   <label for="celular">Celular</label>
-                  <md-input  type="number" :mask="['(##) ####-####', '(##) #####-####']" id="celular" name="celular" autocomplete="celular" v-model="form.celular" :disabled="sending" />
+                  <md-input  type="number" id="celular" name="celular" autocomplete="celular" v-model="form.celular" :disabled="sending" />
                   <span class="md-error" v-if="!$v.form.celular.required">Celular deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.celular.maxlength">Invalid celular</span>
                 </md-field>
@@ -67,7 +67,6 @@
 <script>
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
-import { TheMask } from 'vue-the-mask'
 import {
   required,
   minLength,
@@ -91,12 +90,6 @@ export default {
     sending: false,
     lastUser: null
   }),
-  component: {
-    TheMask
-  },
-  directives: {
-    TheMask
-  },
   validations: {
     form: {
       nomeCompleto: {
