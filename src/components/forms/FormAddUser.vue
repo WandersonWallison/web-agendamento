@@ -302,7 +302,8 @@ export default {
     },
     userSaved : false,
     sending : false,
-    lastUser : null
+    lastUser : null,
+    infoSenha : false
   }),
   validations: {
     form: {
@@ -423,12 +424,12 @@ export default {
       alert('Chegou no save')
       let senhaGerada
       senhaGerada = this.geradorPassword()
-      console.log('Senha: '+ senhaGerada)
+      console.log('Senha Gerada: '+ senhaGerada)
       alert(this.form.senha)
       let newAgente = {
         username : this.form.nomeAgente,
         email : this.form.email,
-        password : this.form.senha,
+        password : senhaGerada,
         telefone : this.form.telefone,
         celular : this.form.celular,
         data_inicio : this.form.dataInicio,
@@ -452,12 +453,15 @@ export default {
       }
       axios.post(process.env.API + 'user', newAgente)
         .then(response => {
-          newEndereco.schedule_address = response.data.id
+          newEndereco.user_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
           .then(response => {
             alert('Agente cadastado com success')
             this.userSaved = true
             this.sending = false
+            alert("Dados de Acesso do Agente "+ this.form.nomeAgente +
+                  " Usuario: " + this.form.email +
+                  "Senha: "+ senhaGerada)
             this.clearForm()
             window.location.reload()
           })
@@ -484,6 +488,7 @@ export default {
       for (var i= 0; i<8; i++) {
         this.pass += this.getRandomChar()
       }
+      alert('Senha: '+this.pass)
       console.log('Senha gerada: '+this.pass)
       return this.pass
     },
