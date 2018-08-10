@@ -12,78 +12,139 @@ import CadAgendamento from '../components/forms/FormAgendamento.vue'
 import Calendario from '../components/forms/FormCalendario.vue'
 
 Vue.use(Router)
-const token = JSON.parse(localStorage.getItem('Usuario'))
+const token = JSON.stringify(localStorage.getItem('Usuario'))
 console.log('Token do localstorage: ' + token)
-if (!token) {
-  console.log('não veio o token')
-}
-const router = new Router({
+
+export default new Router({
+
   routes: [
     {
       path: '/',
       name: 'login',
-      component: Login
+      component: Login,
+      beforeEach: function (to, from, next) {
+        alert('token do usuario: ' + token.id)
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/Home',
       name: 'home',
-      component: Home
+      component: Home,
+      beforeEach: function (to, from, next) {
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/empresa',
       name: 'empresa',
-      component: CadEmpresa
+      component: CadEmpresa,
+      beforeEach: function (to, from, next) {
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/lead',
       name: 'lead',
-      component: CadLead
+      component: CadLead,
+      beforeEach: function (to, from, next) {
+        alert('token do usuario: ' + token.id)
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/agente',
       name: 'agente',
-      component: CadUsuario
+      component: CadUsuario,
+      beforeEach: function (to, from, next) {
+        alert('token do usuario: ' + token.id)
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/listaAgente',
       name: 'listaAgente',
-      component: ListaAgentes
+      component: ListaAgentes,
+      beforeEach: function (to, from, next) {
+        alert('token do usuario: ' + token.id)
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/Agendamento',
       name: 'agendamento',
-      component: Agendamento
+      component: Agendamento,
+      beforeEach: function (to, from, next) {
+        alert('token do usuario: ' + token.id)
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/lead/list',
       name: 'formCrudLead',
-      component: FormCrudLead
+      component: FormCrudLead,
+      beforeEach: function (to, from, next) {
+        alert('token do usuario: ' + token.id)
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/Agenda',
       name: 'cadastroAgendamento',
-      component: CadAgendamento
+      component: CadAgendamento,
+      beforeEach: function (to, from, next) {
+        alert('token do usuario: ' + token.id)
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/FormCalendario',
       name: 'FormCalendario',
-      component: Calendario
+      component: Calendario,
+      beforeEach: function (to, from, next) {
+        alert('token do usuario: ' + token.id)
+        if (!token.id) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     }
   ]
-
 })
-router.beforeEach((to, from, next) => {
-  console.log(to)
-  if (to.meta.requiresAuth) {
-    const authUser = JSON.parse(window.localStorage.getItem('Usuario'))
-    console.log('Usuario Autenticado: ' + authUser)
-    if (authUser && authUser.id) {
-      next()
-    } else {
-      next({name: '/home'})
-    }
-  }
-  next()
-})
-
-export default router

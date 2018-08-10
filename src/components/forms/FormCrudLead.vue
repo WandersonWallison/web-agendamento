@@ -9,7 +9,16 @@
         </md-button>
         <span class="md-title">Prosperidade</span>
         <!-- <img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'> -->
-        <md-button >Sair</md-button>
+       <div>
+          <md-dialog-confirm
+            :md-active.sync='active'
+            md-title='Prosperidade'
+            md-content='Deseja Realmente sair do sistema'
+            md-confirm-text='Sim'
+            md-cancel-text='Não'
+            @md-confirm='sair' />
+          <md-button @click='active = true'>Sair</md-button>
+        </div>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
@@ -64,11 +73,17 @@ export default {
   },
   data: () => ({
     menuVisible: false,
-    showDialog: false
+    showDialog: false,
+    active: false,
   }),
   methods: {
     toggleMenu () {
       this.menuVisible = !this.menuVisible
+    },
+    sair(){
+      this.value = 'Sim'
+      this.$router.push('/Login')
+      window.localStorage.clear()
     }
   }
 }
