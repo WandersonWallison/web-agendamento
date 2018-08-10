@@ -75,7 +75,7 @@ export default {
     },
     sair(){
       this.value = 'Sim'
-      this.$router.push('/Login')
+      this.$router.push('/')
       window.localStorage.clear()
     }
   }

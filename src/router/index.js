@@ -12,8 +12,10 @@ import CadAgendamento from '../components/forms/FormAgendamento.vue'
 import Calendario from '../components/forms/FormCalendario.vue'
 
 Vue.use(Router)
-const token = JSON.stringify(localStorage.getItem('Usuario'))
+var token = JSON.parse(localStorage.getItem('Usuario'))
+
 console.log('Token do localstorage: ' + token)
+
 
 export default new Router({
 
@@ -23,8 +25,8 @@ export default new Router({
       name: 'login',
       component: Login,
       beforeEach: function (to, from, next) {
-        alert('token do usuario: ' + token.id)
-        if (!token.id) {
+        alert('token do usuario: ' + token)
+        if (!token) {
           next('/')
         } else {
           next()
@@ -36,7 +38,7 @@ export default new Router({
       name: 'home',
       component: Home,
       beforeEach: function (to, from, next) {
-        if (!token.id) {
+        if (!token) {
           next('/')
         } else {
           next()
@@ -48,7 +50,7 @@ export default new Router({
       name: 'empresa',
       component: CadEmpresa,
       beforeEach: function (to, from, next) {
-        if (!token.id) {
+        if (!token) {
           next('/')
         } else {
           next()
@@ -60,8 +62,8 @@ export default new Router({
       name: 'lead',
       component: CadLead,
       beforeEach: function (to, from, next) {
-        alert('token do usuario: ' + token.id)
-        if (!token.id) {
+        alert('token do usuario: ' + token)
+        if (!token) {
           next('/')
         } else {
           next()

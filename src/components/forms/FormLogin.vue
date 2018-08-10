@@ -61,7 +61,7 @@ export default {
           .then(response => {
             this.inicio = response.data
             if (response.data.user === false) {
-              this.$router.push('/Login')
+              this.$router.push('/')
               this.menssage = response.data.message
               setTimeout(() => {
                   this.login.email = ''
@@ -72,7 +72,7 @@ export default {
             } else {
               this.results = response.data.message
               console.log('response:' + response.data)
-              localStorage.setItem('Usuario', JSON.stringify(response.data.user))
+              localStorage.setItem('Usuario', response.data.user)
               this.$router.push('/home')
             }
           })
