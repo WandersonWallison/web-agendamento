@@ -203,9 +203,6 @@ export default {
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
       if (field) {
-        // console.log('field: '+field)
-        console.log('field.$invalid: ' + field.$invalid)
-        // console.log('field.$dirty: '+field.$dirty)
         return {
           'md-invalid': field.$invalid && field.$dirty
         }
@@ -262,7 +259,6 @@ export default {
         })
     },
     validateUser () {
-      console.log('this.$v.$invalid ' + this.$v.$invalid)
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.saveAgenda()

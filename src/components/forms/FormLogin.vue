@@ -53,7 +53,6 @@ export default {
   methods: {
     auth() {
       this.menssage = null
-      console.log('Valor API: ' + process.env.API + 'login')
       this.results = ''
       if (this.login.email != '' && this.login.password != '') {
         axios
@@ -71,14 +70,12 @@ export default {
               }, 3000);
             } else {
               this.results = response.data.message
-              console.log('response:' + response.data)
-              localStorage.setItem('Usuario', response.data.user)
+              window.localStorage.setItem('Usuario', JSON.stringify(response.data.user))
               this.$router.push('/home')
             }
           })
           .catch(error => {
             this.results = 'Usuario não encontrado. Por favor verirficar os dados digitados'
-            console.log(error.response.data)
           })
         this.loading = true
         setTimeout(() => {

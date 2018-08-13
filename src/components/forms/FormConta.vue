@@ -61,7 +61,6 @@ export default {
         aplicacao: this.conta.aplicacao,
         leads_bank: this.selected[0].id
       }
-      console.log(newConta)
       axios.post(process.env.API + 'bank', newConta)
         .then(response => {
           this.results = response.data

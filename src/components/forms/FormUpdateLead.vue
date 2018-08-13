@@ -123,7 +123,7 @@ export default {
         escolaridade: this.lead.escolaridade,
         tipo: "Cliente"
       };
-      console.log(newLead);
+      //console.log(newLead);
       axios
         .put(process.env.API+'leads/'+ this.selected[0].id, newLead)
         .then(response => {
