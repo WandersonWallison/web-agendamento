@@ -22,8 +22,8 @@
       -->
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
-        <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
-        <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
+        <md-table-cell md-label="Nome" md-sort-by="data">{{ item.lead.nome }}</md-table-cell>
+        <md-table-cell md-label="Observação" md-sort-by="obs">{{ item.obs }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone }}</md-table-cell>
        <md-table-cell md-label="Status" md-sort-by="status">
           <md-button class="md-icon-button md-raised md-primary">
@@ -55,12 +55,12 @@ export default {
   data: () => ({
     search: null,
     searched: [],
-    users: []
+    schedules: []
   }),
   mounted () {
-    axios.get(process.env.API + 'leads')
+    axios.get(process.env.API + 'schedule')
       .then(response => {
-        this.users = response.data
+        this.schedules = response.data
         this.searched = response.data
       })
   },
@@ -69,7 +69,7 @@ export default {
       window.alert('Noop')
     },
     searchOnTable () {
-      this.searched = searchByName(this.users, this.search)
+      this.searched = searchByName(this.schedules, this.search)
     }
   },
   created () {

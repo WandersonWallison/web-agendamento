@@ -6,7 +6,7 @@ import CadEmpresa from '@/components/forms/FormCadastroEmpresa.vue'
 import CadLead from '@/components/forms/FormCadastroLead.vue'
 import CadUsuario from '@/components/forms/FormAddUser.vue'
 import ListaAgentes from '../components/lists/ListaAgentes.vue'
-import Agendamento from '../components/lists/ListAgendamento.vue'
+import Agendamento from '../components/forms/FormAgente.vue'
 import FormCrudLead from '@/components/forms/FormCrudLead.vue'
 import CadAgendamento from '../components/forms/FormAgendamento.vue'
 import Calendario from '../components/forms/FormCalendario.vue'
@@ -31,24 +31,49 @@ const router = new Router({
       path: '/Home',
       name: 'home',
       component: Home,
-      meta: { requiresAuth: true }
+      meta: {
+        requiresAuth: true,
+        permissions: true
+      }
     },
     {
       path: '/lead/list',
       name: 'formCrudLead',
       component: FormCrudLead,
-      meta: { requiresAuth: true }
+      meta: {
+        requiresAuth: true,
+        permissions: true
+      }
+    },
+    {
+      path: '/Agendamento',
+      name: 'agendamento',
+      component: Agendamento,
+      meta: {
+        requiresAuth: true,
+        permissions: false
+      }
     }
   ]
 })
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const authUser = window.localStorage.getItem('Usuario')
-    var authUser2 = JSON.parse(authUser)
-    if (authUser && authUser2.id) {
-      next()
+    const authUser2 = JSON.parse(authUser)
+    if (authUser) {
+     if(to.meta.permissions == true && authUser2.id_profile == 1){
+        next()
+      }else if(authUser2.id_profile == 2 && to.meta.permissions == false){
+        next()
+      }else {
+        next('/')
+        window.localStorage.clear()
+      }
     } else {
-      next({name: 'home'})
+      next('/')
+      this.$router.push('/')
+      window.localStorage.clear()
+
     }
   }
   next()
