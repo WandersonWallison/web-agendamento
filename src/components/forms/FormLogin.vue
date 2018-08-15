@@ -102,7 +102,7 @@ export default {
           this.menssage = ''
           this.inicio = ''
           this.results = ''
-        }, 2000)
+        }, 4000)
       }
     }
   }

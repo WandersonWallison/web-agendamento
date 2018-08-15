@@ -1,8 +1,8 @@
 <template>
   <div class="div-tamanho">
-    <md-conteiner>
+    
       <form novalidate class="md-layout div-tamanho" @submit.prevent="validateUser">
-        <md-card class="md-layout-item md-size-100 md-small-size-80">
+        <md-card class="md-layout-item md-size-100 md-small-size-100">
           <md-toolbar md-elevation="0" class="md-dense">
             <span class="md-title">Cadastro de Contato</span>
           </md-toolbar>
@@ -25,7 +25,6 @@
                   <span class="md-error" v-if="!$v.form.email.required">E-mail deve ser preenchido</span>
                 </md-field>
               </div>
-
             </div>
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
@@ -61,7 +60,7 @@
           </md-card-actions>
         </md-card>
       </form>
-    </md-conteiner>
+   
   </div>
 </template>
 <script>
@@ -152,12 +151,13 @@ export default {
           this.clearForm()
         })
         .catch(error => {
-          alert('Cantato ' + error.response.data.message)
+          if(error.response.data.code == 'E_UNIQUE'){
+            alert('Contato já cadastrado, \nPor favor verificar as informações')            
+          }          
           console.log(error.response.data)
         })
     },
     validateUser () {
-
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.saveContato()
