@@ -9,20 +9,55 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('nomeEscritorio')">
-                <label for="nomeEscritorio">Nome Escritorio</label>
-                <md-input id="nomeEscritorio" name="nomeEscritorio" v-model="form.nome" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.nome.required">Nome do Escritorio deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.nome.maxlength">Invalid Escritorio</span>
+                <label for="nomeEscritorio">Nome Escritório</label>
+                <md-input id="nomeEscritorio" name="nomeEscritorio" v-model="form.nomeEscritorio" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.nomeEscritorio.required">Nome do Escritório deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.nomeEscritorio.maxlength">Invalid Escritorio</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('responsavelEscritorio')">
-                <label for="responsavelEscritorio">Responsavel Escritorio</label>
-                <md-input id="responsavelEscritorio" name="responsavelEscritorio" v-model="form.responsavel" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.responsavel.required">Responsavel do Escritorio deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.responsavel.maxlength">Invalid Responsavel</span>
+                <label for="responsavelEscritorio">Responsável Escritorio</label>
+                <md-input id="responsavelEscritorio" name="responsavelEscritorio" v-model="form.responsavelEscritorio" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.responsavelEscritorio.required">Responsável do Escritorio deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.responsavelEscritorio.maxlength">Invalid responsável</span>
               </md-field>
             </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field  :class="getValidationClass('cnpj')">
+                <label for="cnpj">CNPJ</label>
+                <md-input type="cnpj" name="cnpj" id="cnpj" autocomplete="cnpj" v-model="form.cnpj" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cnpj.required">CNPJ do Escritorio deve ser preenchido</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('tempoAceite')">
+                <label for="tempoAceite">Tempo Para Aceite</label>
+                <md-select name="tempoAceite" id="tempoAceite" v-model="form.tempoAceite" md-dense :disabled="sending">
+                  <md-option velue=""></md-option>
+                    <md-option value=12>12 Horas</md-option>
+                    <md-option value=24>24 Horas</md-option>
+                    <md-option value=36>26 Horas</md-option>
+                    <md-option value=48>48 Horas</md-option>                    
+                </md-select>
+                <span class="md-error">Tempo de Aceito não selecioando</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('qtdVisitas')">
+                <label for="qtdVisitas">Quantidade de visitas por Agente</label>
+                <md-select name="qtdVisitas" id="qtdVisitas" v-model="form.qtdVisitas" md-dense :disabled="sending">
+                  <md-option velue=""></md-option>
+                    <md-option value=1>1 Visita</md-option>
+                    <md-option value=2>2 Visita</md-option>
+                    <md-option value=3>3 Visita</md-option>
+                    <md-option value=4>4 Visita</md-option>                    
+                </md-select>
+                <span class="md-error">Quantidades de visitas não selecioando</span>
+              </md-field>
+            </div>            
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
@@ -50,6 +85,7 @@
               </md-field>
             </div>
           </div>
+          <br>
           <md-toolbar md-elevation="0" class="md-dense">
             <span class="md-title">Endereço</span>
           </md-toolbar>
@@ -136,18 +172,7 @@
           <md-field>
             <label for="observacao">Observação</label>
             <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
-          </md-field>
-          <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Parametros do Escritorio</span>
-        </md-toolbar>
-        <md-field>
-            <label for="qtdVisitas">Quantidade de visitas por Agente</label>
-            <md-input type="qtdVisitas" name="qtdVisitas" id="qtdVisitas" autocomplete="qtdVisitas" v-model="form.qtdVisitas" :disabled="sending" />
-        </md-field>
-        <md-field>
-            <label for="metaAnual">Meta Anual</label>
-            <md-input type="metaAnual" name="metaAnual" id="metaAnual" autocomplete="metaAnual" v-model="form.metaAnual" :disabled="sending" />
-        </md-field>
+          </md-field>          
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
@@ -156,11 +181,10 @@
         </div>
         </md-card-actions>
       </md-card>
-      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
+      <md-snackbar :md-active.sync="userSaved">O Escritório {{ lastUser }} foi salvo com sucesso!</md-snackbar>
     </form>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
@@ -169,6 +193,7 @@ import {
   minLength,
   email
 } from 'vuelidate/lib/validators'
+import moment from 'moment'
 
 export default {
   name: 'FormEmpresa',
@@ -176,8 +201,8 @@ export default {
   mixins: [validationMixin],
   data: () => ({
     form: {
-      nome: null,
-      responsavel: null,
+      nomeEscritorio: null,
+      responsavelEscritorio: null,
       cnpj : null,
       telefone:null,
       email:null,
@@ -188,8 +213,9 @@ export default {
       cidade: null,
       bairro: null,
       observacao: null,
-      qtd_visita_dia: null,
-      metaAnual: null
+      qtdVisitas: null,
+      cnpj: null,
+      tempoAceite: null
     },
     userSaved: false,
     sending: false,
@@ -197,10 +223,10 @@ export default {
   }),
   validations: {
     form: {
-      nome: {
+      nomeEscritorio: {
         required
       },
-      responsavel: {
+      responsavelEscritorio: {
         required,
         minLength: minLength(1)
       },
@@ -239,7 +265,17 @@ export default {
       bairro: {
         required,
         minLength: minLength(3)
+      },      
+      qtdVisitas: {
+        required      
+      },
+      cnpj: {
+        required
+      },
+      tempoAceite: {
+        required
       }
+
     }
   },
   methods: {
@@ -261,24 +297,26 @@ export default {
       this.form.observacao = null
       this.form.bairro = null
 
-      this.form.nome = null
-      this.form.responsavel = null
+      this.form.nomeEscritorio = null
+      this.form.responsavelEscritorio = null
       this.form.site = null
       this.form.telefone = null
       this.form.email = null
       this.form.qtdVisitas = null
-      this.form.metaAnual = null
+      this.form.cnpj = null
+      this.form.tempoAceite = null
     },
     saveEmpresa () {
       let newEmpresa = {
-        nome: this.form.nome,
-        responsavel: this.form.responsavel,
+        nome: this.form.nomeEscritorio,
+        responsavel: this.form.responsavelEscritorio,
         site : this.form.site,
         telefone: this.form.telefone,
         email: this.form.email,
-        qtd_visita_dia: this.form.qtdVisita,
-        meta_anul: this.form.metaAnual,
-        hora: this.form.horario,
+        qtd_visita_dia: this.form.qtdVisitas,
+        tempo_aceita: this.form.tempoAceite,        
+        abertura: moment(Date.now()).format(),
+        cnpj: this.form.cnpj
       }
       let newEndereco = {
         rua: this.form.rua,
@@ -288,25 +326,29 @@ export default {
         cep: this.form.cep,
         uf: this.form.estado
       }
-      axios.post(process.env.API + 'office', newAgenda)
+      
+      axios.post(process.env.API + 'office', newEmpresa)
         .then(response => {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
           .then(response => {
+            console.log(response)
             alert('Escritorio cadastado com success')
             this.userSaved = true
-            this.sending = false
-            this.clearForm()
+            this.sending = false               
+            this.clearForm()            
             window.location.reload()
           })
-          .catch(error => {
+          .catch(error => {            
             alert('Erro endereco ' + error)
             console.log(error.response.data)
           })
         })
         .catch(error => {
-          alert('agenda ' + error.response.data.code)
-          console.log(error.response.data)
+          if(error.response.data.code = 'E_UNIQUE'){
+             alert('Escritorio já Cadastrado!!!  \nverifique os dados de Cadastro')
+          }         
+          console.log(error.response)
         })
     },
     validateEmpresa () {
