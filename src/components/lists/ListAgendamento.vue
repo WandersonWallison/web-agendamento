@@ -12,7 +12,7 @@
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.id_lead.telefone }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
           <md-button class="md-icon-button md-raised md-primary" @click="aceito">
-            <md-tooltip md-direction="top">Aceito</md-tooltip>
+            <md-tooltip md-direction="top">Aceito</md-tooltip>            
             <md-icon>thumb_up</md-icon>
           </md-button>
           <md-button class="md-icon-button md-raised md-accent"  @click="notAceito">
