@@ -2,7 +2,7 @@
 <div class="page-container">
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-toobar">
-        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
+        <md-button class="md-icon-button">
           <md-icon>menu</md-icon>
         </md-button>
         <span class="md-title">Prosperidade</span>
