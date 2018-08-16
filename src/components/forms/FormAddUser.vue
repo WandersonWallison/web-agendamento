@@ -417,7 +417,7 @@ export default {
     saveEmpresa () {
       let senhaGerada
       senhaGerada = this.geradorPassword()
-      console.log('Senha Gerada: '+ senhaGerada)
+      //console.log('Senha Gerada: '+ senhaGerada)
       let newAgente = {
         username : this.form.nomeAgente,
         email : this.form.email,
@@ -436,7 +436,7 @@ export default {
         nome_pai : this.form.nomePai,
         rede_social : this.form.redeSocial,
         genero: this.form.genero,
-        id_profile : 1
+        id_profile : 2
       }
       let newEndereco = {
         logradouro: this.form.rua,
@@ -451,25 +451,27 @@ export default {
           newEndereco.user_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
           .then(response => {
-            alert('Agente cadastado com success ' +
-                  'Dados de Acesso do Agente ' +
+            alert('Agente cadastado com succeso \n' +
+                  'Dados de Acesso do Agente: ' +
                    this.form.nomeAgente +
-                  ' Usuario: ' +
+                  '\n Usuario: ' +
                    this.form.email +
-                  'Senha: '+
+                  '\n Senha: '+
                    senhaGerada )
             this.userSaved = true
             this.sending = false
             this.clearForm()
-            window.location.reload()
+            //window.location.reload()
           })
           .catch(error => {
-            alert('Erro endereco ' + error)
+            alert('Erro no cadastro do Endereço')
             console.log(error.response.data)
           })
         })
         .catch(error => {
-          alert('agenda ' + error.response.data.code)
+          if(error.response.data.code == 'E_UNIQUE'){
+              alert('Agente já Cadastrado \nPor favor verificar os dados de cadastro')
+          }          
           console.log(error.response.data)
         })
     },
