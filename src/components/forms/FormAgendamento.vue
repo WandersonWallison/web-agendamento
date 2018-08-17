@@ -229,8 +229,8 @@ export default {
         data: moment(this.form.data).format(),
         hora: this.form.horario,
         obs: this.form.observacao,
-        id_lead: this.leadProps.id
-      }
+        id_lead: this.leadProps.id,
+       }
       let newEndereco = {
         rua: this.form.rua,
         numero: this.form.numero,
