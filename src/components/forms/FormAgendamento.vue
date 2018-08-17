@@ -249,7 +249,7 @@ export default {
             window.location.reload()
           })
           .catch(error => {
-            alert('Erro endereco ' + error)
+            alert('Erro no cadastro de Endereco ' + error)
             console.log(error.response.data)
           })
         })
@@ -263,6 +263,29 @@ export default {
       if (!this.$v.$invalid) {
         this.saveAgenda()
       }
+    },
+    getAgente () {
+
+      axios.post(process.env.API + 'schedule', newAgenda)
+      .then(response => {
+        newEndereco.schedule_address = response.data.id
+        axios.post(process.env.API + 'address', newEndereco)
+        .then(response => {
+          alert('Agendamento cadastado com success')
+          this.userSaved = true
+          this.sending = false
+          this.clearForm()
+          window.location.reload()
+        })
+        .catch(error => {
+          alert('Erro no cadastro de Endereco ' + error)
+          console.log(error.response.data)
+        })
+      })
+      .catch(error => {
+        alert('agenda ' + error.response.data.code)
+        console.log(error.response.data)
+      })
     }
   }
 }
