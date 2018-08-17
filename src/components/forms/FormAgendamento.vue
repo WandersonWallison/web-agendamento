@@ -128,6 +128,9 @@
         <div class="actions md-layout md-alignment-center-space-between">
           <md-button class="md-raised md-primary" type="submit" :disabled="sending">Agendar</md-button>
         </div>
+        <div class="actions md-layout md-alignment-center-space-between">
+          <md-button class="md-raised md-primary" @click="getAgente" :disabled="sending">Testar Agente</md-button>
+        </div>
         </md-card-actions>
       </md-card>
       <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
@@ -160,6 +163,11 @@ export default {
       bairro: null,
       observacao: null
     },
+    resultAgente: null,
+    listAgentes:[],
+    resp: [],
+    agentes: [],
+    results: [],
     userSaved: false,
     sending: false,
     lastUser: null
@@ -199,6 +207,15 @@ export default {
       }
     }
   },
+  mounted () {
+    axios.get(process.env.API + 'user?where={"id_profile": 2}')
+    .then(response => {
+    this.resp = response.data
+     for (let index = 0; index < this.resp.length; index++) {
+            this.listAgentes.push(this.resp[index].id)
+        }
+  })
+  },
   methods: {
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
@@ -223,14 +240,13 @@ export default {
     },
     saveAgenda () {
 
-      let valor = getAgente(this.form.data)
-      console.log('Valor: ' + valor)
       let newAgenda = {
         data: moment(this.form.data).format(),
         hora: this.form.horario,
         obs: this.form.observacao,
         id_lead: this.leadProps.id,
-       }
+        agentes: this.resultAgente
+      }
       let newEndereco = {
         rua: this.form.rua,
         numero: this.form.numero,
@@ -267,30 +283,37 @@ export default {
         this.saveAgenda()
       }
     },
-    getAgente (data) {
-      
-      console.log('data'+ data)
-      axios.post(process.env.API + 'schedule', data)
+    getAgente () {
+
+      const finalArray = []
+      let data = moment(this.form.data).format('YYYY-MM-DD')
+
+      alert('Data: ' + data)
+      axios.get(process.env.API + 'schedule/?data=' + data)
       .then(response => {
-        console.log(response.data)
-        newEndereco.schedule_address = response.data.id
-        axios.post(process.env.API + 'address', newEndereco)
-        .then(response => {
-          alert('Agendamento cadastado com success')
-          this.userSaved = true
-          this.sending = false
-          this.clearForm()
-          window.location.reload()
+        this.results = response.data
+
+        alert('Result: ' + this.results)
+        for (let index = 0; index < this.results.length; index++) {
+            if(this.results[index].agentes){
+              this.agentes.push(this.results[index].agentes.id)
+            }
+        }
+        this.listAgentes.forEach((element) => this.agentes.forEach((element2) => {
+           if (element != element2){
+              finalArray.push(element)
+           }
         })
-        .catch(error => {
-          alert('Erro no cadastro de Endereco ' + error)
-          console.log(error.response.data)
-        })
+        )
+
+        alert('chegou no if: ' + finalArray[(finalArray.length-1)]);
+        console.log('chegou no if ' + finalArray)
+        this.resultAgente = finalArray[(finalArray.length-1)]
       })
       .catch(error => {
-        alert('agenda ' + error.response.data.code)
-        console.log(error.response.data)
-      })
+          alert('agenda ' + error)
+          console.log(error)
+        })
     }
   }
 }
