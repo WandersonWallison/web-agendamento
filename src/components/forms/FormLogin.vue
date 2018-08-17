@@ -73,10 +73,10 @@ export default {
             } else {
               this.results = response.data.message
               window.localStorage.setItem('Usuario', JSON.stringify(response.data.user))
-              if(response.data.user.id_profile === 1){
+              if (response.data.user.id_profile === 1){
                 this.$router.push('/home')
               }
-              else{
+              else {
               this.$router.push('/agendamento')
             }
             }
@@ -92,12 +92,11 @@ export default {
 
       } else {
         this.$router.push('/')
-        if(this.login.email == ''){
+        if (this.login.email == ''){
           this.menssage = 'Por favor incluir e-mail'
         }else if(this.login.password == ''){
           this.menssage = 'Por favor incluir a senha'
         }
-
         setInterval(() => {
           this.menssage = ''
           this.inicio = ''

@@ -103,17 +103,17 @@ export default {
         escolaridade: this.selected[0].escolaridade
       },
       results: []
-    };
+    }
   },
   methods: {
     update() {
       let newLead = {
         nome: this.lead.nome,
-        data_nascimento: moment(this.lead.data_nascimento).format("YYYY-MM-DD"),
+        data_nascimento: moment(this.lead.data_nascimento).format('YYYY-MM-DD'),
         email: this.lead.email,
         cpf: this.lead.cpf,
         cnh_rg: this.lead.cnh_rg,
-        data_emissao: moment(this.lead.data_emissao).format("YYYY-MM-DD"),
+        data_emissao: moment(this.lead.data_emissao).format('YYYY-MM-DD'),
         telefone: this.lead.telefone,
         genero: this.lead.genero,
         estado_civil: this.lead.estado_civil,
@@ -121,9 +121,8 @@ export default {
         nome_mae: this.lead.nome_mae,
         nome_pai: this.lead.nome_pai,
         escolaridade: this.lead.escolaridade,
-        tipo: "Cliente"
-      };
-      //console.log(newLead);
+        tipo: 'Cliente'
+      }      
       axios
         .put(process.env.API+'leads/'+ this.selected[0].id, newLead)
         .then(response => {
@@ -137,7 +136,7 @@ export default {
         })
     }
   }
-};
+}
 </script>
 <style lang='scss'>
 .centered-container {

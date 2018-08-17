@@ -245,13 +245,11 @@
           <md-button class="md-raised md-primary" type="submit" :disabled="sending">Cadastrar</md-button>
         </div>
         </md-card-actions>
-
       </md-card>
       <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
     </form>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
@@ -293,7 +291,6 @@ export default {
       estadoCivil : null,
       escolaridade : null,
       genero : null
-
     },
     userSaved : false,
     sending : false,
@@ -379,9 +376,7 @@ export default {
   methods: {
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
-      if (field) {
-        //console.log('Campo: ' + fieldName)
-        //console.log('field.$invalid: ' + field.$invalid)
+      if (field) {        
         return {
           'md-invalid': field.$invalid && field.$dirty
         }
@@ -417,7 +412,7 @@ export default {
     saveEmpresa () {
       let senhaGerada
       senhaGerada = this.geradorPassword()
-      //console.log('Senha Gerada: '+ senhaGerada)
+      
       let newAgente = {
         username : this.form.nomeAgente,
         email : this.form.email,
@@ -450,26 +445,24 @@ export default {
         .then(response => {
           newEndereco.user_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
-          .then(response => {
-            alert('Agente cadastado com succeso \n' +
-                  'Dados de Acesso do Agente: ' +
-                   this.form.nomeAgente +
-                  '\n Usuario: ' +
-                   this.form.email +
-                  '\n Senha: '+
-                   senhaGerada )
-            this.userSaved = true
-            this.sending = false
-            this.clearForm()
-            //window.location.reload()
-          })
+            .then(response => {
+                  alert('Agente cadastado com succeso \n' +
+              'Dados de Acesso do Agente: ' +
+                this.form.nomeAgente +
+              '\n Usuario: ' +
+                this.form.email +
+              '\n Senha: ' + senhaGerada )
+              this.userSaved = true
+              this.sending = false
+              this.clearForm()
+              })
           .catch(error => {
             alert('Erro no cadastro do Endereço')
-            console.log(error.response.data)
+          console.log(error.response.data)
           })
         })
         .catch(error => {
-          if(error.response.data.code == 'E_UNIQUE'){
+          if (error.response.data.code === 'E_UNIQUE') {
               alert('Agente já Cadastrado \nPor favor verificar os dados de cadastro')
           }          
           console.log(error.response.data)
@@ -482,16 +475,16 @@ export default {
       }
     },
      geradorPassword () {
-      this.pass = "";
-      for (var i= 0; i<8; i++) {
+      this.pass = ''
+      for (var i = 0; i < 8; i++) {
         this.pass += this.getRandomChar()
       }
       return this.pass
     },
     getRandomChar(){
-       var ascii = [[48, 57],[64,90],[97,122]]
-        var i = Math.floor(Math.random()*ascii.length)
-        return String.fromCharCode(Math.floor(Math.random()*(ascii[i][1]-ascii[i][0]))+ascii[i][0])
+      var ascii = [[48, 57] , [64, 90] , [97, 122]]
+      var i = Math.floor(Math.random() * ascii.length)
+      return String.fromCharCode(Math.floor(Math.random() * (ascii[i][1]-ascii[i][0])) + ascii[i][0])
     }
   }
 }

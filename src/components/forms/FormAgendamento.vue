@@ -222,6 +222,9 @@ export default {
       this.form.bairro = null
     },
     saveAgenda () {
+
+      let valor = getAgente(this.form.data)
+      console.log('Valor: ' + valor)
       let newAgenda = {
         data: moment(this.form.data).format(),
         hora: this.form.horario,
@@ -264,10 +267,12 @@ export default {
         this.saveAgenda()
       }
     },
-    getAgente () {
-
-      axios.post(process.env.API + 'schedule', newAgenda)
+    getAgente (data) {
+      
+      console.log('data'+ data)
+      axios.post(process.env.API + 'schedule', data)
       .then(response => {
+        console.log(response.data)
         newEndereco.schedule_address = response.data.id
         axios.post(process.env.API + 'address', newEndereco)
         .then(response => {

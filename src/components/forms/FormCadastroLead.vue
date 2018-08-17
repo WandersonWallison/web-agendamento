@@ -127,11 +127,11 @@ export default {
       this.form.observacao = null
     },
     somenteNumeros (num) {
-        var er = /[^0-9.]/;
-        er.lastIndex = 0;
-        var campo = num;
+        var er = /[^0-9.]/
+        er.lastIndex = 0
+        var campo = num
         if (er.test(campo.value)) {
-          campo.value = "";
+          campo.value = ''
         }
     },
     saveContato () {
