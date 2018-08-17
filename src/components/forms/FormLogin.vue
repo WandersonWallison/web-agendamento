@@ -1,12 +1,12 @@
 <template>
-  <div class="centered-container" @keyup.enter="auth">
+  <div class="centered-container2" @keyup.enter="auth">
     <md-content class="md-elevation-3">
 
-      <div class="title">
+      <div class="title2">
         <img src="../../assets/marca_branca_fundo_transparente.png">
       </div>
 
-      <div class="form">
+      <div class="form2">
         <md-field>
           <label>E-mail</label>
           <md-input v-model="login.email" autofocus></md-input>
@@ -22,10 +22,10 @@
         <br>
         {{inicio}}
       </div>
-      <div class="actions md-layout md-alignment-center-space-between">
+      <div class="actions2 md-layout md-alignment-center-space-between">
         <md-button class="md-raised md-primary" @click="auth">Entrar</md-button>
       </div>
-      <div class="loading-overlay" v-if="loading">
+      <div class="loading-overlay2" v-if="loading">
         <md-progress-spinner md-mode='indeterminate' md-diameter='50' :md-stroke='4'></md-progress-spinner>
       </div>
     </md-content>
@@ -110,13 +110,13 @@ export default {
 </script>
 
 <style lang="scss">
-.centered-container {
+.centered-container2 {
   display: flex;
   align-items: center;
   justify-content: center;
   position: static;
   height: 95vh;
-  .title {
+  .title2 {
     text-align: center;
     margin-bottom: 30px;
     img {
@@ -125,7 +125,7 @@ export default {
       width: auto;
     }
   }
-  .actions {
+  .actions2 {
     .md-button {
       margin: 0;
       margin-left: auto;
@@ -133,7 +133,7 @@ export default {
       width: 6em;
     }
   }
-  .form {
+  .form2 {
     margin-bottom: 60px;
   }
   .background {
@@ -157,7 +157,7 @@ export default {
     background-color: #15da93;
     //background-color: #1a503a;
   }
-  .loading-overlay {
+  .loading-overlay2 {
     z-index: 5;
     top: 0;
     left: 0;
