@@ -128,9 +128,6 @@
         <div class="actions md-layout md-alignment-center-space-between">
           <md-button class="md-raised md-primary" type="submit" :disabled="sending">Agendar</md-button>
         </div>
-        <div class="actions md-layout md-alignment-center-space-between">
-          <md-button class="md-raised md-primary" @click="getAgente" :disabled="sending">Testar Agente</md-button>
-        </div>
         </md-card-actions>
       </md-card>
       <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
@@ -206,6 +203,9 @@ export default {
         minLength: minLength(3)
       }
     }
+  },
+  beforeUpdate(){
+     this.getAgente()
   },
   mounted () {
     axios.get(process.env.API + 'user?where={"id_profile": 2}')
@@ -284,16 +284,11 @@ export default {
       }
     },
     getAgente () {
-
       const finalArray = []
       let data = moment(this.form.data).format('YYYY-MM-DD')
-
-      alert('Data: ' + data)
       axios.get(process.env.API + 'schedule/?data=' + data)
       .then(response => {
         this.results = response.data
-
-        alert('Result: ' + this.results)
         for (let index = 0; index < this.results.length; index++) {
             if(this.results[index].agentes){
               this.agentes.push(this.results[index].agentes.id)
@@ -305,13 +300,9 @@ export default {
            }
         })
         )
-
-        alert('chegou no if: ' + finalArray[(finalArray.length-1)]);
-        console.log('chegou no if ' + finalArray)
-        this.resultAgente = finalArray[(finalArray.length-1)]
+      this.resultAgente = finalArray[(finalArray.length-1)]
       })
       .catch(error => {
-          alert('agenda ' + error)
           console.log(error)
         })
     }
