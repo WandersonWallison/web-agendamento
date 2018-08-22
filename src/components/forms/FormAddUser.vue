@@ -3,10 +3,22 @@
     <form novalidate class='md-layout' @submit.prevent='validateUser'>
       <md-card class='md-layout-item md-size-100 md-small-size-100'>
        <md-toolbar md-elevation='0' class='md-dense'>
-          <span class='md-title'>Cadastro de Agente</span>
+          <span class='md-title'>Cadastro de Usuário</span>
         </md-toolbar>
         <md-card-content>
           <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('profile')">
+                <label for="profile">Tipo de Usuário</label>
+                <md-select name="profile" id="profile" v-model="form.profile" md-dense :disabled="sending">
+                  <md-option velue=""></md-option>
+                    <md-option value="1">MANAGER</md-option>
+                    <md-option value="2">AGENTE</md-option>
+                    <md-option value="3">HUNTER</md-option>
+                </md-select>
+                <span class="md-error">Perfil não selecioando</span>
+              </md-field>
+            </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('nomeAgente')">
                 <label for="nomeAgente">Nome Completo</label>
@@ -64,11 +76,9 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cvm')">
+              <md-field>
                 <label for="cvm">CVM</label>
                 <md-input type="number" id="cvm" name="cvm" v-model="form.cvm" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cvm.required">CVM deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.cvm.maxlength">Invalid cvm</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -238,6 +248,7 @@
             <label for="observacao">Observação</label>
             <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
           </md-field>
+
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
@@ -290,7 +301,9 @@ export default {
       metaAnual : null,
       estadoCivil : null,
       escolaridade : null,
-      genero : null
+      genero : null,
+      profile : null
+
     },
     userSaved : false,
     sending : false,
@@ -319,10 +332,6 @@ export default {
         minLength: minLength(1)
       },
       celular: {
-        required,
-        minLength: minLength(1)
-      },
-      cvm: {
         required,
         minLength: minLength(1)
       },
@@ -370,13 +379,17 @@ export default {
       },
       estadoCivil: {
         required
+      },
+      profile: {
+        required
+
       }
     }
   },
   methods: {
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
-      if (field) {        
+      if (field) {
         return {
           'md-invalid': field.$invalid && field.$dirty
         }
@@ -408,11 +421,12 @@ export default {
       this.form.nomePai = null
       this.form.redeSocial = null
       this.form.observacao = null
+      this.form.profile = null
     },
     saveEmpresa () {
       let senhaGerada
       senhaGerada = this.geradorPassword()
-      
+
       let newAgente = {
         username : this.form.nomeAgente,
         email : this.form.email,
@@ -431,7 +445,7 @@ export default {
         nome_pai : this.form.nomePai,
         rede_social : this.form.redeSocial,
         genero: this.form.genero,
-        id_profile : 2
+        id_profile : this.form.profile
       }
       let newEndereco = {
         logradouro: this.form.rua,
@@ -464,7 +478,7 @@ export default {
         .catch(error => {
           if (error.response.data.code === 'E_UNIQUE') {
               alert('Agente já Cadastrado \nPor favor verificar os dados de cadastro')
-          }          
+          }
           console.log(error.response.data)
         })
     },
