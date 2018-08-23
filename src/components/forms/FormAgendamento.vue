@@ -209,12 +209,12 @@ export default {
   },
   mounted () {
     axios.get(process.env.API + 'user?where={"id_profile": 2}')
-    .then(response => {
-    this.resp = response.data
-     for (let index = 0; index < this.resp.length; index++) {
-            this.listAgentes.push(this.resp[index].id)
+      .then(response => {
+          this.resp = response.data
+        for (let index = 0; index < this.resp.length; index++) {
+          this.listAgentes.push(this.resp[index].id)
         }
-  })
+      })
   },
   methods: {
     getValidationClass (fieldName) {
@@ -239,7 +239,6 @@ export default {
       this.form.bairro = null
     },
     saveAgenda () {
-
       let newAgenda = {
         data: moment(this.form.data).format(),
         hora: this.form.horario,
@@ -262,15 +261,15 @@ export default {
           axios.post(process.env.API + 'address', newEndereco)
           .then(response => {
             alert('Agendamento cadastado com success')
-            this.userSaved = true
-            this.sending = false
-            this.clearForm()
-            window.location.reload()
+              this.userSaved = true
+              this.sending = false
+              this.clearForm()
+              window.location.reload()
           })
-          .catch(error => {
-            alert('Erro no cadastro de Endereco ' + error)
-            console.log(error.response.data)
-          })
+            .catch(error => {
+              alert('Erro no cadastro de Endereco ' + error)
+              console.log(error.response.data)
+            })
         })
         .catch(error => {
           alert('agenda ' + error.response.data.code)
@@ -289,15 +288,15 @@ export default {
       axios.get(process.env.API + 'schedule/?data=' + data)
       .then(response => {
         this.results = response.data
-        for (let index = 0; index < this.results.length; index++) {
-            if(this.results[index].agentes){
-              this.agentes.push(this.results[index].agentes.id)
+            for (let index = 0; index < this.results.length; index++) {
+                if (this.results[index].agentes) {
+                  this.agentes.push(this.results[index].agentes.id)
+                    }
             }
-        }
         this.listAgentes.forEach((element) => this.agentes.forEach((element2) => {
-           if (element != element2){
+            if (element !== element2){
               finalArray.push(element)
-           }
+            }
         })
         )
       this.resultAgente = finalArray[(finalArray.length-1)]
