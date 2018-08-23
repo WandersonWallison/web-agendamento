@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/forms/FormLogin.vue'
-import Home from '@/components/forms/Home.vue'
+import Home from '../components/forms/Home.vue'
 import CadEmpresa from '@/components/forms/FormCadastroEmpresa.vue'
 import CadLead from '@/components/forms/FormCadastroLead.vue'
 import CadUsuario from '@/components/forms/FormAddUser.vue'
 import ListaAgentes from '../components/lists/ListaAgentes.vue'
 import Agendamento from '../components/forms/FormAgente.vue'
-import FormCrudLead from '@/components/forms/FormCrudLead.vue'
+import FormCrudLead from '../components/forms/FormCrudLead.vue'
 import CadAgendamento from '../components/forms/FormAgendamento.vue'
-import Calendario from '../components/forms/FormCalendario.vue'
+import ListaLeadAguardando from '../components/lists/ListClienteAguardandoContato.vue'
 
 Vue.use(Router)
 //var token = localStorage.getItem('Usuario')
@@ -19,17 +19,17 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
-      path: '*',
-      redirect: { name: 'login' }
+      path: "*",
+      redirect: { name: "login" }
     },
     {
-      path: '/Login',
-      name: 'login',
+      path: "/Login",
+      name: "login",
       component: Login
     },
     {
-      path: '/Home',
-      name: 'home',
+      path: "/Home",
+      name: "home",
       component: Home,
       meta: {
         requiresAuth: true,
@@ -37,8 +37,8 @@ const router = new Router({
       }
     },
     {
-      path: '/lead/list',
-      name: 'formCrudLead',
+      path: "/lead/list",
+      name: "formCrudLead",
       component: FormCrudLead,
       meta: {
         requiresAuth: true,
@@ -46,8 +46,17 @@ const router = new Router({
       }
     },
     {
-      path: '/Agendamento',
-      name: 'agendamento',
+      path: "/lead/listAguardo",
+      name: "ListClienteAguardando",
+      component: ListaLeadAguardando,
+      meta: {
+        requiresAuth: true,
+        permissions: true
+      }
+    },
+    {
+      path: "/Agendamento",
+      name: "agendamento",
       component: Agendamento,
       meta: {
         requiresAuth: true,
@@ -55,7 +64,7 @@ const router = new Router({
       }
     }
   ]
-})
+});
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const authUser = window.localStorage.getItem('Usuario')

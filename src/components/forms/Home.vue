@@ -38,7 +38,16 @@
           <md-list slot="md-expand">
             <md-button to="/lead/list">Listar</md-button>
             <md-button class="md-inset">Adicionar</md-button>
+            <md-button to="/lead/listAguardo">Aguardando</md-button> 
           </md-list>
+          </md-list-item>
+          <md-list-item md-expand>
+            <md-icon>schedule</md-icon>
+            <span class="md-list-item-text">Agendamentos</span>
+          <md-list slot="md-expand">  
+            <md-button to="/lead/listAguardo">Aceitos</md-button>  
+            <md-button to="/lead/list">Recusados</md-button>             
+          </md-list>          
           </md-list-item>
         </md-list>
       </md-app-drawer>
@@ -54,6 +63,7 @@ import FormAddUser from './FormAddUser'
 import ListCliente from '../lists/ListCliente'
 import FormAddEmpresa from './FormCadastroEmpresa.vue'
 import ButtonAdd from '../buttons/ButtonAdd'
+import ListClienteAguardando from '../lists/ListClienteAguardandoContato'
 
 export default {
   name: 'Home',
@@ -61,7 +71,8 @@ export default {
     FormAddUser,
     ListCliente,
     FormAddEmpresa,
-    ButtonAdd
+    ButtonAdd,
+    ListClienteAguardando
   },
   data: () => ({
     menuVisible: false,
