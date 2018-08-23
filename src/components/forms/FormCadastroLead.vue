@@ -1,6 +1,6 @@
 <template>
   <div class="div-tamanho">
-    
+
       <form novalidate class="md-layout div-tamanho" @submit.prevent="validateUser">
         <md-card class="md-layout-item md-size-100 md-small-size-100">
           <md-toolbar md-elevation="0" class="md-dense">
@@ -60,7 +60,7 @@
           </md-card-actions>
         </md-card>
       </form>
-   
+
   </div>
 </template>
 <script>
@@ -85,6 +85,7 @@ export default {
       celular: null,
       observacao: null
     },
+    userAtual: null,
     userSaved: false,
     sending: false,
     lastUser: null
@@ -108,6 +109,11 @@ export default {
         minLength: minLength(1)
       }
     }
+  },
+  mounted() {
+    const authUser = window.localStorage.getItem('Usuario')
+    const authUser2 = JSON.parse(authUser)
+    this.userAtual = authUser2.id
   },
   methods: {
     getValidationClass (fieldName) {
@@ -135,13 +141,15 @@ export default {
         }
     },
     saveContato () {
+
       let newLead = {
         nome: this.form.nomeCompleto,
         email: this.form.email,
         telefone: this.form.telefone,
         celular: this.form.celular,
         obs: this.form.observacao,
-        data_criacao: moment(Date.now()).format()
+        data_criacao: moment(Date.now()).format(),
+        id_user_criador: this.userAtual
       }
       axios.post(process.env.API + 'leads', newLead)
         .then(response => {
@@ -152,13 +160,14 @@ export default {
         })
         .catch(error => {
           if(error.response.data.code == 'E_UNIQUE'){
-            alert('Contato já cadastrado, \nPor favor verificar as informações')            
-          }          
+            alert('Contato já cadastrado, \nPor favor verificar as informações')
+          }
           console.log(error.response.data)
         })
     },
     validateUser () {
       this.$v.$touch()
+
       if (!this.$v.$invalid) {
         this.saveContato()
       }
