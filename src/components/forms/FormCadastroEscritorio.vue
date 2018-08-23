@@ -3,7 +3,7 @@
     <form novalidate class="md-layout" @submit.prevent="validateEmpresa">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Cadastro de Empresa</span>
+          <span class="md-title">Cadastro de Escritorio</span>
         </md-toolbar>
         <md-card-content>
           <div class="md-layout md-gutter">
@@ -196,7 +196,7 @@ import {
 import moment from 'moment'
 
 export default {
-  name: 'FormEmpresa',
+  name: 'FormEscritorio',
   props: ['leadProps'],
   mixins: [validationMixin],
   data: () => ({

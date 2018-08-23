@@ -11,12 +11,16 @@
           <md-icon>note</md-icon>
         </md-button>
         <md-button class="md-icon-button" @click="showAgente = true">
-          <md-tooltip md-direction="left">Agente</md-tooltip>
+          <md-tooltip md-direction="left">Usuário</md-tooltip>
           <md-icon>people</md-icon>
         </md-button>
-        <md-button class="md-icon-button" @click="showEmpresa = true">
+        <md-button class="md-icon-button" @click="showEscritorio = true">
           <md-tooltip md-direction="left">Escritório</md-tooltip>
           <md-icon>location_city</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" @click="showEmpresa = true">
+          <md-tooltip md-direction="left">Empresa</md-tooltip>
+          <md-icon>business</md-icon>
         </md-button>
       </md-speed-dial-content>
     </md-speed-dial>
@@ -26,6 +30,9 @@
     <md-dialog :md-active.sync="showAgente" class="div">
       <cad-user/>
     </md-dialog>
+    <md-dialog :md-active.sync="showEscritorio" class="div">
+      <cad-escritorio/>
+    </md-dialog>
     <md-dialog :md-active.sync="showEmpresa" class="div">
       <cad-empresa/>
     </md-dialog>
@@ -34,6 +41,7 @@
 <script>
 import CadLead from '../forms/FormCadastroLead.vue'
 import CadUser from '../forms/FormAddUser.vue'
+import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
 
 export default {
@@ -41,11 +49,13 @@ export default {
   components: {
     CadLead,
     CadUser,
+    CadEscritorio,
     CadEmpresa
   },
   data: () => ({
     showDialog: false,
     showAgente: false,
+    showEscritorio: false,
     showEmpresa: false,
     showAgendamento: false
   })
