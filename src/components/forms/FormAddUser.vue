@@ -9,6 +9,15 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('profile')">
+                <label for="office">Escritório</label>
+                <md-select name="office" id="office" v-model="form.office" md-dense :disabled="sending">
+                    <md-option v-for="office in offices" :value="test">{{ office.nome }}</md-option>
+                </md-select>
+                <span class="md-error">Perfil não selecioando</span>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('profile')">
                 <label for="profile">Tipo de Usuário</label>
                 <md-select name="profile" id="profile" v-model="form.profile" md-dense :disabled="sending">
                   <md-option velue=""></md-option>
@@ -19,6 +28,7 @@
                 <span class="md-error">Perfil não selecioando</span>
               </md-field>
             </div>
+
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('nomeAgente')">
                 <label for="nomeAgente">Nome Completo</label>
@@ -308,7 +318,7 @@ export default {
     sending : false,
     lastUser : null,
     infoSenha : false,
-    people: []
+    offices: []
   }),
   validations: {
     form: {
@@ -387,9 +397,9 @@ export default {
     }
   },
   mounted() {
-    axios.get(process.env.API + 'user?where={"ativo": true}')
+    axios.get(process.env.API + 'office')
     .then(response => {
-    this.people = response.data      
+    this.offices = response.data
     })
   },
   methods: {

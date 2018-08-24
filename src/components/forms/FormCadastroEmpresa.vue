@@ -22,8 +22,8 @@
                 <span class="md-error" v-if="!$v.form.razaoSocial.required">Responsável do Escritorio deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.razaoSocial.maxlength">Invalid responsável</span>
               </md-field>
-            </div>            
-          </div>          
+            </div>
+          </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field  :class="getValidationClass('cnpj')">
@@ -53,10 +53,10 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label for="site">Site</label>
-                <md-input id="site" name="site" v-model="form.site" :disabled="sending" />                
+                <md-input id="site" name="site" v-model="form.site" :disabled="sending" />
               </md-field>
-            </div>            
-          </div>          
+            </div>
+          </div>
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
@@ -89,8 +89,8 @@ export default {
       razaoSocial: null,
       cnpj : null,
       telefone:null,
-      email:null,          
-      cnpj: null,      
+      email:null,
+      cnpj: null,
     },
     userSaved: false,
     sending: false,
@@ -142,43 +142,23 @@ export default {
       this.form.razaoSocial = null
       this.form.site = null
       this.form.telefone = null
-      this.form.email = null      
+      this.form.email = null
       this.form.cnpj = null
-      
+
     },
     saveEmpresa () {
       let newEmpresa = {
         nome: this.form.nomeEmpresa,
-        rezao_social: this.form.razaoSocial,
+        razao_social: this.form.razaoSocial,
         site : this.form.site,
         telefone: this.form.telefone,
-        email: this.form.email,        
+        email: this.form.email,
         cnpj: this.form.cnpj
       }
-      let newEndereco = {
-        rua: this.form.rua,
-        numero: this.form.numero,
-        bairro: this.form.bairro,
-        cidade: this.form.cidade,
-        cep: this.form.cep,
-        uf: this.form.estado
-      }
-      alert('Testando o envio: '+newEmpresa)
       axios.post(process.env.API + 'company', newEmpresa)
         .then(response => {
-          newEndereco.office_address = response.data.id
-          axios.post(process.env.API + 'address', newEndereco)
-          .then(response => {            
-            alert('Empresa cadastada com successo')
-            this.userSaved = true
-            this.sending = false
-            this.clearForm()
-            window.location.reload()
-          })
-          .catch(error => {
-            alert('Erro endereco ' + error)
-            console.log(error.response.data)
-          })
+          alert('Empresa Cadastrada com Sucesso!!!')
+          this.clearForm()
         })
         .catch(error => {
           alert(error.response.data)
