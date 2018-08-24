@@ -14,6 +14,10 @@
           <md-tooltip md-direction="left">Usuário</md-tooltip>
           <md-icon>people</md-icon>
         </md-button>
+        <md-button class="md-icon-button" @click="showListaContato = true">
+          <md-tooltip md-direction="left">Lista de Contatos</md-tooltip>
+          <md-icon>format_list_bulleted</md-icon>
+        </md-button>
         <md-button class="md-icon-button" @click="showEscritorio = true">
           <md-tooltip md-direction="left">Escritório</md-tooltip>
           <md-icon>location_city</md-icon>
@@ -36,6 +40,9 @@
     <md-dialog :md-active.sync="showEmpresa" class="div">
       <cad-empresa/>
     </md-dialog>
+    <md-dialog :md-active.sync="showListaContato" class="div">
+      <List-Lead/>
+    </md-dialog>
   </div>
 </template>
 <script>
@@ -43,6 +50,7 @@ import CadLead from '../forms/FormCadastroLead.vue'
 import CadUser from '../forms/FormAddUser.vue'
 import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
+import ListLead from '../lists/ListCrudLead.vue'
 
 export default {
   name: 'buttonAdd',
@@ -50,14 +58,16 @@ export default {
     CadLead,
     CadUser,
     CadEscritorio,
-    CadEmpresa
+    CadEmpresa,
+    ListLead
   },
   data: () => ({
     showDialog: false,
     showAgente: false,
     showEscritorio: false,
     showEmpresa: false,
-    showAgendamento: false
+    showAgendamento: false,
+    showListaContato: false
   })
 }
 </script>
@@ -72,8 +82,8 @@ export default {
 }
 .div{
   overflow: auto;
-  height: 70%;
-  width: 70%;
+  height: 100%;
+  width: 90%;
 
 }
 </style>
