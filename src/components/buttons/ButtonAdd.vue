@@ -26,6 +26,10 @@
           <md-tooltip md-direction="left">Empresa</md-tooltip>
           <md-icon>business</md-icon>
         </md-button>
+        <md-button class="md-icon-button" @click="showListaParaAgendamento = true">
+          <md-tooltip md-direction="left">Clientes para Agendamento</md-tooltip>
+          <md-icon>local_phone</md-icon>
+        </md-button>
       </md-speed-dial-content>
     </md-speed-dial>
     <md-dialog :md-active.sync="showDialog" class="div-contato">
@@ -43,6 +47,9 @@
     <md-dialog :md-active.sync="showListaContato" class="div">
       <list-cliente-aguardando-contato/>
     </md-dialog>
+    <md-dialog :md-active.sync="showListaParaAgendamento" class="div">
+      <List-Cliente/>
+    </md-dialog>
   </div>
 </template>
 <script>
@@ -51,6 +58,7 @@ import CadUser from '../forms/FormAddUser.vue'
 import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
 import ListClienteAguardandoContato from '../lists/ListClienteAguardandoContato.vue'
+import ListCliente from '../lists/ListCliente'
 
 export default {
   name: 'buttonAdd',
@@ -59,7 +67,8 @@ export default {
     CadUser,
     CadEscritorio,
     CadEmpresa,
-    ListClienteAguardandoContato
+    ListClienteAguardandoContato,
+    ListCliente
   },
   data: () => ({
     showDialog: false,
@@ -67,7 +76,8 @@ export default {
     showEscritorio: false,
     showEmpresa: false,
     showAgendamento: false,
-    showListaContato: false
+    showListaContato: false,
+    showListaParaAgendamento: false
   })
 }
 </script>

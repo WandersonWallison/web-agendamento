@@ -2,9 +2,6 @@
 <div class="page-container">
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-toobar">
-        <md-button class="md-icon-button">
-          <md-icon>menu</md-icon>
-        </md-button>
         <span class="md-title">Prosperidade</span>
         <!-- <img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'> -->
         <div>
@@ -18,30 +15,6 @@
           <md-button @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
-      <md-app-drawer :md-active.sync="menuVisible">
-        <md-toolbar class="md-transparent" md-elevation="0">Menu</md-toolbar>
-        <md-list>
-          <md-list-item md-expand>
-            <md-icon>dashboard</md-icon>
-            <span class="md-list-item-text">Dashboard</span>
-            <md-list slot="md-expand">
-            <md-button to="/home">Home</md-button>
-          </md-list>
-          </md-list-item>
-          <md-list-item md-expand>
-            <md-icon>gavel</md-icon>
-            <span class="md-list-item-text">Admin</span>
-          </md-list-item>
-          <md-list-item md-expand>
-            <md-icon>contacts</md-icon>
-            <span class="md-list-item-text">Contatos</span>
-          <md-list slot="md-expand">
-            <md-button to="/lead/list">Listar</md-button>
-            <md-button class="md-inset">Adicionar</md-button>
-          </md-list>
-          </md-list-item>
-        </md-list>
-      </md-app-drawer>
       <md-app-content>
         <agendamento></agendamento>
       </md-app-content>
@@ -67,9 +40,6 @@ export default {
     value: null
   }),
   methods: {
-    toggleMenu () {
-      this.menuVisible = !this.menuVisible
-    },
     sair(){
       this.value = 'Sim'
       this.$router.push('/')

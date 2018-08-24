@@ -2,9 +2,10 @@
 <div class="page-container">
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-toobar">
+        <!--
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
-        </md-button>
+        </md-button> -->
         <span class="md-title">Prosperidade</span>
         <!-- <img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'> -->
         <div>
@@ -18,7 +19,7 @@
           <md-button @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
-      <md-app-drawer :md-active.sync="menuVisible">
+      <!--<md-app-drawer :md-active.sync="menuVisible">
         <md-toolbar class="md-transparent" md-elevation="0">Menu</md-toolbar>
         <md-list>
           <md-list-item md-expand>
@@ -38,22 +39,24 @@
           <md-list slot="md-expand">
             <md-button to="/lead/list">Listar</md-button>
             <md-button class="md-inset">Adicionar</md-button>
-            <md-button to="/lead/listAguardo">Aguardando</md-button> 
+            <md-button to="/lead/listAguardo">Aguardando</md-button>
           </md-list>
           </md-list-item>
           <md-list-item md-expand>
             <md-icon>schedule</md-icon>
             <span class="md-list-item-text">Agendamentos</span>
-          <md-list slot="md-expand">  
-            <md-button to="/lead/listAguardo">Aceitos</md-button>  
-            <md-button to="/lead/list">Recusados</md-button>             
-          </md-list>          
+          <md-list slot="md-expand">
+            <md-button to="/lead/listAguardo">Aceitos</md-button>
+            <md-button to="/lead/list">Recusados</md-button>
+          </md-list>
           </md-list-item>
         </md-list>
-      </md-app-drawer>
+      </md-app-drawer> -->
+      <!--
       <md-app-content>
         <list-cliente ref="ListCliente"></list-cliente>
       </md-app-content>
+      -->
     </md-app>
 <button-add></button-add>
   </div>

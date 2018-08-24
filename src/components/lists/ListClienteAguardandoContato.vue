@@ -102,7 +102,8 @@ export default {
     },
     onConfirm(){
       let newLead = {
-        id_user_editor: this.selectedHunter
+        id_user_editor: this.selectedHunter,
+        momento_atual: 1
       }
       for (var i = 0; i <= this.selected.length; i++) {
         axios.put(process.env.API+'leads/' + this.selected[i].id, newLead)
