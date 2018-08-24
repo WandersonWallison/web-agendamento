@@ -6,26 +6,24 @@
       </md-table-toolbar>
 
       <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
+        <!-- Inicio   -->
+        <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label for="hunter">Hunter</label>
+                <md-select name="hunter" id="hunter" v-model="selectedHunter">
+                  <md-option v-for="hunter in hunters" :key="hunter.id" :value="hunter.id">
+                    {{ hunter.username }}
+                  </md-option>
+                </md-select>
+                <br>
+              </md-field>
+          </div>
+        <!--  FIM   -->
         <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
         <div class="md-toolbar-section-end">
-          <div v-if="count == 1">
-            <md-button class="md-icon-button" @click="showUpdateLead = true">
-            <md-tooltip md-direction="top">Atualizar</md-tooltip>
+          <md-button @click="vinculaHunter = true" class="md-icon-button">
+            <md-tooltip md-direction="top">Vincular Hunter</md-tooltip>
             <md-icon>update</md-icon>
-            </md-button>
-            <md-button class="md-icon-button" @click="showEndereco = true">
-            <md-tooltip md-direction="top">Endereço</md-tooltip>
-            <md-icon>location_on</md-icon>
-            </md-button>
-            <md-button class="md-icon-button" @click="showConta = true">
-            <md-tooltip md-direction="top">Conta</md-tooltip>
-            <md-icon>attach_money</md-icon>
-            </md-button>
-
-          </div>
-          <md-button @click="desativar = true" class="md-icon-button">
-            <md-tooltip md-direction="top">Destivar</md-tooltip>
-            <md-icon>delete</md-icon>
           </md-button>
         </div>
       </md-table-toolbar>
@@ -53,27 +51,11 @@
     </md-card>
       </md-table-row>
     </md-table>
+
   </div>
-    <md-dialog :md-active.sync="showUpdateLead">
-      <div class="div">
-      <up-lead :selected="selected"></up-lead>
-      </div>
-    </md-dialog>
-
-    <md-dialog :md-active.sync="showEndereco">
-      <div class="div">
-      <endereco :selected="selected"></endereco>
-      </div>
-    </md-dialog>
-    <md-dialog :md-active.sync="showConta">
-      <div class="div">
-      <conta :selected="selected"></conta>
-      </div>
-    </md-dialog>
-
-    <md-dialog-confirm
-      :md-active.sync="desativar"
-      md-title="Deseja realmete desativar estas contatos?"
+      <md-dialog-confirm
+      :md-active.sync="vinculaHunter"
+      md-title="Deseja realmete vinvular ao Hunter?"
       md-content="Ele (s) não serão mais exibidos na lista"
       md-confirm-text="Sim"
       md-cancel-text="Não"
@@ -88,7 +70,7 @@ import Endereco from '../forms-endereco/FormEndereco.vue'
 import Conta from '../forms/FormConta.vue'
 import axios from 'axios'
 export default {
-  name: 'listCrudLead',
+  name: 'listClienteAguardando',
   props: ['selected'],
   components: {
     UpLead,
@@ -99,22 +81,20 @@ export default {
     selected: [],
     people: [],
     usuarios: [],
-    showUpdateLead: false,
-    showEndereco: false,
-    showConta: false,
-    desativar: false,
-    atual: []
+    vinculaHunter: false,
+    atual: [],
+    hunters: [],
+    selectedHunter: null
   }),
   mounted () {
-    axios.get(process.env.API + 'leads?where={"ativo": true}')
+    axios.get(process.env.API + 'leads?where={"id_user_editor": 0}')
     .then(response => {
     this.people = response.data
     }),
     axios.get(process.env.API + 'user?where={"id_profile": 3}')
     .then(response => {
-    this.people = response.data
+    this.hunters = response.data
     })
-
   },
   methods: {
     onCancel () {
@@ -122,7 +102,7 @@ export default {
     },
     onConfirm(){
       let newLead = {
-        ativo: false
+        id_user_editor: this.selectedHunter
       }
       for (var i = 0; i <= this.selected.length; i++) {
         axios.put(process.env.API+'leads/' + this.selected[i].id, newLead)

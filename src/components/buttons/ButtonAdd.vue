@@ -41,7 +41,7 @@
       <cad-empresa/>
     </md-dialog>
     <md-dialog :md-active.sync="showListaContato" class="div">
-      <List-Lead/>
+      <list-cliente-aguardando-contato/>
     </md-dialog>
   </div>
 </template>
@@ -50,7 +50,7 @@ import CadLead from '../forms/FormCadastroLead.vue'
 import CadUser from '../forms/FormAddUser.vue'
 import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
-import ListLead from '../lists/ListCrudLead.vue'
+import ListClienteAguardandoContato from '../lists/ListClienteAguardandoContato.vue'
 
 export default {
   name: 'buttonAdd',
@@ -59,7 +59,7 @@ export default {
     CadUser,
     CadEscritorio,
     CadEmpresa,
-    ListLead
+    ListClienteAguardandoContato
   },
   data: () => ({
     showDialog: false,

@@ -8,15 +8,15 @@
         <md-card-content>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field>
+              <md-field :class="getValidationClass('escritorio')">
                 <label for="escritorio">Escritorio</label>
                 <md-select name="escritorio" id="escritorio" v-model="form.selected">
                   <md-option v-for="office in offices" :key="office.id" :value="office.id">
                     {{ office.nome }}
                   </md-option>
                 </md-select>
-                <br>                
-              </md-field>               
+                <br>
+              </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('profile')">
@@ -321,7 +321,7 @@ export default {
     sending : false,
     lastUser : null,
     infoSenha : false,
-    offices: []    
+    offices: []
   }),
   validations: {
     form: {
@@ -396,18 +396,17 @@ export default {
       profile: {
         required
       },
-      escritorio:{
+      selected:{
          required
       }
     }
-  },  
+  },
   created() {
     axios.get(process.env.API + 'office')
     .then(response => {
-      console.log('Office:'+ response.data)
     this.offices = response.data
     })
-  }, 
+  },
   methods: {
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
@@ -469,7 +468,7 @@ export default {
         rede_social : this.form.redeSocial,
         genero: this.form.genero,
         id_profile : this.form.profile,
-        id_officer: this.form.selected
+        id_office: this.form.selected
       }
       let newEndereco = {
         logradouro: this.form.rua,
@@ -523,13 +522,6 @@ export default {
       var ascii = [[48, 57] , [64, 90] , [97, 122]]
       var i = Math.floor(Math.random() * ascii.length)
       return String.fromCharCode(Math.floor(Math.random() * (ascii[i][1]-ascii[i][0])) + ascii[i][0])
-    },
-    getEscritorio(){
-      axios.get(process.env.API + 'office')
-      .then(response => {
-        console.log('Office:'+ response.data)
-        this.offices = response.data
-      })
     }
   }
 }
