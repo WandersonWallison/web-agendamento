@@ -248,11 +248,10 @@
             <label for="observacao">Observação</label>
             <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
           </md-field>
-
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
-        <div class="actions md-layout md-alignment-center-space-between">
+        <div class="alinha-button actions md-layout md-alignment-center-space-between">
           <md-button class="md-raised md-primary" type="submit" :disabled="sending">Cadastrar</md-button>
         </div>
         </md-card-actions>
@@ -308,7 +307,8 @@ export default {
     userSaved : false,
     sending : false,
     lastUser : null,
-    infoSenha : false
+    infoSenha : false,
+    people: []
   }),
   validations: {
     form: {
@@ -385,6 +385,12 @@ export default {
 
       }
     }
+  },
+  mounted() {
+    axios.get(process.env.API + 'user?where={"ativo": true}')
+    .then(response => {
+    this.people = response.data      
+    })
   },
   methods: {
     getValidationClass (fieldName) {
@@ -509,5 +515,8 @@ export default {
   top: 0;
   right: 0;
   left: 0;
+}
+.alinha-button {
+  margin: 2%;
 }
 </style>

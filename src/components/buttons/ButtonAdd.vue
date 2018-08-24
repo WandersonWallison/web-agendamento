@@ -28,7 +28,7 @@
         </md-button>
       </md-speed-dial-content>
     </md-speed-dial>
-    <md-dialog :md-active.sync="showDialog" class="div">
+    <md-dialog :md-active.sync="showDialog" class="div-contato">
       <cad-lead/>
     </md-dialog>
     <md-dialog :md-active.sync="showAgente" class="div">
@@ -37,7 +37,7 @@
     <md-dialog :md-active.sync="showEscritorio" class="div">
       <cad-escritorio/>
     </md-dialog>
-    <md-dialog :md-active.sync="showEmpresa" class="div">
+    <md-dialog :md-active.sync="showEmpresa" class="div-empresa">
       <cad-empresa/>
     </md-dialog>
     <md-dialog :md-active.sync="showListaContato" class="div">
@@ -74,6 +74,8 @@ export default {
 <style lang='scss' scoped>
 .example {
   min-height: 60%;
+  width: 100%;
+  height: 100%;
 }
 .md-dialog {
   width: 100%;
@@ -84,6 +86,15 @@ export default {
   overflow: auto;
   height: 100%;
   width: 90%;
-
+}
+.div-empresa{
+  overflow: auto;
+  height: 65%;
+  width: 80%;
+}
+.div-contato{
+  overflow: auto;
+  height: 85%;
+  width: 90%;
 }
 </style>

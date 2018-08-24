@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="md-dialog-container">
     <form novalidate class="md-layout" @submit.prevent="validateEmpresa">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
@@ -56,95 +56,7 @@
                 <md-input id="site" name="site" v-model="form.site" :disabled="sending" />                
               </md-field>
             </div>            
-          </div>
-          <br>
-          <md-toolbar md-elevation="0" class="md-dense">
-            <span class="md-title">Endereço</span>
-          </md-toolbar>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('rua')">
-                <label for="rua">Rua</label>
-                <md-input id="rua" name="rua" v-model="form.rua" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Rua deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid rua</span>
-              </md-field>
-            </div>
-          </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('numero')">
-                <label for="numero">Número</label>
-                <md-input  type="number" id="numero" name="numero" autocomplete="numero" v-model="form.numero" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cep')">
-                <label for="cep">CEP</label>
-                <md-input  type="number" id="cep" name="cep" autocomplete="cep" v-model="form.cep" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
-              </md-field>
-            </div>
-          </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('bairro')">
-                <label for="bairro">Bairro</label>
-                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid Bairro</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cidade')">
-                <label for="cidade">Cidade</label>
-                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('estado')">
-                <label for="estado">Estado</label>
-                <md-select name="estado" id="estado" v-model="form.estado" md-dense :disabled="sending">
-                  <md-option velue=""></md-option>
-                    <md-option value="ac">Acre</md-option>
-                    <md-option value="al">Alagoas</md-option>
-                    <md-option value="am">Amazonas</md-option>
-                    <md-option value="ap">Amapá</md-option>
-                    <md-option value="ba">Bahia</md-option>
-                    <md-option value="ce">Ceará</md-option>
-                    <md-option value="df">Distrito Federal</md-option>
-                    <md-option value="es">Espírito Santo</md-option>
-                    <md-option value="go">Goiás</md-option>
-                    <md-option value="ma">Maranhão</md-option>
-                    <md-option value="mt">Mato Grosso</md-option>
-                    <md-option value="ms">Mato Grosso do Sul</md-option>
-                    <md-option value="mg">Minas Gerais</md-option>
-                    <md-option value="pa">Pará</md-option>
-                    <md-option value="pb">Paraíba</md-option>
-                    <md-option value="pr">Paraná</md-option>
-                    <md-option value="pe">Pernambuco</md-option>
-                    <md-option value="pi">Piauí</md-option>
-                    <md-option value="rj">Rio de Janeiro</md-option>
-                    <md-option value="rn">Rio Grande do Norte</md-option>
-                    <md-option value="ro">Rondônia</md-option>
-                    <md-option value="rs">Rio Grande do Sul</md-option>
-                    <md-option value="rr">Roraima</md-option>
-                    <md-option value="sc">Santa Catarina</md-option>
-                    <md-option value="se">Sergipe</md-option>
-                    <md-option value="sp">São Paulo</md-option>
-                    <md-option value="to">Tocantins</md-option>
-                </md-select>
-                <span class="md-error">Estado não selecioando</span>
-              </md-field>
-            </div>
-          </div>
-          <md-field>
-            <label for="observacao">Observação</label>
-            <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
-          </md-field>
+          </div>          
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
@@ -177,14 +89,7 @@ export default {
       razaoSocial: null,
       cnpj : null,
       telefone:null,
-      email:null,
-      cep: null,
-      rua: null,
-      numero: null,
-      estado: null,
-      cidade: null,
-      bairro: null,
-      observacao: null,      
+      email:null,          
       cnpj: null,      
     },
     userSaved: false,
@@ -211,32 +116,7 @@ export default {
       },
       cnpj: {
         required
-      },
-      rua: {
-        required,
-        minLength: minLength(4)
-      },
-      numero: {
-        required,
-        minLength: minLength(1)
-      },
-      cep: {
-        required,
-        minLength: minLength(5)
-      },
-      cidade: {
-        required,
-        minLength: minLength(3)
-      },
-      estado: {
-        required,
-        minLength: minLength(2)
-      },
-      bairro: {
-        required,
-        minLength: minLength(3)
-      }     
-      
+      }
     }
   },
   methods: {
