@@ -8,13 +8,15 @@
         <md-card-content>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('profile')">
-                <label for="office">Escritório</label>
-                <md-select name="office" id="office" v-model="form.office" md-dense :disabled="sending">
-                    <md-option v-for="office in offices" :value="test">{{ office.nome }}</md-option>
+              <md-field>
+                <label for="escritorio">Escritorio</label>
+                <md-select name="escritorio" id="escritorio" v-model="form.selected">
+                  <md-option v-for="office in offices" :key="office.id" :value="office.id">
+                    {{ office.nome }}
+                  </md-option>
                 </md-select>
-                <span class="md-error">Perfil não selecioando</span>
-              </md-field>
+                <br>                
+              </md-field>               
             </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('profile')">
@@ -311,14 +313,15 @@ export default {
       estadoCivil : null,
       escolaridade : null,
       genero : null,
-      profile : null
-
+      profile : null,
+      escritorio: null,
+      selected: null
     },
     userSaved : false,
     sending : false,
     lastUser : null,
     infoSenha : false,
-    offices: []
+    offices: []    
   }),
   validations: {
     form: {
@@ -392,16 +395,19 @@ export default {
       },
       profile: {
         required
-
+      },
+      escritorio:{
+         required
       }
     }
-  },
-  mounted() {
+  },  
+  created() {
     axios.get(process.env.API + 'office')
     .then(response => {
+      console.log('Office:'+ response.data)
     this.offices = response.data
     })
-  },
+  }, 
   methods: {
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
@@ -438,6 +444,7 @@ export default {
       this.form.redeSocial = null
       this.form.observacao = null
       this.form.profile = null
+      this.escritorio = null
     },
     saveEmpresa () {
       let senhaGerada
@@ -461,7 +468,8 @@ export default {
         nome_pai : this.form.nomePai,
         rede_social : this.form.redeSocial,
         genero: this.form.genero,
-        id_profile : this.form.profile
+        id_profile : this.form.profile,
+        id_officer: this.form.selected
       }
       let newEndereco = {
         logradouro: this.form.rua,
@@ -515,6 +523,13 @@ export default {
       var ascii = [[48, 57] , [64, 90] , [97, 122]]
       var i = Math.floor(Math.random() * ascii.length)
       return String.fromCharCode(Math.floor(Math.random() * (ascii[i][1]-ascii[i][0])) + ascii[i][0])
+    },
+    getEscritorio(){
+      axios.get(process.env.API + 'office')
+      .then(response => {
+        console.log('Office:'+ response.data)
+        this.offices = response.data
+      })
     }
   }
 }
