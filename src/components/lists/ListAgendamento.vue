@@ -11,6 +11,7 @@
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.id_lead.email }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.id_lead.telefone }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
+          <div v-if="item.status === 0">
           <md-button class="md-icon-button md-raised md-primary" @click="aceito">
             <md-tooltip md-direction="top">Aceito</md-tooltip>
             <md-icon>thumb_up</md-icon>
@@ -19,7 +20,8 @@
             <md-tooltip md-direction="top">Não aceito</md-tooltip>
             <md-icon>thumb_down</md-icon>
           </md-button>
-          </md-table-cell>
+          </div>
+          </md-table-cell>     
       </md-table-row>
     </md-table>
   <div v-if="selected">
@@ -111,7 +113,8 @@ import axios from 'axios'
       const user = JSON.parse(userLogado)
       this.id_usuario = user.id
 
-      axios.get(process.env.API + 'schedule?where={"agentes": '+this.id_usuario+'}')
+      axios.get(process.env.API + 'schedule?where={"agentes": '+this.id_usuario+',"status":{"!=":2}}')
+      //axios.get(process.env.API + 'schedule?where={"agentes": '+this.id_usuario+'}')
         .then(response => {
           this.schedules = response.data
           this.selected = null
