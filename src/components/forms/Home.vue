@@ -1,13 +1,14 @@
 <template>
 <div class="page-container">
     <md-app md-mode="reveal">
-      <md-app-toolbar class="md-toobar">
+      <md-app-toolbar class="md-toobar" md-elevation="1">
         <!--
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
         </md-button> -->
-        <span class="md-title">Prosperidade</span>
-        <!-- <img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'> -->
+        <h3 class="md-title" style="flex:1">Prosperidade</h3>
+        <!--<img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'>-->
+        
         <div>
           <md-dialog-confirm
             :md-active.sync='active'
@@ -16,7 +17,7 @@
             md-confirm-text='Sim'
             md-cancel-text='Não'
             @md-confirm='sair' />
-          <md-button @click='active = true'>Sair</md-button>
+          <md-button @click='active = true'>Sair</md-button> 
         </div>
       </md-app-toolbar>
       <!--<md-app-drawer :md-active.sync="menuVisible">
@@ -58,7 +59,7 @@
       </md-app-content>
       -->
     </md-app>
-<button-add></button-add>
+    <button-add></button-add>
   </div>
 </template>
 <script>

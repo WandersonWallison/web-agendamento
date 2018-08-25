@@ -58,7 +58,7 @@ import CadUser from '../forms/FormAddUser.vue'
 import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
 import ListClienteAguardandoContato from '../lists/ListClienteAguardandoContato.vue'
-import ListCliente from '../lists/ListCliente'
+import ListCliente from '../lists/ListCliente.vue'
 
 export default {
   name: 'buttonAdd',

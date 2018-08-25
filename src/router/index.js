@@ -2,34 +2,34 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/forms/FormLogin.vue'
 import Home from '../components/forms/Home.vue'
-import CadEmpresa from '@/components/forms/FormCadastroEmpresa.vue'
-import CadLead from '@/components/forms/FormCadastroLead.vue'
-import CadUsuario from '@/components/forms/FormAddUser.vue'
-import ListaAgentes from '../components/lists/ListaAgentes.vue'
+// import CadEmpresa from '@/components/forms/FormCadastroEmpresa.vue'
+// import CadLead from '@/components/forms/FormCadastroLead.vue'
+// import CadUsuario from '@/components/forms/FormAddUser.vue'
+// import ListaAgentes from '../components/lists/ListaAgentes.vue'
 import Agendamento from '../components/forms/FormAgente.vue'
 import FormCrudLead from '../components/forms/FormCrudLead.vue'
-import CadAgendamento from '../components/forms/FormAgendamento.vue'
+// import CadAgendamento from '../components/forms/FormAgendamento.vue'
 import ListaLeadAguardando from '../components/lists/ListClienteAguardandoContato.vue'
 
 Vue.use(Router)
-//var token = localStorage.getItem('Usuario')
-//const authUser = JSON.parse(localStorage.getItem('Usuario'))
-//console.log('Token do localstorage: ' + token)
+// var token = localStorage.getItem('Usuario')
+// const authUser = JSON.parse(localStorage.getItem('Usuario'))
+// console.log('Token do localstorage: ' + token)
 
 const router = new Router({
   routes: [
     {
-      path: "*",
-      redirect: { name: "login" }
+      path: '*',
+      redirect: { name: 'login' }
     },
     {
-      path: "/Login",
-      name: "login",
+      path: '/Login',
+      name: 'login',
       component: Login
     },
     {
-      path: "/Home",
-      name: "home",
+      path: '/Home',
+      name: 'home',
       component: Home,
       meta: {
         requiresAuth: true,
@@ -37,8 +37,8 @@ const router = new Router({
       }
     },
     {
-      path: "/lead/list",
-      name: "formCrudLead",
+      path: '/lead/list',
+      name: 'formCrudLead',
       component: FormCrudLead,
       meta: {
         requiresAuth: true,
@@ -46,8 +46,8 @@ const router = new Router({
       }
     },
     {
-      path: "/lead/listAguardo",
-      name: "ListClienteAguardando",
+      path: '/lead/listAguardo',
+      name: 'ListClienteAguardando',
       component: ListaLeadAguardando,
       meta: {
         requiresAuth: true,
@@ -55,8 +55,8 @@ const router = new Router({
       }
     },
     {
-      path: "/Agendamento",
-      name: "agendamento",
+      path: '/Agendamento',
+      name: 'agendamento',
       component: Agendamento,
       meta: {
         requiresAuth: true,
@@ -64,17 +64,17 @@ const router = new Router({
       }
     }
   ]
-});
+})
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     if (authUser) {
-     if(to.meta.permissions == true && authUser2.id_profile == 1){
+      if (to.meta.permissions === true && authUser2.id_profile === 1) {
         next()
-      }else if(authUser2.id_profile == 2 && to.meta.permissions == false){
+      } else if (authUser2.id_profile === 2 && to.meta.permissions === false) {
         next()
-      }else {
+      } else {
         next('/')
         window.localStorage.clear()
       }
@@ -82,15 +82,13 @@ router.beforeEach((to, from, next) => {
       next('/')
       this.$router.push('/')
       window.localStorage.clear()
-
     }
   }
   next()
 })
 export default router
 
-/*export default new Router({
-
+/* export default new Router({
 
   routes: [
     {
@@ -239,5 +237,4 @@ export default router
       }
     }
   ]
-})*/
-
+}) */
