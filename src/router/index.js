@@ -6,7 +6,8 @@ import Home from '../components/forms/Home.vue'
 // import CadLead from '@/components/forms/FormCadastroLead.vue'
 // import CadUsuario from '@/components/forms/FormAddUser.vue'
 // import ListaAgentes from '../components/lists/ListaAgentes.vue'
-import Agendamento from '../components/forms/FormAgente.vue'
+import Agendamento from '../components/forms/FormHunter.vue'
+import Visita from '../components/forms/FormAgente'
 import FormCrudLead from '../components/forms/FormCrudLead.vue'
 // import CadAgendamento from '../components/forms/FormAgendamento.vue'
 import ListaLeadAguardando from '../components/lists/ListClienteAguardandoContato.vue'
@@ -58,6 +59,15 @@ const router = new Router({
       path: '/Agendamento',
       name: 'agendamento',
       component: Agendamento,
+      meta: {
+        requiresAuth: true,
+        permissions: false
+      }
+    },
+    {
+      path: '/Visita',
+      name: 'visita',
+      component: Visita,
       meta: {
         requiresAuth: true,
         permissions: false

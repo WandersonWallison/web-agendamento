@@ -75,10 +75,11 @@ export default {
               window.localStorage.setItem('Usuario', JSON.stringify(response.data.user))
               if (response.data.user.id_profile === 1){
                 this.$router.push('/home')
+              }else if (response.data.user.id_profile === 3){
+                this.$router.push('/agendamento')
+              }else {
+                this.$router.push('/visita')
               }
-              else {
-              this.$router.push('/agendamento')
-            }
             }
           })
           .catch(error => {
