@@ -53,12 +53,12 @@
           </md-list-item>
         </md-list>
       </md-app-drawer> -->
-      <!--
+      
       <md-app-content>
-        <list-cliente ref="ListCliente"></list-cliente>
+      <ListClienteAguardando/>
+       <!-- <list-cliente ref="ListCliente"></list-cliente> -->
       </md-app-content>
-      -->
-    </md-app>
+          </md-app>
     <button-add></button-add>
   </div>
 </template>

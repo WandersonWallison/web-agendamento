@@ -14,10 +14,6 @@
           <md-tooltip md-direction="left">Usuário</md-tooltip>
           <md-icon>people</md-icon>
         </md-button>
-        <md-button class="md-icon-button" @click="showListaContato = true">
-          <md-tooltip md-direction="left">Lista de Contatos</md-tooltip>
-          <md-icon>format_list_bulleted</md-icon>
-        </md-button>
         <md-button class="md-icon-button" @click="showEscritorio = true">
           <md-tooltip md-direction="left">Escritório</md-tooltip>
           <md-icon>location_city</md-icon>
@@ -48,9 +44,6 @@
     <md-dialog :md-active.sync="showEmpresa" class="div-empresa">
       <cad-empresa/>
     </md-dialog>
-    <md-dialog :md-active.sync="showListaContato" class="div">
-      <list-cliente-aguardando-contato/>
-    </md-dialog>
     <md-dialog :md-active.sync="showListaParaAgendamento" class="div">
       <List-Cliente/>
     </md-dialog>
@@ -64,7 +57,6 @@ import CadLead from '../forms/FormCadastroLead.vue'
 import CadUser from '../forms/FormAddUser.vue'
 import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
-import ListClienteAguardandoContato from '../lists/ListClienteAguardandoContato.vue'
 import ListCliente from '../lists/ListCliente.vue'
 import FormHunter from '../forms/FormHunter.vue'
 
@@ -84,7 +76,6 @@ export default {
     showAgente: false,
     showEscritorio: false,
     showEmpresa: false,
-    showAgendamento: false,
     showListaContato: false,
     showListaParaAgendamento: false,
     showFormHunter: false
