@@ -3,7 +3,8 @@
     <md-content class="md-elevation-3">
 
       <div class="title2">
-        <img src="../../assets/marca_branca_fundo_transparente.png">
+        <!--<img src="../../assets/marca_branca_fundo_transparente.png"> -->
+        <img src="../../assets/nova_logo_ProsperidadeInvestimentos.png">
       </div>
 
       <div class="form2">
@@ -132,7 +133,7 @@ export default {
       margin-right: auto;
       width: 6em;
     }
-  }
+  }  
   .form2 {
     margin-bottom: 60px;
   }

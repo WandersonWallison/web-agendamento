@@ -7,8 +7,7 @@
           <md-icon>menu</md-icon>
         </md-button> -->
         <h3 class="md-title" style="flex:1">Prosperidade</h3>
-        <!--<img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'>-->
-        
+        <!--<img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'>-->        
         <div>
           <md-dialog-confirm
             :md-active.sync='active'
