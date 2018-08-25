@@ -66,8 +66,7 @@ export default {
     CadLead,
     CadUser,
     CadEscritorio,
-    CadEmpresa,
-    ListClienteAguardandoContato,
+    CadEmpresa,    
     ListCliente,
     FormHunter
   },

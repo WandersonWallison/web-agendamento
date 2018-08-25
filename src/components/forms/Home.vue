@@ -63,11 +63,11 @@
   </div>
 </template>
 <script>
-import FormAddUser from './FormAddUser'
-import ListCliente from '../lists/ListCliente'
+import FormAddUser from './FormAddUser.vue'
+import ListCliente from '../lists/ListCliente.vue'
 import FormAddEmpresa from './FormCadastroEmpresa.vue'
-import ButtonAdd from '../buttons/ButtonAdd'
-import ListClienteAguardando from '../lists/ListClienteAguardandoContato'
+import ButtonAdd from '../buttons/ButtonAdd.vue'
+import ListClienteAguardando from '../lists/ListClienteAguardandoContato.vue'
 
 export default {
   name: 'Home',

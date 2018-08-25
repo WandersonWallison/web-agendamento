@@ -15,19 +15,19 @@
         </div>
       </md-app-toolbar>
       <md-app-content>
-        <agendamento></agendamento>
+        <ListCliente></ListCliente>
       </md-app-content>
     </md-app>
   </div>
 </template>
 <script>
 
-import Agendamento from '../lists/Listcliente.vue'
+import ListCliente from '../lists/ListCliente.vue'
 
 export default {
   name: 'Agente',
   components: {
-    Agendamento
+    ListCliente
   },
   data: () => ({
     //menuVisible: false,
