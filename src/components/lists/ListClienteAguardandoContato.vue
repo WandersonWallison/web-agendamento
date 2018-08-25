@@ -33,10 +33,11 @@
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
-        <md-table-cell md-label="Observação" md-sort-by="observacao">{{ item.observacao }}</md-table-cell>
+        <md-table-cell md-label="Observação" md-sort-by="observacao">{{ item.obs }}</md-table-cell>
       </md-table-row>
     </md-table>
   <div>
+  <!--
     <md-table v-model="selected" md-card>
       <md-table-toolbar>
         <h1 class="md-title">Detalhe</h1>
@@ -51,7 +52,7 @@
     </md-card>
       </md-table-row>
     </md-table>
-
+-->
   </div>
       <md-dialog-confirm
       :md-active.sync="vinculaHunter"
