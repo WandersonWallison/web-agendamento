@@ -92,7 +92,10 @@ export default {
     data_atendimento: Date.now()
   }),
   mounted () {
-    axios.get(process.env.API+'leads/'+ '?sort=data_criacao ASC&ativo=true')
+    
+    //leads?where={"momento_atual": 1,"momento_atual": 5, "ativo":1,id_user_editor": 7, "data_expiracao": now }
+    // axios.get(process.env.API + 'schedule?where={"agentes": '+this.id_usuario+',"status":0}')
+    axios.get(process.env.API+'leads?where={"momento_atual": 1,"momento_atual": 5, "ativo":1,id_user_editor": 7, "data_expiracao": now }')
     .then(response => {
       (this.users = response.data),
       (this.searched = response.data)

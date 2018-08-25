@@ -30,6 +30,10 @@
           <md-tooltip md-direction="left">Clientes para Agendamento</md-tooltip>
           <md-icon>local_phone</md-icon>
         </md-button>
+        <md-button class="md-icon-button" @click="showFormHunter = true">
+          <md-tooltip md-direction="left">Form HUnter</md-tooltip>
+          <md-icon>local_phone</md-icon>
+        </md-button>
       </md-speed-dial-content>
     </md-speed-dial>
     <md-dialog :md-active.sync="showDialog" class="div-contato">
@@ -50,6 +54,9 @@
     <md-dialog :md-active.sync="showListaParaAgendamento" class="div">
       <List-Cliente/>
     </md-dialog>
+    <md-dialog :md-active.sync="showFormHunter" class="div">
+      <Form-Hunter/>
+    </md-dialog>
   </div>
 </template>
 <script>
@@ -59,6 +66,7 @@ import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
 import ListClienteAguardandoContato from '../lists/ListClienteAguardandoContato.vue'
 import ListCliente from '../lists/ListCliente.vue'
+import FormHunter from '../forms/FormHunter.vue'
 
 export default {
   name: 'buttonAdd',
@@ -68,7 +76,8 @@ export default {
     CadEscritorio,
     CadEmpresa,
     ListClienteAguardandoContato,
-    ListCliente
+    ListCliente,
+    FormHunter
   },
   data: () => ({
     showDialog: false,
@@ -77,7 +86,9 @@ export default {
     showEmpresa: false,
     showAgendamento: false,
     showListaContato: false,
-    showListaParaAgendamento: false
+    showListaParaAgendamento: false,
+    showFormHunter: false
+
   })
 }
 </script>

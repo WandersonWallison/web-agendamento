@@ -2,13 +2,7 @@
 <div class="page-container">
     <md-app md-mode="reveal">
        <md-app-toolbar class="md-toobar" md-elevation="1">
-        <!--
-        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-          <md-icon>menu</md-icon>
-        </md-button> -->
         <h3 class="md-title" style="flex:1">Prosperidade</h3>
-        <!--<img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'>-->
-        
         <div>
           <md-dialog-confirm
             :md-active.sync='active'
@@ -27,16 +21,13 @@
   </div>
 </template>
 <script>
-import FormAddUser from './FormAddUser'
+
 import Agendamento from '../lists/Listcliente.vue'
-import FormAddEmpresa from './FormCadastroEmpresa.vue'
 
 export default {
   name: 'Agente',
   components: {
-    FormAddUser,
-    Agendamento,
-    FormAddEmpresa,
+    Agendamento
   },
   data: () => ({
     //menuVisible: false,
