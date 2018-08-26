@@ -18,12 +18,13 @@
         <md-button class="md-primary md-raised" @click="newUser">Create New User</md-button>
       </md-table-empty-state>
       -->
-      <md-table-row slot="md-table-row" slot-scope="{ item }"  md-selectable="single" :class="getClass(item)">
+      <md-table-row slot="md-table-row" slot-scope="{ item }"  md-selectable="single" :class="getClass(item)"> 
+        <md-table-cell md-label="" md-sort-by="id" md-numeric ><div v-if="item.momento_atual === 5"><md-icon>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente</md-tooltip></div></md-table-cell>
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone }}</md-table-cell>
-       <md-table-cell md-label="Status" md-sort-by="status">
+        <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone }}</md-table-cell>        
+        <md-table-cell md-label="Status" md-sort-by="status">
           <md-button class="md-icon-button md-raised md-primary" @click="atendeu">
             <md-tooltip md-direction="top">Atendeu</md-tooltip>
             <md-icon>phone</md-icon>
@@ -50,7 +51,7 @@
             <md-tooltip md-direction="top">Agendamento</md-tooltip>
             <md-icon>schedule</md-icon>
           </md-button>
-          </md-table-cell>
+          </md-table-cell>        
       </md-table-row>
     </md-table>
     <md-dialog :md-active.sync="showDialog">
@@ -89,13 +90,19 @@ export default {
     users: [],
     showDialog: false,
     leadProps: {},
-    data_atendimento: Date.now()
+    data_atendimento: Date.now(),
+    userAtual: false
   }),
   mounted () {
-    axios.get(process.env.API+'leads/'+ '?sort=data_criacao ASC&ativo=true')
+    const authUser = window.localStorage.getItem('Usuario')
+    const authUser2 = JSON.parse(authUser)
+    this.userAtual = authUser2.id
+    let data_atual = moment(Date.now()).format('YYYY-MM-DD')
+    
+    axios.get(process.env.API+'leads?where={"or":[{"momento_atual": 5},{"momento_atual":1}],"id_user_editor":"'+this.userAtual+'","data_expiracao":{">":"'+ data_atual +'"},"ativo": true}')
     .then(response => {
       (this.users = response.data),
-      (this.searched = response.data)
+      (this.searched = response.data)      
     })
   },
   methods: {
@@ -118,8 +125,7 @@ export default {
      naoAtendeu () {
       let newLead = {
         data_criacao: moment(this.data_atendimento).format()
-      }
-      console.log(newLead)
+      }      
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
@@ -135,8 +141,7 @@ export default {
       let newLead = {
         status: 'Dados Incorrtos',
         ativo: false
-      }
-      console.log(newLead)
+      }      
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
@@ -167,8 +172,7 @@ export default {
       let newLead = {
         status: 'Não Aceita Visita',
         ativo: false
-      }
-      console.log(newLead)
+      }      
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data

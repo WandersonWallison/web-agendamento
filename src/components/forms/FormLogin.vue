@@ -74,6 +74,7 @@ export default {
             } else {
               this.results = response.data.message
               window.localStorage.setItem('Usuario', JSON.stringify(response.data.user))
+              
               if (response.data.user.id_profile === 1){
                 this.$router.push('/home')
               }else if (response.data.user.id_profile === 3){
