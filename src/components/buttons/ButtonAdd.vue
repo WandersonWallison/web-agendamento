@@ -23,9 +23,9 @@
           <md-icon>business</md-icon>
         </md-button>
         <md-button class="md-icon-button" @click="showListaParaAgendamento = true">
-          <md-tooltip md-direction="left">Clientes para Agendamento</md-tooltip>
-          <md-icon>local_phone</md-icon>
-        </md-button>        
+          <md-tooltip md-direction="left">Lista de Contatos</md-tooltip>
+          <md-icon>contact_phone</md-icon>
+        </md-button>
       </md-speed-dial-content>
     </md-speed-dial>
     <md-dialog :md-active.sync="showDialog" class="div-contato">
@@ -41,8 +41,8 @@
       <cad-empresa/>
     </md-dialog>
     <md-dialog :md-active.sync="showListaParaAgendamento" class="div">
-      <List-Cliente/>
-    </md-dialog>    
+      <list-cliente ref="ListCliente"></list-cliente>
+    </md-dialog>
   </div>
 </template>
 <script>
@@ -50,7 +50,7 @@ import CadLead from '../forms/FormCadastroLead.vue'
 import CadUser from '../forms/FormAddUser.vue'
 import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
-import ListCliente from '../lists/ListCliente.vue'
+import ListCliente from '../lists/ListCrudLead.vue'
 
 
 export default {
@@ -59,7 +59,7 @@ export default {
     CadLead,
     CadUser,
     CadEscritorio,
-    CadEmpresa,    
+    CadEmpresa,
     ListCliente
   },
   data: () => ({
