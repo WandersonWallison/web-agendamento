@@ -39,7 +39,7 @@ import axios from 'axios'
 
 export default {
   name: 'Login',
-  data() {
+  data () {
     return {
       loading: false,
       login: {
@@ -52,10 +52,10 @@ export default {
     }
   },
   methods: {
-    auth() {
+    auth () {
       this.menssage = null
       this.results = ''
-      if (this.login.email != '' && this.login.password != '') {
+      if (this.login.email !== '' && this.login.password !=='') {
         axios
           .post(process.env.API + 'login', this.login)
           .then(response => {

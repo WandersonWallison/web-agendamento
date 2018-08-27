@@ -77,7 +77,6 @@ import {
   minLength,
   email
 } from 'vuelidate/lib/validators'
-import moment from 'moment'
 
 export default {
   name: 'FormEmpresa',
@@ -87,10 +86,10 @@ export default {
     form: {
       nomeEmpresa: null,
       razaoSocial: null,
-      cnpj : null,
-      telefone:null,
-      email:null,
       cnpj: null,
+      telefone: null,
+      email: null,
+      site: null,
     },
     userSaved: false,
     sending: false,
@@ -129,15 +128,7 @@ export default {
       }
     },
     clearForm () {
-      this.$v.$reset()
-      this.form.cep = null
-      this.form.rua = null
-      this.form.numero = null
-      this.form.cidade = null
-      this.form.estado = null
-      this.form.observacao = null
-      this.form.bairro = null
-
+      this.$v.$reset()      
       this.form.nomeEmpresa = null
       this.form.razaoSocial = null
       this.form.site = null

@@ -190,8 +190,7 @@ import axios from 'axios'
 import { validationMixin } from 'vuelidate'
 import {
   required,
-  minLength,
-  email
+  minLength
 } from 'vuelidate/lib/validators'
 import moment from 'moment'
 
@@ -203,9 +202,9 @@ export default {
     form: {
       nomeEscritorio: null,
       responsavelEscritorio: null,
-      cnpj : null,
-      telefone:null,
-      email:null,
+      cnpj: null,
+      telefone: null,
+      email: null,
       cep: null,
       rua: null,
       numero: null,
@@ -214,7 +213,7 @@ export default {
       bairro: null,
       observacao: null,
       qtdVisitas: null,
-      cnpj: null,
+      site: null,
       tempoAceite: null
     },
     userSaved: false,
