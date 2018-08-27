@@ -133,7 +133,7 @@ export default {
       if (count > 1) {
         plural = 's'
         }
-      return `${count} Usuário${plural} selecionado${plural}`
+      return `${count} Cliente${plural} selecionado${plural}`
     }
   }
 }
