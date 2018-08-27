@@ -171,8 +171,8 @@ import axios from 'axios'
           })
       },
       getClass: ({ id }) => ({
-        'md-primary': id === 2,
-        'md-accent': id === 3
+      'md-primary': id === 2,
+      'md-accent': id === 3
       }),
       onSelect (item) {
         this.selected = item

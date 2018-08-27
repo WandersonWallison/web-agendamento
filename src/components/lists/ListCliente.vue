@@ -19,7 +19,7 @@
       </md-table-empty-state>
       -->
       <md-table-row slot="md-table-row" slot-scope="{ item }"  md-selectable="single" :class="getClass(item)"> 
-        <md-table-cell md-label="" md-sort-by="id" md-numeric ><div v-if="item.momento_atual === 5"><md-icon>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente</md-tooltip></div></md-table-cell>
+        <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou</md-tooltip></div></md-table-cell>
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
@@ -109,8 +109,7 @@ export default {
     atendeu () {
       let newLead = {
         data_atendimento: moment(this.data_atendimento).format()
-      }
-      console.log(newLead)
+      }      
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
@@ -237,5 +236,8 @@ export default {
 }
 .conteiner {
   height: 100%;
+}
+.botao-red {
+  background-color: #ff1515;
 }
 </style>

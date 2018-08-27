@@ -7,7 +7,8 @@
 
       <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
         <!-- Inicio   -->
-        <div class="md-layout-item md-small-size-100">
+        <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
+        <div class="div-separador">
               <md-field>
                 <label for="hunter">Hunter</label>
                 <md-select name="hunter" id="hunter" v-model="selectedHunter">
@@ -17,9 +18,13 @@
                 </md-select>
                 <br>
               </md-field>
-          </div>
-        <!--  FIM   -->
-        <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
+        </div>        
+        <div >            
+            <md-datepicker v-model="selectedDate" :md-disabled-dates="disabledDates">
+              <label>Data Expiração</label>
+            </md-datepicker>
+        </div>
+        <!--  FIM   -->        
         <div class="md-toolbar-section-end">
           <md-button @click="vinculaHunter = true" class="md-icon-button">
             <md-tooltip md-direction="top">Vincular Hunter</md-tooltip>
@@ -66,6 +71,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import UpLead from '../forms/FormUpdateLead.vue'
 import Endereco from '../forms-endereco/FormEndereco.vue'
 import Conta from '../forms/FormConta.vue'
@@ -85,7 +91,12 @@ export default {
     vinculaHunter: false,
     atual: [],
     hunters: [],
-    selectedHunter: null
+    selectedHunter: null,
+    selectedDate: null,
+    disabledDates: date => {
+        const day = date.getDay()
+        return day === 6 || day === 0
+    }
   }),
   mounted () {
     axios.get(process.env.API + 'leads?where={"id_user_editor": 0}')
@@ -104,9 +115,11 @@ export default {
     onConfirm(){
       let newLead = {
         id_user_editor: this.selectedHunter,
-        momento_atual: 1
-      }
-      for (var i = 0; i <= this.selected.length; i++) {
+        momento_atual: 1,
+        data_expiracao: moment(this.selectedDate).format('YYYY-MM-DD')
+      }  
+      console.log(newLead)    
+      for (var i = 0; i <= this.selected.length; i++) {        
         axios.put(process.env.API+'leads/' + this.selected[i].id, newLead)
           .then(response => {
             console.log(i + 'alterado')
@@ -143,5 +156,8 @@ export default {
   }
   .corrigir-texto {
     text-align: left;
+  }
+  .div-separador{
+    margin-right: 2%;
   }
 </style>

@@ -65,26 +65,26 @@ export default {
               this.menssage = response.data.message
 
               setInterval(() => {
-                  this.login.email = ''
-                  this.login.password = ''
-                  this.inicio = ''
-                  this.menssage =  ''
-              }, 3000);
+                this.login.email = ''
+                this.login.password = ''
+                this.inicio = ''
+                this.menssage = ''
+              }, 3000)
 
             } else {
               this.results = response.data.message
               window.localStorage.setItem('Usuario', JSON.stringify(response.data.user))
               
-              if (response.data.user.id_profile === 1){
+              if (response.data.user.id_profile === 1) {
                 this.$router.push('/home')
-              }else if (response.data.user.id_profile === 3){
+              } else if (response.data.user.id_profile === 3) {
                 this.$router.push('/agendamento')
-              }else {
+              } else {
                 this.$router.push('/visita')
               }
             }
           })
-          .catch(error => {
+          .catch( error => {
             this.results = 'Usuario não encontrado. Por favor verirficar os dados digitados'
           })
         this.loading = true
@@ -95,9 +95,9 @@ export default {
 
       } else {
         this.$router.push('/')
-        if (this.login.email == ''){
+        if (this.login.email === '') {
           this.menssage = 'Por favor incluir e-mail'
-        }else if(this.login.password == ''){
+        } else if (this.login.password === '') {
           this.menssage = 'Por favor incluir a senha'
         }
         setInterval(() => {
