@@ -75,13 +75,6 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cidade')">
-                <label for="cidade">Cidade</label>
-                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estado</label>
                 <md-select name="estado" id="estado" v-model="form.estado" md-dense :disabled="sending">
@@ -116,6 +109,14 @@
                 </md-select>
                 <span class="md-error">Estado não selecioando</span>
               </md-field>
+              <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cidade')">
+                <label for="cidade">Cidade</label>
+                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
+              </md-field>
+            </div>
+
             </div>
           </div>
           <md-field>
@@ -130,7 +131,7 @@
         </div>
         </md-card-actions>
       </md-card>
-      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar>
+      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with sucesso!</md-snackbar>
     </form>
   </div>
 </template>
@@ -260,7 +261,7 @@ export default {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
           .then(response => {
-            alert('Agendamento cadastado com success')
+            alert('Agendamento cadastado com sucesso')
               this.userSaved = true
               this.sending = false
               this.clearForm()

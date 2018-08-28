@@ -64,7 +64,7 @@ export default {
       axios.post(process.env.API + 'bank', newConta)
         .then(response => {
           this.results = response.data
-          alert('Conta adicionado ' + this.selected[0].nome + 'com success')
+          alert('Conta adicionado ' + this.selected[0].nome + 'com sucesso')
           window.location.reload()
           console.log(response.data)
         })

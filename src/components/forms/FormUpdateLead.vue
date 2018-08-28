@@ -122,12 +122,12 @@ export default {
         nome_pai: this.lead.nome_pai,
         escolaridade: this.lead.escolaridade,
         tipo: 'Cliente'
-      }      
+      }
       axios
         .put(process.env.API+'leads/'+ this.selected[0].id, newLead)
         .then(response => {
           this.results = response.data
-          alert('User alterado com success')
+          alert('User alterado com sucesso')
           window.location.reload()
         })
         .catch(error => {

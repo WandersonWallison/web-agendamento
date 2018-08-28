@@ -95,7 +95,7 @@ export default {
       axios.post(process.env.API + 'address', newEndereco)
       .then((response) => {
         this.results = response.data
-        alert( 'Endereço adicionado ' + this.selected[0].nome + ' com success' );
+        alert( 'Endereço adicionado ' + this.selected[0].nome + ' com sucesso' );
         window.location.reload()
         console.log(response.data)
       })

@@ -155,7 +155,7 @@ export default {
         .then(response => {
           this.userSaved = true
           this.sending = false
-          alert('Contato cadastado com success')
+          alert('Contato cadastado com sucesso')
           this.clearForm()
         })
         .catch(error => {

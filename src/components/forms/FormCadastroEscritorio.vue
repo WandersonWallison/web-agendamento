@@ -328,7 +328,7 @@ export default {
           axios.post(process.env.API + 'address', newEndereco)
           .then(response => {
             console.log(response)
-            alert('Escritorio cadastado com success')
+            alert('Escritorio cadastado com sucesso')
             this.userSaved = true
             this.sending = false
             this.clearForm()
