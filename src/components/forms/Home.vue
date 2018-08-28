@@ -6,9 +6,13 @@
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
         </md-button> -->
+        <!--
+        <div class="">
+          <img class="md-title" src='../../assets/nova_logo_ProsperidadeInvestimentos_home.png'>
+        </div>
+        -->       
         <h3 class="text-principal text-tamanho-titulo" style="flex:1">Prosperidade</h3>
         <!--<img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'>-->
-
         <div>
           <md-dialog-confirm
             :md-active.sync='active'

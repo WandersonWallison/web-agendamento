@@ -175,7 +175,7 @@
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
-        <div class="actions md-layout md-alignment-center-space-between">
+        <div class="actions  alinha-button md-layout md-alignment-center-space-between">
           <md-button class="md-raised md-primary" type="submit" :disabled="sending">Cadastrar</md-button>
         </div>
         </md-card-actions>
@@ -362,5 +362,8 @@ export default {
   top: 0;
   right: 0;
   left: 0;
+}
+.alinha-button {
+  margin: 2%;
 }
 </style>
