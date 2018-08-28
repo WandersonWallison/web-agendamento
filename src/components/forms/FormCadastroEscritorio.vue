@@ -26,10 +26,9 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field  :class="getValidationClass('cnpj')">
+              <md-field>
                 <label for="cnpj">CNPJ</label>
                 <md-input type="cnpj" name="cnpj" id="cnpj" autocomplete="cnpj" v-model="form.cnpj" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cnpj.required">CNPJ do Escritorio deve ser preenchido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -266,9 +265,6 @@ export default {
         minLength: minLength(3)
       },
       qtdVisitas: {
-        required
-      },
-      cnpj: {
         required
       },
       tempoAceite: {

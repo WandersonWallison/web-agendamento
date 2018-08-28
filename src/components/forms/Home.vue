@@ -8,7 +8,7 @@
         </md-button> -->
         <h3 class="md-title" style="flex:1">Prosperidade</h3>
         <!--<img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'>-->
-        
+
         <div>
           <md-dialog-confirm
             :md-active.sync='active'
@@ -17,7 +17,7 @@
             md-confirm-text='Sim'
             md-cancel-text='Não'
             @md-confirm='sair' />
-          <md-button @click='active = true'>Sair</md-button> 
+          <md-button @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
       <!--<md-app-drawer :md-active.sync="menuVisible">
@@ -53,7 +53,7 @@
           </md-list-item>
         </md-list>
       </md-app-drawer> -->
-      
+
       <md-app-content>
       <ListClienteAguardando/>
        <!-- <list-cliente ref="ListCliente"></list-cliente> -->
@@ -109,7 +109,7 @@ export default {
   max-width: calc(100vw - 125px);
 }
 .md-toobar {
-  background-color: #15da93;
+  background-color: #5c6763;
 }
 .md-fab {
   display: block;
