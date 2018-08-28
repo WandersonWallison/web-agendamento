@@ -2,7 +2,7 @@
 <div class="page-container">
     <md-app md-mode="reveal">
        <md-app-toolbar class="md-toobar" md-elevation="1">
-        <h3 class="md-title" style="flex:1">Prosperidade</h3>
+        <h3 class="text-principal text-tamanho-titulo" style="flex:1">Prosperidade</h3>
         <div>
           <md-dialog-confirm
             :md-active.sync='active'
@@ -11,7 +11,7 @@
             md-confirm-text='Sim'
             md-cancel-text='Não'
             @md-confirm='sair' />
-          <md-button @click='active = true'>Sair</md-button> 
+          <md-button class="text-principal" @click='active = true'>Sair</md-button> 
         </div>
       </md-app-toolbar>
       <md-app-content>
@@ -63,5 +63,22 @@ export default {
   display: block;
   float: right;
   margin-top: 200px;
+}
+.text-tamanho-titulo{
+  font-size: 25px;
+}
+.text-principal {
+  color: aliceblue;
+  margin: 0;
+  margin-left: 8px;
+  overflow: hidden;
+  font-weight: 400;
+  letter-spacing: .02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;  
+  font-weight: 500;
+  letter-spacing: .005em;
+  line-height: 26px;
 }
 </style>
