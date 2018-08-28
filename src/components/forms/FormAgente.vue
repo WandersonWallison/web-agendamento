@@ -6,7 +6,7 @@
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
         </md-button> -->
-        <h3 class="md-title" style="flex:1">Prosperidade</h3>
+        <h3 class="text-principal text-tamanho-titulo" style="flex:1">Prosperidade</h3>
         <!--<img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'>-->
         <div>
           <md-dialog-confirm
@@ -16,7 +16,7 @@
             md-confirm-text='Sim'
             md-cancel-text='Não'
             @md-confirm='sair' />
-          <md-button @click='active = true'>Sair</md-button>
+          <md-button class="text-principal" @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
       <md-app-content>
@@ -71,5 +71,22 @@ export default {
   display: block;
   float: right;
   margin-top: 200px;
+}
+.text-tamanho-titulo{
+  font-size: 25px;
+}
+.text-principal {
+  color: aliceblue;
+  margin: 0;
+  margin-left: 8px;
+  overflow: hidden;
+  font-weight: 400;
+  letter-spacing: .02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+  font-weight: 500;
+  letter-spacing: .005em;
+  line-height: 26px;
 }
 </style>
