@@ -201,7 +201,7 @@ export default {
     form: {
       nomeEscritorio: null,
       responsavelEscritorio: null,
-      cnpj: null,
+      cnpj: '',
       telefone: null,
       email: null,
       cep: null,

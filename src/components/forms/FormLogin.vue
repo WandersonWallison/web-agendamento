@@ -53,17 +53,17 @@ export default {
       this.menssage = null
       this.results = null
       if (this.login.email !== '' && this.login.password !=='') {
-        this.loading = true
+        //this.loading = true
         axios
           .post(process.env.API + 'login', this.login)
-          .then(response => {            
+          .then(response => {
             if (response.data.user === false) {
               this.$router.push('/')
               if(response.data.message === 'Username not found'){
                 this.menssage = 'Usuário não encontrado!'
               }else{
                 this.menssage = 'A senha incorreta!'
-              }              
+              }
 
             } else {
               //this.results = response.data.message
@@ -84,20 +84,20 @@ export default {
           .catch( error => {
             this.results = 'Usuario não encontrado. Por favor verirficar os dados digitados'
             this.loading = false
-          })        
+          })
       } else {
         this.$router.push('/')
         if (this.login.email === '') {
           this.menssage = 'Por favor incluir e-mail'
         } else if (this.login.password === '') {
           this.menssage = 'Por favor incluir a senha'
-        }        
+        }
         setInterval(() => {
           this.menssage = ''
           this.inicio = ''
           this.results = ''
         }, 4000)
-        
+
       }
     }
   }

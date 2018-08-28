@@ -11,7 +11,7 @@
             md-confirm-text='Sim'
             md-cancel-text='Não'
             @md-confirm='sair' />
-          <md-button @click='active = true'>Sair</md-button> 
+          <md-button @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
       <md-app-content>
@@ -57,7 +57,7 @@ export default {
   max-width: calc(100vw - 125px);
 }
 .md-toobar {
-  background-color: #15da93;
+  background-color: #5c6763;
 }
 .md-fab {
   display: block;

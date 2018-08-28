@@ -21,7 +21,7 @@
         </div>
         <div >
             <md-datepicker v-model="selectedDate" :md-disabled-dates="disabledDates">
-              <label>Data Expiração</label>
+              <label>Data para Comclusão</label>
             </md-datepicker>
         </div>
         <!--  FIM   -->
@@ -58,8 +58,8 @@
       </md-table-row>
     </md-table>
 -->
-  </div>
-      <md-dialog-confirm
+<div>
+<md-dialog-confirm
       :md-active.sync="vinculaHunter"
       md-title="Deseja realmete vinvular ao Hunter?"
       md-content="Ele (s) não serão mais exibidos na lista"
@@ -67,6 +67,9 @@
       md-cancel-text="Não"
       @md-cancel="onCancel"
       @md-confirm="onConfirm" />
+</div>
+  </div>
+
   </div>
 </template>
 
@@ -77,7 +80,7 @@ import Endereco from '../forms-endereco/FormEndereco.vue'
 import Conta from '../forms/FormConta.vue'
 import axios from 'axios'
 export default {
-  name: 'listClienteAguardando',  
+  name: 'listClienteAguardando',
   components: {
     UpLead,
     Endereco,
@@ -143,11 +146,7 @@ export default {
     margin-top: 16px
     ali
   }
-  .md-dialog {
-  width: 70%;
-  height: 70%;
-  max-width: 100%;
-  }
+
   .div{
     overflow: auto;
    margin-left: 2%;
