@@ -18,13 +18,13 @@
                 </md-select>
                 <br>
               </md-field>
-        </div>        
-        <div >            
+        </div>
+        <div >
             <md-datepicker v-model="selectedDate" :md-disabled-dates="disabledDates">
               <label>Data Expiração</label>
             </md-datepicker>
         </div>
-        <!--  FIM   -->        
+        <!--  FIM   -->
         <div class="md-toolbar-section-end">
           <md-button @click="vinculaHunter = true" class="md-icon-button">
             <md-tooltip md-direction="top">Vincular Hunter</md-tooltip>
@@ -116,9 +116,8 @@ export default {
         id_user_editor: this.selectedHunter,
         momento_atual: 1,
         data_expiracao: moment(this.selectedDate).format('YYYY-MM-DD')
-      }  
-      console.log(newLead)    
-      for (var i = 0; i <= this.selected.length; i++) {        
+      }
+      for (var i = 0; i <= this.selected.length; i++) {
         axios.put(process.env.API+'leads/' + this.selected[i].id, newLead)
           .then(response => {
             console.log(i + 'alterado')
@@ -133,7 +132,7 @@ export default {
       if (count > 1) {
         plural = 's'
         }
-      return `${count} Usuário${plural} selecionado${plural}`
+      return `${count} Cliente${plural} selecionado${plural}`
     }
   }
 }

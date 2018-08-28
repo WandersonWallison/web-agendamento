@@ -90,7 +90,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label for="cvm">CVM</label>
-                <md-input type="number" id="cvm" name="cvm" v-model="form.cvm" :disabled="sending" />
+                <md-input id="cvm" name="cvm" v-model="form.cvm" :disabled="sending" />
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -294,11 +294,11 @@ export default {
       celular : null,
       dataInicio : null,
       dataNascimento: null,
-      cvm : null,
+      cvm : '',
       nomeConjuge : null,
       nomeMae : null,
       nomePai : null,
-      redeSocial : null,
+      redeSocial : '',
       rg : null,
       cpf : null,
       cep : null,
@@ -508,6 +508,7 @@ export default {
     },
     validateUser () {
       this.$v.$touch()
+      console.log("validate do form "+ this.$v.$invalid)
       if (!this.$v.$invalid) {
         this.saveEmpresa()
       }
