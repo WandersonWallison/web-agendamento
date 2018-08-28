@@ -360,7 +360,7 @@ export default {
         required,
         minLength: minLength(1)
       },
-       rua: {
+      rua: {
         required,
         minLength: minLength(4)
       },
@@ -484,15 +484,16 @@ export default {
           axios.post(process.env.API + 'address', newEndereco)
             .then(response => {
                   alert('Agente cadastado com succeso \n' +
-              'Dados de Acesso do Agente: ' +
-                this.form.nomeAgente +
-              '\n Usuario: ' +
-                this.form.email +
-              '\n Senha: ' + senhaGerada )
-              this.userSaved = true
-              this.sending = false
-              this.clearForm()
-              })
+                'Dados de Acesso do Agente: ' +
+                  this.form.nomeAgente +
+                '\n Usuario: ' +
+                  this.form.email +
+                '\n Senha: ' + senhaGerada )
+                this.userSaved = true
+                this.sending = false
+                this.clearForm()
+                window.location.reload()
+                })
           .catch(error => {
             alert('Erro no cadastro do Endereço')
           console.log(error.response.data)

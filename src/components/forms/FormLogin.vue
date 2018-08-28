@@ -19,9 +19,6 @@
         </md-field>
         {{menssage}}
         <br>
-        {{results}}
-        <br>
-        {{inicio}}
       </div>
       <div class="actions2 md-layout md-alignment-center-space-between">
         <md-button class="md-raised md-primary" @click="auth">Entrar</md-button>
@@ -54,57 +51,53 @@ export default {
   methods: {
     auth () {
       this.menssage = null
-      this.results = ''
+      this.results = null
       if (this.login.email !== '' && this.login.password !=='') {
+        this.loading = true
         axios
           .post(process.env.API + 'login', this.login)
-          .then(response => {
-            this.inicio = response.data
+          .then(response => {            
             if (response.data.user === false) {
               this.$router.push('/')
-              this.menssage = response.data.message
-
-              setInterval(() => {
-                this.login.email = ''
-                this.login.password = ''
-                this.inicio = ''
-                this.menssage = ''
-              }, 3000)
+              if(response.data.message === 'Username not found'){
+                this.menssage = 'Usuário não encontrado!'
+              }else{
+                this.menssage = 'A senha incorreta!'
+              }              
 
             } else {
-              this.results = response.data.message
+              //this.results = response.data.message
               window.localStorage.setItem('Usuario', JSON.stringify(response.data.user))
               
               if (response.data.user.id_profile === 1) {
                 this.$router.push('/home')
+                this.loading = false
               } else if (response.data.user.id_profile === 3) {
                 this.$router.push('/agendamento')
+                this.loading = false
               } else {
                 this.$router.push('/visita')
+                this.loading = false
               }
             }
           })
           .catch( error => {
             this.results = 'Usuario não encontrado. Por favor verirficar os dados digitados'
-          })
-        this.loading = true
-
-        setInterval(() => {
-          this.loading = false
-        }, 2000)
-
+            this.loading = false
+          })        
       } else {
         this.$router.push('/')
         if (this.login.email === '') {
           this.menssage = 'Por favor incluir e-mail'
         } else if (this.login.password === '') {
           this.menssage = 'Por favor incluir a senha'
-        }
+        }        
         setInterval(() => {
           this.menssage = ''
           this.inicio = ''
           this.results = ''
         }, 4000)
+        
       }
     }
   }
