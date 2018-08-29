@@ -21,7 +21,7 @@
         </div>
         <div >
             <md-datepicker v-model="selectedDate" :md-disabled-dates="disabledDates">
-              <label>Data para Comclusão</label>
+              <label>Data para Conclusão</label>
             </md-datepicker>
         </div>
         <!--  FIM   -->
