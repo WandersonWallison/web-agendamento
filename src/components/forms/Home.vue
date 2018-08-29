@@ -59,7 +59,8 @@
       </md-app-drawer> -->
 
       <md-app-content>
-      <ListClienteAguardando/>
+        <!--<ListClienteAguardando/> -->
+        <Dashboard/>
        <!-- <list-cliente ref="ListCliente"></list-cliente> -->
       </md-app-content>
           </md-app>
@@ -72,6 +73,7 @@ import ListCliente from '../lists/ListCliente.vue'
 import FormAddEmpresa from './FormCadastroEmpresa.vue'
 import ButtonAdd from '../buttons/ButtonAdd.vue'
 import ListClienteAguardando from '../lists/ListClienteAguardandoContato.vue'
+import Dashboard from './FormDashbord.vue'
 
 export default {
   name: 'Home',
@@ -80,7 +82,9 @@ export default {
     ListCliente,
     FormAddEmpresa,
     ButtonAdd,
-    ListClienteAguardando
+    ListClienteAguardando,
+    Dashboard
+
   },
   data: () => ({
     menuVisible: false,
