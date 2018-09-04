@@ -124,7 +124,7 @@ export default {
         tipo: 'Cliente'
       }
       axios
-        .put(process.env.API+'leads/'+ this.selected[0].id, newLead)
+        .put(process.env.API + 'leads/'+ this.selected[0].id, newLead)
         .then(response => {
           this.results = response.data
           alert('User alterado com sucesso')

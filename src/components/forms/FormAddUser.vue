@@ -6,7 +6,7 @@
           <span class='md-title'>Cadastro de Usuário</span>
         </md-toolbar>
         <md-card-content>
-          <div class="md-layout md-gutter">
+          <div class="md-layout md-gutter">            
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('escritorio')">
                 <label for="escritorio">Escritorio</label>
@@ -30,17 +30,25 @@
                 <span class="md-error">Perfil não selecioando</span>
               </md-field>
             </div>
-
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('nomeAgente')">
-                <label for="nomeAgente">Nome Completo</label>
-                <md-input id="nomeAgente" name="nomeAgente" v-model="form.nomeAgente" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.nomeAgente.required">Nome do Agente deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.nomeAgente.maxlength">Invalid Escritorio</span>
+            <!--:class="getValidationClass('dataNascimento')" -->
+              <md-field v-if="form.profile==2" :class="getValidationClass('cvm')">
+                <label for="cvm">CVM</label>
+                <md-input id="cvm" name="cvm" v-model="form.cvm" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cvm.required">RG deve ser preenchido</span>
               </md-field>
             </div>
+            
           </div>
           <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('nomeAgente')">
+                  <label for="nomeAgente">Nome Completo</label>
+                  <md-input id="nomeAgente" name="nomeAgente" v-model="form.nomeAgente" :disabled="sending" />
+                  <span class="md-error" v-if="!$v.form.nomeAgente.required">Nome do Agente deve ser preenchido</span>
+                  <span class="md-error" v-else-if="!$v.form.nomeAgente.maxlength">Invalid Escritorio</span>
+                </md-field>
+            </div>
             <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('email')">
                   <label for="email">E-mail</label>
@@ -48,19 +56,21 @@
                   <span class="md-error" v-if="!$v.form.email.required">E-mail deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.email.maxlength">Invalid email</span>
                 </md-field>
-            </div>
+            </div>             
+          </div>
+          <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('telefone')">
-                <label for="telefone">Telefone</label>
-                <md-input type="number" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" />
+                <!--<label for="telefone">Telefone</label> -->
+                <the-mask class="campos-text" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) ####-####','(##) ####-####']" placeholder="Telefone"/>
+                <!--<md-input type="number" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" /> -->
                 <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Invalid telefone</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('celular')">
-                <label for="celular">Celular</label>
-                <md-input type="number" id="celular" name="celular" v-model="form.celular" :disabled="sending" />
+              <md-field :class="getValidationClass('celular')">               
+                <the-mask class="campos-text" id="celular" name="celular" v-model="form.celular" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Celular"/>               
                 <span class="md-error" v-if="!$v.form.celular.required">celular deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.celular.maxlength">Invalid celular</span>
               </md-field>
@@ -86,25 +96,17 @@
                 </md-datepicker>
             </div>
           </div>
-          <div class="md-layout md-gutter">
+          <div class="md-layout md-gutter">            
             <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label for="cvm">CVM</label>
-                <md-input id="cvm" name="cvm" v-model="form.cvm" :disabled="sending" />
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('rg')">
-                <label for="rg">RG</label>
-                <md-input type="number" id="rg" name="rg" v-model="form.rg" :disabled="sending" />
+              <md-field :class="getValidationClass('rg')">                
+                <the-mask class="campos-text" id="rg" name="rg" v-model="form.rg" :disabled="sending" :mask="['#.###.###','#.###.###']" placeholder="RG"/>                
                 <span class="md-error" v-if="!$v.form.rg.required">RG deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.rg.maxlength">Invalid rg</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cpf')">
-                <label for="cpf">CPF</label>
-                <md-input type="number" id="cpf" name="cpf" v-model="form.cpf" :disabled="sending" />
+              <md-field :class="getValidationClass('cpf')">               
+                <the-mask class="campos-text" id="cpf" name="cpf" v-model="form.cpf" :disabled="sending" :mask="['###.###.###-##','###.###.###-##']" placeholder="CPF"/>                
                 <span class="md-error" v-if="!$v.form.cpf.required">cpf deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.cpf.maxlength">Invalid cpf</span>
               </md-field>
@@ -188,37 +190,20 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('numero')">
-                <label for="numero">Número</label>
-                <md-input  type="number" id="numero" name="numero" autocomplete="numero" v-model="form.numero" :disabled="sending" />
+              <md-field :class="getValidationClass('numero')">                
+                <the-mask class="campos-text" id="numero" name="numero" v-model="form.numero" :disabled="sending" :mask="['########','########']" placeholder="Numero"/>                
                 <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cep')">
-                <label for="cep">CEP</label>
-                <md-input  type="number" id="cep" name="cep" autocomplete="cep" v-model="form.cep" :disabled="sending" />
+              <md-field :class="getValidationClass('cep')">               
+                <the-mask class="campos-text" id="cep" name="cep" v-model="form.cep" :disabled="sending" :mask="['#####-###','#####-###']" placeholder="CEP"/>                
                 <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
               </md-field>
             </div>
           </div>
           <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('bairro')">
-                <label for="bairro">Bairro</label>
-                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid Bairro</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cidade')">
-                <label for="cidade">Cidade</label>
-                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
-              </md-field>
-            </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estado</label>
@@ -255,6 +240,21 @@
                 <span class="md-error">Estado não selecioando</span>
               </md-field>
             </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cidade')">
+                <label for="cidade">Cidade</label>
+                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
+              </md-field>
+            </div>  
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('bairro')">
+                <label for="bairro">Bairro</label>
+                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid Bairro</span>
+              </md-field>
+            </div>                      
           </div>
           <md-field>
             <label for="observacao">Observação</label>
@@ -280,6 +280,7 @@ import {
   minLength,
   email
 } from 'vuelidate/lib/validators'
+import {TheMask} from 'vue-the-mask'
 
 export default {
   name: 'FormEmpresa',
@@ -323,6 +324,7 @@ export default {
     infoSenha : false,
     offices: []
   }),
+  components: {TheMask},
   validations: {
     form: {
 
@@ -338,6 +340,9 @@ export default {
         required
       },
       dataNascimento: {
+        required
+      },
+      cvm: {
         required
       },
       telefone: {
@@ -537,5 +542,8 @@ export default {
 }
 .alinha-button {
   margin: 2%;
+}
+.campos-text {
+  width: 100%;
 }
 </style>

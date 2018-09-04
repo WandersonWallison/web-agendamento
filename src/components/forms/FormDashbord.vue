@@ -1,27 +1,30 @@
 <template>
   <div>
     <md-toolbar class="md-accent">
-      <h3 class="md-title">Dashbord - Em construção</h3>
+      <h3 class="md-title">Dashbord - Em construção</h3>      
     </md-toolbar>
-    
-    <div>
-        <md-content>
-            <GChart type="BubbleChart" :data="chartData1" :options="chartOptions1"/>
-            <GChart type="LineChart" :data="chartData4" :options="chartOptions4"/> 
-            <GChart type="LineChart" :data="chartData2" :options="chartOptions2"/>   
-        </md-content>
-    </div>
-    <div>
-        <md-content>
-            <GChart :settings="{packages: ['bar']}" :data="chartData" :options="chartOptions" :createChart="(el, google) => new google.charts.Bar(el)"  @ready="onChartReady" />    
-            <GChart type="CoreChart" :data="chartData3" :options="chartOptions3"/>   
-            <GChart type="ColumnChart" :data="chartData" :options="chartOptions"/>  
-        </md-content>
-    </div>    
+    <br>
+    <br>
+    <md-content>
+        <GChart type="LineChart" :data="chartData4" :options="chartOptions4"/>
+        <GChart :settings="{packages: ['bar']}" :data="chartData" :options="chartOptions" :createChart="(el, google) => new google.charts.Bar(el)"  @ready="onChartReady" />
+        <GChart
+            :settings="{packages: ['bar']}"    
+            :data="chartData"
+            :options="chartOptions"
+            :createChart="(el, google) => new google.charts.Bar(el)"
+            @ready="onChartReady"
+        /> 
+    </md-content>
+    <md-content>
+         <GChart type="LineChart" :data="chartData4" :options="chartOptions4"/>   
+        <GChart type="ColumnChart" :data="chartData" :options="chartOptions"/>
+        <GChart type="ColumnChart" :data="chartData" :options="chartOptions"/>  
+    </md-content>    
   </div>
 </template>
 <script>
-    import { GChart } from 'vue-google-charts'
+import { GChart } from 'vue-google-charts'
 
     export default {
         name: 'dashbord',
@@ -31,6 +34,7 @@
         data () {
             return {
             // Array will be automatically processed with visualization.arrayToDataTable function
+                chartsLib: null,
                 chartData: [
                     ['Ano', 'Leads', 'Agendados', 'Efetivados'],
                     ['2014', 1000, 400, 200],
@@ -64,15 +68,15 @@
                     ['JUNHO',  660,   1120],
                     ['AGOSTO',  1030,  540]
                 ],  
-                 chartOptions2: {
+                    chartOptions2: {
                     chart: {
                         title: 'Desempenho Hunter',
                         subtitle: 'Leads, Agendados, and Efetivados: MAIO-AGOSTO',
                     }
                 },            
                 chartData3: [
-                     ['Blueberry', 44],                     
-                     ['Strawberry', 13]
+                        ['Blueberry', 44],                     
+                        ['Strawberry', 13]
                 ],
                 chartOptions3: {
                     chart: {
@@ -91,7 +95,7 @@
                     title: 'ATIVIDADES DIARIAS',
                     pieHole: 0.4,
                 }
-                      
+                        
             }
 
         },
@@ -104,20 +108,18 @@
                         subtitle: 'Sales, Expenses, and Profit: 2014-2017'
                     },
                     bars: 'horizontal', // Required for Material Bar Charts.
-                    hAxis: { format: 'decimal' },
-                    height: 400,
-                    colors: ['#1b9e77', '#d95f02', '#7570b3']
+                        hAxis: { format: 'decimal' },
+                        height: 400,
+                        colors: ['#1b9e77', '#d95f02', '#7570b3']
                 })
             }
         },
         methods: {
             onChartReady (chart, google) {
             this.chartsLib = google
-            }        
+        }   
         }
-
     }
-    
 </script>
 <style lang="scss" scoped>
   .md-content {
@@ -128,8 +130,11 @@
     align-items: center;
   }
   .BubbleChart {
-      width: 80%; 
+      width: 80%;
       height: 25%;
+  }
+  .Style-chart {
+      width: 40%;
   }
 
 </style>

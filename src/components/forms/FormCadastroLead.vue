@@ -28,17 +28,15 @@
             </div>
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <md-field :class="getValidationClass('telefone')">
-                  <label for="cep">Telefone</label>
-                  <md-input  type="number" id="telefone" name="telefone" autocomplete="telefone"  v-model="form.telefone" :disabled="sending" />
+                <md-field :class="getValidationClass('telefone')">                  
+                  <the-mask class="campos-text" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) ####-####','(##) ####-####']" placeholder="Telefone"/>                  
                   <span class="md-error" v-if="!$v.form.telefone.required">Telefone deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.telefone.maxlength">telefone invalido</span>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100">
-                <md-field :class="getValidationClass('celular')">
-                  <label for="celular">Celular</label>
-                  <md-input  type="number" id="celular" name="celular" autocomplete="celular" v-model="form.celular" :disabled="sending" />
+                <md-field :class="getValidationClass('celular')">                  
+                  <the-mask class="campos-text" id="celular" name="celular" v-model="form.celular" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Celular"/>                  
                   <span class="md-error" v-if="!$v.form.celular.required">Celular deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.celular.maxlength">Invalid celular</span>
                 </md-field>
@@ -72,6 +70,7 @@ import {
   email
 } from 'vuelidate/lib/validators'
 import moment from 'moment'
+import {TheMask} from 'vue-the-mask'
 
 export default {
   name: 'FormCadastroLead',
@@ -90,6 +89,7 @@ export default {
     sending: false,
     lastUser: null
   }),
+  components: {TheMask},
   validations: {
     form: {
       nomeCompleto: {
@@ -141,7 +141,6 @@ export default {
         }
     },
     saveContato () {
-
       let newLead = {
         nome: this.form.nomeCompleto,
         email: this.form.email,
@@ -159,7 +158,7 @@ export default {
           this.clearForm()
         })
         .catch(error => {
-          if(error.response.data.code == 'E_UNIQUE'){
+          if (error.response.data.code === 'E_UNIQUE') {
             alert('Contato já cadastrado, \nPor favor verificar as informações')
           }
           console.log(error.response.data)
@@ -188,4 +187,7 @@ export default {
   .alinha-button {
     margin: 2%;
   }
+  .campos-text {
+  width: 100%;
+}
 </style>

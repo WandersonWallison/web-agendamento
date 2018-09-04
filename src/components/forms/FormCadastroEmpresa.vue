@@ -27,17 +27,17 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field  :class="getValidationClass('cnpj')">
-                <label for="cnpj">CNPJ</label>
-                <md-input type="cnpj" name="cnpj" id="cnpj" autocomplete="cnpj" v-model="form.cnpj" :disabled="sending" />
+                <!--<label for="cnpj">CNPJ</label>-->
+                <the-mask class="campos-text" name="cnpj" id="cnpj" autocomplete="cnpj" v-model="form.cnpj" :disabled="sending" :mask="['##.###.###/####-##','##.###.###/####-##']" placeholder="CNPJ" />
+                <!--<md-input type="cnpj" name="cnpj" id="cnpj" autocomplete="cnpj" v-model="form.cnpj" :disabled="sending" />-->
                 <span class="md-error" v-if="!$v.form.cnpj.required">CNPJ do Escritorio deve ser preenchido</span>
               </md-field>
             </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('telefone')">
-                <label for="telefone">Telefone</label>
-                <md-input type="number" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" />
+            <div class="md-layout-item md-small-size-50">
+              <md-field :class="getValidationClass('telefone')">                
+                <the-mask class="campos-text"  id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Telefone"/>               
                 <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Invalid telefone</span>
+                <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Telefone Inválido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -45,7 +45,7 @@
                 <label for="email">E-mail</label>
                 <md-input id="email" name="email" v-model="form.email" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.email.required">E-mail deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.email.maxlength">Invalid rua</span>
+                <span class="md-error" v-else-if="!$v.form.email.maxlength">E-mail Inválido</span>
               </md-field>
             </div>
           </div>
@@ -77,6 +77,7 @@ import {
   minLength,
   email
 } from 'vuelidate/lib/validators'
+import {TheMask} from 'vue-the-mask'
 
 export default {
   name: 'FormEmpresa',
@@ -95,6 +96,7 @@ export default {
     sending: false,
     lastUser: null
   }),
+  components: {TheMask},
   validations: {
     form: {
       nomeEmpresa: {
@@ -159,8 +161,7 @@ export default {
           console.log(error.response)
         })
     },
-    validateEmpresa () {
-      console.log('Validador: '+this.$v.$invalid)
+    validateEmpresa () {      
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.saveEmpresa()
@@ -179,5 +180,8 @@ export default {
 }
 .alinha-button {
   margin: 2%;
+}
+.campos-text {
+  width: 100%;
 }
 </style>

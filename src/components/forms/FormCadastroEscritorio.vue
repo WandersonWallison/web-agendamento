@@ -26,9 +26,8 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label for="cnpj">CNPJ</label>
-                <md-input type="cnpj" name="cnpj" id="cnpj" autocomplete="cnpj" v-model="form.cnpj" :disabled="sending" />
+              <md-field>                
+                <the-mask class="campos-text" name="cnpj" id="cnpj" autocomplete="cnpj" v-model="form.cnpj" :disabled="sending" :mask="['##.###.###/####-##','##.###.###/####-##']" placeholder="CNPJ" />                
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -64,15 +63,14 @@
                 <label for="site">Site</label>
                 <md-input id="site" name="site" v-model="form.site" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.site.required">Site deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.site.maxlength">Invalid Site</span>
+                <span class="md-error" v-else-if="!$v.form.site.maxlength">Site inválido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('telefone')">
-                <label for="telefone">Telefone</label>
-                <md-input type="number" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" />
+              <md-field :class="getValidationClass('telefone')">                 
+                <the-mask class="campos-text" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Telefone"/>                
                 <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Invalid telefone</span>
+                <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Telefone inválido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -80,7 +78,7 @@
                 <label for="email">E-mail</label>
                 <md-input id="email" name="email" v-model="form.email" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.email.required">E-mail deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.email.maxlength">Invalid rua</span>
+                <span class="md-error" v-else-if="!$v.form.email.maxlength">Rua inválido</span>
               </md-field>
             </div>
           </div>
@@ -94,43 +92,26 @@
                 <label for="rua">Rua</label>
                 <md-input id="rua" name="rua" v-model="form.rua" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.rua.required">Rua deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid rua</span>
+                <span class="md-error" v-else-if="!$v.form.rua.maxlength">inválido Rua</span>
               </md-field>
             </div>
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('numero')">
-                <label for="numero">Número</label>
-                <md-input  type="number" id="numero" name="numero" autocomplete="numero" v-model="form.numero" :disabled="sending" />
+              <md-field :class="getValidationClass('numero')">               
+                <the-mask class="campos-text" id="numero" name="numero" v-model="form.numero" :disabled="sending" :mask="['########','########']" placeholder="Numero"/>               
                 <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cep')">
-                <label for="cep">CEP</label>
-                <md-input  type="number" id="cep" name="cep" autocomplete="cep" v-model="form.cep" :disabled="sending" />
+              <md-field :class="getValidationClass('cep')">               
+                <the-mask class="campos-text" id="cep" name="cep" v-model="form.cep" :disabled="sending" :mask="['#####-###','#####-###']" placeholder="CEP"/>                
                 <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
+                <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep inválido</span>
               </md-field>
             </div>
           </div>
           <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('bairro')">
-                <label for="bairro">Bairro</label>
-                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid Bairro</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cidade')">
-                <label for="cidade">Cidade</label>
-                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
-              </md-field>
-            </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estado</label>
@@ -166,7 +147,22 @@
                 </md-select>
                 <span class="md-error">Estado não selecioando</span>
               </md-field>
+            </div>            
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cidade')">
+                <label for="cidade">Cidade</label>
+                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
+              </md-field>
             </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('bairro')">
+                <label for="bairro">Bairro</label>
+                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Bairro inválido</span>
+              </md-field>
+            </div>           
           </div>
           <md-field>
             <label for="observacao">Observação</label>
@@ -192,6 +188,7 @@ import {
   minLength
 } from 'vuelidate/lib/validators'
 import moment from 'moment'
+import {TheMask} from 'vue-the-mask'
 
 export default {
   name: 'FormEscritorio',
@@ -219,6 +216,7 @@ export default {
     sending: false,
     lastUser: null
   }),
+  components: {TheMask},
   validations: {
     form: {
       nomeEscritorio: {
@@ -365,5 +363,8 @@ export default {
 }
 .alinha-button {
   margin: 2%;
+}
+.campos-text {
+  width: 100%;
 }
 </style>

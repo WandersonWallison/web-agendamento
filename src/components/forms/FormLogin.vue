@@ -50,21 +50,21 @@ export default {
     auth () {
       this.menssage = null
       this.results = null
-      if (this.login.email !== '' && this.login.password !=='') {
-        //this.loading = true
+      if (this.login.email !== '' && this.login.password !== '') {
+        // this.loading = true
         axios
           .post(process.env.API + 'login', this.login)
           .then(response => {
             if (response.data.user === false) {
               this.$router.push('/')
-              if(response.data.message === 'Username not found'){
+              if (response.data.message === 'Username not found'){
                 this.menssage = 'Usuário não encontrado!'
-              }else{
+              } else {
                 this.menssage = 'A senha incorreta!'
               }
 
-            } else {
-              //this.results = response.data.message
+            } else  {
+              // this.results = response.data.message
               window.localStorage.setItem('Usuario', JSON.stringify(response.data.user))
 
               if (response.data.user.id_profile === 1) {
@@ -79,7 +79,7 @@ export default {
               }
             }
           })
-          .catch( error => {
+          .catch(error => {
             this.results = 'Usuario não encontrado. Por favor verirficar os dados digitados'
             this.loading = false
           })
@@ -95,7 +95,6 @@ export default {
           this.inicio = ''
           this.results = ''
         }, 4000)
-
       }
     }
   }
@@ -149,8 +148,8 @@ export default {
     position: absolute;
     height: 500px;
     background-color: #5c6763;
-    //background-color: #9bc5b6;
-    //background-color: #1a503a;
+    // background-color: #9bc5b6;
+    // background-color: #1a503a;
   }
   .loading-overlay2 {
     z-index: 5;
@@ -166,7 +165,7 @@ export default {
     justify-content: center;
   }
   .input_white{
-    color: #eeeeee;    
+    color: #eeeeee;
   }
 
 }

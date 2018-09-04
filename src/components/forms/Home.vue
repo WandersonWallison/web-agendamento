@@ -96,7 +96,7 @@ export default {
     toggleMenu () {
       this.menuVisible = !this.menuVisible
     },
-    sair(){
+    sair() {
       this.value = 'Sim'
       this.$router.push('/')
       window.localStorage.clear()

@@ -12,6 +12,7 @@ import Vuetify from 'vuetify'
 import BootstrapVue from 'bootstrap-vue'
 import Axios from 'axios'
 import './assets/vue2-simple-calendar.css'
+import VueTheMask from 'vue-the-mask'
 
 Vue.config.productionTip = false
 
@@ -20,7 +21,8 @@ Vue.use(
   VueSessionstorage,
   Vuetify,
   BootstrapVue,
-  Axios
+  Axios,
+  VueTheMask
 )
 
 /* eslint-disable no-new */
