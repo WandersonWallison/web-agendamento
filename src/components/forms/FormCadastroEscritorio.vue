@@ -113,6 +113,29 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label for="estado">Estados</label>
+                <md-select name="estado" id="estado" v-model="selectedEstado">
+                  <md-option v-for="estado in estados" :key="estado.id" :value="estado.id">
+                    {{ estado.nome}}
+                  </md-option>
+                </md-select>
+                <br>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label for="cidade">Cidade</label>
+                <md-select name="cidade" id="cidade" v-model="selectedCidade">
+                  <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.id">
+                    {{ cidade.nome}}
+                  </md-option>
+                </md-select>
+                <br>
+              </md-field>
+            </div>
+            <!--
+            <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estado</label>
                 <md-select name="estado" id="estado" v-model="form.estado" md-dense :disabled="sending">
@@ -155,6 +178,7 @@
                 <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
               </md-field>
             </div>
+            -->
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('bairro')">
                 <label for="bairro">Bairro</label>
@@ -214,8 +238,34 @@ export default {
     },
     userSaved: false,
     sending: false,
-    lastUser: null
+    lastUser: null,
+    estados: [],
+    cidades: [],
+    cep: [],
+    selectedEstado: null,
+    selectedCidade: null,
+    selectedCep: null
   }),
+  beforeCreate() {
+    axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+    .then(response => {
+    this.estados = response.data
+    })
+  },  
+  beforeUpdate() {
+    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/'+ this.selectedEstado +'/municipios')
+    .then(response => {
+    this.cidades = response.data
+    })
+    ,
+    axios.get('https://viacep.com.br/ws/'+ this.form.cep +'/json/')
+    .then(response => {
+      this.cep = response.data
+      this.form.bairro = this.cep.bairro,
+      this.form.rua = this.cep.logradouro,
+      this.form.observacao = this.cep.complemento
+    })
+  },
   components: {TheMask},
   validations: {
     form: {
