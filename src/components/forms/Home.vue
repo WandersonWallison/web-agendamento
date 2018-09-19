@@ -1,18 +1,9 @@
 <template>
-<div class="page-container">
+  <div class="page-container">
+    <md-content>
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-toobar" md-elevation="1">
-        <!--
-        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-          <md-icon>menu</md-icon>
-        </md-button> -->
-        <!--
-        <div class="">
-          <img class="md-title" src='../../assets/nova_logo_ProsperidadeInvestimentos_home.png'>
-        </div>
-        -->       
         <h3 class="text-principal text-tamanho-titulo" style="flex:1">Prosperidade</h3>
-        <!--<img class="md-title" src='../../assets/marca_branca_fundo_transparente.png'>-->
         <div>
           <md-dialog-confirm
             :md-active.sync='active'
@@ -24,47 +15,12 @@
           <md-button class="text-principal"  @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
-      <!--<md-app-drawer :md-active.sync="menuVisible">
-        <md-toolbar class="md-transparent" md-elevation="0">Menu</md-toolbar>
-        <md-list>
-          <md-list-item md-expand>
-            <md-icon>dashboard</md-icon>
-            <span class="md-list-item-text">Dashboard</span>
-            <md-list slot="md-expand">
-            <md-button to="/home">Home</md-button>
-          </md-list>
-          </md-list-item>
-          <md-list-item md-expand>
-            <md-icon>gavel</md-icon>
-            <span class="md-list-item-text">Admin</span>
-          </md-list-item>
-          <md-list-item md-expand>
-            <md-icon>contacts</md-icon>
-            <span class="md-list-item-text">Contatos</span>
-          <md-list slot="md-expand">
-            <md-button to="/lead/list">Listar</md-button>
-            <md-button class="md-inset">Adicionar</md-button>
-            <md-button to="/lead/listAguardo">Aguardando</md-button>
-          </md-list>
-          </md-list-item>
-          <md-list-item md-expand>
-            <md-icon>schedule</md-icon>
-            <span class="md-list-item-text">Agendamentos</span>
-          <md-list slot="md-expand">
-            <md-button to="/lead/listAguardo">Aceitos</md-button>
-            <md-button to="/lead/list">Recusados</md-button>
-          </md-list>
-          </md-list-item>
-        </md-list>
-      </md-app-drawer> -->
-
       <md-app-content>
-        <!--<ListClienteAguardando/> -->
         <Dashboard/>
-       <!-- <list-cliente ref="ListCliente"></list-cliente> -->
       </md-app-content>
-          </md-app>
+    </md-app>
     <button-add></button-add>
+    </md-content>
   </div>
 </template>
 <script>
@@ -136,7 +92,7 @@ export default {
   letter-spacing: .02em;
   text-overflow: ellipsis;
   white-space: nowrap;
-  vertical-align: top;  
+  vertical-align: top;
   font-weight: 500;
   letter-spacing: .005em;
   line-height: 26px;

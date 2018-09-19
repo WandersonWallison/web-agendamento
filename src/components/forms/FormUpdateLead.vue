@@ -106,7 +106,7 @@ export default {
     }
   },
   methods: {
-    update() {
+    update (){
       let newLead = {
         nome: this.lead.nome,
         data_nascimento: moment(this.lead.data_nascimento).format('YYYY-MM-DD'),
