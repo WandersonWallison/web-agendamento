@@ -33,8 +33,6 @@
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
       </md-table-row>
     </md-table>
-    <p>Selected:</p>
-    {{ selected }}
   </div>
 </template>
 
@@ -73,10 +71,11 @@
       },
       Alterar() {
 
-        let newPassword = this.newValuePassword
-        axios.put(process.env.API + 'user/'+this.selected.id, newPassword)
+        let user = {
+          password: this.newValuePassword
+        }
+        axios.put(process.env.API + 'user/'+this.selected.id, user)
         .then(response => {
-
           alert('Agente cadastado com succeso \n' +
           'Dados de Acesso do Agente: ' +
             this.form.nomeAgente +

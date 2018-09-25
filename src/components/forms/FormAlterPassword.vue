@@ -27,6 +27,7 @@
                 </md-field>
               </div>
             </div>
+            {{teste}}
           </md-card-content>
           <md-progress-bar md-mode="indeterminate" v-if="sending" />
           <md-card-actions>
@@ -54,16 +55,13 @@ import moment from 'moment'
 import {TheMask} from 'vue-the-mask'
 
 export default {
-  name: 'FormCadastroLead',
+  name: 'FormAlterPassword',
   props: ['leadProps'],
   mixins: [validationMixin],
   data: () => ({
     form: {
       newSenha: null,
-      email: null,
-      telefone: null,
-      celular: null,
-      observacao: null
+      newConfirmSenha: null
     },
     userAtual: null,
     userSaved: false,
@@ -99,11 +97,9 @@ export default {
     },
     clearForm () {
       this.$v.$reset()
-      this.form.nomeCompleto = null
-      this.form.telefone = null
-      this.form.email = null
-      this.form.celular = null
-      this.form.observacao = null
+      this.form.newSenha = null
+      this.form.newConfirmSenha = null
+
     },
     somenteNumeros (num) {
         var er = /[^0-9.]/
@@ -114,14 +110,19 @@ export default {
         }
     },
     saveContato () {
-      let newLead = {
-        nome: this.form.newSenha
-      }
-      axios.post(process.env.API + 'leads', newLead)
+
+
+      alert('chegou no save')
+      if(this.form.newSenha == this.form.newConfirmSenha){
+        let user = {
+          password: this.form.newSenha
+        }
+        alert('passou no if')
+        axios.put(process.env.API + 'user/'+this.userAtual,user)
         .then(response => {
           this.userSaved = true
           this.sending = false
-          alert('Contato cadastado com sucesso')
+          alert('Senha alterada com sucesso')
           this.clearForm()
         })
         .catch(error => {
@@ -130,6 +131,8 @@ export default {
           }
           console.log(error.response.data)
         })
+      }
+
     },
     validateUser () {
       this.$v.$touch()
