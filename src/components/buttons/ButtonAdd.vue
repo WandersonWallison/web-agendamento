@@ -30,6 +30,10 @@
           <md-tooltip md-direction="left">Lista Cliente Aguardando Contato</md-tooltip>
           <md-icon>playlist_add_check</md-icon>
         </md-button>
+        <md-button class="md-icon-button" @click="showListUsuario = true">
+          <md-tooltip md-direction="left">Lista Usuarios</md-tooltip>
+          <md-icon>home</md-icon>
+        </md-button>
       </md-speed-dial-content>
     </md-speed-dial>
     <md-dialog :md-active.sync="showDialog" class="div-contato">
@@ -50,6 +54,9 @@
     <md-dialog :md-active.sync="showListaClienteAguardando" class="div">
       <ListClienteAguardando/>
     </md-dialog>
+    <md-dialog :md-active.sync="showListUsuario" class="div">
+      <ListUsuario/>
+    </md-dialog>    
   </div>
 </template>
 <script>
@@ -59,6 +66,8 @@ import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
 import ListCliente from '../lists/ListCrudLead.vue'
 import ListClienteAguardando from '../lists/ListClienteAguardandoContato.vue'
+import ListUsuario from '../lists/ListUsuarios.vue'
+import AlterSenha from'../forms/FormALterPassword.vue'
 
 // ListClienteAguardando
 
@@ -70,7 +79,8 @@ export default {
     CadEscritorio,
     CadEmpresa,
     ListCliente,
-    ListClienteAguardando
+    ListClienteAguardando,
+    ListUsuario
   },
   data: () => ({
     showDialog: false,
@@ -79,8 +89,8 @@ export default {
     showEmpresa: false,
     showListaContato: false,
     showListaParaAgendamento: false,
-    showListaClienteAguardando: false
-    
+    showListaClienteAguardando: false,
+    showListUsuario: false
   })
 }
 </script>
@@ -97,17 +107,17 @@ export default {
 }
 .div{
   overflow: auto;
-  height: 100%;
-  width: 90%;
+  height: 75%;
+  width: 85%;
 }
 .div-empresa{
   overflow: auto;
-  height: 65%;
-  width: 80%;
+  height: 70%;
+  width: 85%;
 }
 .div-contato{
   overflow: auto;
-  height: 85%;
+  height: 75%;
   width: 90%;
 }
 </style>

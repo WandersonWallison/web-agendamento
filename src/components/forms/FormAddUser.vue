@@ -6,15 +6,16 @@
           <span class='md-title'>Cadastro de Usuário</span>
         </md-toolbar>
         <md-card-content>
-          <div class="md-layout md-gutter">            
+          <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('escritorio')">
-                <label for="escritorio">Escritorio</label>
-                <md-select name="escritorio" id="escritorio" v-model="form.selected">
-                  <md-option v-for="office in offices" :key="office.id" :value="office.id">
-                    {{ office.nome }}
-                  </md-option>
+              <md-field :class="getValidationClass('office')">
+                <label for="office">Escritorio</label>
+                <md-select name="office" id="office" v-model="form.office" md-dense :disabled="sending">
+                <md-option v-for="office in offices" :key="office.id" :value="office.id">
+                  {{ office.nome }}
+                </md-option>
                 </md-select>
+                  <span class="md-error">Escritorio não selecionado</span>
                 <br>
               </md-field>
             </div>
@@ -27,18 +28,18 @@
                     <md-option value="2">AGENTE</md-option>
                     <md-option value="3">HUNTER</md-option>
                 </md-select>
-                <span class="md-error">Perfil não selecioando</span>
+                <span class="md-error">Perfil não selecionado</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-            <!--:class="getValidationClass('dataNascimento')" -->
-              <md-field v-if="form.profile==2" :class="getValidationClass('cvm')">
-                <label for="cvm">CVM</label>
-                <md-input id="cvm" name="cvm" v-model="form.cvm" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cvm.required">RG deve ser preenchido</span>
-              </md-field>
+              <div v-if="form.profile!=3">
+                <md-field>
+                  <label for="cvm">CVM</label>
+                  <md-input id="cvm" name="cvm" v-model="form.cvm" :disabled=false />
+                </md-field>
+              </div>
             </div>
-            
+
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
@@ -56,21 +57,19 @@
                   <span class="md-error" v-if="!$v.form.email.required">E-mail deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.email.maxlength">Invalid email</span>
                 </md-field>
-            </div>             
+            </div>
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('telefone')">
-                <!--<label for="telefone">Telefone</label> -->
                 <the-mask class="campos-text" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) ####-####','(##) ####-####']" placeholder="Telefone"/>
-                <!--<md-input type="number" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" /> -->
                 <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Invalid telefone</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('celular')">               
-                <the-mask class="campos-text" id="celular" name="celular" v-model="form.celular" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Celular"/>               
+              <md-field :class="getValidationClass('celular')">
+                <the-mask class="campos-text" id="celular" name="celular" v-model="form.celular" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Celular"/>
                 <span class="md-error" v-if="!$v.form.celular.required">celular deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.celular.maxlength">Invalid celular</span>
               </md-field>
@@ -96,17 +95,17 @@
                 </md-datepicker>
             </div>
           </div>
-          <div class="md-layout md-gutter">            
+          <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('rg')">                
-                <the-mask class="campos-text" id="rg" name="rg" v-model="form.rg" :disabled="sending" :mask="['#.###.###','#.###.###']" placeholder="RG"/>                
+              <md-field :class="getValidationClass('rg')">
+                <the-mask class="campos-text" id="rg" name="rg" v-model="form.rg" :disabled="sending" :mask="['#.###.###','#.###.###']" placeholder="RG"/>
                 <span class="md-error" v-if="!$v.form.rg.required">RG deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.rg.maxlength">Invalid rg</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cpf')">               
-                <the-mask class="campos-text" id="cpf" name="cpf" v-model="form.cpf" :disabled="sending" :mask="['###.###.###-##','###.###.###-##']" placeholder="CPF"/>                
+              <md-field :class="getValidationClass('cpf')">
+                <the-mask class="campos-text" id="cpf" name="cpf" v-model="form.cpf" :disabled="sending" :mask="['###.###.###-##','###.###.###-##']" placeholder="CPF"/>
                 <span class="md-error" v-if="!$v.form.cpf.required">cpf deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.cpf.maxlength">Invalid cpf</span>
               </md-field>
@@ -190,14 +189,14 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('numero')">                
-                <the-mask class="campos-text" id="numero" name="numero" v-model="form.numero" :disabled="sending" :mask="['########','########']" placeholder="Numero"/>                
+              <md-field :class="getValidationClass('numero')">
+                <the-mask class="campos-text" id="numero" name="numero" v-model="form.numero" :disabled="sending" :mask="['########','########']" placeholder="Numero"/>
                 <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cep')">               
-                <the-mask class="campos-text" id="cep" name="cep" v-model="form.cep" :disabled="sending" :mask="['#####-###','#####-###']" placeholder="CEP"/>                
+              <md-field :class="getValidationClass('cep')">
+                <the-mask class="campos-text" id="cep" name="cep" v-model="form.cep" :disabled="sending" :mask="['#####-###','#####-###']" placeholder="CEP"/>
                 <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
               </md-field>
@@ -205,80 +204,35 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field>
+              <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estados</label>
                 <md-select name="estado" id="estado" v-model="selectedEstado">
                   <md-option v-for="estado in estados" :key="estado.id" :value="estado.id">
                     {{ estado.nome}}
                   </md-option>
                 </md-select>
-                <br>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label for="cidade">Cidade</label>
-                <md-select name="cidade" id="cidade" v-model="selectedCidade">
-                  <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.id">
-                    {{ cidade.nome}}
-                  </md-option>
-                </md-select>
-                <br>
-              </md-field>
-            </div>
-            <!--
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('estado')">
-                <label for="estado">Estado</label>
-                <md-select name="estado" id="estado" v-model="form.estado" md-dense :disabled="sending">
-                  <md-option velue=""></md-option>
-                    <md-option value="ac">Acre</md-option>
-                    <md-option value="al">Alagoas</md-option>
-                    <md-option value="am">Amazonas</md-option>
-                    <md-option value="ap">Amapá</md-option>
-                    <md-option value="ba">Bahia</md-option>
-                    <md-option value="ce">Ceará</md-option>
-                    <md-option value="df">Distrito Federal</md-option>
-                    <md-option value="es">Espírito Santo</md-option>
-                    <md-option value="go">Goiás</md-option>
-                    <md-option value="ma">Maranhão</md-option>
-                    <md-option value="mt">Mato Grosso</md-option>
-                    <md-option value="ms">Mato Grosso do Sul</md-option>
-                    <md-option value="mg">Minas Gerais</md-option>
-                    <md-option value="pa">Pará</md-option>
-                    <md-option value="pb">Paraíba</md-option>
-                    <md-option value="pr">Paraná</md-option>
-                    <md-option value="pe">Pernambuco</md-option>
-                    <md-option value="pi">Piauí</md-option>
-                    <md-option value="rj">Rio de Janeiro</md-option>
-                    <md-option value="rn">Rio Grande do Norte</md-option>
-                    <md-option value="ro">Rondônia</md-option>
-                    <md-option value="rs">Rio Grande do Sul</md-option>
-                    <md-option value="rr">Roraima</md-option>
-                    <md-option value="sc">Santa Catarina</md-option>
-                    <md-option value="se">Sergipe</md-option>
-                    <md-option value="sp">São Paulo</md-option>
-                    <md-option value="to">Tocantins</md-option>
-                </md-select>
-                <span class="md-error">Estado não selecioando</span>
+                <span class="md-error">Estado não selecionado</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cidade')">
                 <label for="cidade">Cidade</label>
-                <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cep.required">Cidade deve ser preenchido</span>
+                <md-select name="cidade" id="cidade" v-model="selectedCidade">
+                  <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.nome">
+                    {{ cidade.nome}}
+                  </md-option>
+                </md-select>
+                  <span class="md-error">Cidade não selecionado</span>
               </md-field>
-            </div>  
-            -->
+            </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('bairro')">
                 <label for="bairro">Bairro</label>
                 <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid Bairro</span>
+                <span class="md-error" v-if="!$v.form.bairro.required">Bairro deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.bairro.rua.maxlength">Invalid Bairro</span>
               </md-field>
-            </div>                      
+            </div>
           </div>
           <md-field>
             <label for="observacao">Observação</label>
@@ -352,14 +306,16 @@ export default {
     cep: [],
     selectedEstado: null,
     selectedCidade: null,
-    selectedCep: null
+    selectedCep: null,
+    novoUsuario: null,
+    teste: null
   }),
    beforeCreate() {
     axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
     .then(response => {
     this.estados = response.data
     })
-  },  
+  },
   beforeUpdate() {
     axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/'+ this.selectedEstado +'/municipios')
     .then(response => {
@@ -390,9 +346,6 @@ export default {
         required
       },
       dataNascimento: {
-        required
-      },
-      cvm: {
         required
       },
       telefone: {
@@ -451,7 +404,7 @@ export default {
       profile: {
         required
       },
-      selected:{
+      office:{
          required
       }
     }
@@ -463,13 +416,17 @@ export default {
     })
   },
   methods: {
+
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
-      if (field) {
-        return {
-          'md-invalid': field.$invalid && field.$dirty
+        console.log('field.$dirty : '+ field.$dirty)
+        console.log('field.$invalid :'+ field.$invalid)
+        this.teste = field
+        if (field) {
+          return {
+            'md-invalid': field.$invalid && field.$dirty
+          }
         }
-      }
     },
     clearForm () {
       this.$v.$reset()
@@ -504,7 +461,7 @@ export default {
       let senhaGerada
       senhaGerada = this.geradorPassword()
 
-      let newAgente = {
+      let newUsuario = {
         username : this.form.nomeAgente,
         email : this.form.email,
         password : senhaGerada,
@@ -523,17 +480,20 @@ export default {
         rede_social : this.form.redeSocial,
         genero: this.form.genero,
         id_profile : this.form.profile,
-        id_office: this.form.selected
+        id_office: this.form.office
       }
+
+      this.novoUsuario = newUsuario
+
       let newEndereco = {
         logradouro: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
-        cidade: this.form.cidade,
+        cidade: this.selectedCidade,
         cep: this.form.cep,
-        uf: this.form.estado
+        uf: this.selectedEstado
       }
-      axios.post(process.env.API + 'user', newAgente)
+      axios.post(process.env.API + 'user', newUsuario)
         .then(response => {
           newEndereco.user_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
@@ -563,9 +523,11 @@ export default {
     },
     validateUser () {
       this.$v.$touch()
+
       console.log("validate do form "+ this.$v.$invalid)
       if (!this.$v.$invalid) {
-        this.saveEmpresa()
+            this.saveEmpresa()
+
       }
     },
      geradorPassword () {
