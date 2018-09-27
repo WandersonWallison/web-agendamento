@@ -89,7 +89,7 @@
                 </md-datepicker>
             </div>
             <div class="md-layout-item md-small-size-100">
-                <md-datepicker :class="getValidationClass('dataNascimento')"  id="dataNascimento" name="dataNascimento" date="true" time="true" v-model="form.dataNascimento">
+                <md-datepicker :md-closed="idade()" :class="getValidationClass('dataNascimento')"  id="dataNascimento" name="dataNascimento" date="true" time="true" v-model="form.dataNascimento">
                   <label>Data Nascimento</label>
                   <span class="md-error" v-if="!$v.form.dataNascimento.required">Data Nascimento deve ser preenchido</span>
                 </md-datepicker>
@@ -251,6 +251,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
 import {
@@ -537,6 +538,17 @@ export default {
       }
       return this.pass
     },
+   idade() {
+    var hoje = new Date()
+    var nascimento = new Date(this.form.dataNascimento)
+    var diferencaAnos = hoje.getFullYear() - nascimento.getFullYear();
+    if(diferencaAnos < 18){
+      alert('Usuário menor de 18 Anos\n')
+    }
+    return diferencaAnos
+
+},
+
     getRandomChar(){
       var ascii = [[48, 57] , [64, 90] , [97, 122]]
       var i = Math.floor(Math.random() * ascii.length)
