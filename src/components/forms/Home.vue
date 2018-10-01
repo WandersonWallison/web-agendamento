@@ -5,18 +5,22 @@
       <md-app-toolbar class="md-toobar" md-elevation="1">
         <h3 class="text-principal text-tamanho-titulo" style="flex:1">Prosperidade</h3>
         <div>
-          <md-dialog :md-active.sync="senha" class="divSenha">
-            <alter-senha/>
-          </md-dialog>
-          <md-dialog-confirm
-            :md-active.sync='active'
-            md-title='Prosperidade'
-            md-content='Deseja Realmente sair do sistema'
-            md-confirm-text='Sim'
-            md-cancel-text='Não'
-            @md-confirm='sair' />
-          <md-button class="text-principal"  @click='senha = true'>Alterar Senha</md-button>
-          <md-button class="text-principal"  @click='active = true'>Sair</md-button>
+          <md-card>
+            <md-dialog :md-active.sync="senha" class="divSenha">
+              <alter-senha/>
+            </md-dialog>
+          </md-card>
+
+            <md-dialog-confirm
+              :md-active.sync='active'
+              md-title='Prosperidade'
+              md-content='Deseja Realmente sair do sistema'
+              md-confirm-text='Sim'
+              md-cancel-text='Não'
+              @md-confirm='sair' />
+            <md-button class="text-principal"  @click='senha = true'>Alterar Senha</md-button>
+            <md-button class="text-principal"  @click='active = true'>Sair</md-button>
+
         </div>
       </md-app-toolbar>
       <md-app-content>
@@ -46,7 +50,6 @@ export default {
     ListClienteAguardando,
     Dashboard,
     AlterSenha
-
   },
   data: () => ({
     menuVisible: false,
@@ -105,7 +108,8 @@ export default {
   line-height: 26px;
 }
 .divSenha{
-  height: 35%;
-  width: 20%;
+  display: flex;
+  height: 55%;
+  width: 22%;
 }
 </style>

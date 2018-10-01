@@ -1,9 +1,6 @@
 <template>
   <div>
-    <!--
-    <md-dialog :md-active.sync="showAlteraSenha" class="div">
-       <AlterSenha/>
-    </md-dialog> -->
+
     <md-dialog-prompt
       :md-active.sync="active"
       v-model="newValuePassword"
@@ -41,12 +38,8 @@
   import moment from 'moment'
   import VueMoment from 'vue-moment'
   import {TheMask} from 'vue-the-mask'
-  import AlterSenha from'../forms/FormALterPassword.vue'
   export default {
     name: 'TableSingle',
-    components: {
-      AlterSenha
-    },
     data: () => ({
       selected: {},
       people: [],
@@ -76,14 +69,10 @@
         }
         axios.put(process.env.API + 'user/'+this.selected.id, user)
         .then(response => {
-          alert('Agente cadastado com succeso \n' +
-          'Dados de Acesso do Agente: ' +
-            this.form.nomeAgente +
-          '\n Usuario: ' +
-            this.form.email +
-          '\n Senha: ' + senhaGerada )
+          alert('Senha do usuario alterada com succeso \n' +  senhaGerada )
           this.userSaved = true
           this.sending = false
+          this.active = false
           this.clearForm()
           window.location.reload()
 

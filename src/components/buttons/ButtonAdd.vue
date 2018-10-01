@@ -56,7 +56,7 @@
     </md-dialog>
     <md-dialog :md-active.sync="showListUsuario" class="div">
       <ListUsuario/>
-    </md-dialog>    
+    </md-dialog>
   </div>
 </template>
 <script>
@@ -67,9 +67,6 @@ import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
 import ListCliente from '../lists/ListCrudLead.vue'
 import ListClienteAguardando from '../lists/ListClienteAguardandoContato.vue'
 import ListUsuario from '../lists/ListUsuarios.vue'
-import AlterSenha from'../forms/FormALterPassword.vue'
-
-// ListClienteAguardando
 
 export default {
   name: 'buttonAdd',

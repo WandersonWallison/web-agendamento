@@ -147,7 +147,7 @@ export default {
     max-width: 100%;
     position: absolute;
     height: 500px;
-    background-color: #5c6763;
+    //background-color: #5c6763;
     // background-color: #9bc5b6;
     // background-color: #1a503a;
   }
