@@ -15,7 +15,8 @@
           <label>Password</label>
           <md-input v-model="login.password" type="password"></md-input>
         </md-field>
-        {{menssage}}
+        <div class="input_white">{{menssage}}</div>
+
         <br>
       </div>
       <div class="actions2 md-layout md-alignment-center-space-between">
@@ -94,7 +95,7 @@ export default {
           this.menssage = ''
           this.inicio = ''
           this.results = ''
-        }, 4000)
+        }, 6000)
       }
     }
   }
@@ -130,7 +131,7 @@ export default {
     color: #eeeeee;
   }
   .background {
-    background: black;
+    background: #ccb690;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -165,7 +166,7 @@ export default {
     justify-content: center;
   }
   .input_white{
-    color: #eeeeee;
+    color:black;
   }
 
 }

@@ -222,7 +222,7 @@
                     {{ cidade.nome}}
                   </md-option>
                 </md-select>
-                  <span class="md-error">Cidade não selecionado</span>
+                <span class="md-error">Cidade não selecionado</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -262,7 +262,7 @@ import {
 import {TheMask} from 'vue-the-mask'
 
 export default {
-  name: 'FormEmpresa',
+  name: 'FormUsuario',
   props: ['leadProps'],
   mixins: [validationMixin],
   data: () => ({
@@ -420,8 +420,9 @@ export default {
 
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
-        console.log('field.$dirty : '+ field.$dirty)
-        console.log('field.$invalid :'+ field.$invalid)
+        //console.log('Campo: '+ field.name)
+        //console.log('field.$dirty : '+ field.$dirty)
+        //console.log('field.$invalid :'+ field.$invalid)
         this.teste = field
         if (field) {
           return {
@@ -512,7 +513,7 @@ export default {
                 })
           .catch(error => {
             alert('Erro no cadastro do Endereço')
-          console.log(error.response.data)
+            console.log(error.response.data)
           })
         })
         .catch(error => {

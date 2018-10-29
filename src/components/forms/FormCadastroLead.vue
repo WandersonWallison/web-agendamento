@@ -1,6 +1,5 @@
 <template>
   <div class="div-tamanho">
-
       <form novalidate class="md-layout div-tamanho" @submit.prevent="validateUser">
         <md-card class="md-layout-item md-size-100 md-small-size-100">
           <md-toolbar md-elevation="0" class="md-dense">
@@ -28,15 +27,15 @@
             </div>
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <md-field :class="getValidationClass('telefone')">                  
-                  <the-mask class="campos-text" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) ####-####','(##) ####-####']" placeholder="Telefone"/>                  
+                <md-field :class="getValidationClass('telefone')">
+                  <the-mask class="campos-text" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) ####-####','(##) ####-####']" placeholder="Telefone"/>
                   <span class="md-error" v-if="!$v.form.telefone.required">Telefone deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.telefone.maxlength">telefone invalido</span>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100">
-                <md-field :class="getValidationClass('celular')">                  
-                  <the-mask class="campos-text" id="celular" name="celular" v-model="form.celular" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Celular"/>                  
+                <md-field :class="getValidationClass('celular')">
+                  <the-mask class="campos-text" id="celular" name="celular" v-model="form.celular" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Celular"/>
                   <span class="md-error" v-if="!$v.form.celular.required">Celular deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.celular.maxlength">Invalid celular</span>
                 </md-field>
@@ -44,9 +43,10 @@
             </div>
             <div class="md-layout md-gutter">
             </div>
-            <md-field>
+            <md-field :class="getValidationClass('observacao')">
               <label for="observacao">Observação</label>
               <md-textarea type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
+              <span class="md-error" v-if="!$v.form.observacao.required">Observacão deve ser preenchida</span>
               <md-icon>description</md-icon>
             </md-field>
           </md-card-content>
@@ -58,7 +58,6 @@
           </md-card-actions>
         </md-card>
       </form>
-
   </div>
 </template>
 <script>
@@ -107,6 +106,9 @@ export default {
       celular: {
         required,
         minLength: minLength(1)
+      },
+      observacao: {
+        required
       }
     }
   },
@@ -128,17 +130,9 @@ export default {
       this.$v.$reset()
       this.form.nomeCompleto = null
       this.form.telefone = null
-      this.form.email = null
       this.form.celular = null
+      this.form.email = null
       this.form.observacao = null
-    },
-    somenteNumeros (num) {
-        var er = /[^0-9.]/
-        er.lastIndex = 0
-        var campo = num
-        if (er.test(campo.value)) {
-          campo.value = ''
-        }
     },
     saveContato () {
       let newLead = {
@@ -165,8 +159,8 @@ export default {
         })
     },
     validateUser () {
-      this.$v.$touch()
 
+      this.$v.$touch()
       if (!this.$v.$invalid) {
         this.saveContato()
       }

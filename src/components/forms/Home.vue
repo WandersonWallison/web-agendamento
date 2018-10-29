@@ -10,7 +10,6 @@
               <alter-senha/>
             </md-dialog>
           </md-card>
-
             <md-dialog-confirm
               :md-active.sync='active'
               md-title='Prosperidade'
@@ -20,14 +19,13 @@
               @md-confirm='sair' />
             <md-button class="text-principal"  @click='senha = true'>Alterar Senha</md-button>
             <md-button class="text-principal"  @click='active = true'>Sair</md-button>
-
         </div>
       </md-app-toolbar>
       <md-app-content>
         <Dashboard/>
       </md-app-content>
     </md-app>
-    <button-add></button-add>
+      <button-add/>
     </md-content>
   </div>
 </template>
