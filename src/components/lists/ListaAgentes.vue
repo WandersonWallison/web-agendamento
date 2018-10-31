@@ -31,7 +31,7 @@
       <md-table-row slot="md-table-row" slot-scope="{ item }" :md-disabled="item.username.includes('Stave')" md-selectable="multiple" md-auto-select>
         <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.username }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
+        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone | maskFone }}</md-table-cell>
         <md-table-cell md-label="Cpf" md-sort-by="cpf">{{ item.cpf }}</md-table-cell>
       </md-table-row>
     </md-table>
@@ -100,6 +100,14 @@ export default {
     desativar: false,
     atual: []
   }),
+  filters: {
+      maskFone: function (v) {
+        v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
+        v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+        v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+        return v
+      }
+  },
   mounted () {
   axios.get(process.env.API + 'user?id_profile=2')
   .then(response => {

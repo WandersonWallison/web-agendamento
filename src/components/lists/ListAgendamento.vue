@@ -9,7 +9,7 @@
         <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.id_lead.nome }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.id_lead.email }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.id_lead.telefone }}</md-table-cell>
+        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.id_lead.telefone | maskFone }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
           <div v-if="item.status === 0">
           <md-button class="md-icon-button md-raised md-primary" @click="aceito">
@@ -21,7 +21,7 @@
             <md-icon>thumb_down</md-icon>
           </md-button>
           </div>
-          </md-table-cell>     
+          </md-table-cell>
       </md-table-row>
     </md-table>
   <div v-if="selected">
@@ -108,6 +108,14 @@ import axios from 'axios'
       id_lead: null,
       results : []
     }),
+    filters: {
+      maskFone: function (v) {
+        v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
+        v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+        v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+        return v
+      }
+    },
     mounted () {
       const userLogado = window.localStorage.getItem('Usuario')
       const user = JSON.parse(userLogado)

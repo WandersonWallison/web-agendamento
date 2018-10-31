@@ -18,12 +18,12 @@
         <md-button class="md-primary md-raised" @click="newUser">Create New User</md-button>
       </md-table-empty-state>
       -->
-      <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single" :class="getClass(item)"> 
+      <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single" :class="getClass(item)">
         <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou</md-tooltip></div></md-table-cell>
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone }}</md-table-cell>        
+        <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone | maskFone }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
           <md-button class="md-icon-button md-raised md-primary" @click="atendeu">
             <md-tooltip md-direction="top">Atendeu</md-tooltip>
@@ -51,7 +51,7 @@
             <md-tooltip md-direction="top">Agendamento</md-tooltip>
             <md-icon>schedule</md-icon>
           </md-button>
-          </md-table-cell>        
+          </md-table-cell>
       </md-table-row>
     </md-table>
     <md-dialog :md-active.sync="showDialog">
@@ -93,23 +93,31 @@ export default {
     data_atendimento: Date.now(),
     userAtual: false
   }),
+  filters: {
+      maskFone: function (v) {
+        v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
+        v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+        v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+        return v
+      }
+  },
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2.id
     let data_atual = moment(Date.now()).format('YYYY-MM-DD')
-    
+
     axios.get(process.env.API+'leads?where={"or":[{"momento_atual": 5},{"momento_atual":1}],"id_user_editor":"'+this.userAtual+'","data_expiracao":{">":"'+ data_atual +'"},"ativo": true}')
     .then(response => {
       (this.users = response.data),
-      (this.searched = response.data)      
+      (this.searched = response.data)
     })
   },
   methods: {
     atendeu () {
       let newLead = {
         data_atendimento: moment(this.data_atendimento).format()
-      }      
+      }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
@@ -118,13 +126,13 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
      naoAtendeu () {
       let newLead = {
         data_criacao: moment(this.data_atendimento).format()
-      }      
+      }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
@@ -133,14 +141,14 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
     dadosIncorretos () {
       let newLead = {
         status: 'Dados Incorrtos',
         ativo: false
-      }      
+      }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
@@ -149,13 +157,13 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
     naoPodeFalar () {
       let newLead = {
         data_criacao: moment(this.data_atendimento).format()
-      }      
+      }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
@@ -164,14 +172,14 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
     naoAceitaVisita () {
       let newLead = {
         status: 'Não Aceita Visita',
         ativo: false
-      }      
+      }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
@@ -180,7 +188,7 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
     getClass: ({ id }) => ({

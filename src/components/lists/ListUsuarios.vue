@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <md-dialog-prompt
       :md-active.sync="active"
       v-model="newValuePassword"
@@ -49,13 +48,12 @@
     }),
     components: {TheMask},
     mounted () {
-    axios.get(process.env.API + 'user?where={"ativo": true}')
-      .then(response => {
-      this.people = response.data
-    })
+      axios.get(process.env.API + 'user?where={"ativo": true}')
+        .then(response => {
+        this.people = response.data
+      })
     },
     methods: {
-
       getClass: ({ id }) => ({
         'md-primary': id
       }),
@@ -63,7 +61,6 @@
         this.selected = item
       },
       Alterar() {
-
         let user = {
           password: this.newValuePassword
         }
@@ -83,7 +80,6 @@
           }
           console.log(error.response.data)
         })
-
       }
     }
   }
