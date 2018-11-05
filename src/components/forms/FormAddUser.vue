@@ -247,6 +247,7 @@
         </md-card-actions>
       </md-card>
       <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with sucesso!</md-snackbar>
+      <cep></cep>
     </form>
   </div>
 </template>
@@ -311,18 +312,19 @@ export default {
     novoUsuario: null,
     teste: null
   }),
+  /*
   beforeCreate(){
     axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
     .then(response => {
     this.estados = response.data
   })
-  },
+  },*/
   beforeUpdate(){
     axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/'+ this.selectedEstado +'/municipios')
     .then(response => {
     this.cidades = response.data
     }),
-    axios.get('https://viacep.com.br/ws/'+ this.form.cep +'/ json /')
+    axios.get('https://viacep.com.br/ws/'+ this.form.cep +'/json/')
     .then(response => {
       this.cep = response.data
       this.form.bairro = this.cep.bairro,

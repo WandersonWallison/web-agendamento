@@ -25,7 +25,7 @@
         <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.username }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
+        <md-table-cell md-label="telefone" md-sort-by="telefone">{{ item.telefone  }}</md-table-cell>
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
       </md-table-row>
     </md-table>
@@ -36,7 +36,6 @@
   import axios from 'axios'
   import moment from 'moment'
   import VueMoment from 'vue-moment'
-  import {TheMask} from 'vue-the-mask'
   export default {
     name: 'TableSingle',
     data: () => ({
@@ -46,7 +45,7 @@
       newValuePassword: null,
       showAlteraSenha: false
     }),
-    components: {TheMask},
+
     mounted () {
       axios.get(process.env.API + 'user?where={"ativo": true}')
         .then(response => {
@@ -81,7 +80,15 @@
           console.log(error.response.data)
         })
       }
-    }
+    },
+    filters: {
+      maskFone: function (v) {
+        v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
+        v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+        v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+        return v
+      }
+    },
   }
 </script>
 

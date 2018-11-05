@@ -43,22 +43,7 @@
       </md-table-row>
     </md-table>
   <div>
-  <!--
-    <md-table v-model="selected" md-card>
-      <md-table-toolbar>
-        <h1 class="md-title">Detalhe</h1>
-      </md-table-toolbar>
 
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
-         <md-card>
-      <md-card-header>
-        <div class="md-title">{{ item.nome }}</div>
-        <div class="md-subhead">{{ item.email }}</div>
-      </md-card-header>
-    </md-card>
-      </md-table-row>
-    </md-table>
--->
 <div>
 <md-dialog-confirm
       :md-active.sync="vinculaHunter"
@@ -77,17 +62,11 @@
 <script>
 import moment from 'moment'
 import UpLead from '../forms/FormUpdateLead.vue'
-import Endereco from '../forms-endereco/FormEndereco.vue'
-import Conta from '../forms/FormConta.vue'
 import axios from 'axios'
-import {TheMask} from 'vue-the-mask'
 export default {
   name: 'listClienteAguardando',
   components: {
-    UpLead,
-    Endereco,
-    Conta,
-    TheMask
+    UpLead
   },
   data: () => ({
     selected: [],
