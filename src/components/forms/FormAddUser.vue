@@ -203,6 +203,7 @@
             </div>
           </div>
           <div class="md-layout md-gutter">
+            <!--
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estados</label>
@@ -213,7 +214,42 @@
                 </md-select>
                 <span class="md-error">Estado não selecionado</span>
               </md-field>
-            </div>
+            </div>-->
+            <div class="md-layout-item md-small-size-100">
+                <md-field :class="getValidationClass('estado')">
+                  <label for="estado">Estados</label>
+                  <md-select v-model="form.estado" name="estado" id="estado">
+                    <md-option value="AC">Acre</md-option>
+                    <md-option value="AL">Alagoas</md-option>
+                    <md-option value="AP">Amapá</md-option>
+                    <md-option value="AM">Amazonas</md-option>
+                    <md-option value="BA">Bahia</md-option>
+                    <md-option value="CE">Ceará</md-option>
+                    <md-option value="DF">Distrito Federal</md-option>
+                    <md-option value="ES">Espírito Santo</md-option>
+                    <md-option value="GO">Goiás</md-option>
+                    <md-option value="MA">Maranhão</md-option>
+                    <md-option value="MT">Mato Grosso</md-option>
+                    <md-option value="MS">Mato Grosso do Sul</md-option>
+                    <md-option value="MG">Minas Gerais</md-option>
+                    <md-option value="PA">Pará</md-option>
+                    <md-option value="PB">Paraíba</md-option>
+                    <md-option value="PR">Paraná</md-option>
+                    <md-option value="PE">Pernambuco</md-option>
+                    <md-option value="PI">Piauí</md-option>
+                    <md-option value="RJ">Rio de Janeiro</md-option>
+                    <md-option value="RN">Rio Grande do Norte</md-option>
+                    <md-option value="RS">Rio Grande do Sul</md-option>
+                    <md-option value="RO">Rondônia</md-option>
+                    <md-option value="RR">Roraima</md-option>
+                    <md-option value="SC">Santa Catarina</md-option>
+                    <md-option value="SP">São Paulo</md-option>
+                    <md-option value="SE">Sergipe</md-option>
+                    <md-option value="TO">Tocantins</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.form.estadoCivil.required">Estado Civil deve ser selecionado</span>
+                </md-field>
+              </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cidade')">
                 <label for="cidade">Cidade</label>
@@ -335,7 +371,6 @@ export default {
   components: {TheMask},
   validations: {
     form: {
-
       nomeAgente: {
         required
       },
