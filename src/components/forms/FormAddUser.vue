@@ -203,7 +203,6 @@
             </div>
           </div>
           <div class="md-layout md-gutter">
-            <!--
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estados</label>
@@ -214,7 +213,8 @@
                 </md-select>
                 <span class="md-error">Estado não selecionado</span>
               </md-field>
-            </div>-->
+            </div>
+            <!--
             <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('estado')">
                   <label for="estado">Estados</label>
@@ -247,15 +247,16 @@
                     <md-option value="SE">Sergipe</md-option>
                     <md-option value="TO">Tocantins</md-option>
                   </md-select>
-                  <span class="md-error" v-if="!$v.form.estadoCivil.required">Estado Civil deve ser selecionado</span>
+                  <span class="md-error" v-if="!$v.form.estado.required">Estado deve ser selecionado</span>
                 </md-field>
               </div>
+              -->
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cidade')">
                 <label for="cidade">Cidade</label>
                 <md-select name="cidade" id="cidade" v-model="selectedCidade">
                   <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.nome">
-                    {{ cidade.nome}}
+                    {{ cidade.nome }}
                   </md-option>
                 </md-select>
                 <span class="md-error">Cidade não selecionado</span>
@@ -264,7 +265,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('bairro')">
                 <label for="bairro">Bairro</label>
-                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
+                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="bairro" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.bairro.required">Bairro deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.bairro.rua.maxlength">Invalid Bairro</span>
               </md-field>
@@ -289,6 +290,7 @@
 </template>
 <script>
 import moment from 'moment'
+import {TheMask} from 'vue-the-mask'
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
 import {
@@ -296,7 +298,7 @@ import {
   minLength,
   email
 } from 'vuelidate/lib/validators'
-import {TheMask} from 'vue-the-mask'
+
 
 export default {
   name: 'FormUsuario',
@@ -334,6 +336,7 @@ export default {
       escritorio: null,
       selected: null
     },
+    bairro: null,
     userSaved : false,
     sending : false,
     lastUser : null,
@@ -348,13 +351,13 @@ export default {
     novoUsuario: null,
     teste: null
   }),
-  /*
+  components: {TheMask},
   beforeCreate(){
     axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
     .then(response => {
     this.estados = response.data
   })
-  },*/
+  },
   beforeUpdate(){
     axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/'+ this.selectedEstado +'/municipios')
     .then(response => {
@@ -362,13 +365,12 @@ export default {
     }),
     axios.get('https://viacep.com.br/ws/'+ this.form.cep +'/json/')
     .then(response => {
-      this.cep = response.data
-      this.form.bairro = this.cep.bairro,
+      this.cep = response.data,
+      this.bairro = this.cep.bairro,
       this.form.rua = this.cep.logradouro,
       this.form.observacao = this.cep.complemento
     })
   },
-  components: {TheMask},
   validations: {
     form: {
       nomeAgente: {
@@ -453,7 +455,6 @@ export default {
     })
   },
   methods: {
-
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
         //console.log('Campo: '+ field.name)
@@ -532,7 +533,7 @@ export default {
         uf: this.selectedEstado
       }
       axios.post(process.env.API + 'user', newUsuario)
-        .then(response => {
+      .then(response => {
           newEndereco.user_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
             .then(response => {
@@ -561,7 +562,6 @@ export default {
     },
     validateUser () {
       this.$v.$touch()
-
       console.log("validate do form "+ this.$v.$invalid)
       if (!this.$v.$invalid) {
             this.saveEmpresa()
@@ -570,15 +570,15 @@ export default {
     },
      geradorPassword () {
       this.pass = ''
-      for (var i = 0; i < 8; i++) {
+      for (let i = 0; i < 8; i++) {
         this.pass += this.getRandomChar()
       }
       return this.pass
     },
    idade() {
-    var hoje = new Date()
-    var nascimento = new Date(this.form.dataNascimento)
-    var diferencaAnos = hoje.getFullYear() - nascimento.getFullYear();
+    let hoje = new Date()
+    let nascimento = new Date(this.form.dataNascimento)
+    let diferencaAnos = hoje.getFullYear() - nascimento.getFullYear()
     if(diferencaAnos < 18){
       alert('Usuário menor de 18 Anos\n')
     }
@@ -587,8 +587,8 @@ export default {
 },
 
     getRandomChar(){
-      var ascii = [[48, 57] , [64, 90] , [97, 122]]
-      var i = Math.floor(Math.random() * ascii.length)
+      let ascii = [[48, 57] , [64, 90] , [97, 122]]
+      let i = Math.floor(Math.random() * ascii.length)
       return String.fromCharCode(Math.floor(Math.random() * (ascii[i][1]-ascii[i][0])) + ascii[i][0])
     }
   }

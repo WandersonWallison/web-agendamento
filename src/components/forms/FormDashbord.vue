@@ -1,8 +1,9 @@
 <template>
   <div  class="card-expansion">
-    <md-toolbar class="md-accent">
+    <!--<md-toolbar class="md-accent">
       <h3 class="md-title">Dashbord - Em construção</h3>
     </md-toolbar>
+    -->
     <br>
     <md-card>
       <md-card-content>
