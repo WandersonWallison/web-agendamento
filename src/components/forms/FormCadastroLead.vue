@@ -27,17 +27,17 @@
             </div>
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
-                <md-field :class="getValidationClass('telefone')">
-                  <the-mask class="campos-text" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) ####-####','(##) ####-####']" placeholder="Telefone"/>
-                  <span class="md-error" v-if="!$v.form.telefone.required">Telefone deve ser preenchido</span>
-                  <span class="md-error" v-else-if="!$v.form.telefone.maxlength">telefone invalido</span>
+                <md-field :class="getValidationClass('celular')">
+                  <the-mask class="campos-text" id="celular" name="celular" v-model="form.celular" :disabled="sending" :mask="['(##) ####-####','(##) ####-####']" placeholder="Celular"/>
+                  <span class="md-error" v-if="!$v.form.celular.required">Celular deve ser preenchido</span>
+                  <span class="md-error" v-else-if="!$v.form.celular.maxlength">Celular invalido</span>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100">
-                <md-field :class="getValidationClass('celular')">
-                  <the-mask class="campos-text" id="celular" name="celular" v-model="celular" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']"  placeholder="Celular"/>
-                  <span class="md-error" v-if="!$v.form.required">Celular deve ser preenchido</span>
-                  <span class="md-error" v-else-if="!$v.form.maxlength">Invalid celular</span>
+                <md-field :class="getValidationClass('telefone')">
+                  <label for="telefone">Telefone</label>
+                  <md-input  type="telefone" id="telefone" name="telefone" autocomplete="telefone" v-model="form.telefone" :disabled="sending" />
+                  <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
                 </md-field>
               </div>
             </div>
@@ -80,9 +80,9 @@ export default {
       nomeCompleto: null,
       email: null,
       telefone: null,
+      celular: null,
       observacao: null
     },
-    celular: null,
     userAtual: null,
     userSaved: false,
     sending: false,
@@ -103,13 +103,15 @@ export default {
         required,
         minLength: minLength(4)
       },
+      celular: {
+        required,
+        minLength: minLength(4)
+      },
+
       observacao: {
         required
       }
-    },
-    celular: {
-        required,
-        minLength: minLength(4)
+
     }
   },
   mounted () {
