@@ -23,10 +23,9 @@
               <md-field :class="getValidationClass('profile')">
                 <label for="profile">Tipo de Usuário</label>
                 <md-select name="profile" id="profile" v-model="form.profile" md-dense :disabled="sending">
-                  <md-option velue=""></md-option>
-                    <md-option value="1">MANAGER</md-option>
-                    <md-option value="2">AGENTE</md-option>
-                    <md-option value="3">HUNTER</md-option>
+                  <md-option value="1">MANAGER</md-option>
+                  <md-option value="2">AGENTE</md-option>
+                  <md-option value="3">HUNTER</md-option>
                 </md-select>
                 <span class="md-error">Perfil não selecionado</span>
               </md-field>
@@ -345,7 +344,6 @@ export default {
     axios.get('https://viacep.com.br/ws/' + this.form.cep + '/json/')
       .then(response => {
         this.cep = response.data
-        this.form.cep = this.cep.id
         this.form.bairro = this.cep.bairro
         this.form.rua = this.cep.logradouro
         this.form.observacao = this.cep.complemento
@@ -476,9 +474,14 @@ export default {
       this.form.profile = null
       this.form.office = null
       this.escritorio = null
+      this.selectedCidade = null
     },
     saveEmpresa () {
       console.log('chegou no salvar !!!')
+
+      let cvmValidado
+      cvmValidado = this.validarCVM()
+      console.log('CVM ' + cvmValidado)
       let senhaGerada
       senhaGerada = this.geradorPassword()
 
@@ -486,12 +489,12 @@ export default {
         username: this.form.nomeAgente,
         email: this.form.email,
         password: senhaGerada,
-        telefone: this.RetiraMascara(this.form.telefone),
-        celular: this.RetiraMascara(this.form.celular),
+        telefone: this.retiraMascara(this.form.telefone),
+        celular: this.retiraMascara(this.form.celular),
         data_inicio: this.form.dataInicio,
         cvm: this.form.cvm,
-        cnh_rg: this.form.rg,
-        cpf: this.form.cpf,
+        cnh_rg: this.retiraMascara(this.form.rg),
+        cpf: this.retiraMascara(this.form.cpf),
         data_nascimento: this.form.dataNascimento,
         escolaridade: this.form.escolaridade,
         estado_civil: this.form.estadoCivil,
@@ -512,39 +515,40 @@ export default {
         cep: this.form.cep,
         uf: this.form.estado
       }
-      axios.post(process.env.API + 'user', newUsuario)
-        .then(response => {
-          newEndereco.user_address = response.data.id
-          axios.post(process.env.API + 'address', newEndereco)
-            .then(response => {
-              alert('Agente cadastado com succeso \n' +
-              'Dados de Acesso do Agente: ' +
-              this.form.nomeAgente +
-              '\n Usuario: ' +
-              this.form.email +
-              '\n Senha: ' + senhaGerada)
-              this.userSaved = true
-              this.sending = false
-              this.clearForm()
-              window.location.reload()
-            })
-            .catch(error => {
-              alert('Erro no cadastro do Endereço')
-              console.log(error.response.data)
-            })
-        })
-        .catch(error => {
-          if (error.response.data.code === 'E_UNIQUE') {
-            alert('Agente já Cadastrado \nPor favor verificar os dados de cadastro')
-          }
-          console.log(error.response.data)
-        })
+      if (cvmValidado) {
+        axios.post(process.env.API + 'user', newUsuario)
+          .then(response => {
+            newEndereco.user_address = response.data.id
+            axios.post(process.env.API + 'address', newEndereco)
+              .then(response => {
+                alert('Agente cadastado com succeso \n' +
+                'Dados de Acesso do Agente: ' +
+                this.form.nomeAgente +
+                '\n Usuario: ' +
+                this.form.email +
+                '\n Senha: ' + senhaGerada)
+                this.userSaved = true
+                this.sending = false
+                this.clearForm()
+                window.location.reload()
+              })
+              .catch(error => {
+                alert('Erro no cadastro do Endereço')
+                console.log(error.response.data)
+              })
+          })
+          .catch(error => {
+            if (error.response.data.code === 'E_UNIQUE') {
+              alert('Agente já Cadastrado \nPor favor verificar os dados de cadastro')
+            }
+            console.log(error.response.data)
+          })
+      } else {
+        alert('Campo CVM deve ser preenchido')
+      }
     },
     validateUser () {
-      console.log('Chegou aqui 1 - !!!!!')
       this.$v.$touch()
-      console.log('Chegou aqui - 2 - !!!!!')
-      console.log('validate do form ' + this.$v.$invalid)
       if (!this.$v.$invalid) {
         this.saveEmpresa()
       }
@@ -570,8 +574,16 @@ export default {
       let i = Math.floor(Math.random() * ascii.length)
       return String.fromCharCode(Math.floor(Math.random() * (ascii[i][1] - ascii[i][0])) + ascii[i][0])
     },
-    RetiraMascara (ObjCPF) {
-      return ObjCPF.value.replace(/\D/g, '')
+    retiraMascara (campo) {
+      campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
+      return campo
+    },
+    validarCVM () {
+      if (this.form.profile !== 3 && this.form.cvm === '') {
+        return false
+      } else {
+        return true
+      }
     }
   }
 }
