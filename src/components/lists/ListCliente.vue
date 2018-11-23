@@ -23,7 +23,7 @@
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone | maskFone }}</md-table-cell>
+        <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
           <md-button class="md-icon-button md-raised md-primary" @click="atendeu">
             <md-tooltip md-direction="top">Atendeu</md-tooltip>
@@ -78,7 +78,7 @@ const searchByName = (items, term) => {
   return items
 }
 export default {
-  name: 'list',
+  name: 'ListaClientes',
   props: ['leadProps'],
   components: {
     Agenda
@@ -93,14 +93,6 @@ export default {
     data_atendimento: Date.now(),
     userAtual: false
   }),
-  filters: {
-    maskFone: function (v) {
-      v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
-      v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
-      v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
-      return v
-    }
-  },
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)

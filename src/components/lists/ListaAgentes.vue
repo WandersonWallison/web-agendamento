@@ -84,7 +84,7 @@ import Endereco from '../forms-endereco/FormEndereco.vue'
 import Conta from '../forms/FormConta.vue'
 import axios from 'axios'
 export default {
-  name: 'listCrudLead',
+  name: 'ListaAgentes',
   props: ['selected'],
   components: {
     UpLead,

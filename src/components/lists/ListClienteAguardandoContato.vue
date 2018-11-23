@@ -37,8 +37,8 @@
         <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
 
-        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone | maskFone }}</md-table-cell>
-        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular | maskFone }}</md-table-cell>
+        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
+        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
         <md-table-cell md-label="Observação" md-sort-by="observacao">{{ item.obs }}</md-table-cell>
       </md-table-row>
     </md-table>
@@ -82,14 +82,7 @@ export default {
       return day === 6 || day === 0
     }
   }),
-  filters: {
-    maskFone: function (v) {
-      v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
-      v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
-      v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
-      return v
-    }
-  },
+
   mounted () {
     axios.get(process.env.API + 'leads?where={"id_user_editor": 0}')
       .then(response => {

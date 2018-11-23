@@ -77,7 +77,7 @@ const searchByName = (items, term) => {
   return items
 }
 export default {
-  name: 'list',
+  name: 'ListaClienteRecusadoAgendamento',
   props: ['leadProps'],
   components: {
     Agenda
@@ -112,7 +112,7 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
      naoAtendeu () {
@@ -128,7 +128,7 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
     dadosIncorretos () {
@@ -145,13 +145,13 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
     naoPodeFalar () {
       let newLead = {
         data_criacao: moment(this.data_atendimento).format()
-      }      
+      }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then((response) => {
           this.results = response.data
@@ -160,7 +160,7 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
     naoAceitaVisita () {
@@ -177,7 +177,7 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.code)
-          console.log(error.response.data)          
+          console.log(error.response.data)
         })
     },
     getClass: ({ id }) => ({

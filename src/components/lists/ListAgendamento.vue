@@ -100,7 +100,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'ListeAgendamento',
+  name: 'ListaAgendamento',
   data: () => ({
     selected: {},
     schedules: [],
