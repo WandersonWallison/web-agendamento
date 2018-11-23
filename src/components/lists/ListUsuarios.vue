@@ -35,14 +35,13 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'TableSingle',
+  name: 'ListaUsuario',
   data: () => ({
     selected: {},
     people: [],
     active: false,
     newValuePassword: null,
-    showAlteraSenha: false,
-    senhaGerada: null
+    showAlteraSenha: false
   }),
 
   mounted () {
@@ -64,26 +63,15 @@ export default {
       }
       axios.put(process.env.API + 'user/' + this.selected.id, user)
         .then(response => {
-          alert('Senha do usuario alterada com succeso \n' + senhaGerada)
           this.userSaved = true
           this.sending = false
           this.active = false
-          this.clearForm()
-          window.location.reload()
         })
         .catch(error => {
           if (error.response.data.code === 'E_UNIQUE') {
-            alert('Agente já Cadastrado \nPor favor verificar os dados de cadastro')
+            alert('Erro na alteração de senha')
           }
         })
-    }
-  },
-  filters: {
-    maskFone: function (v) {
-      v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
-      v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
-      v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
-      return v
     }
   }
 }
