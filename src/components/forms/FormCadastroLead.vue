@@ -28,16 +28,18 @@
             <div class="md-layout md-gutter">
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('celular')">
-                  <the-mask class="campos-text" id="celular" name="celular" v-model="form.celular" :disabled="sending" :mask="['(##) ####-####','(##) ####-####']" placeholder="Celular"/>
-                  <span class="md-error" v-if="!$v.form.celular.required">Celular deve ser preenchido</span>
+                  <label for="celular">Celular</label>
+                  <md-input type="tel" id="celular" name="celular" v-model="form.celular"  v-mask = "'(##) #####-####'" :disabled="sending" />
+                  <span class = "md-error" v-if="!$v.form.celular.required">Celular deve ser preenchido</span>
                   <span class="md-error" v-else-if="!$v.form.celular.maxlength">Celular invalido</span>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('telefone')">
                   <label for="telefone">Telefone</label>
-                  <md-input  type="telefone" id="telefone" name="telefone" autocomplete="telefone" v-model="form.telefone" :disabled="sending" />
+                  <md-input type="tel" id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" v-mask = "'(##) ####-####'" />
                   <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
+                  <span class="md-error" v-else-if="!$v.form.telefone.maxlength">telefone invalido</span>
                 </md-field>
               </div>
             </div>
@@ -69,7 +71,7 @@ import {
   email
 } from 'vuelidate/lib/validators'
 import moment from 'moment'
-import {TheMask} from 'vue-the-mask'
+import {mask} from 'vue-the-mask'
 
 export default {
   name: 'FormCadastroLead',
@@ -88,7 +90,7 @@ export default {
     sending: false,
     lastUser: null
   }),
-  components: {TheMask},
+  directives: {mask},
   validations: {
     form: {
       nomeCompleto: {
@@ -107,11 +109,9 @@ export default {
         required,
         minLength: minLength(4)
       },
-
       observacao: {
         required
       }
-
     }
   },
   mounted () {
@@ -122,7 +122,7 @@ export default {
   methods: {
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
-            if (field) {
+      if (field) {
         return {
           'md-invalid': field.$invalid && field.$dirty
         }
@@ -150,10 +150,8 @@ export default {
         .then(response => {
           this.userSaved = true
           this.sending = false
-          console.log(newLead)
           alert('Contato cadastado com sucesso')
           this.clearForm()
-          vm.$forceUpdade()
         })
         .catch(error => {
           if (error.response.data.code === 'E_UNIQUE') {
@@ -166,7 +164,7 @@ export default {
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.saveContato()
-      } else{
+      } else {
         console.log('Erro de Validação')
       }
     }
