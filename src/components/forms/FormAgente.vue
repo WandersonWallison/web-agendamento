@@ -35,16 +35,16 @@ export default {
   components: {
     FormAddUser,
     Agendamento,
-    FormAddEmpresa,
+    FormAddEmpresa
   },
   data: () => ({
-    //menuVisible: false,
+    // menuVisible: false,
     showDialog: false,
     active: false,
     value: null
   }),
   methods: {
-    sair(){
+    sair () {
       this.value = 'Sim'
       this.$router.push('/')
       window.localStorage.clear()

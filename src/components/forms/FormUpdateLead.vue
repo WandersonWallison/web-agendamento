@@ -85,7 +85,7 @@ import axios from 'axios'
 export default {
   name: 'FormUpdadeLead',
   props: ['selected'],
-  data() {
+  data () {
     return {
       lead: {
         nome: this.selected[0].nome,
@@ -106,7 +106,7 @@ export default {
     }
   },
   methods: {
-    update (){
+    update () {
       let newLead = {
         nome: this.lead.nome,
         data_nascimento: moment(this.lead.data_nascimento).format('YYYY-MM-DD'),
@@ -124,7 +124,7 @@ export default {
         tipo: 'Cliente'
       }
       axios
-        .put(process.env.API + 'leads/'+ this.selected[0].id, newLead)
+        .put(process.env.API + 'leads/' + this.selected[0].id, newLead)
         .then(response => {
           this.results = response.data
           alert('User alterado com sucesso')

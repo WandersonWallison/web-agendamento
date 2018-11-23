@@ -162,7 +162,7 @@ export default {
       observacao: null
     },
     resultAgente: null,
-    listAgentes:[],
+    listAgentes: [],
     resp: [],
     agentes: [],
     results: [],
@@ -205,13 +205,13 @@ export default {
       }
     }
   },
-  beforeUpdate(){
-     this.getAgente()
+  beforeUpdate () {
+    this.getAgente()
   },
   mounted () {
     axios.get(process.env.API + 'user?where={"id_profile": 2}')
       .then(response => {
-          this.resp = response.data
+        this.resp = response.data
         for (let index = 0; index < this.resp.length; index++) {
           this.listAgentes.push(this.resp[index].id)
         }
@@ -260,13 +260,13 @@ export default {
         .then(response => {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
-          .then(response => {
-            alert('Agendamento cadastado com sucesso')
+            .then(response => {
+              alert('Agendamento cadastado com sucesso')
               this.userSaved = true
               this.sending = false
               this.clearForm()
               window.location.reload()
-          })
+            })
             .catch(error => {
               alert('Erro no cadastro de Endereco ' + error)
               console.log(error.response.data)
@@ -287,22 +287,21 @@ export default {
       const finalArray = []
       let data = moment(this.form.data).format('YYYY-MM-DD')
       axios.get(process.env.API + 'schedule/?data=' + data)
-      .then(response => {
-        this.results = response.data
-            for (let index = 0; index < this.results.length; index++) {
-                if (this.results[index].agentes) {
-                  this.agentes.push(this.results[index].agentes.id)
-                    }
+        .then(response => {
+          this.results = response.data
+          for (let index = 0; index < this.results.length; index++) {
+            if (this.results[index].agentes) {
+              this.agentes.push(this.results[index].agentes.id)
             }
-        this.listAgentes.forEach((element) => this.agentes.forEach((element2) => {
-            if (element !== element2){
+          }
+          this.listAgentes.forEach((element) => this.agentes.forEach((element2) => {
+            if (element !== element2) {
               finalArray.push(element)
             }
+          }))
+          this.resultAgente = finalArray[(finalArray.length - 1)]
         })
-        )
-      this.resultAgente = finalArray[(finalArray.length-1)]
-      })
-      .catch(error => {
+        .catch(error => {
           console.log(error)
         })
     }

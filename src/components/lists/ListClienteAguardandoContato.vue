@@ -78,43 +78,44 @@ export default {
     selectedHunter: null,
     selectedDate: null,
     disabledDates: date => {
-        const day = date.getDay()
-        return day === 6 || day === 0
+      const day = date.getDay()
+      return day === 6 || day === 0
     }
   }),
   filters: {
-      maskFone: function (v) {
-        v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
-        v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-        v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
-        return v
-      }
+    maskFone: function (v) {
+      v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
+      v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
+      v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
+      return v
+    }
   },
   mounted () {
     axios.get(process.env.API + 'leads?where={"id_user_editor": 0}')
-    .then(response => {
-    this.people = response.data
-    }),
+      .then(response => {
+        this.people = response.data
+      })
     axios.get(process.env.API + 'user?where={"id_profile": 3}')
-    .then(response => {
-    this.hunters = response.data
-    })
+      .then(response => {
+        this.hunters = response.data
+      })
   },
   methods: {
     onCancel () {
       this.value = 'Disagreed'
     },
-    onConfirm(){
+    onConfirm () {
       let newLead = {
         id_user_editor: this.selectedHunter,
         momento_atual: 1,
         data_expiracao: moment(this.selectedDate).format('YYYY-MM-DD')
       }
       for (var i = 0; i <= this.selected.length; i++) {
-        axios.put(process.env.API+'leads/' + this.selected[i].id, newLead)
+        axios.put(process.env.API + 'leads/' + this.selected[i].id, newLead)
           .then(response => {
             console.log(i + 'alterado')
-            window.location.reload()})
+            window.location.reload()
+          })
       }
     },
     onSelect (items) {
@@ -124,7 +125,7 @@ export default {
       let plural = ''
       if (count > 1) {
         plural = 's'
-        }
+      }
       return `${count} Cliente${plural} selecionado${plural}`
     }
   }

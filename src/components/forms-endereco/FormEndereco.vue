@@ -83,7 +83,7 @@ export default {
     }
   },
   methods: {
-    add (){
+    add () {
       let newEndereco = {
         rua: this.endereco.rua,
         numero: this.endereco.numero,
@@ -93,16 +93,16 @@ export default {
         leads_address: this.selected[0].id
       }
       axios.post(process.env.API + 'address', newEndereco)
-      .then((response) => {
-        this.results = response.data
-        alert( 'Endereço adicionado ' + this.selected[0].nome + ' com sucesso' );
-        window.location.reload()
-        console.log(response.data)
-      })
-      .catch((error) => {
-        alert(error.response.data.code)
-        console.log(error.response.data)
-      })
+        .then((response) => {
+          this.results = response.data
+          alert('Endereço adicionado ' + this.selected[0].nome + ' com sucesso')
+          window.location.reload()
+          console.log(response.data)
+        })
+        .catch((error) => {
+          alert(error.response.data.code)
+          console.log(error.response.data)
+        })
     }
   }
 }

@@ -99,94 +99,88 @@
 
 <script>
 import axios from 'axios'
-  export default {
-    name: 'ListeAgendamento',
-    data: () => ({
-      selected: {},
-      schedules: [],
-      id_usuario: null,
-      id_lead: null,
-      results : []
-    }),
-    filters: {
-      maskFone: function (v) {
-        v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
-        v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-        v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
-        return v
-      }
-    },
-    mounted () {
-      const userLogado = window.localStorage.getItem('Usuario')
-      const user = JSON.parse(userLogado)
-      this.id_usuario = user.id
+export default {
+  name: 'ListeAgendamento',
+  data: () => ({
+    selected: {},
+    schedules: [],
+    id_usuario: null,
+    id_lead: null,
+    results: []
+  }),
+  filters: {
+    maskFone: function (v) {
+      v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
+      v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
+      v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
+      return v
+    }
+  },
+  mounted () {
+    const userLogado = window.localStorage.getItem('Usuario')
+    const user = JSON.parse(userLogado)
+    this.id_usuario = user.id
 
-      axios.get(process.env.API + 'schedule?where={"agentes": '+this.id_usuario+',"status":{"!=":2}}')
-      //axios.get(process.env.API + 'schedule?where={"agentes": '+this.id_usuario+'}')
-        .then(response => {
-          this.schedules = response.data
-          this.selected = null
-
+    axios.get(process.env.API + 'schedule?where={"agentes": ' + this.id_usuario + ',"status":{"!=":2}}')
+    // axios.get(process.env.API + 'schedule?where={"agentes": '+this.id_usuario+'}')
+      .then(response => {
+        this.schedules = response.data
+        this.selected = null
       })
-    },
-    methods: {
-      aceito () {
-        let newAgenda = {
-          status: 1
-        }
-        axios.put(process.env.API + 'schedule/' + this.selected.id, newAgenda)
-          .then((response) => {
-            console.log("asasas" + response.data)
-            this.results = response.data
-            alert('Confirmado agendamento')
-            this.updateLead(4)
-            ///window.location.reload()
-          })
-          .catch((error) => {
-            alert(error.response.data.code)
-            console.log(error.response.data)
+  },
+  methods: {
+    aceito () {
+      let newAgenda = {
+        status: 1
+      }
+      axios.put(process.env.API + 'schedule/' + this.selected.id, newAgenda)
+        .then((response) => {
+          this.results = response.data
+          this.updateLead(4)
+          /* window.location.reload() */
         })
-      },
+        .catch((error) => {
+          alert(error.response.data.code)
+          console.log(error.response.data)
+        })
+    },
 
-      updateLead(id) {
-        let newLead = {
-          momento_atual: id
-        }
-        axios.put(process.env.API + 'leads/' + this.results.id_lead.id, newLead)
-          .then((response) => {
-
-            window.location.reload()
-          })
-          .catch((error) => {
-            alert('eeeee'+ error.response.data.code)
-            console.log(error.response.data)
-          })
-
-      },
-      notAceito () {
-        let newAgenda = {
-          status: 2
-        }
-        axios.put(process.env.API + 'schedule/' + this.selected.id, newAgenda)
-          .then((response) => {
-            this.results = response.data
-            alert('Não confirmou agendamento')
-            this.updateLead(5)
-          })
-          .catch((error) => {
-            alert(error.response.data.code)
-            console.log(error.response.data)
-          })
-      },
-      getClass: ({ id }) => ({
+    updateLead (id) {
+      let newLead = {
+        momento_atual: id
+      }
+      axios.put(process.env.API + 'leads/' + this.results.id_lead.id, newLead)
+        .then((response) => {
+          window.location.reload()
+        })
+        .catch((error) => {
+          console.log(error.response.data)
+        })
+    },
+    notAceito () {
+      let newAgenda = {
+        status: 2
+      }
+      axios.put(process.env.API + 'schedule/' + this.selected.id, newAgenda)
+        .then((response) => {
+          this.results = response.data
+          alert('Não confirmou agendamento')
+          this.updateLead(5)
+        })
+        .catch((error) => {
+          alert(error.response.data.code)
+          console.log(error.response.data)
+        })
+    },
+    getClass: ({ id }) => ({
       'md-primary': id === 2,
       'md-accent': id === 3
-      }),
-      onSelect (item) {
-        this.selected = item
-      }
+    }),
+    onSelect (item) {
+      this.selected = item
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

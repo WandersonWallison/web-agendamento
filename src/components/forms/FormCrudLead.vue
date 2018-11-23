@@ -74,13 +74,13 @@ export default {
   data: () => ({
     menuVisible: false,
     showDialog: false,
-    active: false,
+    active: false
   }),
   methods: {
     toggleMenu () {
       this.menuVisible = !this.menuVisible
     },
-    sair (){
+    sair () {
       this.value = 'Sim'
       this.$router.push('/')
       window.localStorage.clear()

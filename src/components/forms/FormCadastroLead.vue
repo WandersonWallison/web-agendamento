@@ -35,9 +35,9 @@
               </div>
               <div class="md-layout-item md-small-size-100">
                 <md-field :class="getValidationClass('celular')">
-                  <the-mask class="campos-text" id="celular" name="celular" v-model="form.celular" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Celular"/>
-                  <span class="md-error" v-if="!$v.form.celular.required">Celular deve ser preenchido</span>
-                  <span class="md-error" v-else-if="!$v.form.celular.maxlength">Invalid celular</span>
+                  <the-mask class="campos-text" id="celular" name="celular" v-model="celular" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']"  placeholder="Celular"/>
+                  <span class="md-error" v-if="!$v.form.required">Celular deve ser preenchido</span>
+                  <span class="md-error" v-else-if="!$v.form.maxlength">Invalid celular</span>
                 </md-field>
               </div>
             </div>
@@ -80,9 +80,9 @@ export default {
       nomeCompleto: null,
       email: null,
       telefone: null,
-      celular: null,
       observacao: null
     },
+    celular: null,
     userAtual: null,
     userSaved: false,
     sending: false,
@@ -103,16 +103,16 @@ export default {
         required,
         minLength: minLength(4)
       },
-      celular: {
-        required,
-        minLength: minLength(1)
-      },
       observacao: {
         required
       }
+    },
+    celular: {
+        required,
+        minLength: minLength(4)
     }
   },
-  mounted() {
+  mounted () {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2.id
@@ -120,7 +120,7 @@ export default {
   methods: {
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
-      if (field) {
+            if (field) {
         return {
           'md-invalid': field.$invalid && field.$dirty
         }
@@ -148,8 +148,10 @@ export default {
         .then(response => {
           this.userSaved = true
           this.sending = false
+          console.log(newLead)
           alert('Contato cadastado com sucesso')
           this.clearForm()
+          vm.$forceUpdade()
         })
         .catch(error => {
           if (error.response.data.code === 'E_UNIQUE') {
@@ -159,10 +161,11 @@ export default {
         })
     },
     validateUser () {
-
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.saveContato()
+      } else{
+        console.log('Erro de Validação')
       }
     }
   }

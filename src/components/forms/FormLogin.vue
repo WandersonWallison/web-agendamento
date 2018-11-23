@@ -58,13 +58,12 @@ export default {
           .then(response => {
             if (response.data.user === false) {
               this.$router.push('/')
-              if (response.data.message === 'Username not found'){
+              if (response.data.message === 'Username not found') {
                 this.menssage = 'Usuário não encontrado!'
               } else {
                 this.menssage = 'A senha incorreta!'
               }
-
-            } else  {
+            } else {
               // this.results = response.data.message
               window.localStorage.setItem('Usuario', JSON.stringify(response.data.user))
 
@@ -81,6 +80,9 @@ export default {
             }
           })
           .catch(error => {
+            if (error.response.data.code === 'E_UNIQUE') {
+              this.results = 'Usuario não encontrado. Por favor verirficar os dados digitados'
+            }
             this.results = 'Usuario não encontrado. Por favor verirficar os dados digitados'
             this.loading = false
           })

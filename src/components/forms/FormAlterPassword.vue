@@ -44,10 +44,8 @@ import axios from 'axios'
 import { validationMixin } from 'vuelidate'
 import {
   required,
-  minLength,
-  email
+  minLength
 } from 'vuelidate/lib/validators'
-import moment from 'moment'
 import {TheMask} from 'vue-the-mask'
 
 export default {
@@ -77,7 +75,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2.id
@@ -97,29 +95,25 @@ export default {
       this.form.newConfirmSenha = null
     },
     alterarSenha () {
-
-      alert('chegou no save')
-      if(this.form.newSenha == this.form.newConfirmSenha){
+      if (this.form.newSenha === this.form.newConfirmSenha) {
         let user = {
           password: this.form.newSenha
         }
-        alert('passou no if')
-        axios.put(process.env.API + 'user/'+this.userAtual,user)
-        .then(response => {
-          this.userSaved = true
-          this.sending = false
-          alert('Senha alterada com sucesso')
-          this.clearForm()
-          window.location.reload()
-        })
-        .catch(error => {
-          if (error.response.data.code === 'E_UNIQUE') {
-            alert('Alteração não realizada, \nPor favor verificar as informações')
-          }
-          console.log(error.response.data)
-        })
+        axios.put(process.env.API + 'user/' + this.userAtual, user)
+          .then(response => {
+            this.userSaved = true
+            this.sending = false
+            alert('Senha alterada com sucesso')
+            this.clearForm()
+            window.location.reload()
+          })
+          .catch(error => {
+            if (error.response.data.code === 'E_UNIQUE') {
+              alert('Alteração não realizada, \nPor favor verificar as informações')
+            }
+            console.log(error.response.data)
+          })
       }
-
     },
     validateUser () {
       this.$v.$touch()

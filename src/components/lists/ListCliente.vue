@@ -94,24 +94,24 @@ export default {
     userAtual: false
   }),
   filters: {
-      maskFone: function (v) {
-        v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
-        v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-        v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
-        return v
-      }
+    maskFone: function (v) {
+      v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
+      v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
+      v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
+      return v
+    }
   },
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2.id
-    let data_atual = moment(Date.now()).format('YYYY-MM-DD')
+    let dataAtual = moment(Date.now()).format('YYYY-MM-DD')
 
-    axios.get(process.env.API+'leads?where={"or":[{"momento_atual": 5},{"momento_atual":1}],"id_user_editor":"'+this.userAtual+'","data_expiracao":{">":"'+ data_atual +'"},"ativo": true}')
-    .then(response => {
-      (this.users = response.data),
-      (this.searched = response.data)
-    })
+    axios.get(process.env.API+'leads?where={"or":[{"momento_atual": 5},{"momento_atual":1}]," id_user_editor ":"' + this.userAtual + '","data_expiracao":{">":"' + this.dataAtual + '"},"ativo": true}')
+      .then(response => {
+        this.users = response.data
+        this.searched = response.data
+      })
   },
   methods: {
     atendeu () {
@@ -129,7 +129,7 @@ export default {
           console.log(error.response.data)
         })
     },
-     naoAtendeu () {
+    naoAtendeu () {
       let newLead = {
         data_criacao: moment(this.data_atendimento).format()
       }
@@ -195,10 +195,9 @@ export default {
       'md-primary': id
     }),
     addSelected () {
-      if (!this.selected){
+      if (!this.selected) {
         alert('Selecione um contato da lista')
-      }
-      else {
+      } else {
         this.showDialog = true
         this.leadProps = this.selected
       }
@@ -206,10 +205,10 @@ export default {
     newUser () {
       window.alert('Noop')
     },
-    onMouseOver(item) {
+    onMouseOver (item) {
       this.selected = item
     },
-    searchOnTable() {
+    searchOnTable () {
       this.searched = searchByName(this.users, this.search)
     }
   },

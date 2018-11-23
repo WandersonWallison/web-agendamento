@@ -201,27 +201,26 @@ export default {
     selectedCidade: null,
     selectedCep: null
   }),
-  beforeCreate() {
+  beforeCreate () {
     axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-    .then(response => {
-    this.estados = response.data
-    })
+      .then(response => {
+        this.estados = response.data
+      })
   },
-  beforeUpdate() {
-    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/'+ this.selectedEstado +'/municipios')
-    .then(response => {
-    this.cidades = response.data
-    })
-    ,
-    axios.get('https://viacep.com.br/ws/'+ this.form.cep +'/json/')
-    .then(response => {
-      this.cep = response.data
-      this.form.bairro = this.cep.bairro,
-      this.form.rua = this.cep.logradouro,
-      this.form.observacao = this.cep.complemento,
-      this.form.cidade = this.cep.localidade,
-      this.form.estado = this.cep.uf
-    })
+  beforeUpdate () {
+    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.selectedEstado + '/municipios')
+      .then(response => {
+        this.cidades = response.data
+      })
+    axios.get('https://viacep.com.br/ws/' + this.form.cep + '/json/')
+      .then(response => {
+        this.cep = response.data
+        this.form.bairro = this.cep.bairro
+        this.form.rua = this.cep.logradouro
+        this.form.observacao = this.cep.complemento
+        this.form.cidade = this.cep.localidade
+        this.form.estado = this.cep.uf
+      })
   },
   components: {TheMask},
   validations: {
@@ -309,7 +308,7 @@ export default {
       let newEmpresa = {
         nome: this.form.nomeEscritorio,
         responsavel: this.form.responsavelEscritorio,
-        site : this.form.site,
+        site: this.form.site,
         telefone: this.form.telefone,
         email: this.form.email,
         qtd_visita_dia: this.form.qtdVisitas,
@@ -330,24 +329,23 @@ export default {
         .then(response => {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
-          .then(response => {
-            console.log(response)
-            alert('Escritorio cadastado com sucesso')
-            this.userSaved = true
-            this.sending = false
-            this.clearForm()
-            window.location.reload()
-          })
-          .catch(error => {
-            alert('Erro endereco ' + error)
-            console.log(error.response.data)
-          })
+            .then(response => {
+              console.log(response)
+              alert('Escritorio cadastado com sucesso')
+              this.userSaved = true
+              this.sending = false
+              this.clearForm()
+              window.location.reload()
+            })
+            .catch(error => {
+              alert('Erro endereco ' + error)
+              console.log(error.response.data)
+            })
         })
         .catch(error => {
-          if(error.response.data.code = 'E_UNIQUE') {
-             alert('Escritorio já Cadastrado!!!  \nverifique os dados de Cadastro')
+          if (error.response.data.code === 'E_UNIQUE') {
+            alert('Escritorio já Cadastrado!!!  \nverifique os dados de Cadastro')
           }
-          console.log(error.response)
         })
     },
     validateEmpresa () {

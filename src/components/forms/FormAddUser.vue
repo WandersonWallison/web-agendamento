@@ -289,7 +289,6 @@
   </div>
 </template>
 <script>
-import moment from 'moment'
 import {TheMask} from 'vue-the-mask'
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
@@ -299,7 +298,6 @@ import {
   email
 } from 'vuelidate/lib/validators'
 
-
 export default {
   name: 'FormUsuario',
   props: ['leadProps'],
@@ -307,40 +305,40 @@ export default {
   data: () => ({
     form: {
       nomeAgente: null,
-      email : null,
-      senha : null,
-      telefone:null,
-      celular : null,
-      dataInicio : null,
+      email: null,
+      senha: null,
+      telefone: null,
+      celular: null,
+      dataInicio: null,
       dataNascimento: null,
-      cvm : '',
-      nomeConjuge : null,
-      nomeMae : null,
-      nomePai : null,
-      redeSocial : '',
-      rg : null,
-      cpf : null,
-      cep : null,
-      rua : null,
-      numero : null,
-      estado : null,
-      cidade : null,
-      bairro : null,
-      observacao : null,
-      qtdVisitas : null,
-      metaAnual : null,
-      estadoCivil : null,
-      escolaridade : null,
-      genero : null,
-      profile : null,
+      cvm: '',
+      nomeConjuge: null,
+      nomeMae: null,
+      nomePai: null,
+      redeSocial: '',
+      rg: null,
+      cpf: null,
+      cep: null,
+      rua: null,
+      numero: null,
+      estado: null,
+      cidade: null,
+      bairro: null,
+      observacao: null,
+      qtdVisitas: null,
+      metaAnual: null,
+      estadoCivil: null,
+      escolaridade: null,
+      genero: null,
+      profile: null,
       escritorio: null,
       selected: null
     },
     bairro: null,
-    userSaved : false,
-    sending : false,
-    lastUser : null,
-    infoSenha : false,
+    userSaved: false,
+    sending: false,
+    lastUser: null,
+    infoSenha: false,
     offices: [],
     estados: [],
     cidades: [],
@@ -352,24 +350,24 @@ export default {
     teste: null
   }),
   components: {TheMask},
-  beforeCreate(){
+  beforeCreate () {
     axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-    .then(response => {
-    this.estados = response.data
-  })
+      .then(response => {
+        this.estados = response.data
+      })
   },
-  beforeUpdate(){
-    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/'+ this.selectedEstado +'/municipios')
-    .then(response => {
-    this.cidades = response.data
-    }),
-    axios.get('https://viacep.com.br/ws/'+ this.form.cep +'/json/')
-    .then(response => {
-      this.cep = response.data,
-      this.bairro = this.cep.bairro,
-      this.form.rua = this.cep.logradouro,
-      this.form.observacao = this.cep.complemento
-    })
+  beforeUpdate () {
+    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.selectedEstado + '/municipios')
+      .then(response => {
+        this.cidades = response.data
+      })
+    axios.get('https://viacep.com.br/ws/' + this.form.cep + '/json/')
+      .then(response => {
+        this.cep = response.data
+        this.bairro = this.cep.bairro
+        this.form.rua = this.cep.logradouro
+        this.form.observacao = this.cep.complemento
+      })
   },
   validations: {
     form: {
@@ -443,29 +441,26 @@ export default {
       profile: {
         required
       },
-      office:{
-         required
+      office: {
+        required
       }
     }
   },
-  created() {
+  created () {
     axios.get(process.env.API + 'office')
-    .then(response => {
-    this.offices = response.data
-    })
+      .then(response => {
+        this.offices = response.data
+      })
   },
   methods: {
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
-        //console.log('Campo: '+ field.name)
-        //console.log('field.$dirty : '+ field.$dirty)
-        //console.log('field.$invalid :'+ field.$invalid)
-        this.teste = field
-        if (field) {
-          return {
-            'md-invalid': field.$invalid && field.$dirty
-          }
+      this.teste = field
+      if (field) {
+        return {
+          'md-invalid': field.$invalid && field.$dirty
         }
+      }
     },
     clearForm () {
       this.$v.$reset()
@@ -488,7 +483,7 @@ export default {
       this.form.genero = null
       this.form.estadoCivi = null
       this.form.escolaridade = null
-      this.form.nomeConjuge  = null
+      this.form.nomeConjuge = null
       this.form.nomeMae = null
       this.form.nomePai = null
       this.form.redeSocial = null
@@ -501,24 +496,24 @@ export default {
       senhaGerada = this.geradorPassword()
 
       let newUsuario = {
-        username : this.form.nomeAgente,
-        email : this.form.email,
-        password : senhaGerada,
-        telefone : this.form.telefone,
-        celular : this.form.celular,
-        data_inicio : this.form.dataInicio,
-        cvm : this.form.cvm,
-        cnh_rg  : this.form.rg,
-        cpf : this.form.cpf,
-        data_nascimento : this.form.dataNascimento,
-        escolaridade : this.form.escolaridade,
+        username: this.form.nomeAgente,
+        email: this.form.email,
+        password: senhaGerada,
+        telefone: this.form.telefone,
+        celular: this.form.celular,
+        data_inicio: this.form.dataInicio,
+        cvm: this.form.cvm,
+        cnh_rg: this.form.rg,
+        cpf: this.form.cpf,
+        data_nascimento: this.form.dataNascimento,
+        escolaridade: this.form.escolaridade,
         estado_civil: this.form.estadoCivil,
-        nome_conjuge : this.form.nomeConjuge ,
-        nome_mae : this.form.nomeMae,
-        nome_pai : this.form.nomePai,
-        rede_social : this.form.redeSocial,
+        nome_conjuge: this.form.nomeConjuge,
+        nome_mae: this.form.nomeMae,
+        nome_pai: this.form.nomePai,
+        rede_social: this.form.redeSocial,
         genero: this.form.genero,
-        id_profile : this.form.profile,
+        id_profile: this.form.profile,
         id_office: this.form.office
       }
 
@@ -533,63 +528,60 @@ export default {
         uf: this.selectedEstado
       }
       axios.post(process.env.API + 'user', newUsuario)
-      .then(response => {
+        .then(response => {
           newEndereco.user_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
             .then(response => {
-                  alert('Agente cadastado com succeso \n' +
-                'Dados de Acesso do Agente: ' +
-                  this.form.nomeAgente +
-                '\n Usuario: ' +
-                  this.form.email +
-                '\n Senha: ' + senhaGerada )
-                this.userSaved = true
-                this.sending = false
-                this.clearForm()
-                window.location.reload()
-                })
-          .catch(error => {
-            alert('Erro no cadastro do Endereço')
-            console.log(error.response.data)
-          })
+              alert('Agente cadastado com succeso \n' +
+              'Dados de Acesso do Agente: ' +
+              this.form.nomeAgente +
+              '\n Usuario: ' +
+              this.form.email +
+              '\n Senha: ' + senhaGerada)
+              this.userSaved = true
+              this.sending = false
+              this.clearForm()
+              window.location.reload()
+            })
+            .catch(error => {
+              alert('Erro no cadastro do Endereço')
+              console.log(error.response.data)
+            })
         })
         .catch(error => {
           if (error.response.data.code === 'E_UNIQUE') {
-              alert('Agente já Cadastrado \nPor favor verificar os dados de cadastro')
+            alert('Agente já Cadastrado \nPor favor verificar os dados de cadastro')
           }
           console.log(error.response.data)
         })
     },
     validateUser () {
       this.$v.$touch()
-      console.log("validate do form "+ this.$v.$invalid)
+      console.log('validate do form ' + this.$v.$invalid)
       if (!this.$v.$invalid) {
-            this.saveEmpresa()
-
+        this.saveEmpresa()
       }
     },
-     geradorPassword () {
+    geradorPassword () {
       this.pass = ''
       for (let i = 0; i < 8; i++) {
         this.pass += this.getRandomChar()
       }
       return this.pass
     },
-   idade() {
-    let hoje = new Date()
-    let nascimento = new Date(this.form.dataNascimento)
-    let diferencaAnos = hoje.getFullYear() - nascimento.getFullYear()
-    if(diferencaAnos < 18){
-      alert('Usuário menor de 18 Anos\n')
-    }
-    return diferencaAnos
-
-},
-
-    getRandomChar(){
-      let ascii = [[48, 57] , [64, 90] , [97, 122]]
+    idade () {
+      let hoje = new Date()
+      let nascimento = new Date(this.form.dataNascimento)
+      let diferencaAnos = hoje.getFullYear() - nascimento.getFullYear()
+      if (diferencaAnos < 18) {
+        alert('Usuário menor de 18 Anos\n')
+      }
+      return diferencaAnos
+    },
+    getRandomChar () {
+      let ascii = [[48, 57], [64, 90], [97, 122]]
       let i = Math.floor(Math.random() * ascii.length)
-      return String.fromCharCode(Math.floor(Math.random() * (ascii[i][1]-ascii[i][0])) + ascii[i][0])
+      return String.fromCharCode(Math.floor(Math.random() * (ascii[i][1] - ascii[i][0])) + ascii[i][0])
     }
   }
 }

@@ -34,8 +34,8 @@
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-50">
-              <md-field :class="getValidationClass('telefone')">                
-                <the-mask class="campos-text"  id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Telefone"/>               
+              <md-field  :class="getValidationClass('telefone')">
+                <the-mask class="campos-text"  id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" :mask="['(##) #####-####','(##) #####-####']" placeholder="Telefone"/>
                 <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Telefone Inválido</span>
               </md-field>
@@ -90,7 +90,7 @@ export default {
       cnpj: null,
       telefone: null,
       email: null,
-      site: null,
+      site: null
     },
     userSaved: false,
     sending: false,
@@ -130,20 +130,19 @@ export default {
       }
     },
     clearForm () {
-      this.$v.$reset()      
+      this.$v.$reset()
       this.form.nomeEmpresa = null
       this.form.razaoSocial = null
       this.form.site = null
       this.form.telefone = null
       this.form.email = null
       this.form.cnpj = null
-
     },
     saveEmpresa () {
       let newEmpresa = {
         nome: this.form.nomeEmpresa,
         razao_social: this.form.razaoSocial,
-        site : this.form.site,
+        site: this.form.site,
         telefone: this.form.telefone,
         email: this.form.email,
         cnpj: this.form.cnpj
@@ -154,14 +153,12 @@ export default {
           this.clearForm()
         })
         .catch(error => {
-          alert(error.response.data)
-          if(error.response.data.code = 'E_UNIQUE'){
-             alert('Empresa já Cadastrado!!!  \nverifique os dados de Cadastro')
+          if (error.response.data.code === 'E_UNIQUE') {
+            alert('Empresa já Cadastrado!!!  \nverifique os dados de Cadastro')
           }
-          console.log(error.response)
         })
     },
-    validateEmpresa () {      
+    validateEmpresa () {
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.saveEmpresa()

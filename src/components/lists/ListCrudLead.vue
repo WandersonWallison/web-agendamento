@@ -106,32 +106,33 @@ export default {
 
   }),
   filters: {
-      maskFone: function (v) {
-        v=v.replace(/\D/g,""); //Remove tudo o que não é dígito
-        v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-        v=v.replace(/(\d)(\d{4})$/,"$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
-        return v
-      }
+    maskFone: function (v) {
+      v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
+      v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
+      v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
+      return v
+    }
   },
   mounted () {
     axios.get(process.env.API + 'leads?where={"ativo": true}')
-    .then(response => {
-    this.people = response.data
-  })
+      .then(response => {
+        this.people = response.data
+      })
   },
   methods: {
     onCancel () {
       this.value = 'Disagreed'
     },
-    onConfirm(){
+    onConfirm () {
       let newLead = {
         ativo: false
       }
       for (var i = 0; i <= this.selected.length; i++) {
-        axios.put(process.env.API+'leads/' + this.selected[i].id, newLead)
+        axios.put(process.env.API + 'leads/' + this.selected[i].id, newLead)
           .then(response => {
             console.log(i + 'alterado')
-            window.location.reload()})
+            window.location.reload()
+          })
       }
     },
     onSelect (items) {
@@ -141,7 +142,7 @@ export default {
       let plural = ''
       if (count > 1) {
         plural = 's'
-        }
+      }
       return `${count} Usuário${plural} selecionado${plural}`
     }
   }
