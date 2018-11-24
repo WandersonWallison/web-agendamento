@@ -8,11 +8,11 @@
       <md-speed-dial-content>
         <md-button class="md-icon-button" @click="showDialog = true">
           <md-tooltip md-direction="left">Contato</md-tooltip>
-          <md-icon>note</md-icon>
+          <md-icon>contact_phone</md-icon>
         </md-button>
         <md-button class="md-icon-button" @click="showAgente = true">
           <md-tooltip md-direction="left">Usuário</md-tooltip>
-          <md-icon>people</md-icon>
+          <md-icon>person_add</md-icon>
         </md-button>
         <md-button class="md-icon-button" @click="showEscritorio = true">
           <md-tooltip md-direction="left">Escritório</md-tooltip>
@@ -24,7 +24,7 @@
         </md-button>
         <md-button class="md-icon-button" @click="showListaParaAgendamento = true">
           <md-tooltip md-direction="left">Lista de Contatos</md-tooltip>
-          <md-icon>contact_phone</md-icon>
+          <md-icon>list_alt</md-icon>
         </md-button>
         <md-button class="md-icon-button" @click="showListaClienteAguardando = true">
           <md-tooltip md-direction="left">Lista Cliente Aguardando Contato</md-tooltip>
@@ -32,7 +32,7 @@
         </md-button>
         <md-button class="md-icon-button" @click="showListUsuario = true">
           <md-tooltip md-direction="left">Lista Usuarios</md-tooltip>
-          <md-icon>home</md-icon>
+          <md-icon>people</md-icon>
         </md-button>
       </md-speed-dial-content>
     </md-speed-dial>

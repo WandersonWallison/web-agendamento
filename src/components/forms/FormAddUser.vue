@@ -511,7 +511,7 @@ export default {
         numero: this.form.numero,
         bairro: this.form.bairro,
         cidade: this.selectedCidade,
-        cep: this.form.cep,
+        cep: this.retiraMascara(this.form.cep),
         uf: this.form.estado
       }
       if (cvmValidado) {
