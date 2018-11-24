@@ -25,7 +25,7 @@
 import ListCliente from '../lists/ListCliente.vue'
 
 export default {
-  name: 'Agente',
+  name: 'Hunter',
   components: {
     ListCliente
   },
