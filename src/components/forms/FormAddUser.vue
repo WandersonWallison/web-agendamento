@@ -477,7 +477,6 @@ export default {
       this.selectedCidade = null
     },
     saveEmpresa () {
-
       let cvmValidado
       let senhaGerada
 

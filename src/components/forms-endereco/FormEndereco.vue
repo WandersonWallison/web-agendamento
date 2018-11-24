@@ -149,7 +149,6 @@ export default {
   },
   validations: {
     form: {
-
       rua: {
         required,
         minLength: minLength(4)
@@ -206,7 +205,6 @@ export default {
       this.selectedCidade = null
     },
     saveEndereco () {
-
       let newEndereco = {
         logradouro: this.form.rua,
         numero: this.form.numero,
@@ -216,13 +214,12 @@ export default {
         uf: this.form.estado,
         leads_address: this.selected[0].id
       }
-      console.log('Endereço: '+newEndereco)
       axios.post(process.env.API + 'address', newEndereco)
         .then((response) => {
           this.results = response.data
           alert('Endereço adicionado ' + this.selected[0].nome + ' com sucesso')
           this.clearForm()
-          //window.location.reload()
+          // window.location.reload()
         })
         .catch((error) => {
           alert(error.response.data.code)
@@ -238,7 +235,7 @@ export default {
     retiraMascara (campo) {
       campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
       return campo
-    },
+    }
   }
 }
 </script>
