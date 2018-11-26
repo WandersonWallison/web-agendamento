@@ -12,17 +12,21 @@
     <md-table v-model="people" md-card @md-selected="onSelect">
       <md-table-toolbar>
         <h1 class="md-title">Lista de Usuários</h1>
+        <md-button @click="active = true">
+              <md-icon  class='botao-red'>lock</md-icon>
+              <md-tooltip md-direction="top">Alterar Senha</md-tooltip>
+            </md-button >
       </md-table-toolbar>
       <span v-if="value">Value: {{ value }}</span>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }" :class="getClass(item)" md-selectable="single">
-        <md-table-cell md-label="Senha">
+        <!--<md-table-cell md-label="Senha">
             <div @click="active = true">
               <md-icon  class='botao-red'>lock</md-icon>
               <md-tooltip md-direction="top">Alterar Senha</md-tooltip>
             </div>
         </md-table-cell>
-        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>-->
         <md-table-cell md-label="Perfil" md-sort-by="id_perfil" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.username }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
