@@ -131,12 +131,12 @@ export default {
     },
     clearForm () {
       this.$v.$reset()
-      this.form.nomeEmpresa = null
-      this.form.razaoSocial = null
-      this.form.site = null
+      this.form.nomeEmpresa = ''
+      this.form.razaoSocial = ''
+      this.form.site = ''
       this.form.telefone = null
-      this.form.email = null
-      this.form.cnpj = null
+      this.form.email = ''
+      this.form.cnpj = ''
     },
     saveEmpresa () {
       let newEmpresa = {
