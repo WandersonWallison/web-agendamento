@@ -98,6 +98,9 @@ export default {
       this.value = 'Disagreed'
     },
     onConfirm () {
+      if( this.selected.length === 0){
+        alert('ocorreu algum erro de comunicação com a intenet,selecione novamente ')
+      }else{
       let newLead = {
         id_user_editor: this.selectedHunter,
         momento_atual: 1,
@@ -110,6 +113,7 @@ export default {
             window.location.reload()
           })
       }
+    }
     },
     onSelect (items) {
       this.selected = items

@@ -117,8 +117,7 @@ export default {
           window.location.reload()
         })
         .catch((error) => {
-          alert(error.response.data.code)
-          console.log(error.response.data)
+          alert('Selecione um cliente')
         })
     },
     naoAtendeu () {
@@ -132,8 +131,7 @@ export default {
           window.location.reload()
         })
         .catch((error) => {
-          alert(error.response.data.code)
-          console.log(error.response.data)
+          alert('Selecione um cliente')
         })
     },
     dadosIncorretos () {
@@ -148,8 +146,7 @@ export default {
           window.location.reload()
         })
         .catch((error) => {
-          alert(error.response.data.code)
-          console.log(error.response.data)
+          alert('Selecione um cliente')
         })
     },
     naoPodeFalar () {
@@ -163,8 +160,7 @@ export default {
           window.location.reload()
         })
         .catch((error) => {
-          alert(error.response.data.code)
-          console.log(error.response.data)
+          alert('Selecione um cliente')
         })
     },
     naoAceitaVisita () {
@@ -179,8 +175,7 @@ export default {
           window.location.reload()
         })
         .catch((error) => {
-          alert(error.response.data.code)
-          console.log(error.response.data)
+          alert('Selecione um cliente')
         })
     },
     getClass: ({ id }) => ({
