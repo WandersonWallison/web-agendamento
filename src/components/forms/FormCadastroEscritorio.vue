@@ -3,7 +3,7 @@
     <form novalidate class="md-layout" @submit.prevent="validateEmpresa">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Cadastro de Escritorio</span>
+          <span class="md-title">Cadastro de Escritório</span>
         </md-toolbar>
         <md-card-content>
           <div class="md-layout md-gutter">
@@ -48,9 +48,9 @@
                 <label for="qtdVisitas">Visitas por Agente</label>
                 <md-select name="qtdVisitas" id="qtdVisitas" v-model="form.qtdVisitas" md-dense :disabled="sending">
                   <md-option value=1>1 Visita</md-option>
-                  <md-option value=2>2 Visita</md-option>
-                  <md-option value=3>3 Visita</md-option>
-                  <md-option value=4>4 Visita</md-option>
+                  <md-option value=2>2 Visitas</md-option>
+                  <md-option value=3>3 Visitas</md-option>
+                  <md-option value=4>4 Visitas</md-option>
                 </md-select>
                 <span class="md-error">Quantidades de visitas não selecioando</span>
               </md-field>
@@ -68,7 +68,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('telefone')">
                 <label for="telefone">Telefone</label>
-                <md-input id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" v-mask = "'(##) #####-####'" />
+                <md-input id="telefone" name="telefone" v-model="form.telefone" :disabled="sending" v-mask = "'(##) ####-####'" />
                 <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Telefone inválido</span>
               </md-field>
