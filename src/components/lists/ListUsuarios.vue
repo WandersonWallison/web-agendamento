@@ -23,6 +23,7 @@
             </div>
         </md-table-cell>
         <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="Perfil" md-sort-by="id_perfil" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.username }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="telefone" md-sort-by="telefone">{{ item.telefone  }}</md-table-cell>
@@ -49,6 +50,7 @@ export default {
       .then(response => {
         this.people = response.data
       })
+      console.log('Usuarios: '+this.people)
   },
   methods: {
     getClass: ({ id }) => ({
