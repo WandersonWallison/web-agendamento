@@ -9,13 +9,13 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('office')">
-                <label for="office">Escritorio</label>
+                <label for="office">Escritório</label>
                 <md-select name="office" id="office" v-model="form.office" md-dense :disabled="sending">
                 <md-option v-for="office in offices" :key="office.id" :value="office.id">
                   {{ office.nome }}
                 </md-option>
                 </md-select>
-                  <span class="md-error">Escritorio não selecionado</span>
+                  <span class="md-error">Escritório não selecionado</span>
                 <br>
               </md-field>
             </div>
@@ -154,7 +154,7 @@
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
                 <md-field>
-                  <label for="nomeConjuge">Nome Conjuge</label>
+                  <label for="nomeConjuge">Nome Cônjuge</label>
                   <md-input id="nomeConjuge" name="nomeConjuge" v-model="form.nomeConjuge" :disabled="sending" />
                 </md-field>
             </div>
@@ -189,7 +189,7 @@
             </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('numero')">
-                <label for="numero">Numero</label>
+                <label for="numero">Número</label>
                 <md-input id="numero" name="numero" v-model="form.numero" :disabled="sending" v-mask = "'#########'" />
                 <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
               </md-field>
@@ -529,8 +529,8 @@ export default {
             newEndereco.user_address = response.data.id
             axios.post(process.env.API + 'address', newEndereco)
               .then(response => {
-                alert('Agente cadastado com succeso \n' +
-                'Dados de Acesso do Agente: ' +
+                alert('Cadastro realizado com succeso \n' +
+                'Dados de Acesso: ' +
                 this.form.nomeAgente +
                 '\n Usuario: ' +
                 this.form.email +
@@ -547,7 +547,7 @@ export default {
           })
           .catch(error => {
             if (error.response.data.code === 'E_UNIQUE') {
-              alert('Agente já Cadastrado \nPor favor verificar os dados de cadastro')
+              alert('Dados já Cadastrado \nPor favor verificar os dados de cadastro')
             }
             console.log(error.response.data)
           })
