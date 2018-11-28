@@ -57,7 +57,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cep')">
                 <label for="cep">CEP</label>
-                <md-input  type="number" id="cep" name="cep" autocomplete="cep" v-model="form.cep" :disabled="sending" />
+                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" />
                 <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
               </md-field>
@@ -137,6 +137,7 @@
 </template>
 
 <script>
+import {mask} from 'vue-the-mask'
 import moment from 'moment'
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
@@ -205,6 +206,7 @@ export default {
       }
     }
   },
+  directives: {mask},
   beforeUpdate () {
     this.getAgente()
   },
