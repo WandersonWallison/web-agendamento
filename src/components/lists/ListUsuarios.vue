@@ -20,15 +20,9 @@
       <span v-if="value">Value: {{ value }}</span>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }" :class="getClass(item)" md-selectable="single">
-        <!--<md-table-cell md-label="Senha">
-            <div @click="active = true">
-              <md-icon  class='botao-red'>lock</md-icon>
-              <md-tooltip md-direction="top">Alterar Senha</md-tooltip>
-            </div>
-        </md-table-cell>
-        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>-->
-        <md-table-cell md-label="Perfil" md-sort-by="id_perfil" md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.username }}</md-table-cell>
+        <md-table-cell md-label="Perfil" md-sort-by="id_perfil" md-numeric>{{ item.id_profile['name']}}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="telefone" md-sort-by="telefone">{{ item.telefone  }}</md-table-cell>
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
@@ -44,6 +38,7 @@ export default {
   data: () => ({
     selected: {},
     people: [],
+    perfil: [],
     active: false,
     newValuePassword: null,
     showAlteraSenha: false
@@ -54,7 +49,7 @@ export default {
       .then(response => {
         this.people = response.data
       })
-      console.log('Usuarios: '+this.people)
+    console.log('Usuarios: ' + this.people)
   },
   methods: {
     getClass: ({ id }) => ({

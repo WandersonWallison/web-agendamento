@@ -98,22 +98,22 @@ export default {
       this.value = 'Disagreed'
     },
     onConfirm () {
-      if( this.selected.length === 0){
+      if (this.selected.length === 0) {
         alert('ocorreu algum erro de comunicação com a intenet,selecione novamente ')
-      }else{
-      let newLead = {
-        id_user_editor: this.selectedHunter,
-        momento_atual: 1,
-        data_expiracao: moment(this.selectedDate).format('YYYY-MM-DD')
+      } else {
+        let newLead = {
+          id_user_editor: this.selectedHunter,
+          momento_atual: 1,
+          data_expiracao: moment(this.selectedDate).format('YYYY-MM-DD')
+        }
+        for (var i = 0; i <= this.selected.length; i++) {
+          axios.put(process.env.API + 'leads/' + this.selected[i].id, newLead)
+            .then(response => {
+              console.log(i + 'alterado')
+              window.location.reload()
+            })
+        }
       }
-      for (var i = 0; i <= this.selected.length; i++) {
-        axios.put(process.env.API + 'leads/' + this.selected[i].id, newLead)
-          .then(response => {
-            console.log(i + 'alterado')
-            window.location.reload()
-          })
-      }
-    }
     },
     onSelect (items) {
       this.selected = items

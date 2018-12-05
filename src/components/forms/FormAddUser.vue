@@ -341,21 +341,21 @@ export default {
         this.cidades = response.data
         this.form.cidade = this.cidades
       })
-    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep )
+    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
       .then(response => {
         this.cep = response.data
-        if(this.cep.bairro){
+        if (this.cep.bairro) {
           this.form.bairro = this.cep.bairro
         }
-        if(this.cep.logradouro){
+        if (this.cep.logradouro) {
           this.form.rua = this.cep.logradouro
         }
-        if(this.cep.complemento){
+        if (this.cep.complemento) {
           this.form.observacao = this.cep.complemento
         }
       })
       .catch(error => {
-        //alert('Erro no cadastro do Endereço')
+        // alert('Erro no cadastro do Endereço')
         console.log(error.response.data)
       })
   },

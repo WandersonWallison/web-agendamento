@@ -99,7 +99,7 @@ export default {
     this.userAtual = authUser2.id
     let dataAtual = moment(Date.now()).format('YYYY-MM-DD')
 
-    axios.get(process.env.API+'leads?where={"or":[{"momento_atual": 1},{"momento_atual":5}],"id_user_editor":'+this.userAtual+',"data_expiracao":{"<":"'+this.dataAtual+'"}}')
+    axios.get(process.env.API + 'leads?where={"or":[{"momento_atual": 1},{"momento_atual":5}],"id_user_editor":' + this.userAtual + ',"data_expiracao":{"<":"' + this.dataAtual + '"}}')
       .then(response => {
         this.users = response.data
         this.searched = response.data
@@ -111,13 +111,14 @@ export default {
         data_atendimento: moment(this.data_atendimento).format()
       }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then((response) => {
+        .then(response => {
           this.results = response.data
           alert('Cliente atendeu a ligação')
           window.location.reload()
         })
-        .catch((error) => {
+        .catch(error => {
           alert('Selecione um cliente')
+          console.log(error.response.data)
         })
     },
     naoAtendeu () {
@@ -125,13 +126,14 @@ export default {
         data_criacao: moment(this.data_atendimento).format()
       }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then((response) => {
+        .then(response => {
           this.results = response.data
           alert('Cliente Não atendeu a ligação')
           window.location.reload()
         })
-        .catch((error) => {
+        .catch(error => {
           alert('Selecione um cliente')
+          console.log(error.response.data)
         })
     },
     dadosIncorretos () {
@@ -140,13 +142,14 @@ export default {
         ativo: false
       }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then((response) => {
+        .then(response => {
           this.results = response.data
           alert('Cliente com os dados incorreto')
           window.location.reload()
         })
-        .catch((error) => {
+        .catch(error => {
           alert('Selecione um cliente')
+          console.log(error.response.data)
         })
     },
     naoPodeFalar () {
@@ -154,13 +157,14 @@ export default {
         data_criacao: moment(this.data_atendimento).format()
       }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then((response) => {
+        .then(response => {
           this.results = response.data
           alert('No Momento não pode falar')
           window.location.reload()
         })
-        .catch((error) => {
+        .catch(error => {
           alert('Selecione um cliente')
+          console.log(error.response.data)
         })
     },
     naoAceitaVisita () {
@@ -169,13 +173,14 @@ export default {
         ativo: false
       }
       axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then((response) => {
+        .then(response => {
           this.results = response.data
           alert('Cliente Não Aceita Visita')
           window.location.reload()
         })
-        .catch((error) => {
+        .catch(error => {
           alert('Selecione um cliente')
+          console.log(error.response.data)
         })
     },
     getClass: ({ id }) => ({

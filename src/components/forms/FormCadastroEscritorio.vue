@@ -233,21 +233,21 @@ export default {
         this.cidades = response.data
         this.form.cidade = this.cidades
       })
-   axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep )
+    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
       .then(response => {
         this.cep = response.data
-        if(this.cep.bairro){
+        if (this.cep.bairro) {
           this.form.bairro = this.cep.bairro
         }
-        if(this.cep.logradouro){
+        if (this.cep.logradouro) {
           this.form.rua = this.cep.logradouro
         }
-        if(this.cep.complemento){
-            this.form.observacao = this.cep.complemento
+        if (this.cep.complemento) {
+          this.form.observacao = this.cep.complemento
         }
       })
       .catch(error => {
-        //alert('Erro no cadastro do Endereço')
+        // alert('Erro no cadastro do Endereço')
         console.log(error.response.data)
       })
   },
@@ -332,7 +332,6 @@ export default {
       this.form.qtdVisitas = null
       this.form.cnpj = null
       this.form.tempoAceite = null
-
     },
     saveEmpresa () {
       let newEmpresa = {
@@ -344,28 +343,26 @@ export default {
         qtd_visita_dia: this.form.qtdVisitas,
         tempo_aceita: this.form.tempoAceite,
         abertura: moment(Date.now()).format(),
-        cnpj: this.retiraMascara(this.form.cnpj),
+        cnpj: this.retiraMascara(this.form.cnpj)
       }
       let newEndereco = {
         rua: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
         cidade: this.selectedCidade,
-        cep:this.retiraMascara(this.form.cep),
+        cep: this.retiraMascara(this.form.cep),
         uf: this.form.estado
       }
-
       axios.post(process.env.API + 'office', newEmpresa)
         .then(response => {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
             .then(response => {
-              console.log(response)
               alert('Escritorio cadastado com sucesso')
               this.userSaved = true
               this.sending = false
               this.clearForm()
-              //window.location.reload()
+              // window.location.reload()
             })
             .catch(error => {
               alert('Erro endereco ' + error)
@@ -388,7 +385,7 @@ export default {
     retiraMascara (campo) {
       campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
       return campo
-    },
+    }
   }
 }
 </script>
