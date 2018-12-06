@@ -156,7 +156,7 @@ export default {
 
     disabledDates: date => {
 
-      // const day = date.getDay()
+      const day = date.getDay()
 
       return ['2018-12-12']
       // day === 6 || day === 0
