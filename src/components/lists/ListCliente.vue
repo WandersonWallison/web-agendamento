@@ -22,8 +22,8 @@
         <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou</md-tooltip></div></md-table-cell>
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
-        <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="title">{{ item.telefone }}</md-table-cell>
+        <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
           <md-button class="md-icon-button md-raised md-primary" @click="atendeu">
             <md-tooltip md-direction="top">Atendeu</md-tooltip>
@@ -54,7 +54,7 @@
           </md-table-cell>
       </md-table-row>
     </md-table>
-    <md-dialog :md-active.sync="showDialog">
+    <md-dialog :md-active.sync="showDialog" class="dialog-agendamento">
       <div class="div">
           <agenda :leadProps="leadProps"></agenda>
       </div>
@@ -231,12 +231,15 @@ export default {
 }
 .div {
   overflow: auto;
-  margin-left: 2%;
+  /* margin-left: 2%; */
 }
 .conteiner {
   height: 100%;
 }
 .botao-red {
   background-color: #ff1515;
+}
+.dialog-agendamento {
+  width: 70%;
 }
 </style>
