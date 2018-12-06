@@ -1,12 +1,10 @@
 <template>
   <div class="conteudo-alinhamento conteiner">
-  <md-conteiner class="conteiner" >
     <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header @md-selected="onMouseOver">
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
           <h1 class="md-title"></h1>
         </div>
-
         <md-field md-clearable class="md-toolbar-section-end">
           <md-input placeholder="Buscar pelo nome..." v-model="search" @input="searchOnTable" />
         </md-field>
@@ -59,7 +57,6 @@
           <agenda :leadProps="leadProps"></agenda>
       </div>
     </md-dialog>
-  </md-conteiner>
   </div>
 </template>
 
@@ -78,7 +75,7 @@ const searchByName = (items, term) => {
   return items
 }
 export default {
-  name: 'ListaClientes',
+  listaCliente: 'ListaClientes',
   props: ['leadProps'],
   components: {
     Agenda

@@ -8,7 +8,7 @@
         <md-card-content>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-datepicker id="data" name="data" date="true" time="true" :language="ptBR" v-model="form.data" :md-disabled-dates="disabledDates" :class="getValidationClass('data')">
+              <md-datepicker id="data" name="data" date="true" time="true" v-model="form.data" :md-disabled-dates="disabledDates" :class="getValidationClass('data')">
                  <label>Data Agendamento</label>
                  <span class="md-error" v-if="!$v.form.data.required">Data deve ser preenchido</span>
               </md-datepicker>
@@ -155,8 +155,14 @@ export default {
   data: () => ({
 
     disabledDates: date => {
-      const day = date.getDay()
-      return day === 6 || day === 0
+
+      // const day = date.getDay()
+
+      return ['2018-12-12']
+      // day === 6 || day === 0
+      // console.log('dia:' + date.Date())
+      // console.log('mes:' + mes)
+      //  console.log('ano:' + year)
     },
     form: {
       data: null,
@@ -177,7 +183,8 @@ export default {
     userSaved: false,
     sending: false,
     lastUser: null,
-    selectedCidade: null
+    selectedCidade: null,
+    cidades: null
   }),
   directives: {mask},
   validations: {
