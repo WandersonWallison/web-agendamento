@@ -8,7 +8,7 @@
         <md-card-content>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-datepicker id="data" name="data" date="true" time="true" v-model="form.data" :md-disabled-dates="disabledDates" :class="getValidationClass('data')">
+              <md-datepicker id="data" name="data" date="true" time="true" :md-disabled-dates="disabledDates" v-model="form.data" :class="getValidationClass('data')">
                  <label>Data Agendamento</label>
                  <span class="md-error" v-if="!$v.form.data.required">Data deve ser preenchido</span>
               </md-datepicker>
@@ -139,7 +139,6 @@
 
 <script>
 import moment from 'moment'
-// import Datepicker from 'vuejs-datepicker'
 import {mask} from 'vue-the-mask'
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
@@ -153,17 +152,8 @@ export default {
   props: ['leadProps'],
   mixins: [validationMixin],
   data: () => ({
-
-    disabledDates: date => {
-
-      const day = date.getDay()
-
-      return ['2018-12-12']
-      // day === 6 || day === 0
-      // console.log('dia:' + date.Date())
-      // console.log('mes:' + mes)
-      //  console.log('ano:' + year)
-    },
+    selectedDate: null,
+    disabledDates: this.datasAgendadas,
     form: {
       data: null,
       horario: null,
@@ -175,6 +165,8 @@ export default {
       bairro: null,
       observacao: null
     },
+    dataAgendamento: '',
+    datasAgendadas: [],
     resultAgente: null,
     listAgentes: [],
     resp: [],
@@ -258,6 +250,14 @@ export default {
           this.listAgentes.push(this.resp[index].id)
         }
       })
+    axios.get(process.env.API + 'schedule')
+      .then(response => {
+        this.dataAgendamento = response.data
+        for (let i = 0; i < this.dataAgendamento.length; i++) {
+          this.datasAgendadas.push(moment(this.dataAgendamento[i].data).format('YYYY-MM-DD'))
+        }        
+      })
+
   },
   methods: {
     getValidationClass (fieldName) {
