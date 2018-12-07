@@ -153,7 +153,7 @@ export default {
   mixins: [validationMixin],
   data: () => ({
     selectedDate: null,
-    disabledDates: this.datasAgendadas,
+    disabledDates: [],
     form: {
       data: null,
       horario: null,
@@ -255,9 +255,9 @@ export default {
         this.dataAgendamento = response.data
         for (let i = 0; i < this.dataAgendamento.length; i++) {
           this.datasAgendadas.push(moment(this.dataAgendamento[i].data).format('YYYY-MM-DD'))
-        }        
+        }
+        this.disabledDates = this.datasAgendadas
       })
-
   },
   methods: {
     getValidationClass (fieldName) {
