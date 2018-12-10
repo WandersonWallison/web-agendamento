@@ -13,7 +13,6 @@ import BootstrapVue from 'bootstrap-vue'
 import Axios from 'axios'
 import './assets/vue2-simple-calendar.css'
 import VueTheMask from 'vue-the-mask'
-import VueFilterDateFormat from 'vue-filter-date-format'
 
 Vue.config.productionTip = false
 
@@ -23,8 +22,7 @@ Vue.use(
   Vuetify,
   BootstrapVue,
   Axios,
-  VueTheMask,
-  VueFilterDateFormat
+  VueTheMask
 )
 
 /* eslint-disable no-new */

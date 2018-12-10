@@ -80,6 +80,7 @@ export default {
   },
   data () {
     return {
+
     // Array will be automatically processed with visualization.arrayToDataTable function
       chartsLib: null,
       chartData: [
@@ -183,6 +184,9 @@ export default {
     onChartReady (chart, google) {
       this.chartsLib = google
     }
+  },
+  created: {
+
   }
 }
 </script>
