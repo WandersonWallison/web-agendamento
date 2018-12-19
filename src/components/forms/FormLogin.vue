@@ -133,7 +133,7 @@ export default {
     color: #eeeeee;
   }
   .background {
-    background: #b48a42;
+    background: #5c6763;
     position: absolute;
     height: 100%;
     width: 100%;

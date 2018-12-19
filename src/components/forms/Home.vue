@@ -22,7 +22,7 @@
         </div>
       </md-app-toolbar>
       <md-app-content>
-        <Dashboard/>
+        <dashboard-teste/>
       </md-app-content>
     </md-app>
       <button-add/>
@@ -36,6 +36,7 @@ import FormAddEmpresa from './FormCadastroEmpresa.vue'
 import ButtonAdd from '../buttons/ButtonAdd.vue'
 import ListClienteAguardando from '../lists/ListClienteAguardandoContato.vue'
 import Dashboard from './FormDashbord.vue'
+import DashboardTeste from './FormDashbord.1.vue'
 import AlterSenha from './FormAlterPassword.vue'
 
 export default {
@@ -47,6 +48,7 @@ export default {
     ButtonAdd,
     ListClienteAguardando,
     Dashboard,
+    DashboardTeste,
     AlterSenha
   },
   data: () => ({

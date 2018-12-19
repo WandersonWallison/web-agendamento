@@ -1,5 +1,5 @@
 <template>
-  <div  class="card-expansion">
+  <div class="card-expansion">
     <!--<md-toolbar class="md-accent">
       <h3 class="md-title">Dashbord - Em construção</h3>
     </md-toolbar>
@@ -184,9 +184,6 @@ export default {
     onChartReady (chart, google) {
       this.chartsLib = google
     }
-  },
-  created: {
-
   }
 }
 </script>
