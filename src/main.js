@@ -13,6 +13,10 @@ import BootstrapVue from 'bootstrap-vue'
 import Axios from 'axios'
 import './assets/vue2-simple-calendar.css'
 import VueTheMask from 'vue-the-mask'
+import Vs from 'd3-vs'
+import VueGoogleCharts from 'vue-google-charts'
+import VueApexCharts from 'vue-apexcharts'
+import VCharts from 'v-charts'
 
 Vue.config.productionTip = false
 
@@ -22,7 +26,11 @@ Vue.use(
   Vuetify,
   BootstrapVue,
   Axios,
-  VueTheMask
+  VueTheMask,
+  Vs,
+  VueGoogleCharts,
+  VueApexCharts,
+  VCharts
 )
 
 /* eslint-disable no-new */

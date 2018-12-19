@@ -9,7 +9,7 @@
     <md-card md-with-hover>
       <md-ripple>
         <md-card-content>
-
+          <pie-chart/>
         </md-card-content>
       </md-ripple>
     </md-card>
@@ -64,5 +64,24 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+  .md-content {
+      width: 50%;
+      height: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .BubbleChart {
+      width: 80%;
+      height: 25%;
+    }
+    .Style-chart {
+      width: 40%;
+    }
+    .md-card {
+      width: 330px;
+      margin: 6px;
+      display: inline-block;
+      vertical-align: top;
+    }
 </style>
