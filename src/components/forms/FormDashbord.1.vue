@@ -23,20 +23,20 @@
     <br>
     <md-card>
       <md-card-content>
-
+        <bar-chart/>
       </md-card-content>
     </md-card>
     <md-card md-with-hover>
       <md-ripple>
         <md-card-content>
-
+          <bar-chart/>
         </md-card-content>
       </md-ripple>
     </md-card>
     <md-card md-with-hover>
       <md-ripple>
         <md-card-content>
-       <bar-chart/>
+          <bar-chart/>
         </md-card-content>
       </md-ripple>
     </md-card>

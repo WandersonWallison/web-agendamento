@@ -21,7 +21,7 @@
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
-        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular | maskFone }}</md-table-cell>
+        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
           <md-button class="md-icon-button md-raised md-primary" @click="atendeu">
@@ -105,7 +105,7 @@ export default {
     this.userAtual = authUser2.id
     let dataAtual = moment(Date.now()).format('YYYY-MM-DD')
 
-    axios.get(process.env.API + 'leads?where={"or":[{"momento_atual": 1},{"momento_atual":5}],"id_user_editor":' + this.userAtual + ',"data_expiracao":{"<":"' + dataAtual + '"}}')
+    axios.get(process.env.API + 'leads?where={"or":[{"momento_atual":1},{"momento_atual":5}],"id_user_editor":' + this.userAtual + ',"data_expiracao":{"<":"' + dataAtual + '"}}')
       .then(response => {
         this.users = response.data
         this.searched = response.data

@@ -133,7 +133,7 @@
         </div>
         </md-card-actions>
       </md-card>
-      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with sucesso!</md-snackbar>
+      <!--md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with sucesso!</md-snackbar -->
     </form>
   </div>
 </template>
@@ -215,7 +215,7 @@ export default {
       }
     }
   },
-  beforeUpdate() {
+  beforeUpdate () {
     this.getAgente()
   },
   mounted () {
@@ -237,36 +237,30 @@ export default {
   },
   methods: {
     pesquisacep () {
-    /*axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
-      .then(response => {
-        this.cidades = response.data
-        this.form.cidade = this.cidades
-      })*/
-    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
-      .then(response => {
-        this.cep = response.data
-        if (this.cep.bairro) {
-          this.form.bairro = this.cep.bairro
-        }
-        if (this.cep.logradouro) {
-          this.form.rua = this.cep.logradouro
-        }
-        if (this.cep.complemento) {
-          this.form.observacao = this.cep.complemento
-        }
-        if (this.cep.estado) {
-          this.form.estado = this.cep.estado
-        }
-        if (this.cep.cidade) {
-          this.form.cidade = this.cep.cidade
-        }
-      })
-      .catch(error => {
-        // alert('Erro no cadastro do Endereço')
-        console.log(error.response.data)
-      })
-  },
-
+      axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
+        .then(response => {
+          this.cep = response.data
+          if (this.cep.bairro) {
+            this.form.bairro = this.cep.bairro
+          }
+          if (this.cep.logradouro) {
+            this.form.rua = this.cep.logradouro
+          }
+          if (this.cep.complemento) {
+            this.form.observacao = this.cep.complemento
+          }
+          if (this.cep.estado) {
+            this.form.estado = this.cep.estado
+          }
+          if (this.cep.cidade) {
+            this.form.cidade = this.cep.cidade
+          }
+        })
+        .catch(error => {
+          // alert('Erro no cadastro do Endereço')
+          console.log(error.response.data)
+        })
+    },
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
       if (field) {

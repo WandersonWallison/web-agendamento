@@ -109,5 +109,4 @@ export default {
   float: right;
   margin-top: 200px;
 }
-
 </style>
