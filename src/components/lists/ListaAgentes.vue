@@ -31,7 +31,7 @@
       <md-table-row slot="md-table-row" slot-scope="{ item }" :md-disabled="item.username.includes('Stave')" md-selectable="multiple" md-auto-select>
         <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.username }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone | maskFone }}</md-table-cell>
+        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label="Cpf" md-sort-by="cpf">{{ item.cpf }}</md-table-cell>
       </md-table-row>
     </md-table>
