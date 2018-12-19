@@ -170,6 +170,6 @@ export default {
   }
   .div{
     overflow: auto;
-    /* margin-left: 2%; */
+    margin-left: 2%;
   }
 </style>
