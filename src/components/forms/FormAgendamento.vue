@@ -40,6 +40,10 @@
               <md-field :class="getValidationClass('cep')">
                 <label for="cep">CEP</label>
                 <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" />
+                <md-button class="md-icon-button md-dense md-raised md-primary" @click="pesquisacep">
+                  <md-tooltip md-direction="top">Buscar Cep</md-tooltip>
+                  <md-icon>cached</md-icon>
+                </md-button>
                 <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
               </md-field>
@@ -64,7 +68,7 @@
                   <md-option value=15>Pará</md-option>
                   <md-option value=25>Paraíba</md-option>
                   <md-option value=41>Paraná</md-option>
-                  <md-option value=26>Pernambuco</md-option>
+                  <md-option value="PE">Pernambuco</md-option>
                   <md-option value=22>Piauí</md-option>
                   <md-option value=33>Rio de Janeiro</md-option>
                   <md-option value=24>Rio Grande do Norte</md-option>
@@ -80,14 +84,11 @@
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cidade')">
-                <label for="cidade">Cidade</label>
-                <md-select name="cidade" id="cidade" v-model="selectedCidade">
-                  <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.nome">
-                    {{ cidade.nome }}
-                  </md-option>
-                </md-select>
-                <span class="md-error">Cidade não selecionado</span>
+              <md-field :class="getValidationClass('rua')">
+                <label for="rua">Cidade</label>
+                <md-input id="rua" name="rua" v-model="form.cidade" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cidade.required">Cidade deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.cidade.maxlength">Invalid Cidade</span>
               </md-field>
             </div>
           </div>
@@ -161,7 +162,7 @@ export default {
       rua: null,
       numero: null,
       estado: null,
-      cidade: [],
+      cidade: '',
       bairro: null,
       observacao: null
     },
@@ -175,8 +176,8 @@ export default {
     userSaved: false,
     sending: false,
     lastUser: null,
-    selectedCidade: null,
-    cidades: null
+    cidades: null,
+    cep: []
   }),
   directives: {mask},
   validations: {
@@ -212,35 +213,10 @@ export default {
         required,
         minLength: minLength(3)
       }
-    },
-    selectedCidade: {
-      required
     }
   },
-  beforeUpdate () {
+  beforeUpdate() {
     this.getAgente()
-    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
-      .then(response => {
-        this.cidades = response.data
-        this.form.cidade = this.cidades
-      })
-    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
-      .then(response => {
-        this.cep = response.data
-        if (this.cep.bairro) {
-          this.form.bairro = this.cep.bairro
-        }
-        if (this.cep.logradouro) {
-          this.form.rua = this.cep.logradouro
-        }
-        if (this.cep.complemento) {
-          this.form.observacao = this.cep.complemento
-        }
-      })
-      .catch(error => {
-        // alert('Erro no cadastro do Endereço')
-        console.log(error.response.data)
-      })
   },
   mounted () {
     axios.get(process.env.API + 'user?where={"id_profile": 2}')
@@ -260,6 +236,37 @@ export default {
       })
   },
   methods: {
+    pesquisacep () {
+    /*axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
+      .then(response => {
+        this.cidades = response.data
+        this.form.cidade = this.cidades
+      })*/
+    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
+      .then(response => {
+        this.cep = response.data
+        if (this.cep.bairro) {
+          this.form.bairro = this.cep.bairro
+        }
+        if (this.cep.logradouro) {
+          this.form.rua = this.cep.logradouro
+        }
+        if (this.cep.complemento) {
+          this.form.observacao = this.cep.complemento
+        }
+        if (this.cep.estado) {
+          this.form.estado = this.cep.estado
+        }
+        if (this.cep.cidade) {
+          this.form.cidade = this.cep.cidade
+        }
+      })
+      .catch(error => {
+        // alert('Erro no cadastro do Endereço')
+        console.log(error.response.data)
+      })
+  },
+
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
       if (field) {
@@ -329,6 +336,7 @@ export default {
     getAgente () {
       const finalArray = []
       let data = moment(this.form.data).format('YYYY-MM-DD')
+      console.log(data)
       axios.get(process.env.API + 'schedule/?data=' + data)
         .then(response => {
           this.results = response.data
