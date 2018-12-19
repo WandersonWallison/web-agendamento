@@ -9,7 +9,7 @@
         <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.id_lead.nome }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.id_lead.email }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.id_lead.telefone | maskFone }}</md-table-cell>
+        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.id_lead.telefone }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
           <div v-if="item.status === 0">
           <md-button class="md-icon-button md-raised md-primary" @click="aceito">

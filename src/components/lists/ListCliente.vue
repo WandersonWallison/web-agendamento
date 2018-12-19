@@ -105,7 +105,7 @@ export default {
     this.userAtual = authUser2.id
     let dataAtual = moment(Date.now()).format('YYYY-MM-DD')
 
-    axios.get(process.env.API + 'leads?where={"or":[{"momento_atual":1},{"momento_atual":5}],"id_user_editor":' + this.userAtual + ',"data_expiracao":{"<":"' + dataAtual + '"}}')
+    axios.get(process.env.API + 'leads?where={"or":[{"momento_atual":1},{"momento_atual":5}],"id_user_editor":' + this.userAtual + ',"data_expiracao":{">":"' + dataAtual + '"}}')
       .then(response => {
         this.users = response.data
         this.searched = response.data
