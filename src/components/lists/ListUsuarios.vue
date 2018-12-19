@@ -1,31 +1,55 @@
 <template>
   <div>
     <md-dialog-prompt
-      :md-active.sync="active"
-      v-model="newValuePassword"
-      md-title="Alterar Senha do Usuário"
-      md-input-maxlength="8"
-      md-input-placeholder="Digite a nova senha"
-      md-confirm-text="Alterar"
-      @md-confirm='Alterar'/>
+      :md-active.sync='active'
+      v-model='newValuePassword'
+      md-title='Alterar Senha do Usuário'
+      md-input-maxlength='8'
+      md-input-placeholder='Digite a nova senha'
+      md-confirm-text='Alterar'
+      @md-confirm='Alterar'
+    />
 
-    <md-table v-model="people" md-card @md-selected="onSelect">
+    <md-dialog-confirm
+      :md-active.sync='bloqueio'
+      md-title='Deseja Bloquear Usuário?'
+      md-confirm-text='Sim'
+      md-cancel-text='Não'
+      @md-cancel='onCancel'
+      @md-confirm='Bloquear'
+    />
+
+    <md-table v-model='people' md-card @md-selected='onSelect'>
       <md-table-toolbar>
-        <h1 class="md-title">Lista de Usuários</h1>
-        <md-button @click="active = true">
-              <md-icon  class='botao-red'>lock</md-icon>
-              <md-tooltip md-direction="top">Alterar Senha</md-tooltip>
-            </md-button >
+        <h1 class='md-title'>Lista de Usuários</h1>
+        <md-button @click='active = true'>
+          <md-icon class='botao-red'>lock</md-icon>
+          <md-tooltip md-direction='top'>Alterar Senha</md-tooltip>
+        </md-button>
+        <md-button @click='bloqueio = true'>
+          <md-icon class='botao-red'>no_encryption</md-icon>
+          <md-tooltip md-direction='top'>Bloquer Usuário</md-tooltip>
+        </md-button>
       </md-table-toolbar>
-      <span v-if="value">Value: {{ value }}</span>
 
-      <md-table-row slot="md-table-row" slot-scope="{ item }" :class="getClass(item)" md-selectable="single">
-        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
-        <md-table-cell md-label="Name" md-sort-by="name">{{ item.username }}</md-table-cell>
-        <md-table-cell md-label="Perfil" md-sort-by="id_perfil" md-numeric>{{ item.id_profile['name']}}</md-table-cell>
-        <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="telefone" md-sort-by="telefone">{{ item.telefone  }}</md-table-cell>
-        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
+      <span v-if='value'>Value: {{ value }}</span>
+
+      <md-table-row
+        slot='md-table-row'
+        slot-scope='{ item }'
+        :class='getClass(item)'
+        md-selectable='single'
+      >
+        <md-table-cell md-label='ID' md-sort-by='id' md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-cell md-label='Name' md-sort-by='name'>{{ item.username }}</md-table-cell>
+        <md-table-cell
+          md-label='Perfil'
+          md-sort-by='id_perfil'
+          md-numeric
+        >{{ item.id_profile['name']}}</md-table-cell>
+        <md-table-cell md-label='Email' md-sort-by='email'>{{ item.email }}</md-table-cell>
+        <md-table-cell md-label='telefone' md-sort-by='telefone'>{{ item.telefone }}</md-table-cell>
+        <md-table-cell md-label='Celular' md-sort-by='celular'>{{ item.celular }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -41,14 +65,13 @@ export default {
     perfil: [],
     active: false,
     newValuePassword: null,
-    showAlteraSenha: false
+    showAlteraSenha: false,
+    bloqueio: false
   }),
-
   mounted () {
-    axios.get(process.env.API + 'user?where={"ativo": true}')
-      .then(response => {
-        this.people = response.data
-      })
+    axios.get(process.env.API + 'user?where={"ativo": true}').then(response => {
+      this.people = response.data
+    })
     console.log('Usuarios: ' + this.people)
   },
   methods: {
@@ -73,13 +96,34 @@ export default {
             alert('Erro na alteração de senha')
           }
         })
+    },
+    Bloquear () {
+      console.log('Selected: ' + this.selected.id)
+
+      if (!this.selected.id) {
+        alert('Favor Selecionar um Usuário')
+      } else {
+        let user = {
+          ativo: false
+        }
+        axios.put(process.env.API + 'user/' + this.selected.id, user)
+          .then(response => {
+            this.userSaved = true
+            this.sending = false
+            this.bloqueio = false
+            window.location.reload()
+          })
+          .catch(error => {
+            console.log('Erro de Bloqueio de Usuário' + error)
+          })
+      }
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-  .md-table + .md-table {
-    margin-top: 16px
-  }
+<style lang='scss' scoped>
+.md-table + .md-table {
+  margin-top: 16px;
+}
 </style>

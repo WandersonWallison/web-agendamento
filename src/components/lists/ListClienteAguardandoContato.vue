@@ -36,7 +36,6 @@
       <md-table-row class='corrigir-texto' slot="md-table-row" slot-scope="{ item }" :md-disabled="item.nome.includes('Stave')" md-selectable="multiple" md-auto-select>
         <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
         <md-table-cell md-label="Observação" md-sort-by="observacao">{{ item.obs }}</md-table-cell>

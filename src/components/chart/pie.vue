@@ -1,11 +1,14 @@
 <template>
-  <ve-pie :data="chartData"></ve-pie>
+  <ve-pie
+    :data="chartData"
+    :after-config="afterConfig"
+  />
 </template>
 
 <script>
-import VeLine from 'v-charts/lib/pie.common'
+import VePie from 'v-charts/lib/pie.common.js'
 export default {
-  components: { VeLine },
+  components: { VePie },
   data () {
     return {
       chartData: {
