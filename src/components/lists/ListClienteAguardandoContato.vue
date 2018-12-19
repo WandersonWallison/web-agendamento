@@ -87,7 +87,7 @@ export default {
       .then(response => {
         this.people = response.data
       })
-    axios.get(process.env.API + 'user?where={"id_profile": 3}')
+    axios.get(process.env.API + 'user?where={"id_profile": 3,"ativo":true}')
       .then(response => {
         this.hunters = response.data
       })

@@ -12,7 +12,7 @@
 
     <md-dialog-confirm
       :md-active.sync='bloqueio'
-      md-title='Deseja Bloquear Usuário?'
+      md-title='Deseja Ativar ou Desativar Usuário?'
       md-confirm-text='Sim'
       md-cancel-text='Não'
       @md-cancel='onCancel'
@@ -28,7 +28,7 @@
         </md-button>
         <md-button @click='bloqueio = true'>
           <md-icon class='botao-red'>no_encryption</md-icon>
-          <md-tooltip md-direction='top'>Bloquer Usuário</md-tooltip>
+          <md-tooltip md-direction='top'>Ativar ou Desativar</md-tooltip>
         </md-button>
       </md-table-toolbar>
 
@@ -41,6 +41,8 @@
         md-selectable='single'
       >
         <md-table-cell md-label='ID' md-sort-by='id' md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-cell  md-label='Status' v-if="item.ativo === false " md-sort-by='status'>Desativado</md-table-cell>
+        <md-table-cell  md-label='Status' v-if="item.ativo === true " md-sort-by='status'>Ativo</md-table-cell>
         <md-table-cell md-label='Name' md-sort-by='name'>{{ item.username }}</md-table-cell>
         <md-table-cell
           md-label='Perfil'
@@ -50,6 +52,7 @@
         <md-table-cell md-label='Email' md-sort-by='email'>{{ item.email }}</md-table-cell>
         <md-table-cell md-label='telefone' md-sort-by='telefone'>{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label='Celular' md-sort-by='celular'>{{ item.celular }}</md-table-cell>
+
       </md-table-row>
     </md-table>
   </div>
@@ -69,7 +72,7 @@ export default {
     bloqueio: false
   }),
   mounted () {
-    axios.get(process.env.API + 'user?where={"ativo": true}').then(response => {
+    axios.get(process.env.API + 'user').then(response => {
       this.people = response.data
     })
     console.log('Usuarios: ' + this.people)
@@ -99,18 +102,28 @@ export default {
     },
     Bloquear () {
       console.log('Selected: ' + this.selected.id)
-
+      let user
+      let msn
       if (!this.selected.id) {
         alert('Favor Selecionar um Usuário')
       } else {
-        let user = {
-          ativo: false
+        if (this.selected.ativo === true) {
+          user = {
+            ativo: false
+          }
+          msn = 'Usuário Desativado'
+        } else {
+          user = {
+            ativo: true
+          }
+          msn = 'Usuário Ativado'
         }
         axios.put(process.env.API + 'user/' + this.selected.id, user)
           .then(response => {
             this.userSaved = true
             this.sending = false
             this.bloqueio = false
+            alert(msn)
             window.location.reload()
           })
           .catch(error => {
