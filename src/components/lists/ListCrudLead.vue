@@ -10,21 +10,25 @@
         <div class="md-toolbar-section-end">
           <div v-if="count == 1">
             <md-button class="md-icon-button" @click="showUpdateLead = true">
-            <md-tooltip md-direction="top">Atualizar</md-tooltip>
+            <md-tooltip md-direction="top">Atualizar Lead</md-tooltip>
             <md-icon>update</md-icon>
             </md-button>
+            <md-button class="md-icon-button" @click="showUpdateCliente = true">
+            <md-tooltip md-direction="top">Ativar Cliente</md-tooltip>
+            <md-icon>person</md-icon>
+            </md-button>
             <md-button class="md-icon-button" @click="showEndereco = true">
-            <md-tooltip md-direction="top">Endereço</md-tooltip>
+            <md-tooltip md-direction="top">Adicionar Endereço</md-tooltip>
             <md-icon>location_on</md-icon>
             </md-button>
             <md-button class="md-icon-button" @click="showConta = true">
-            <md-tooltip md-direction="top">Conta</md-tooltip>
+            <md-tooltip md-direction="top">Adicionar Conta</md-tooltip>
             <md-icon>attach_money</md-icon>
             </md-button>
 
           </div>
           <md-button @click="desativar = true" class="md-icon-button">
-            <md-tooltip md-direction="top">Destivar</md-tooltip>
+            <md-tooltip md-direction="top">Excluir</md-tooltip>
             <md-icon>delete</md-icon>
           </md-button>
         </div>
@@ -58,6 +62,11 @@
       <up-lead :selected="selected"></up-lead>
       </div>
     </md-dialog>
+    <md-dialog :md-active.sync="showUpdateCliente">
+      <div class="div">
+      <up-cliente :selected="selected"></up-cliente>
+      </div>
+    </md-dialog>
 
     <md-dialog :md-active.sync="showEndereco">
       <div class="div">
@@ -83,6 +92,7 @@
 
 <script>
 import UpLead from '../forms/FormUpdateLead.vue'
+import UpCliente from '../forms/FormUpdateCliente.vue'
 import Endereco from '../forms-endereco/FormEndereco.vue'
 import Conta from '../forms/FormConta.vue'
 import axios from 'axios'
@@ -91,6 +101,7 @@ export default {
   props: ['selected'],
   components: {
     UpLead,
+    UpCliente,
     Endereco,
     Conta
   },
@@ -98,6 +109,7 @@ export default {
     selected: [],
     people: [],
     showUpdateLead: false,
+    showUpdateCliente: false,
     showEndereco: false,
     showConta: false,
     desativar: false,
