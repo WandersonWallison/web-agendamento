@@ -23,20 +23,20 @@
     <br>
     <md-card>
       <md-card-content>
-        <bar-chart/>
+        <liquidfill-chart/>
       </md-card-content>
     </md-card>
     <md-card md-with-hover>
       <md-ripple>
         <md-card-content>
-          <bar-chart/>
+          <histogram-chart/>
         </md-card-content>
       </md-ripple>
     </md-card>
     <md-card md-with-hover>
       <md-ripple>
         <md-card-content>
-          <bar-chart/>
+          <gauge-chart/>
         </md-card-content>
       </md-ripple>
     </md-card>
@@ -47,13 +47,19 @@ import LineChart from './../chart/line.vue'
 import DoubleLineChart from './../chart/doubleLine.vue'
 import PieChart from './../chart/pie.vue'
 import BarChart from './../chart/bar.vue'
+import HistogramChart from './../chart/histogram.vue'
+import GaugeChart from './../chart/gauge.vue'
+import LiquidfillChart from './../chart/liquidfill.vue'
 export default {
   name: 'dashbord',
   components: {
     LineChart,
     DoubleLineChart,
     PieChart,
-    BarChart
+    BarChart,
+    HistogramChart,
+    GaugeChart,
+    LiquidfillChart
   },
   data () {
     return {

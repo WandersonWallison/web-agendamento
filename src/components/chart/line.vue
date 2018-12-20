@@ -11,14 +11,14 @@ export default {
   data () {
     return {
       chartData: {
-        columns: ['date', 'PV'],
+        columns: ['date', 'Valores investido'],
         rows: [
-          { 'date': '01-01', 'PV': 1231 },
-          { 'date': '01-02', 'PV': 1223 },
-          { 'date': '01-03', 'PV': 2123 },
-          { 'date': '01-04', 'PV': 4123 },
-          { 'date': '01-05', 'PV': 3123 },
-          { 'date': '01-06', 'PV': 7123 }
+          { 'date': '01-01', 'Valores investido': 1231 },
+          { 'date': '01-02', 'Valores investido': 1223 },
+          { 'date': '01-03', 'Valores investido': 2123 },
+          { 'date': '01-04', 'Valores investido': 4123 },
+          { 'date': '01-05', 'Valores investido': 3123 },
+          { 'date': '01-06', 'Valores investido': 7123 }
         ]
       }
     }
