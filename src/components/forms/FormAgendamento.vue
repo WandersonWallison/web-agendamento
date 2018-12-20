@@ -171,6 +171,7 @@ export default {
     resultAgente: null,
     listAgentes: [],
     resp: [],
+    comparativoAgendamento: [],
     agentes: [],
     results: [],
     userSaved: false,
@@ -216,17 +217,20 @@ export default {
     }
   },
   beforeUpdate () {
-    this.getAgente()
+    this.pegarAgeteAgendamento()
   },
   mounted () {
-    axios.get(process.env.API + 'user?where={"id_profile": 2}')
+    const authUser = window.localStorage.getItem('Usuario')
+    const authUser2 = JSON.parse(authUser)
+    this.userAtual = authUser2
+    axios.get(process.env.API + 'user?where={"id_profile": 2,"id_office":' + this.userAtual.id_office + '}')
       .then(response => {
         this.resp = response.data
         for (let index = 0; index < this.resp.length; index++) {
           this.listAgentes.push(this.resp[index].id)
         }
       })
-    axios.get(process.env.API + 'schedule')
+    axios.get(process.env.API + 'schedule?where={"office_schedule":' + this.userAtual.id_office + '}')
       .then(response => {
         this.dataAgendamento = response.data
         for (let i = 0; i < this.dataAgendamento.length; i++) {
@@ -284,12 +288,14 @@ export default {
       this.selectedCidade = null
     },
     saveAgenda () {
+      this.pegarAgeteAgendamento()
       let newAgenda = {
         data: moment(this.form.data).format(),
         hora: this.form.horario,
         obs: this.form.observacao,
         id_lead: this.leadProps.id,
-        agentes: this.resultAgente
+        agentes: this.resultAgente,
+        office_schedule: this.leadProps.id_office
       }
       let newEndereco = {
         rua: this.form.rua,
@@ -300,16 +306,23 @@ export default {
         uf: this.form.estado,
         schedule_address: ''
       }
+      let newLead = {
+        momento_atual: 3
+      }
       axios.post(process.env.API + 'schedule', newAgenda)
         .then(response => {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
             .then(response => {
-              alert('Agendamento cadastado com sucesso')
               this.userSaved = true
               this.sending = false
-              this.clearForm()
-              window.location.reload()
+              /* Axios de Atualizar o lead para momento_atual = 3  */
+              axios.put(process.env.API + 'leads/' + this.leadProps.id, newLead)
+                .then(response => {
+                  alert('Agendamento cadastado com sucesso')
+                  this.clearForm()
+                  window.location.reload()
+                })
             })
             .catch(error => {
               alert('Erro no cadastro de Endereco ' + error)
@@ -327,34 +340,29 @@ export default {
         this.saveAgenda()
       }
     },
-    getAgente () {
-      const finalArray = []
+    pegarAgeteAgendamento (){
+
+      if (this.listAgentes) {
+        let x = Math.floor((Math.random() * this.listAgentes.length))
+        let data = moment(this.form.data).format('YYYY-MM-DD')
+        this.resultAgente = this.listAgentes[x]
+      } else {
+        alert ('Não há Agentes cadastrado para o seu escritório')
+      }
+    }
+    /*,
+    getAgente (id) {
       let data = moment(this.form.data).format('YYYY-MM-DD')
-      console.log(data)
       axios.get(process.env.API + 'schedule/?data=' + data) //pegar agentes p escritorio
         .then(response => {
+          console.log(' resp do Get agent '+ response.data)
           this.results = response.data
-          for (let index = 0; index < this.results.length; index++) {
-            if (this.results[index].agentes) {
-              this.agentes.push(this.results[index].agentes.id)
-            }
-          }
-          this.listAgentes.forEach((element) => this.agentes.forEach((element2) => {
-            if (element !== element2) {
-              finalArray.push(element)
-            }
-          }))
-          this.resultAgente = finalArray[(finalArray.length - 1)]
         })
         .catch(error => {
           console.log(error)
         })
-        // pega agente alertorio se não vir na data
-        let max = this.results.length
-        if (this.resultAgente === 0){
-          this.resultAgente = this.listAgentes.Math.random(max)
-        }
     }
+    */
   }
 }
 </script>

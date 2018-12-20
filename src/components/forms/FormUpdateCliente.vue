@@ -87,7 +87,7 @@
 import moment from 'moment'
 import axios from 'axios'
 export default {
-  name: 'FormUpdadeLead',
+  name: 'FormUpdadeCliente',
   props: ['selected'],
   data () {
     return {
