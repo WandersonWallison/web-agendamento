@@ -331,7 +331,7 @@ export default {
       const finalArray = []
       let data = moment(this.form.data).format('YYYY-MM-DD')
       console.log(data)
-      axios.get(process.env.API + 'schedule/?data=' + data)
+      axios.get(process.env.API + 'schedule/?data=' + data) //pegar agentes p escritorio
         .then(response => {
           this.results = response.data
           for (let index = 0; index < this.results.length; index++) {
@@ -349,6 +349,11 @@ export default {
         .catch(error => {
           console.log(error)
         })
+        // pega agente alertorio se não vir na data
+        let max = this.results.length
+        if (this.resultAgente === 0){
+          this.resultAgente = this.listAgentes.Math.random(max)
+        }
     }
   }
 }

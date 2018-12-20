@@ -85,7 +85,7 @@ export default {
       celular: null,
       observacao: null
     },
-    userAtual: null,
+    userAtual: [],
     userSaved: false,
     sending: false,
     lastUser: null
@@ -117,7 +117,7 @@ export default {
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
-    this.userAtual = authUser2.id
+    this.userAtual = authUser2
   },
   methods: {
     getValidationClass (fieldName) {
@@ -144,7 +144,8 @@ export default {
         celular: this.form.celular,
         obs: this.form.observacao,
         data_criacao: moment(Date.now()).format(),
-        id_user_criador: this.userAtual
+        id_user_criador: this.userAtual.id,
+        id_office: this.userAtual.id_office
       }
       axios.post(process.env.API + 'leads', newLead)
         .then(response => {
