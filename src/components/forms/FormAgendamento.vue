@@ -217,7 +217,7 @@ export default {
     }
   },
   beforeUpdate () {
-    this.pegarAgeteAgendamento()
+    this.pegarAgenteAgendamento()
   },
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
@@ -288,7 +288,7 @@ export default {
       this.selectedCidade = null
     },
     saveAgenda () {
-      this.pegarAgeteAgendamento()
+      this.pegarAgenteAgendamento()
       let newAgenda = {
         data: moment(this.form.data).format(),
         hora: this.form.horario,
@@ -340,14 +340,13 @@ export default {
         this.saveAgenda()
       }
     },
-    pegarAgeteAgendamento (){
-
+    pegarAgenteAgendamento () {
       if (this.listAgentes) {
         let x = Math.floor((Math.random() * this.listAgentes.length))
-        let data = moment(this.form.data).format('YYYY-MM-DD')
+        // let data = moment(this.form.data).format('YYYY-MM-DD')
         this.resultAgente = this.listAgentes[x]
       } else {
-        alert ('Não há Agentes cadastrado para o seu escritório')
+        alert('Não há Agentes cadastrado para o seu escritório')
       }
     }
     /*,
