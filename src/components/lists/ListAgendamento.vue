@@ -7,6 +7,8 @@
 
       <md-table-row slot="md-table-row" class="alinhar-texto" slot-scope="{ item }" :class="getClass(item)" md-selectable="single">
         <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="Data agendamento" md-sort-by="data">{{ item.data | maskData }}</md-table-cell>
+        <md-table-cell md-label="Hora" md-sort-by="hora">{{ item.hora | maskHora }} hs</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.id_lead.nome }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.id_lead.email }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.id_lead.telefone }}</md-table-cell>
@@ -99,6 +101,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 export default {
   name: 'ListaAgendamento',
   data: () => ({
@@ -114,8 +117,63 @@ export default {
       v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
       v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
       return v
+    },
+    maskData: function (v) {
+      v = moment(v).format('DD/MM/YYYY')
+      return v
+    },
+    maskHora: function (v) {
+      switch (v) {
+        case 1:
+          v = '08:00'
+          break
+        case 2:
+          v = '09:00'
+          break
+        case 3:
+          v = '10:00'
+          break
+        case 4:
+          v = '11:00'
+          break
+        case 5:
+          v = '12:00'
+          break
+        case 6:
+          v = '13:00'
+          break
+        case 7:
+          v = '14:00'
+          break
+        case 8:
+          v = '15:00'
+          break
+        case 9:
+          v = '16:00'
+          break
+        case 10:
+          v = '17:00'
+          break
+        case 11:
+          v = '18:00'
+          break
+        case 12:
+          v = '19:00'
+          break
+        case 13:
+          v = '20:00'
+          break
+        case 14:
+          v = '21:00'
+          break
+        case 15:
+          v = '22:00'
+          break
+      }
+      return v
     }
   },
+
   mounted () {
     const userLogado = window.localStorage.getItem('Usuario')
     const user = JSON.parse(userLogado)
