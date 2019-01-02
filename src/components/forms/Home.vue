@@ -3,6 +3,9 @@
     <md-content>
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-toobar" md-elevation="1">
+        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
+          <md-icon>menu</md-icon>
+        </md-button>
         <h3 class="text-principal text-tamanho-titulo" style="flex:1">Prosperidade</h3>
         <div>
           <md-card>
@@ -16,13 +19,51 @@
               md-content='Deseja Realmente sair do sistema'
               md-confirm-text='Sim'
               md-cancel-text='Não'
-              @md-confirm='sair' />
+              @md-confirm='sair'/>
+
             <md-button class="text-principal"  @click='senha = true'>Alterar Senha</md-button>
             <md-button class="text-principal"  @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
-      <md-app-content>
+      <md-app-drawer :md-active.sync="menuVisible">
+        <md-toolbar class="md-transparent" md-elevation="0">Menu</md-toolbar>
+
+        <md-list>
+          <md-list-item @click= 'mShowDash'>
+            <md-icon>pie_chart</md-icon>
+            <span class="md-list-item-text">Dashboard</span>
+          </md-list-item>
+
+          <md-list-item @click= 'mShowHunter'>
+            <md-icon>format_list_bulleted</md-icon>
+            <span class="md-list-item-text">Atividades Hunter</span>
+          </md-list-item>
+
+          <md-list-item @click= 'mShowAgente'>
+            <md-icon>view_day</md-icon>
+            <span class="md-list-item-text">Atividades Agentes</span>
+          </md-list-item>
+
+          <md-list-item  @click= 'mShowUsuario'>
+            <md-icon>group</md-icon>
+            <span class="md-list-item-text">Usuários</span>
+          </md-list-item>
+          <md-list-item  @click='active = true'>
+            <md-icon>meeting_room</md-icon>
+            <span class="md-list-item-text">Sair</span>
+          </md-list-item>
+        </md-list>
+      </md-app-drawer>
+      <md-app-content v-if="showDash === true">
         <dashboard-teste/>
+      </md-app-content>
+      <md-app-content v-if="showUsuario === true">
+        <br/>
+        <lista-usuarios/>
+      </md-app-content>
+      <md-app-content v-if="showAtAgentes === true">
+        <br/>
+        <lista-agendamentos-realizados/>
       </md-app-content>
     </md-app>
       <button-add/>
@@ -38,6 +79,8 @@ import ListClienteAguardando from '../lists/ListClienteAguardandoContato.vue'
 import Dashboard from './FormDashbord.vue'
 import DashboardTeste from './FormDashbord.1.vue'
 import AlterSenha from './FormAlterPassword.vue'
+import ListaUsuarios from '../lists/ListUsuarios.vue'
+import ListaAgendamentosRealizados from '../lists/ListAgendamentosRealizados.vue'
 
 export default {
   name: 'Home',
@@ -49,14 +92,20 @@ export default {
     ListClienteAguardando,
     Dashboard,
     DashboardTeste,
-    AlterSenha
+    AlterSenha,
+    ListaUsuarios,
+    ListaAgendamentosRealizados
   },
   data: () => ({
     menuVisible: false,
     showDialog: false,
     active: false,
     value: null,
-    senha: false
+    senha: false,
+    showDash: true,
+    showUsuario: false,
+    showAtAgentes: false,
+    ShowAtHunter: false
   }),
   methods: {
     toggleMenu () {
@@ -66,6 +115,30 @@ export default {
       this.value = 'Sim'
       this.$router.push('/')
       window.localStorage.clear()
+    },
+    mShowUsuario () {
+      this.showDash = false
+      this.showUsuario = true
+      this.showAtAgentes = false
+      this.ShowAtHunter = false
+    },
+    mShowHunter () {
+      this.showDash = false
+      this.showUsuario = false
+      this.showAtAgentes = false
+      this.ShowAtHunter = true
+    },
+    mShowAgente () {
+      this.showDash = false
+      this.showUsuario = false
+      this.showAtAgentes = true
+      this.ShowAtHunter = false
+    },
+    mShowDash () {
+      this.showDash = true
+      this.showUsuario = false
+      this.showAtAgentes = false
+      this.ShowAtHunter = false
     }
   }
 }

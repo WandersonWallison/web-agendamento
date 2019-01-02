@@ -35,6 +35,7 @@
       <span v-if='value'>Value: {{ value }}</span>
 
       <md-table-row
+        class="alinhamento-table"
         slot='md-table-row'
         slot-scope='{ item }'
         :class='getClass(item)'
@@ -138,5 +139,8 @@ export default {
 <style lang='scss' scoped>
 .md-table + .md-table {
   margin-top: 16px;
+}
+.alinhamento-table {
+  text-align: left;
 }
 </style>

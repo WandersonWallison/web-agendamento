@@ -30,10 +30,12 @@
           <md-tooltip md-direction="left">Lista Cliente Aguardando Contato</md-tooltip>
           <md-icon>playlist_add_check</md-icon>
         </md-button>
+        <!--
         <md-button class="md-icon-button" @click="showListUsuario = true">
           <md-tooltip md-direction="left">Lista Usuarios</md-tooltip>
           <md-icon>people</md-icon>
         </md-button>
+        -->
       </md-speed-dial-content>
     </md-speed-dial>
     <md-dialog :md-active.sync="showDialog" class="div-contato">
@@ -54,9 +56,11 @@
     <md-dialog :md-active.sync="showListaClienteAguardando" class="div">
       <ListClienteAguardando/>
     </md-dialog>
+    <!--
     <md-dialog :md-active.sync="showListUsuario" class="div">
       <ListUsuario/>
     </md-dialog>
+    -->
   </div>
 </template>
 <script>
