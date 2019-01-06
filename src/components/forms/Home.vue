@@ -55,7 +55,7 @@
         </md-list>
       </md-app-drawer>
       <md-app-content v-if="showDash === true">
-        <dashboard-teste/>
+        <dashboard/>
       </md-app-content>
       <md-app-content v-if="showUsuario === true">
         <br/>
@@ -77,7 +77,6 @@ import FormAddEmpresa from './FormCadastroEmpresa.vue'
 import ButtonAdd from '../buttons/ButtonAdd.vue'
 import ListClienteAguardando from '../lists/ListClienteAguardandoContato.vue'
 import Dashboard from './FormDashbord.vue'
-import DashboardTeste from './FormDashbord.1.vue'
 import AlterSenha from './FormAlterPassword.vue'
 import ListaUsuarios from '../lists/ListUsuarios.vue'
 import ListaAgendamentosRealizados from '../lists/ListAgendamentosRealizados.vue'
@@ -91,7 +90,6 @@ export default {
     ButtonAdd,
     ListClienteAguardando,
     Dashboard,
-    DashboardTeste,
     AlterSenha,
     ListaUsuarios,
     ListaAgendamentosRealizados
