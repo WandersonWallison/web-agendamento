@@ -83,11 +83,15 @@ export default {
   }),
 
   mounted () {
-    axios.get(process.env.API + 'leads?where={"id_user_editor": 0}')
+    const authUser = window.localStorage.getItem('Usuario')
+    const authUser2 = JSON.parse(authUser)
+    this.userAtual = authUser2
+
+    axios.get(process.env.API + 'leads?where={"id_user_editor": 0,"id_office":' + this.userAtual.id_office + '}')
       .then(response => {
         this.people = response.data
       })
-    axios.get(process.env.API + 'user?where={"id_profile": 3,"ativo":true}')
+    axios.get(process.env.API + 'user?where={"id_profile": 3,"ativo":true,"id_office":' + this.userAtual.id_office + '}')
       .then(response => {
         this.hunters = response.data
       })

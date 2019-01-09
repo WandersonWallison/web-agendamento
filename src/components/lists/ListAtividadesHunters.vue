@@ -1,35 +1,61 @@
 <template>
   <div>
-    <md-table v-model="schedules" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+     <div>
+      <md-table v-model="leads" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
-        <h1 class="md-title">Agendamentos</h1>
-      </md-table-toolbar>
+          <div class="md-layout md-gutter md-small-size-100">
+            <div class="md-layout-item md-small-size-100">
+              <br/>
+              <md-field>
+                 <label for="hunter">Hunters</label>
+                <md-select name="hunter" id="hunter" v-model="selecionado">
+                  <md-option v-for="hunter in listahunters" :key="hunter.id" :value="hunter.id">
+                    {{ hunter.username }}
+                  </md-option>
+                </md-select>
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter md-small-size-100">
+            <div class="md-layout-item md-small-size-100">
+            </div>
+          </div>
+    </md-table-toolbar>
       <md-table-row  class="alinhamento-table" slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
-        <md-table-cell md-label="Agente" md-sort-by="agente">{{ item.agentes.username }}</md-table-cell>
-        <md-table-cell md-label="Data" md-sort-by="data">{{ item.data | maskData}}</md-table-cell>
-        <md-table-cell md-label="Hora" md-sort-by="hora">{{ item.hora | maskHora}}</md-table-cell>
-        <md-table-cell md-label="Escritorio" md-sort-by="escritorio">{{ item.office_schedule.nome }}</md-table-cell>
-        <md-table-cell md-label="Cliente" md-sort-by="Cliente">{{ item.id_lead.nome }}</md-table-cell>
+        <md-table-cell md-label="Cliente" md-sort-by="Cliente">{{ item.nome }}</md-table-cell>
+        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
+        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
+        <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
+        <md-table-cell md-label="Hora" md-sort-by="hora">{{ item.data_expiracao | maskData}}</md-table-cell>
       </md-table-row>
     </md-table>
+     </div>
+
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import moment from 'moment'
 export default {
-  name: 'ListaAgendamentosRealizados',
+  name: 'ListaAtividadesHunters',
   data: () => ({
-    selected: {},
-    schedules: [],
-    perfil: [],
-    active: false
+    selecionado: '',
+    leads: [],
+    hunters: [],
+    listahunters: []
   }),
   mounted () {
-    axios.get(process.env.API + 'schedule?where={"ativo":true,"status":0,"office_schedule":8}').then(response => {
-      this.schedules = response.data
+    const authUser = window.localStorage.getItem('Usuario')
+    const authUser2 = JSON.parse(authUser)
+    this.userAtual = authUser2
+    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":3,"id_office":' + this.userAtual.id_office + '}').then(response => {
+      this.listahunters = response.data
+    })
+  },
+  // corrigir antes de subi o "office_schedule":8" colocar a logica do escritorio que esta na sessão
+  updated () {
+    axios.get(process.env.API + 'leads?where={"ativo":true,"id_user_editor":' + this.selecionado + '}').then(response => {
+      this.leads = response.data
     })
   },
   methods: {
@@ -104,6 +130,15 @@ export default {
 }
 .alinhamento-table {
   text-align: left;
+}
+.md-progress-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+.alinhamento {
+  align-items: center;
 }
 
 </style>

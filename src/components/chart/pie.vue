@@ -1,7 +1,6 @@
 <template>
   <ve-pie
     :data="chartData"
-    :after-config="afterConfig"
   />
 </template>
 

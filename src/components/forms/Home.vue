@@ -65,6 +65,10 @@
         <br/>
         <lista-agendamentos-realizados/>
       </md-app-content>
+       <md-app-content v-if="ShowAtHunter === true">
+        <br/>
+        <lista-atividades-hunter/>
+      </md-app-content>
     </md-app>
       <button-add/>
     </md-content>
@@ -80,6 +84,7 @@ import Dashboard from './FormDashbord.vue'
 import AlterSenha from './FormAlterPassword.vue'
 import ListaUsuarios from '../lists/ListUsuarios.vue'
 import ListaAgendamentosRealizados from '../lists/ListAgendamentosRealizados.vue'
+import ListaAtividadesHunter from './../lists/ListAtividadesHunters.vue'
 
 export default {
   name: 'Home',
@@ -92,7 +97,8 @@ export default {
     Dashboard,
     AlterSenha,
     ListaUsuarios,
-    ListaAgendamentosRealizados
+    ListaAgendamentosRealizados,
+    ListaAtividadesHunter
   },
   data: () => ({
     menuVisible: false,
