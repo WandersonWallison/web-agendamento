@@ -1,29 +1,23 @@
 <template>
   <div class="conteudo-alinhamento conteiner">
+
+    <md-dialog-prompt
+      :md-active.sync="objLead"
+      v-model="valueLead"
+      md-title="Observação"
+      md-input-maxlength="30"
+      md-input-placeholder="Escreva a observação"
+      md-confirm-text="Salvar"
+      @md-cancel='onCancel'
+      @md-confirm='addObservacao'/>
     <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header @md-selected="onMouseOver">
+       <br/>
       <md-table-toolbar>
         <div class="md-toolbar-section-start">
-          <h1 class="md-title"></h1>
+          <h1 class='md-title'>Agendar visitas</h1>
         </div>
-        <md-field md-clearable class="md-toolbar-section-end">
-          <md-input placeholder="Buscar pelo nome..." v-model="search" @input="searchOnTable" />
-        </md-field>
-      </md-table-toolbar>
-      <!--
-      <md-table-empty-state
-        md-label="No users found"
-        :md-description="`No user found for this '${search}' query. Try a different search term or create a new user.`">
-        <md-button class="md-primary md-raised" @click="newUser">Create New User</md-button>
-      </md-table-empty-state>
-      -->
-      <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single" :class="getClass(item)">
-        <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou</md-tooltip></div></md-table-cell>
-        <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
-        <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
-        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
-        <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Status" md-sort-by="status">
+        <!-- Inicio do Menu suspenso do Hunter -->
+        <div>
           <md-button class="md-icon-button md-raised md-primary" @click="atendeu">
             <md-tooltip md-direction="top">Atendeu</md-tooltip>
             <md-icon>phone</md-icon>
@@ -44,13 +38,26 @@
             <md-tooltip md-direction="top">Não aceita visita</md-tooltip>
             <md-icon>voice_over_off</md-icon>
           </md-button>
-          </md-table-cell>
-          <md-table-cell md-label="Marcar Agendamento" md-sort-by="marcar">
-              <md-button class="md-icon-button butoom-05" @click="addSelected">
+          <md-button class="md-icon-button butoom-05" @click="addSelected">
             <md-tooltip md-direction="top">Agendamento</md-tooltip>
             <md-icon>schedule</md-icon>
           </md-button>
-          </md-table-cell>
+        </div>
+      </md-table-toolbar>
+      <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single" :class="getClass(item)">
+        <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou</md-tooltip></div></md-table-cell>
+        <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
+        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
+        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
+        <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
+        <md-table-cell md-label="Observações" md-sort-by="obsevacoes">{{ item.obs }}</md-table-cell>
+        <md-table-cell>
+          <md-button class="md-icon-button butoom-06" @click="objLead=true">
+            <md-tooltip md-direction="top">Adicionar Observação</md-tooltip>
+            <md-icon>create</md-icon>
+          </md-button>
+        </md-table-cell>
       </md-table-row>
     </md-table>
     <md-dialog :md-active.sync="showDialog" class="dialog-agendamento">
@@ -89,7 +96,9 @@ export default {
     showDialog: false,
     leadProps: {},
     data_atendimento: Date.now(),
-    userAtual: false
+    userAtual: false,
+    objLead: false,
+    valueLead: null
   }),
   filters: {
     maskFone: function (v) {
@@ -208,6 +217,25 @@ export default {
     },
     searchOnTable () {
       this.searched = searchByName(this.users, this.search)
+    },
+    addObservacao () {
+      if (this.selected) {
+        let lead = {
+          obs: this.selected.obs + ' Informações Hunter :' + this.valueLead
+        }
+        axios.put(process.env.API + 'leads/' + this.selected.id, lead)
+          .then(response => {
+            this.objLead = false
+            window.location.reload(this.listaCliente)
+          })
+          .catch(error => {
+            if (error.response.data.code === 'E_UNIQUE') {
+              alert('Erro na alteração de senha')
+            }
+          })
+      } else {
+        alert(' Por favor selecionar uma cliente \n para adicionar Observações! ')
+      }
     }
   },
   created () {
@@ -234,6 +262,9 @@ export default {
 }
 .butoom-05 {
   background-color: #15da93;
+}
+.butoom-06 {
+  background-color: darkorange;
 }
 .div {
   overflow: auto;

@@ -1,30 +1,30 @@
 <template>
   <div class="centered-container2" @keyup.enter="auth">
     <md-content class="md-elevation-3">
-
-      <div class="title2">
+      <form>
+        <div class="title2">
         <!--<img src="../../assets/marca_branca_fundo_transparente.png"> -->
         <img src="../../assets/nova_logo_ProsperidadeInvestimentos.png">
-      </div>
-      <div class="form2">
-        <md-field>
-          <label >E-mail</label>
-          <md-input v-model="login.email" autofocus></md-input>
-        </md-field>
-        <md-field md-has-password>
-          <label>Password</label>
-          <md-input v-model="login.password" type="password"></md-input>
-        </md-field>
-        <div class="input_white">{{menssage}}</div>
-
-        <br>
-      </div>
-      <div class="actions2 md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="auth">Entrar</md-button>
-      </div>
-      <div class="loading-overlay2" v-if="loading">
-        <md-progress-spinner md-mode='indeterminate' md-diameter='50' :md-stroke='4'></md-progress-spinner>
-      </div>
+        </div>
+        <div class="form2">
+          <md-field>
+            <label >E-mail</label>
+            <md-input v-model="login.email" autofocus></md-input>
+          </md-field>
+          <md-field md-has-password>
+            <label>Password</label>
+            <md-input v-model="login.password" type="password"></md-input>
+          </md-field>
+          <div class="input_white">{{menssage}}</div>
+          <br>
+        </div>
+        <div class="actions2 md-layout md-alignment-center-space-between">
+          <md-button class="md-raised md-primary" @click="auth">Entrar</md-button>
+        </div>
+        <div class="loading-overlay2" v-if="loading">
+          <md-progress-spinner md-mode='indeterminate' md-diameter='50' :md-stroke='4'></md-progress-spinner>
+        </div>
+      </form>
     </md-content>
     <div class="background" />
   </div>
