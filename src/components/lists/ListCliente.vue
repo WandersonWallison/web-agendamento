@@ -45,7 +45,7 @@
         </div>
       </md-table-toolbar>
       <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single" :class="getClass(item)">
-        <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou</md-tooltip></div></md-table-cell>
+        <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou </md-tooltip></div></md-table-cell>
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
@@ -113,7 +113,6 @@ export default {
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2.id
     let dataAtual = moment(Date.now()).format('YYYY-MM-DD')
-
     axios.get(process.env.API + 'leads?where={"or":[{"momento_atual":1},{"momento_atual":5}],"id_user_editor":' + this.userAtual + ',"data_expiracao":{">":"' + dataAtual + '"}}')
       .then(response => {
         this.users = response.data
@@ -122,81 +121,101 @@ export default {
   },
   methods: {
     atendeu () {
-      let newLead = {
-        data_atendimento: moment(this.data_atendimento).format()
+      if (this.selected.id) {
+        let newLead = {
+          data_atendimento: moment(this.data_atendimento).format()
+        }
+        axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+          .then(response => {
+            this.results = response.data
+            alert('Cliente atendeu a ligação')
+            window.location.reload()
+          })
+          .catch(error => {
+            alert('Selecione um cliente')
+            console.log(error.response.data)
+          })
+      } else {
+        alert('Por Favor \n selecione um contato para realizar solicitação! ')
       }
-      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then(response => {
-          this.results = response.data
-          alert('Cliente atendeu a ligação')
-          window.location.reload()
-        })
-        .catch(error => {
-          alert('Selecione um cliente')
-          console.log(error.response.data)
-        })
     },
     naoAtendeu () {
-      let newLead = {
-        data_criacao: moment(this.data_atendimento).format()
+      if (this.selected.id) {
+        let newLead = {
+          data_criacao: moment(this.data_atendimento).format()
+        }
+        axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+          .then(response => {
+            this.results = response.data
+            alert('Cliente Não atendeu a ligação')
+            window.location.reload()
+          })
+          .catch(error => {
+            alert('Selecione um cliente')
+            console.log(error.response.data)
+          })
+      } else {
+        alert('Por Favor \n selecione um contato para realizar solicitação! ')
       }
-      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then(response => {
-          this.results = response.data
-          alert('Cliente Não atendeu a ligação')
-          window.location.reload()
-        })
-        .catch(error => {
-          alert('Selecione um cliente')
-          console.log(error.response.data)
-        })
     },
     dadosIncorretos () {
-      let newLead = {
-        status: 'Dados Incorrtos',
-        ativo: false
+      if (this.selected.id) {
+        let newLead = {
+          status: 'Dados Incorrtos',
+          ativo: false
+        }
+        axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+          .then(response => {
+            this.results = response.data
+            alert('Cliente com os dados incorreto')
+            window.location.reload()
+          })
+          .catch(error => {
+            alert('Selecione um cliente')
+            console.log(error.response.data)
+          })
+      } else {
+        alert('Por Favor \n selecione um contato para realizar solicitação! ')
       }
-      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then(response => {
-          this.results = response.data
-          alert('Cliente com os dados incorreto')
-          window.location.reload()
-        })
-        .catch(error => {
-          alert('Selecione um cliente')
-          console.log(error.response.data)
-        })
     },
     naoPodeFalar () {
-      let newLead = {
-        data_criacao: moment(this.data_atendimento).format()
+      if (this.selected.id) {
+        let newLead = {
+          data_criacao: moment(this.data_atendimento).format()
+        }
+        axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+          .then(response => {
+            this.results = response.data
+            alert('No Momento não pode falar')
+            window.location.reload()
+          })
+          .catch(error => {
+            alert('Selecione um cliente')
+            console.log(error.response.data)
+          })
+      } else {
+        alert('Por Favor \n selecione um contato para realizar solicitação! ')
       }
-      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then(response => {
-          this.results = response.data
-          alert('No Momento não pode falar')
-          window.location.reload()
-        })
-        .catch(error => {
-          alert('Selecione um cliente')
-          console.log(error.response.data)
-        })
     },
     naoAceitaVisita () {
-      let newLead = {
-        status: 'Não Aceita Visita',
-        ativo: false
+      if (this.selected.id) {
+        let newLead = {
+          status: 'Não Aceita Visita',
+          ativo: false
+        }
+        axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+          .then(response => {
+            this.results = response.data
+            alert('Cliente Não Aceita Visita')
+            window.location.reload()
+          })
+          .catch(error => {
+            alert('Selecione um cliente')
+            console.log(error.response.data)
+          })
+      } else {
+        alert('Por Favor \n selecione um contato para realizar solicitação! ')
       }
-      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-        .then(response => {
-          this.results = response.data
-          alert('Cliente Não Aceita Visita')
-          window.location.reload()
-        })
-        .catch(error => {
-          alert('Selecione um cliente')
-          console.log(error.response.data)
-        })
     },
     getClass: ({ id }) => ({
       'md-primary': id
