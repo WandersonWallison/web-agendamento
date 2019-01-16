@@ -1,15 +1,43 @@
 <template>
   <div class="conteudo-alinhamento conteiner">
-
+    <!-- Dialog da observação  -->
     <md-dialog-prompt
       :md-active.sync="objLead"
       v-model="valueLead"
       md-title="Observação"
-      md-input-maxlength="30"
+      md-input-maxlength="40"
       md-input-placeholder="Escreva a observação"
       md-confirm-text="Salvar"
-      @md-cancel='onCancel'
       @md-confirm='addObservacao'/>
+    <!-- Fim da Observação -->
+    <!-- Dialog do reagendamento -->
+    <md-dialog :md-active.sync="showDialogReagendamento">
+      <md-dialog-title>Reagendamento</md-dialog-title>
+      <md-tabs md-dynamic-height>
+        <md-tab md-label="Cliente">
+          <p>Nome: {{ this.agendamento.nome }}</p>
+          <p>E-mail: {{ this.agendamento.email }}</p>
+          <p>Telefone: {{ this.agendamento.telefone }}</p>
+          <p>Celular: {{ this.agendamento.celular }}</p>
+        </md-tab>
+        <md-tab md-label="Agendamento">
+          <p>Codigo: {{ this.agendamento.codigo }}</p>
+          <p>Data: {{ this.agendamento.data | maskData }}</p>
+          <p>Hora: {{ this.agendamento.hora | maskHora }}</p>
+          <p>Motivo: {{ this.agendamento.motivo }}</p>
+        </md-tab>
+        <md-tab md-label="Agente">
+          <p>Nome: {{ this.agendamento.nomeAgente }}</p>
+          <p>Telefone: {{ this.agendamento.telefoneAgente }}</p>
+          <p>E-mail: {{ this.agendamento.emailAgente }}</p>
+          <p>CVM: {{ this.agendamento.cvmAgente }}</p>
+        </md-tab>
+      </md-tabs>
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialogReagendamento = false">Close</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+    <!-- Fim do reagendamento  -->
     <md-table v-model="searched" md-sort="name" md-sort-order="asc" md-card md-fixed-header @md-selected="onMouseOver">
        <br/>
       <md-table-toolbar>
@@ -45,7 +73,7 @@
         </div>
       </md-table-toolbar>
       <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single" :class="getClass(item)">
-        <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou </md-tooltip></div></md-table-cell>
+        <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5" @click="showDialogReagendamento2"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou. Clique duas vezes para mais detalhes </md-tooltip></div></md-table-cell>
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
@@ -67,7 +95,6 @@
     </md-dialog>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import moment from 'moment'
@@ -75,7 +102,6 @@ import Agenda from '../forms/FormAgendamento.vue'
 const toLower = text => {
   return text.toString().toLowerCase()
 }
-
 const searchByName = (items, term) => {
   if (term) {
     return items.filter(item => toLower(item.nome).includes(toLower(term)))
@@ -98,13 +124,84 @@ export default {
     data_atendimento: Date.now(),
     userAtual: false,
     objLead: false,
-    valueLead: null
+    valueLead: null,
+    showDialogReagendamento: false,
+    agendamento: {
+      nome: null,
+      email: null,
+      telefone: null,
+      celular: null,
+      codigo: null,
+      data: null,
+      hora: null,
+      motivo: null,
+      idAgente: null,
+      nomeAgente: null,
+      telefoneAgente: null,
+      emailAgente: null,
+      cvmAgente: null
+    }
+
   }),
   filters: {
     maskFone: function (v) {
       v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
       v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
       v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
+      return v
+    },
+    maskData: function (v) {
+      v = moment(v).format('DD/MM/YYYY')
+      return v
+    },
+    maskHora: function (v) {
+      switch (v) {
+        case 1:
+          v = '08:00'
+          break
+        case 2:
+          v = '09:00'
+          break
+        case 3:
+          v = '10:00'
+          break
+        case 4:
+          v = '11:00'
+          break
+        case 5:
+          v = '12:00'
+          break
+        case 6:
+          v = '13:00'
+          break
+        case 7:
+          v = '14:00'
+          break
+        case 8:
+          v = '15:00'
+          break
+        case 9:
+          v = '16:00'
+          break
+        case 10:
+          v = '17:00'
+          break
+        case 11:
+          v = '18:00'
+          break
+        case 12:
+          v = '19:00'
+          break
+        case 13:
+          v = '20:00'
+          break
+        case 14:
+          v = '21:00'
+          break
+        case 15:
+          v = '22:00'
+          break
+      }
       return v
     }
   },
@@ -217,6 +314,36 @@ export default {
         alert('Por Favor \n selecione um contato para realizar solicitação! ')
       }
     },
+    showDialogReagendamento2 () {
+      this.agendamento.nome = this.selected.nome
+      this.agendamento.email = this.selected.email
+      this.agendamento.telefone = this.selected.telefone
+      this.agendamento.celular = this.selected.celular
+      this.agendamento.idAgente = this.selected.agendamentos[0].agentes
+      // -------------------------------------------------------------
+      this.agendamento.codigo = this.selected.agendamentos[0].id
+      this.agendamento.data = this.selected.agendamentos[0].data
+      this.agendamento.hora = this.selected.agendamentos[0].hora
+      this.agendamento.motivo = this.selected.agendamentos[0].motivo
+
+      axios.get(process.env.API + 'user/' + this.agendamento.idAgente)
+        .then(response => {
+          this.agendamento.nomeAgente = response.data.username
+          this.agendamento.cvmAgente = response.data.cvm
+          this.agendamento.emailAgente = response.data.email
+          this.agendamento.telefoneAgente = response.data.telefone
+        })
+        .catch(error => {
+          alert('erro na busca de agente' + error)
+        })
+
+      if (this.selected.id) {
+        this.showDialogReagendamento = true
+      } else {
+        this.showDialogReagendamento = false
+        alert('Selecione o contato para realizar a visualização!!')
+      }
+    },
     getClass: ({ id }) => ({
       'md-primary': id
     }),
@@ -297,5 +424,8 @@ export default {
 }
 .dialog-agendamento {
   width: 70%;
+}
+.md-dialog {
+  max-width: 768px;
 }
 </style>
