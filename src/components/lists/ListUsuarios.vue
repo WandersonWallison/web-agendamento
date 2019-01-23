@@ -74,13 +74,11 @@ export default {
     escritorioId: ''
   }),
   mounted () {
-
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.escritorioId = authUser2.id_office
 
-    axios.get(process.env.API + 'user?where={"ativo": true,"id_office":' + this.escritorioId + '}')
-    .then(response => {
+    axios.get(process.env.API + 'user?where={"ativo": true,"id_office":' + this.escritorioId + '}').then(response => {
       this.people = response.data
     })
     console.log('Usuarios: ' + this.people)
