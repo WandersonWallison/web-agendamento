@@ -1,6 +1,6 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  API: '"http://104.248.7.221:5555/"'
+  API: '"http://165.227.188.44:5555/"'
 
 };
