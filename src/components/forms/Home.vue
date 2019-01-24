@@ -4,7 +4,7 @@
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-toobar" md-elevation="1">
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-          <md-icon>menu</md-icon>
+          <md-icon style="color:white;">menu</md-icon>
         </md-button>
         <h3 class="text-principal text-tamanho-titulo" style="flex:1">Prosperidade</h3>
         <div>
