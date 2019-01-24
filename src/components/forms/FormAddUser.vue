@@ -591,8 +591,8 @@ export default {
       // console.log('CVM: ' + this.form.cvm)
 
       if (this.form.profile !== 3) {
-        if ( this.form.cvm === '') {
-           return false
+        if (this.form.cvm === '') {
+          return false
         } else {
           return true
         }
