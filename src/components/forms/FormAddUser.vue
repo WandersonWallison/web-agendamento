@@ -590,8 +590,12 @@ export default {
       // console.log('Profile: ' + this.form.profile)
       // console.log('CVM: ' + this.form.cvm)
 
-      if (this.form.profile !== 3 && this.form.cvm === '') {
-        return false
+      if (this.form.profile !== 3) {
+        if ( this.form.cvm === '') {
+           return false
+        } else {
+          return true
+        }
       } else {
         return true
       }
