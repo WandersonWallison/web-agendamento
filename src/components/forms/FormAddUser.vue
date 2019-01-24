@@ -317,7 +317,6 @@ export default {
       escolaridade: '',
       genero: null,
       profile: null,
-      escritorio: null,
       office: null,
       selected: null
     },
@@ -483,7 +482,6 @@ export default {
       this.form.observacao = null
       this.form.profile = null
       this.form.office = null
-      this.escritorio = null
       this.selectedCidade = null
     },
     saveEmpresa () {
@@ -590,7 +588,7 @@ export default {
       // console.log('Profile: ' + this.form.profile)
       // console.log('CVM: ' + this.form.cvm)
 
-      if (this.form.profile !== 3) {
+      if (this.form.profile !== '3') {
         if (this.form.cvm === '') {
           return false
         } else {
