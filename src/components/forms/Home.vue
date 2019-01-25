@@ -48,6 +48,12 @@
             <md-icon>group</md-icon>
             <span class="md-list-item-text">Usuários</span>
           </md-list-item>
+
+          <md-list-item  @click= 'mShowOffice'>
+            <md-icon>business_center</md-icon>
+            <span class="md-list-item-text">Escritórios</span>
+          </md-list-item>
+
           <md-list-item  @click='active = true'>
             <md-icon>meeting_room</md-icon>
             <span class="md-list-item-text">Sair</span>
@@ -60,6 +66,10 @@
       <md-app-content v-if="showUsuario === true">
         <br/>
         <lista-usuarios/>
+      </md-app-content>
+      <md-app-content v-if="showOffice === true">
+        <br/>
+        <lista-office/>
       </md-app-content>
       <md-app-content v-if="showAtAgentes === true">
         <br/>
@@ -85,6 +95,7 @@ import AlterSenha from './FormAlterPassword.vue'
 import ListaUsuarios from '../lists/ListUsuarios.vue'
 import ListaAgendamentosRealizados from '../lists/ListAgendamentosRealizados.vue'
 import ListaAtividadesHunter from './../lists/ListAtividadesHunters.vue'
+import ListaOffice from './../lists/ListOfices.vue'
 
 export default {
   name: 'Home',
@@ -98,7 +109,8 @@ export default {
     AlterSenha,
     ListaUsuarios,
     ListaAgendamentosRealizados,
-    ListaAtividadesHunter
+    ListaAtividadesHunter,
+    ListaOffice
   },
   data: () => ({
     menuVisible: false,
@@ -109,7 +121,8 @@ export default {
     showDash: true,
     showUsuario: false,
     showAtAgentes: false,
-    ShowAtHunter: false
+    ShowAtHunter: false,
+    showOffice: false
   }),
   methods: {
     toggleMenu () {
@@ -125,24 +138,35 @@ export default {
       this.showUsuario = true
       this.showAtAgentes = false
       this.ShowAtHunter = false
+      this.showOffice = false
+    },
+    mShowOffice () {
+      this.showOffice = true
+      this.showDash = false
+      this.showUsuario = false
+      this.showAtAgentes = false
+      this.ShowAtHunter = false
     },
     mShowHunter () {
       this.showDash = false
       this.showUsuario = false
       this.showAtAgentes = false
       this.ShowAtHunter = true
+      this.showOffice = false
     },
     mShowAgente () {
       this.showDash = false
       this.showUsuario = false
       this.showAtAgentes = true
       this.ShowAtHunter = false
+      this.showOffice = false
     },
     mShowDash () {
       this.showDash = true
       this.showUsuario = false
       this.showAtAgentes = false
       this.ShowAtHunter = false
+      this.showOffice = false
     }
   }
 }

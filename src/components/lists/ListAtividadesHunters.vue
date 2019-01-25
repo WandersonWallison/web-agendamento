@@ -2,12 +2,12 @@
   <div>
      <div>
       <md-table v-model="leads" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-      <md-table-toolbar>
+        <md-table-toolbar>
           <div class="md-layout md-gutter md-small-size-100">
             <div class="md-layout-item md-small-size-100">
               <br/>
               <md-field>
-                 <label for="hunter">Hunters</label>
+                <label for="hunter">Hunters</label>
                 <md-select name="hunter" id="hunter" v-model="selecionado">
                   <md-option v-for="hunter in listahunters" :key="hunter.id" :value="hunter.id">
                     {{ hunter.username }}
@@ -20,7 +20,7 @@
             <div class="md-layout-item md-small-size-100">
             </div>
           </div>
-    </md-table-toolbar>
+      </md-table-toolbar>
       <md-table-row  class="alinhamento-table" slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Cliente" md-sort-by="Cliente">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>

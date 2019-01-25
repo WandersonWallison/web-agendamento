@@ -81,7 +81,6 @@ export default {
     axios.get(process.env.API + 'user?where={"ativo": true,"id_office":' + this.escritorioId + '}').then(response => {
       this.people = response.data
     })
-    console.log('Usuarios: ' + this.people)
   },
   methods: {
     getClass: ({ id }) => ({
