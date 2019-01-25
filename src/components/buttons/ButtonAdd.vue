@@ -23,11 +23,11 @@
           <md-icon>business</md-icon>
         </md-button>
         <md-button class="md-icon-button" @click="showListaParaAgendamento = true">
-          <md-tooltip md-direction="left">Lista de Contatos</md-tooltip>
+          <md-tooltip md-direction="left">Lista Geral</md-tooltip>
           <md-icon>list_alt</md-icon>
         </md-button>
         <md-button class="md-icon-button" @click="showListaClienteAguardando = true">
-          <md-tooltip md-direction="left">Lista Cliente Aguardando Contato</md-tooltip>
+          <md-tooltip md-direction="left">Lista Leads</md-tooltip>
           <md-icon>playlist_add_check</md-icon>
         </md-button>
         <!--

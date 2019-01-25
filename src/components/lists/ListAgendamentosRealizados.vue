@@ -1,7 +1,7 @@
 <template>
   <div>
      <div>
-       <md-table v-model="schedules" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+      <md-table v-model="schedules" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
           <div class="md-layout md-gutter md-small-size-100">
             <div class="md-layout-item md-small-size-100">
