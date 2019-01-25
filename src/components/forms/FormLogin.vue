@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import axios from 'axios'
 
 export default {
@@ -42,12 +43,33 @@ export default {
         email: '',
         password: ''
       },
+      leads: [],
       results: null,
       inicio: null,
       menssage: null
     }
   },
+  mounted () {
+    axios.get(process.env.API + 'leads?where={"data_expiracao":{">":"2018/12/31"}}')
+      .then(response => {
+        this.leads = response.data
+      })
+  },
   methods: {
+    validaDataExpiracao () {
+      let newLead = {
+        id_user_editor: 0,
+        momento_atual: 1,
+        data_expiracao: moment('0000/00/00').format(),
+        // obs: ''
+      }
+      for (var i = 0; i <= this.leads.length; i++) {
+        newLead.obs = this.leads[i].obs + ' Hunter: Não atuou no lead'
+        axios.put(process.env.API + 'leads/' + this.leads[i].id, newLead)
+          .then(response => {
+          })
+      }
+    },
     auth () {
       this.menssage = null
       this.results = null
@@ -66,16 +88,18 @@ export default {
             } else {
               // this.results = response.data.message
               window.localStorage.setItem('Usuario', JSON.stringify(response.data.user))
-
               if (response.data.user.id_profile === 1) {
                 this.$router.push('/home')
                 this.loading = false
+                this.validaDataExpiracao()
               } else if (response.data.user.id_profile === 3) {
                 this.$router.push('/agendamento')
                 this.loading = false
+                this.validaDataExpiracao()
               } else {
                 this.$router.push('/visita')
                 this.loading = false
+                this.validaDataExpiracao()
               }
             }
           })
