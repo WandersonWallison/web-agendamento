@@ -22,11 +22,18 @@
           </div>
       </md-table-toolbar>
       <md-table-row  class="alinhamento-table" slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="Cliente" md-sort-by="Cliente">{{ item.nome }}</md-table-cell>
+        <md-table-cell md-label="Cliente" md-sort-by="nome">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Hora" md-sort-by="hora">{{ item.data_expiracao | maskData}}</md-table-cell>
+        <md-table-cell md-label="Data Expiração" md-sort-by="data_expiracao">{{ item.data_expiracao | maskData }}</md-table-cell>
+        <md-table-cell md-label="Status" md-sort-by="status">
+            <div v-if="item.status === 'Não Atendeu'"><md-icon>voice_over_off</md-icon>{{ ' - ' + item.status }}</div>
+            <div v-if="item.status === 'Dados Incorretos'"><md-icon>mobile_off</md-icon>{{ ' - ' +item.status }}</div>
+            <div v-if="item.status === 'Não pode falar'"><md-icon>mobile_friendly</md-icon>{{ ' - ' + item.status }}</div>
+            <div v-if="item.status === 'Não Aceita Visita'"><md-icon>work_off</md-icon>{{ ' - ' + item.status }}</div>
+            <div v-if="item.status === ''"><md-icon>description</md-icon>{{ ' - Aguardado Atendimento' }}</div>
+        </md-table-cell>
       </md-table-row>
     </md-table>
      </div>

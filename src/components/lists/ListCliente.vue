@@ -239,7 +239,8 @@ export default {
     naoAtendeu () {
       if (this.selected.id) {
         let newLead = {
-          data_criacao: moment(this.data_atendimento).format()
+          data_criacao: moment(this.data_atendimento).format(),
+          status: 'Não Atendeu'
         }
         axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
           .then(response => {
@@ -258,7 +259,7 @@ export default {
     dadosIncorretos () {
       if (this.selected.id) {
         let newLead = {
-          status: 'Dados Incorrtos',
+          status: 'Dados Incorretos',
           ativo: false
         }
         axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
@@ -278,7 +279,8 @@ export default {
     naoPodeFalar () {
       if (this.selected.id) {
         let newLead = {
-          data_criacao: moment(this.data_atendimento).format()
+          data_criacao: moment(this.data_atendimento).format(),
+          status: 'Não pode falar'
         }
         axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
           .then(response => {
