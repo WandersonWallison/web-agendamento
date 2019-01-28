@@ -1,4 +1,5 @@
 <script>
+import moment from 'moment'
 export default {
   filters: {
     maskData: function (v) {
@@ -55,6 +56,94 @@ export default {
       }
       return v
     }
+  },
+  methods: {
+    estadoBrasileiro: function (v) {
+      v = v.toUpperCase(v)
+
+      switch (v) {
+        case 'AC':
+          v = 'Acre'
+          break
+        case 'AL':
+          v = 'Alagoas'
+          break
+        case 'AP':
+          v = 'Amapá'
+          break
+        case 'AM':
+          v = 'Amazonas'
+          break
+        case 'BA':
+          v = 'Bahia'
+          break
+        case 'CE':
+          v = 'Ceará'
+          break
+        case 'DF':
+          v = 'Distrito Federal'
+          break
+        case 'GO':
+          v = 'Goiás'
+          break
+        case 'MA':
+          v = 'Maranhão'
+          break
+        case 'MT':
+          v = 'Mato Grosso'
+          break
+        case 'MS':
+          v = 'Mato Grosso do Sul'
+          break
+        case 'MG':
+          v = 'Minas Gerais'
+          break
+        case 'PA':
+          v = 'Pará'
+          break
+        case 'PB':
+          v = 'Paraíba'
+          break
+        case 'PR':
+          v = 'Paraná'
+          break
+        case 'PE':
+          v = 'Pernambuco'
+          break
+        case 'PI':
+          v = 'Piauí'
+          break
+        case 'RJ':
+          v = 'Rio de Janeiro'
+          break
+        case 'RN':
+          v = 'Rio Grande do Norte'
+          break
+        case 'RS':
+          v = 'Rio Grande do Sul'
+          break
+        case 'RO':
+          v = 'Rondônia'
+          break
+        case 'RR':
+          v = 'Roraima'
+          break
+        case 'SC':
+          v = 'Santa Catarina'
+          break
+        case 'SP':
+          v = 'São Paulo'
+          break
+        case 'SE':
+          v = 'Sergipe'
+          break
+        case 'TO':
+          v = 'Tocantins'
+          break
+      }
+      return v
+    }
+
   }
 }
 </script>

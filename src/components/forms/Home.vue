@@ -13,13 +13,13 @@
               <alter-senha/>
             </md-dialog>
           </md-card>
-            <md-dialog-confirm
-              :md-active.sync='active'
-              md-title='Prosperidade'
-              md-content='Deseja Realmente sair do sistema'
-              md-confirm-text='Sim'
-              md-cancel-text='Não'
-              @md-confirm='sair'/>
+          <md-dialog-confirm
+            :md-active.sync='active'
+            md-title='Prosperidade'
+            md-content='Deseja Realmente sair do sistema'
+            md-confirm-text='Sim'
+            md-cancel-text='Não'
+            @md-confirm='sair'/>
 
             <md-button class="text-principal"  @click='senha = true'>Alterar Senha</md-button>
             <md-button class="text-principal"  @click='active = true'>Sair</md-button>

@@ -4,6 +4,11 @@
        <md-app-toolbar class="md-toobar" md-elevation="1">
         <h3 class="text-principal text-tamanho-titulo" style="flex:1">Prosperidade</h3>
         <div>
+          <md-card>
+            <md-dialog :md-active.sync="senha" class="divSenha">
+              <alter-senha/>
+            </md-dialog>
+          </md-card>
           <md-dialog-confirm
             :md-active.sync='active'
             md-title='Prosperidade'
@@ -11,6 +16,8 @@
             md-confirm-text='Sim'
             md-cancel-text='Não'
             @md-confirm='sair' />
+
+          <md-button class="text-principal" @click='senha = true'>Alterar Senha</md-button>
           <md-button class="text-principal" @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
@@ -23,17 +30,20 @@
 <script>
 
 import ListCliente from '../lists/ListCliente.vue'
+import AlterSenha from './FormAlterPassword.vue'
 
 export default {
   name: 'Hunter',
   components: {
-    ListCliente
+    ListCliente,
+    AlterSenha
   },
   data: () => ({
     // menuVisible: false,
     showDialog: false,
     active: false,
-    value: null
+    value: null,
+    senha: false
   }),
   methods: {
     sair () {
@@ -80,5 +90,9 @@ export default {
   font-weight: 500;
   letter-spacing: .005em;
   line-height: 26px;
+}.divSenha{
+  display: flex;
+  height: 55%;
+  width: 22%;
 }
 </style>

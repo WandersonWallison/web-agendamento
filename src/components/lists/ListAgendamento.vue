@@ -29,37 +29,28 @@
   <div v-if="selected">
      <div class="viewport">
       <md-toolbar :md-elevation="1">
-        <span class="md-title">Contato</span>
+        <span class="md-title">Detalhamento</span>
       </md-toolbar>
 
-      <md-list class="md-double-line">
-        <md-subheader>Phone</md-subheader>
-
+      <md-list>
         <md-list-item>
           <md-icon class="md-primary">phone</md-icon>
-
           <div class="md-list-item-text">
             <span>{{ selected.id_lead.telefone }}</span>
-            <span>Mobile</span>
           </div>
-
-          <md-button class="md-icon-button md-list-action">
-            <md-icon>sms</md-icon>
-          </md-button>
         </md-list-item>
-
-        <md-divider></md-divider>
-        <md-subheader>Email</md-subheader>
-
         <md-list-item>
           <md-icon class="md-primary">email</md-icon>
-
           <div class="md-list-item-text">
             <span>{{ selected.id_lead.email }}</span>
-            <span>Personal</span>
           </div>
         </md-list-item>
-
+        <md-list-item>
+          <md-icon class="md-primary">description</md-icon>
+          <div class="md-list-item-text">
+            <span>{{ selected.id_lead.obs }}</span>
+          </div>
+        </md-list-item>
       </md-list>
     </div>
 
@@ -70,27 +61,20 @@
 
       <md-list>
         <md-list-item>
-          <md-icon>map</md-icon>
+          <md-icon class="md-primary">person_pin</md-icon>
           <span class="md-list-item-text">{{ selected.endereco[0].logradouro }}</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>map</md-icon>
-          <span class="md-list-item-text">{{ selected.endereco[0].cidade }}</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>map</md-icon>
-          <span class="md-list-item-text">{{ selected.endereco[0].bairro }}</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>map</md-icon>
+          <md-icon class="md-primary">person_pin</md-icon>
           <span class="md-list-item-text">{{ selected.endereco[0].numero }}</span>
         </md-list-item>
         <md-list-item>
-          <md-icon>map</md-icon>
-          <span class="md-list-item-text">{{ selected.endereco[0].estado }}</span>
+          <md-icon class="md-primary">person_pin</md-icon>
+          <span class="md-list-item-text">{{ selected.endereco[0].bairro }}</span>
+          <md-icon class="md-primary">person_pin</md-icon>
+          <span class="md-list-item-text">{{ selected.endereco[0].cidade }}</span>
+        </md-list-item>
+        <md-list-item>
+          <md-icon class="md-primary">person_pin</md-icon>
+          <span class="md-list-item-text">{{ selected.endereco[0].uf | estadosBrasileiro }}</span>
         </md-list-item>
 
       </md-list>
@@ -109,7 +93,8 @@ export default {
     schedules: [],
     id_usuario: null,
     id_lead: null,
-    results: []
+    results: [],
+    formataca: ''
   }),
   filters: {
     maskFone: function (v) {
@@ -121,6 +106,9 @@ export default {
     maskData: function (v) {
       v = moment(v).format('DD/MM/YYYY')
       return v
+    },
+    estado: function (v) {
+
     },
     maskHora: function (v) {
       switch (v) {
@@ -168,6 +156,91 @@ export default {
           break
         case 15:
           v = '22:00'
+          break
+      }
+      return v
+    },
+    estadosBrasileiro: function (v) {
+      v = v.toUpperCase(v)
+
+      switch (v) {
+        case 'AC':
+          v = 'Acre'
+          break
+        case 'AL':
+          v = 'Alagoas'
+          break
+        case 'AP':
+          v = 'Amapá'
+          break
+        case 'AM':
+          v = 'Amazonas'
+          break
+        case 'BA':
+          v = 'Bahia'
+          break
+        case 'CE':
+          v = 'Ceará'
+          break
+        case 'DF':
+          v = 'Distrito Federal'
+          break
+        case 'GO':
+          v = 'Goiás'
+          break
+        case 'MA':
+          v = 'Maranhão'
+          break
+        case 'MT':
+          v = 'Mato Grosso'
+          break
+        case 'MS':
+          v = 'Mato Grosso do Sul'
+          break
+        case 'MG':
+          v = 'Minas Gerais'
+          break
+        case 'PA':
+          v = 'Pará'
+          break
+        case 'PB':
+          v = 'Paraíba'
+          break
+        case 'PR':
+          v = 'Paraná'
+          break
+        case 'PE':
+          v = 'Pernambuco'
+          break
+        case 'PI':
+          v = 'Piauí'
+          break
+        case 'RJ':
+          v = 'Rio de Janeiro'
+          break
+        case 'RN':
+          v = 'Rio Grande do Norte'
+          break
+        case 'RS':
+          v = 'Rio Grande do Sul'
+          break
+        case 'RO':
+          v = 'Rondônia'
+          break
+        case 'RR':
+          v = 'Roraima'
+          break
+        case 'SC':
+          v = 'Santa Catarina'
+          break
+        case 'SP':
+          v = 'São Paulo'
+          break
+        case 'SE':
+          v = 'Sergipe'
+          break
+        case 'TO':
+          v = 'Tocantins'
           break
       }
       return v

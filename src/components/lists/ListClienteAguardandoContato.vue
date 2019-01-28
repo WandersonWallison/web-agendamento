@@ -1,8 +1,8 @@
 <template>
   <div>
-    <md-table v-model="people" md-card @md-selected="onSelect">
+    <md-table v-model="people" md-card @md-selected="onSelect" md-fixed-header>
       <md-table-toolbar>
-        <h1 class="md-title">Lista de Contatos para Hunter</h1>
+        <h1 class="md-title">Lista de Leads</h1>
       </md-table-toolbar>
 
       <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
@@ -87,7 +87,7 @@ export default {
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
 
-    axios.get(process.env.API + 'leads?where={"id_user_editor": 0,"id_office":' + this.userAtual.id_office + '}')
+    axios.get(process.env.API + 'leads?where={"id_user_editor": 0,"id_office":' + this.userAtual.id_office + '} & limit=1000')
       .then(response => {
         this.people = response.data
       })

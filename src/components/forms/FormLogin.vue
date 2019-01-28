@@ -60,7 +60,7 @@ export default {
       let newLead = {
         id_user_editor: 0,
         momento_atual: 1,
-        data_expiracao: moment('0000/00/00').format(),
+        data_expiracao: moment('0000/00/00').format()
         // obs: ''
       }
       for (var i = 0; i <= this.leads.length; i++) {
