@@ -19,7 +19,7 @@
       @md-confirm='Bloquear'
     />
 
-    <md-table v-model='people' md-card @md-selected='onSelect'>
+    <md-table v-model='people' md-card @md-selected='onSelect' md-fixed-header>
       <md-table-toolbar>
         <h1 class='md-title'>Lista de Usuários</h1>
         <md-button @click='active = true'>

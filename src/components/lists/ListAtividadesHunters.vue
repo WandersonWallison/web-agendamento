@@ -3,6 +3,7 @@
      <div>
       <md-table v-model="leads" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
         <md-table-toolbar>
+          <h1 class="md-title">Atividades dos Hunters</h1>
           <div class="md-layout md-gutter md-small-size-100">
             <div class="md-layout-item md-small-size-100">
               <br/>

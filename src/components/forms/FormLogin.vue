@@ -44,14 +44,14 @@ export default {
         password: ''
       },
       leads: [],
-      data: moment(Date.now()).format('YYYY/MM/DD'),
+      dataAtual: moment(Date.now()).format('YYYY/MM/DD'),
       results: null,
       inicio: null,
       menssage: null
     }
   },
   mounted () {
-    axios.get(process.env.API + 'leads?where={"data_expiracao":{">":'+ data +'}}')
+    axios.get(process.env.API + 'leads?where={"data_expiracao":{">":' + this.dataAtual + '}}')
       .then(response => {
         this.leads = response.data
       })
