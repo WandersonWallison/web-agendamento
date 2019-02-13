@@ -145,11 +145,8 @@ export default {
       window.localStorage.clear()
     },
     mShowUsuario () {
-      this.showDash = false
+      this.inativaComponentes()
       this.showUsuario = true
-      this.showAtAgentes = false
-      this.ShowAtHunter = false
-      this.showOffice = false
       this.menuVisible = false
     },
     mShowOffice () {
