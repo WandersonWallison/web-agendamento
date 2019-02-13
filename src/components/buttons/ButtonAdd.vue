@@ -10,6 +10,7 @@
           <md-tooltip md-direction="left">Contato</md-tooltip>
           <md-icon>contact_phone</md-icon>
         </md-button>
+        <!--
         <md-button class="md-icon-button" @click="showAgente = true">
           <md-tooltip md-direction="left">Usuário</md-tooltip>
           <md-icon>person_add</md-icon>
@@ -22,6 +23,7 @@
           <md-tooltip md-direction="left">Empresa</md-tooltip>
           <md-icon>business</md-icon>
         </md-button>
+        -->
         <md-button class="md-icon-button" @click="showListaParaAgendamento = true">
           <md-tooltip md-direction="left">Lista Geral</md-tooltip>
           <md-icon>list_alt</md-icon>

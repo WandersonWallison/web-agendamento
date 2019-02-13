@@ -54,10 +54,16 @@
             <span class="md-list-item-text">Escritórios</span>
           </md-list-item>
 
+          <md-list-item  @click= 'mShowCompany'>
+            <md-icon>business</md-icon>
+            <span class="md-list-item-text">Empresa</span>
+          </md-list-item>
+
           <md-list-item  @click='active = true'>
             <md-icon>meeting_room</md-icon>
             <span class="md-list-item-text">Sair</span>
           </md-list-item>
+
         </md-list>
       </md-app-drawer>
       <md-app-content v-if="showDash === true">
@@ -75,9 +81,13 @@
         <br/>
         <lista-agendamentos-realizados/>
       </md-app-content>
-       <md-app-content v-if="ShowAtHunter === true">
+      <md-app-content v-if="ShowAtHunter === true">
         <br/>
         <lista-atividades-hunter/>
+      </md-app-content>
+      <md-app-content v-if="ShowAtEmpresa === true">
+        <br/>
+        <list-empresa/>
       </md-app-content>
     </md-app>
       <button-add/>
@@ -87,7 +97,7 @@
 <script>
 import FormAddUser from './FormAddUser.vue'
 import ListCliente from '../lists/ListCliente.vue'
-import FormAddEmpresa from './FormCadastroEmpresa.vue'
+import ListEmpresa from '../lists/ListCompany.vue'
 import ButtonAdd from '../buttons/ButtonAdd.vue'
 import ListClienteAguardando from '../lists/ListClienteAguardandoContato.vue'
 import Dashboard from './FormDashbord.vue'
@@ -102,7 +112,7 @@ export default {
   components: {
     FormAddUser,
     ListCliente,
-    FormAddEmpresa,
+    ListEmpresa,
     ButtonAdd,
     ListClienteAguardando,
     Dashboard,
@@ -122,7 +132,8 @@ export default {
     showUsuario: false,
     showAtAgentes: false,
     ShowAtHunter: false,
-    showOffice: false
+    showOffice: false,
+    ShowAtEmpresa: false
   }),
   methods: {
     toggleMenu () {
@@ -139,35 +150,42 @@ export default {
       this.showAtAgentes = false
       this.ShowAtHunter = false
       this.showOffice = false
+      this.menuVisible = false
     },
     mShowOffice () {
+      this.inativaComponentes()
       this.showOffice = true
-      this.showDash = false
-      this.showUsuario = false
-      this.showAtAgentes = false
-      this.ShowAtHunter = false
+      this.menuVisible = false
+    },
+    mShowCompany () {
+      this.inativaComponentes()
+      this.ShowAtEmpresa = true
+      this.menuVisible = false
     },
     mShowHunter () {
-      this.showDash = false
-      this.showUsuario = false
-      this.showAtAgentes = false
+      this.inativaComponentes()
       this.ShowAtHunter = true
-      this.showOffice = false
+      this.menuVisible = false
     },
     mShowAgente () {
-      this.showDash = false
-      this.showUsuario = false
+      this.inativaComponentes()
       this.showAtAgentes = true
-      this.ShowAtHunter = false
-      this.showOffice = false
+      this.menuVisible = false
     },
     mShowDash () {
+      this.inativaComponentes()
       this.showDash = true
+      this.menuVisible = false
+    },
+    inativaComponentes () {
+      this.showOffice = false
+      this.showDash = false
       this.showUsuario = false
       this.showAtAgentes = false
       this.ShowAtHunter = false
-      this.showOffice = false
+      this.ShowAtEmpresa = false
     }
+
   }
 }
 </script>

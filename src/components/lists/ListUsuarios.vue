@@ -19,9 +19,17 @@
       @md-confirm='Bloquear'
     />
 
-    <md-table v-model='people' md-card @md-selected='onSelect' md-fixed-header>
+    <md-dialog :md-active.sync="showUsuario" class="div">
+      <cad-user/>
+    </md-dialog>
+
+    <md-table v-model='people' md-sort="name" md-sort-order="asc" md-card @md-selected='onSelect' md-fixed-header>
       <md-table-toolbar>
         <h1 class='md-title'>Lista de Usuários</h1>
+        <md-button @click="showUsuario = true">
+          <md-icon class='botao-red'>person_add</md-icon>
+          <md-tooltip md-direction='top'>Cadastro de Usuário</md-tooltip>
+        </md-button>
         <md-button @click='active = true'>
           <md-icon class='botao-red'>lock</md-icon>
           <md-tooltip md-direction='top'>Alterar Senha</md-tooltip>
@@ -44,10 +52,10 @@
         <md-table-cell md-label='ID' md-sort-by='id' md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell  md-label='Status' v-if="item.ativo === false " md-sort-by='status'>Desativado</md-table-cell>
         <md-table-cell  md-label='Status' v-if="item.ativo === true " md-sort-by='status'>Ativo</md-table-cell>
-        <md-table-cell md-label='Name' md-sort-by='name'>{{ item.username }}</md-table-cell>
+        <md-table-cell md-label='Nome' md-sort-by='username'>{{ item.username }}</md-table-cell>
         <md-table-cell
           md-label='Perfil'
-          md-sort-by='id_perfil'
+          md-sort-by='id_profile'
           md-numeric
         >{{ item.id_profile['name']}}</md-table-cell>
         <md-table-cell md-label='Email' md-sort-by='email'>{{ item.email }}</md-table-cell>
@@ -61,8 +69,12 @@
 
 <script>
 import axios from 'axios'
+import CadUser from '../forms/FormAddUser.vue'
 export default {
   name: 'ListaUsuario',
+  components: {
+    CadUser
+  },
   data: () => ({
     selected: {},
     people: [],
@@ -71,7 +83,9 @@ export default {
     newValuePassword: null,
     showAlteraSenha: false,
     bloqueio: false,
-    escritorioId: ''
+    escritorioId: '',
+    showUsuario: false
+
   }),
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
@@ -146,5 +160,10 @@ export default {
 }
 .alinhamento-table {
   text-align: left;
+}
+.div{
+  overflow: auto;
+  height: 75%;
+  width: 85%;
 }
 </style>

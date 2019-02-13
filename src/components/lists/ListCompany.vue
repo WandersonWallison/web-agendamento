@@ -1,14 +1,14 @@
 <template>
   <div>
-    <md-dialog :md-active.sync="showEscritorio" class="div">
-      <cad-escritorio/>
+    <md-dialog :md-active.sync="showEmpresa" class="div">
+      <cad-Empresa/>
     </md-dialog>
-    <md-table v-model="office" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    <md-table v-model="company" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
-        <h1 class="md-title">Escritorios</h1>
-        <md-button @click="showEscritorio = true">
+        <h1 class="md-title">Empresas</h1>
+        <md-button @click="showEmpresa = true">
           <md-icon class='botao-red'>location_city</md-icon>
-          <md-tooltip md-direction='top'>Cadastro de Escritorio</md-tooltip>
+          <md-tooltip md-direction='top'>Cadastro de Empresa</md-tooltip>
         </md-button>
       </md-table-toolbar>
       <md-table-row
@@ -20,8 +20,8 @@
       >
         <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.nome }}</md-table-cell>
-        <md-table-cell md-label="Responsavel" md-sort-by="responsavel">{{ item.responsavel }}</md-table-cell>
         <md-table-cell md-label="CNPJ" md-sort-by="cnpj">{{ item.cnpj }}</md-table-cell>
+        <md-table-cell md-label="Razão Social" md-sort-by="razao_social">{{ item.razao_social }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{item.email }}</md-table-cell>
       </md-table-row>
@@ -31,30 +31,30 @@
 
 <script>
 import axios from 'axios'
-import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
+import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
 export default {
-  name: 'ListaOffice',
+  name: 'Listacompany',
   components: {
-    CadEscritorio
+    CadEmpresa
   },
   data: () => ({
     selected: {},
-    office: [],
+    company: [],
     perfil: [],
     active: false,
     newValuePassword: null,
     showAlteraSenha: false,
     bloqueio: false,
-    escritorioId: '',
-    showEscritorio: false
+    EmpresaId: '',
+    showEmpresa: false
   }),
   mounted () {
     /* const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
-    this.escritorioId = authUser2.id_office */
+    this.EmpresaId = authUser2.id_company */
 
-    axios.get(process.env.API + 'office').then(response => {
-      this.office = response.data
+    axios.get(process.env.API + 'company').then(response => {
+      this.company = response.data
     })
   },
   methods: {
