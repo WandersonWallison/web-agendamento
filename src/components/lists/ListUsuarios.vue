@@ -26,7 +26,7 @@
     <md-table v-model='people' md-sort="name" md-sort-order="asc" md-card @md-selected='onSelect' md-fixed-header>
       <md-table-toolbar>
         <h1 class='md-title'>Lista de Usuários</h1>
-        <md-button @click="showUsuario = true">
+        <md-button class="md-raised md-primary" @click="showUsuario = true">
           <md-icon class='botao-red'>person_add</md-icon>
           <md-tooltip md-direction='top'>Cadastro de Usuário</md-tooltip>
         </md-button>

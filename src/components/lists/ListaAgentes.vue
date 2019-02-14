@@ -2,7 +2,7 @@
   <div>
     <md-table v-model="people" md-card @md-selected="onSelect">
       <md-table-toolbar>
-        <h1 class="md-title">Lista de Agentes</h1>
+        <h1 class="md-title">Lista de Assessores</h1>
       </md-table-toolbar>
 
       <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">

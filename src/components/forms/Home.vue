@@ -41,7 +41,7 @@
 
           <md-list-item @click= 'mShowAgente'>
             <md-icon>view_day</md-icon>
-            <span class="md-list-item-text">Atividades Agentes</span>
+            <span class="md-list-item-text">Atividades Assessores</span>
           </md-list-item>
 
           <md-list-item  @click= 'mShowUsuario'>

@@ -3,12 +3,12 @@
      <div>
       <md-table v-model="schedules" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
-        <h1 class="md-title">Atividades dos Agentes</h1>
+        <h1 class="md-title">Atividades dos Assessores</h1>
           <div class="md-layout md-gutter md-small-size-100">
             <div class="md-layout-item md-small-size-100">
               <br/>
               <md-field>
-                 <label for="agente">Agentes</label>
+                 <label for="agente">Assessores</label>
                 <md-select name="agente" id="agente" v-model="selecionado">
                   <md-option v-for="agente in listaAgentes" :key="agente.id" :value="agente.id">
                     {{ agente.username }}

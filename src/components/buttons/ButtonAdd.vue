@@ -6,11 +6,12 @@
         <md-icon class="md-morph-final">close</md-icon>
       </md-speed-dial-target>
       <md-speed-dial-content>
+        <!--
         <md-button class="md-icon-button" @click="showDialog = true">
           <md-tooltip md-direction="left">Contato</md-tooltip>
           <md-icon>contact_phone</md-icon>
         </md-button>
-        <!--
+
         <md-button class="md-icon-button" @click="showAgente = true">
           <md-tooltip md-direction="left">Usuário</md-tooltip>
           <md-icon>person_add</md-icon>
@@ -25,14 +26,14 @@
         </md-button>
         -->
         <md-button class="md-icon-button" @click="showListaParaAgendamento = true">
-          <md-tooltip md-direction="left">Lista Geral</md-tooltip>
+          <md-tooltip md-direction="left">Lead</md-tooltip>
           <md-icon>list_alt</md-icon>
         </md-button>
+        <!--
         <md-button class="md-icon-button" @click="showListaClienteAguardando = true">
           <md-tooltip md-direction="left">Lista Leads</md-tooltip>
           <md-icon>playlist_add_check</md-icon>
         </md-button>
-        <!--
         <md-button class="md-icon-button" @click="showListUsuario = true">
           <md-tooltip md-direction="left">Lista Usuarios</md-tooltip>
           <md-icon>people</md-icon>
@@ -96,6 +97,7 @@ export default {
   height: 100%;
 }
 .md-dialog {
+  overflow: auto;
   width: 100%;
   height: 100%;
   max-width: 100%;

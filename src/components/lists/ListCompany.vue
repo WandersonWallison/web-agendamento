@@ -6,7 +6,7 @@
     <md-table v-model="company" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
         <h1 class="md-title">Empresas</h1>
-        <md-button @click="showEmpresa = true">
+        <md-button class="md-raised md-primary" @click="showEmpresa = true">
           <md-icon class='botao-red'>location_city</md-icon>
           <md-tooltip md-direction='top'>Cadastro de Empresa</md-tooltip>
         </md-button>

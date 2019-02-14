@@ -3,7 +3,7 @@
       <form novalidate class="md-layout div-tamanho" @submit.prevent="validateUser">
         <md-card class="md-layout-item md-size-100 md-small-size-100">
           <md-toolbar md-elevation="0" class="md-dense">
-            <span class="md-title">Cadastro de Contato</span>
+            <span class="md-title">Cadastro de Lead</span>
           </md-toolbar>
           <md-card-content >
             <div class="md-layout md-gutter">
@@ -45,12 +45,14 @@
             </div>
             <div class="md-layout md-gutter">
             </div>
+            <!--
             <md-field :class="getValidationClass('observacao')">
               <label for="observacao">Observação</label>
               <md-textarea type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
               <span class="md-error" v-if="!$v.form.observacao.required">Observacão deve ser preenchida</span>
               <md-icon>description</md-icon>
             </md-field>
+           -->
           </md-card-content>
           <md-progress-bar md-mode="indeterminate" v-if="sending" />
           <md-card-actions>
@@ -82,8 +84,7 @@ export default {
       nomeCompleto: null,
       email: null,
       telefone: null,
-      celular: null,
-      observacao: null
+      celular: null
     },
     userAtual: [],
     userSaved: false,
@@ -108,9 +109,6 @@ export default {
       celular: {
         required,
         minLength: minLength(4)
-      },
-      observacao: {
-        required
       }
     }
   },
@@ -134,7 +132,7 @@ export default {
       this.form.telefone = null
       this.form.celular = null
       this.form.email = null
-      this.form.observacao = null
+      // this.form.observacao = null
     },
     saveContato () {
       let newLead = {
@@ -142,7 +140,7 @@ export default {
         email: this.form.email,
         telefone: this.form.telefone,
         celular: this.form.celular,
-        obs: this.form.observacao,
+        // obs: this.form.observacao,
         data_criacao: moment(Date.now()).format(),
         id_user_criador: this.userAtual.id,
         id_office: this.userAtual.id_office
@@ -180,6 +178,7 @@ export default {
     left: 0;
   }
   .div-tamanho {
+    width: 100%;
     height: 100%;
   }
   .alinha-button {

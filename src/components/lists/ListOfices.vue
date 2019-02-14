@@ -3,12 +3,19 @@
     <md-dialog :md-active.sync="showEscritorio" class="div">
       <cad-escritorio/>
     </md-dialog>
-    <md-table v-model="office" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    <md-dialog :md-active.sync="showEditEscritorio" class="div">
+       <upd-escritorio :selected="selected"></upd-escritorio>
+    </md-dialog>
+    <md-table v-model="office" @md-selected="onSelect" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
-        <h1 class="md-title">Escritorios</h1>
-        <md-button @click="showEscritorio = true">
-          <md-icon class='botao-red'>location_city</md-icon>
+        <h1 class="md-title">Escritórios</h1>
+        <md-button class="md-raised md-primary" @click="showEscritorio = true">
+          <md-icon>business_center</md-icon>
           <md-tooltip md-direction='top'>Cadastro de Escritorio</md-tooltip>
+        </md-button>
+        <md-button class="md-raised md-accent" @click="showEditEscritorio = true">
+          <md-icon>edit</md-icon>
+          <md-tooltip md-direction='top'>Editar Escritorio</md-tooltip>
         </md-button>
       </md-table-toolbar>
       <md-table-row
@@ -32,10 +39,13 @@
 <script>
 import axios from 'axios'
 import CadEscritorio from '../forms/FormCadastroEscritorio.vue'
+import UpdEscritorio from '../forms/FormUpdateEscritorio.vue'
 export default {
   name: 'ListaOffice',
+  props: ['selected'],
   components: {
-    CadEscritorio
+    CadEscritorio,
+    UpdEscritorio
   },
   data: () => ({
     selected: {},
@@ -46,7 +56,8 @@ export default {
     showAlteraSenha: false,
     bloqueio: false,
     escritorioId: '',
-    showEscritorio: false
+    showEscritorio: false,
+    showEditEscritorio: false
   }),
   mounted () {
     /* const authUser = window.localStorage.getItem('Usuario')

@@ -2,7 +2,11 @@
   <div>
     <md-table v-model="people" md-card @md-selected="onSelect">
       <md-table-toolbar>
-        <h1 class="md-title">Lista de Contatos</h1>
+        <h1 class="md-title">Lista de Leads</h1>
+        <md-button class="md-raised md-primary" @click="showDialog = true">
+          <md-tooltip md-direction="left">Cadastro de Lead</md-tooltip>
+          <md-icon>contact_phone</md-icon>
+        </md-button>
       </md-table-toolbar>
 
       <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
@@ -25,7 +29,6 @@
             <md-tooltip md-direction="top">Adicionar Conta</md-tooltip>
             <md-icon>attach_money</md-icon>
             </md-button>
-
           </div>
           <md-button @click="desativar = true" class="md-icon-button">
             <md-tooltip md-direction="top">Excluir</md-tooltip>
@@ -44,7 +47,7 @@
   <div>
     <md-table v-model="selected" md-card>
       <md-table-toolbar>
-        <h1 class="md-title">Detalhe</h1>
+        <h1 class="md-title">Detalhamento</h1>
       </md-table-toolbar>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
@@ -57,17 +60,19 @@
       </md-table-row>
     </md-table>
   </div>
-    <md-dialog :md-active.sync="showUpdateLead">
-      <div class="div">
-      <up-lead :selected="selected"></up-lead>
+    <md-dialog class="md-dialog-update" :md-active.sync="showUpdateLead">
+      <div class="alinhar-esquerda">
+        <md-button class="md-primary" @click="showUpdateLead = false"><md-icon>clear</md-icon></md-button>
+      </div>
+      <div class="div-update">
+        <up-lead :selected="selected"></up-lead>
       </div>
     </md-dialog>
     <md-dialog :md-active.sync="showUpdateCliente">
-      <div class="div">
+      <div>
       <up-cliente :selected="selected"></up-cliente>
       </div>
     </md-dialog>
-
     <md-dialog :md-active.sync="showEndereco">
       <div class="div">
       <endereco :selected="selected"></endereco>
@@ -78,7 +83,6 @@
       <conta :selected="selected"></conta>
       </div>
     </md-dialog>
-
     <md-dialog-confirm
       :md-active.sync="desativar"
       md-title="Deseja realmete desativar estas contatos?"
@@ -87,6 +91,10 @@
       md-cancel-text="Não"
       @md-cancel="onCancel"
       @md-confirm="onConfirm" />
+
+    <md-dialog :md-active.sync="showDialog" class="div-contato">
+      <cad-lead/>
+    </md-dialog>
   </div>
 </template>
 
@@ -95,6 +103,7 @@ import UpLead from '../forms/FormUpdateLead.vue'
 import UpCliente from '../forms/FormUpdateCliente.vue'
 import Endereco from '../forms-endereco/FormEndereco.vue'
 import Conta from '../forms/FormConta.vue'
+import CadLead from '../forms/FormCadastroLead.vue'
 import axios from 'axios'
 export default {
   name: 'listCrudLead',
@@ -103,7 +112,8 @@ export default {
     UpLead,
     UpCliente,
     Endereco,
-    Conta
+    Conta,
+    CadLead
   },
   data: () => ({
     selected: [],
@@ -113,7 +123,8 @@ export default {
     showEndereco: false,
     showConta: false,
     desativar: false,
-    atual: []
+    atual: [],
+    showDialog: false
   }),
   filters: {
     maskFone: function (v) {
@@ -171,8 +182,14 @@ export default {
   height: 70%;
   max-width: 100%;
   }
-  .div{
-    overflow: auto;
-    margin-left: 2%;
+  .div-update {
+    width: 100%;
+  }
+  .md-dialog-update {
+    width: 63%;
+    height: 60%;
+  }
+  .alinhar-esquerda {
+    align-items: flex-end;
   }
 </style>
