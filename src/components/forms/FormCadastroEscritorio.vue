@@ -152,11 +152,8 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label for="cidade">Cidade</label>
-                <md-select name="cidade" id="cidade" v-model="form.cidade">
-                  <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.id">
-                    {{ cidade.nome}}
-                  </md-option>
-                </md-select>
+                  <md-input id="cidade" name="cidade" autocomplete="cidade" v-model="form.cidade" :disabled="sending" />
+                  <span class="md-error" v-if="!$v.form.cidade.required">cidade deve ser preenchido</span>
                 <br>
               </md-field>
             </div>
@@ -164,8 +161,8 @@
               <md-field :class="getValidationClass('bairro')">
                 <label for="bairro">Bairro</label>
                 <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Bairro inválido</span>
+                <span class="md-error" v-if="!$v.form.bairro.required">Bairro deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.bairro.maxlength">Bairro inválido</span>
               </md-field>
             </div>
           </div>
@@ -221,30 +218,6 @@ export default {
     selectedCidade: null,
     selectedCep: null
   }),
-  beforeUpdate () {
-    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
-      .then(response => {
-        this.cidades = response.data
-        this.form.cidade = this.cidades
-      })
-    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
-      .then(response => {
-        this.cep = response.data
-        if (this.cep.bairro) {
-          this.form.bairro = this.cep.bairro
-        }
-        if (this.cep.logradouro) {
-          this.form.rua = this.cep.logradouro
-        }
-        if (this.cep.complemento) {
-          this.form.observacao = this.cep.complemento
-        }
-      })
-      .catch(error => {
-        // alert('Erro no cadastro do Endereço')
-        console.log(error.response.data)
-      })
-  },
   directives: {mask},
   validations: {
     form: {

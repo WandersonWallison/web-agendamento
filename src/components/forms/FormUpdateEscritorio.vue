@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form novalidate class="md-layout" @submit.prevent="validateEmpresa">
+    <form novalidate class="md-layout" @submit.prevent="validateOffice">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Editar Escritório</span>
@@ -206,7 +206,7 @@ export default {
         rua: this.selected.endereco[0].logradouro,
         numero: this.selected.endereco[0].numero,
         estado: this.selected.endereco[0].uf,
-        cidade: this.cidadeCadastrada,
+        cidade: this.selected.endereco[0].cidade,
         bairro: this.selected.endereco[0].bairro
       },
       userSaved: false,
@@ -220,36 +220,6 @@ export default {
       selectedCep: null,
       cidadeCadastrada: ''
     }
-  },
-  mounted () {
-    axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/municipios/' + this.selected.endereco[0].cidade)
-      .then(response => {
-        this.cidadeCadastrada = response.data.nome
-        // alert('teste: '+ this.cidadeCadastrada)
-      })
-  },
-  beforeUpdate () {
-    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
-      .then(response => {
-        this.cidades = response.data
-      })
-    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
-      .then(response => {
-        this.cep = response.data
-        if (this.cep.bairro) {
-          this.form.bairro = this.cep.bairro
-        }
-        if (this.cep.logradouro) {
-          this.form.rua = this.cep.logradouro
-        }
-        if (this.cep.complemento) {
-          this.form.observacao = this.cep.complemento
-        }
-      })
-      .catch(error => {
-        // alert('Erro no cadastro do Endereço')
-        console.log(error.response.data)
-      })
   },
   directives: {mask},
   validations: {
@@ -333,8 +303,8 @@ export default {
       this.form.cnpj = null
       this.form.tempoAceite = null
     },
-    saveEmpresa () {
-      let newEmpresa = {
+    updateOffice () {
+      let upOffice = {
         nome: this.form.nomeEscritorio,
         responsavel: this.form.responsavelEscritorio,
         site: this.form.site,
@@ -345,41 +315,37 @@ export default {
         abertura: moment(Date.now()).format(),
         cnpj: this.form.cnpj
       }
-      let newEndereco = {
-        rua: this.form.rua,
+      let upEndereco = {
+        logradouro: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
-        cidade: this.selectedCidade,
+        cidade: this.form.cidade,
         cep: this.form.cep,
         uf: this.form.estado
       }
-      axios.post(process.env.API + 'office', newEmpresa)
+      axios.put(process.env.API + 'office/' + this.selected.id, upOffice)
         .then(response => {
-          newEndereco.schedule_address = response.data.id
-          axios.post(process.env.API + 'address', newEndereco)
+          this.results = response.data
+          axios.put(process.env.API + 'address/' + this.selected.endereco[0].id, upEndereco)
             .then(response => {
-              alert('Escritorio cadastado com sucesso')
-              this.userSaved = true
+              alert('Escritório alterado com sucesso')
               this.sending = false
-              this.clearForm()
-              // window.location.reload()
+              // this.clearForm()
+              window.location.reload()
             })
             .catch(error => {
-              alert('Erro endereco ' + error)
-              console.log(error.response.data)
+              console.log('Erro de endereço Update Escritorio: ' + error.response.data)
             })
         })
         .catch(error => {
-          if (error.response.data.code === 'E_UNIQUE') {
-            alert('Escritorio já Cadastrado!!!  \nverifique os dados de Cadastro')
-          }
+          console.log('Code erro atualiza escritório: ' + error.response.data.code)
+          console.log('Erro atualiza escritório: ' + error.response.data)
         })
     },
-    validateEmpresa () {
+    validateOffice () {
       this.$v.$touch()
-      console.log(this.$v.$invalid)
       if (!this.$v.$invalid) {
-        this.saveEmpresa()
+        this.updateOffice()
       }
     },
     retiraMascara (campo) {
