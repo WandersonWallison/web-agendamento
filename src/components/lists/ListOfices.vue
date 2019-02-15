@@ -13,7 +13,7 @@
           <md-icon>business_center</md-icon>
           <md-tooltip md-direction='top'>Cadastro de Escritorio</md-tooltip>
         </md-button>
-        <md-button class="md-raised md-accent" @click="showEditEscritorio = true">
+        <md-button class="md-raised md-accent" @click="validaEdicao">
           <md-icon>edit</md-icon>
           <md-tooltip md-direction='top'>Editar Escritorio</md-tooltip>
         </md-button>
@@ -50,12 +50,7 @@ export default {
   data: () => ({
     selected: {},
     office: [],
-    perfil: [],
     active: false,
-    newValuePassword: null,
-    showAlteraSenha: false,
-    bloqueio: false,
-    escritorioId: '',
     showEscritorio: false,
     showEditEscritorio: false
   }),
@@ -63,7 +58,6 @@ export default {
     /* const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.escritorioId = authUser2.id_office */
-
     axios.get(process.env.API + 'office').then(response => {
       this.office = response.data
     })
@@ -74,7 +68,15 @@ export default {
     }),
     onSelect (item) {
       this.selected = item
+    },
+    validaEdicao () {
+      if (this.selected) {
+        this.showEditEscritorio = true
+      } else {
+        alert('Por favor selecionar um escritorio para edição!')
+      }
     }
+
   }
 }
 </script>

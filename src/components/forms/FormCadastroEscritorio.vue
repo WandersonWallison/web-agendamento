@@ -152,7 +152,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label for="cidade">Cidade</label>
-                <md-select name="cidade" id="cidade" v-model="selectedCidade">
+                <md-select name="cidade" id="cidade" v-model="form.cidade">
                   <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.id">
                     {{ cidade.nome}}
                   </md-option>
@@ -169,10 +169,6 @@
               </md-field>
             </div>
           </div>
-          <md-field>
-            <label for="observacao">Observação</label>
-            <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
-          </md-field>
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
@@ -181,7 +177,6 @@
         </div>
         </md-card-actions>
       </md-card>
-      <md-snackbar :md-active.sync="userSaved">O Escritório {{ lastUser }} foi salvo com sucesso!</md-snackbar>
     </form>
   </div>
 </template>
@@ -212,7 +207,6 @@ export default {
       estado: null,
       cidade: null,
       bairro: null,
-      observacao: '',
       qtdVisitas: null,
       site: '',
       tempoAceite: null
@@ -320,7 +314,6 @@ export default {
       this.form.numero = null
       this.form.cidade = null
       this.form.estado = null
-      this.form.observacao = null
       this.form.bairro = null
       this.selectedCidade = null
 
@@ -338,31 +331,31 @@ export default {
         nome: this.form.nomeEscritorio,
         responsavel: this.form.responsavelEscritorio,
         site: this.form.site,
-        telefone: this.retiraMascara(this.form.telefone),
+        telefone: this.form.telefone,
         email: this.form.email,
         qtd_visita_dia: this.form.qtdVisitas,
         tempo_aceita: this.form.tempoAceite,
         abertura: moment(Date.now()).format(),
-        cnpj: this.retiraMascara(this.form.cnpj)
+        cnpj: this.form.cnpj
       }
       let newEndereco = {
-        rua: this.form.rua,
+        logradouro: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
         cidade: this.selectedCidade,
-        cep: this.retiraMascara(this.form.cep),
+        cep: this.form.cep,
         uf: this.form.estado
       }
       axios.post(process.env.API + 'office', newEmpresa)
         .then(response => {
-          newEndereco.schedule_address = response.data.id
+          newEndereco.office_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
             .then(response => {
               alert('Escritorio cadastado com sucesso')
               this.userSaved = true
               this.sending = false
               this.clearForm()
-              // window.location.reload()
+              window.location.reload()
             })
             .catch(error => {
               alert('Erro endereco ' + error)

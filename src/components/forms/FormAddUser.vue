@@ -271,7 +271,6 @@
         </div>
         </md-card-actions>
       </md-card>
-      <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with sucesso!</md-snackbar>
     </form>
   </div>
 </template>
@@ -495,12 +494,12 @@ export default {
         username: this.form.nomeAgente,
         email: this.form.email,
         password: senhaGerada,
-        telefone: this.retiraMascara(this.form.telefone),
-        celular: this.retiraMascara(this.form.celular),
+        telefone: this.form.telefone,
+        celular: this.form.celular,
         data_inicio: this.form.dataInicio,
         cvm: this.form.cvm,
-        cnh_rg: this.retiraMascara(this.form.rg),
-        cpf: this.retiraMascara(this.form.cpf),
+        cnh_rg: this.form.rg,
+        cpf: this.form.cpf,
         data_nascimento: this.form.dataNascimento,
         escolaridade: this.form.escolaridade,
         estado_civil: this.form.estadoCivil,
@@ -518,7 +517,7 @@ export default {
         numero: this.form.numero,
         bairro: this.form.bairro,
         cidade: this.selectedCidade,
-        cep: this.retiraMascara(this.form.cep),
+        cep: this.form.cep,
         uf: this.form.estado
       }
       if (cvmValidado) {

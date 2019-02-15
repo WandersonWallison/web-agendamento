@@ -150,13 +150,10 @@
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
-              <md-field>
+              <md-field :class="getValidationClass('cidade')">
                 <label for="cidade">Cidade</label>
-                <md-select name="cidade" id="cidade" v-model="selectedCidade">
-                  <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.id">
-                    {{ cidade.nome}}
-                  </md-option>
-                </md-select>
+                <md-input name="cidade" id="cidade" v-model="form.cidade" :disabled="sending"/>
+                <span class="md-error" v-if="!$v.form.cidade.required">Cidade deve ser preenchido</span>
                 <br>
               </md-field>
             </div>
@@ -164,15 +161,11 @@
               <md-field :class="getValidationClass('bairro')">
                 <label for="bairro">Bairro</label>
                 <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Bairro deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Bairro inválido</span>
+                <span class="md-error" v-if="!$v.form.bairro.required">Bairro deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.bairro.maxlength">Bairro inválido</span>
               </md-field>
             </div>
           </div>
-          <md-field>
-            <label for="observacao">Observação</label>
-            <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
-          </md-field>
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
@@ -198,39 +191,47 @@ export default {
   name: 'FormUpdateEscritorio',
   props: ['selected'],
   mixins: [validationMixin],
-  data: () => ({
-    form: {
-      nomeEscritorio: '',
-      responsavelEscritorio: '',
-      cnpj: '',
-      telefone: '',
-      email: '',
-      cep: null,
-      rua: null,
-      numero: null,
-      estado: null,
-      cidade: null,
-      bairro: null,
-      observacao: '',
-      qtdVisitas: null,
-      site: '',
-      tempoAceite: null
-    },
-    userSaved: false,
-    sending: false,
-    lastUser: null,
-    estados: [],
-    cidades: [],
-    cep: [],
-    selectedEstado: null,
-    selectedCidade: null,
-    selectedCep: null
-  }),
+  data () {
+    return {
+      form: {
+        nomeEscritorio: this.selected.nome,
+        responsavelEscritorio: this.selected.responsavel,
+        cnpj: this.selected.cnpj,
+        telefone: this.selected.telefone,
+        email: this.selected.email,
+        site: this.selected.site,
+        qtdVisitas: this.selected.qtd_visita_dia,
+        tempoAceite: this.selected.tempo_aceita,
+        cep: this.selected.endereco[0].cep,
+        rua: this.selected.endereco[0].logradouro,
+        numero: this.selected.endereco[0].numero,
+        estado: this.selected.endereco[0].uf,
+        cidade: this.cidadeCadastrada,
+        bairro: this.selected.endereco[0].bairro
+      },
+      userSaved: false,
+      sending: false,
+      lastUser: null,
+      estados: [],
+      cidades: [],
+      cep: [],
+      selectedEstado: null,
+      selectedCidade: null,
+      selectedCep: null,
+      cidadeCadastrada: ''
+    }
+  },
+  mounted () {
+    axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/municipios/' + this.selected.endereco[0].cidade)
+      .then(response => {
+        this.cidadeCadastrada = response.data.nome
+        // alert('teste: '+ this.cidadeCadastrada)
+      })
+  },
   beforeUpdate () {
     axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
       .then(response => {
         this.cidades = response.data
-        this.form.cidade = this.cidades
       })
     axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
       .then(response => {
@@ -337,19 +338,19 @@ export default {
         nome: this.form.nomeEscritorio,
         responsavel: this.form.responsavelEscritorio,
         site: this.form.site,
-        telefone: this.retiraMascara(this.form.telefone),
+        telefone: this.form.telefone,
         email: this.form.email,
         qtd_visita_dia: this.form.qtdVisitas,
         tempo_aceita: this.form.tempoAceite,
         abertura: moment(Date.now()).format(),
-        cnpj: this.retiraMascara(this.form.cnpj)
+        cnpj: this.form.cnpj
       }
       let newEndereco = {
         rua: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
         cidade: this.selectedCidade,
-        cep: this.retiraMascara(this.form.cep),
+        cep: this.form.cep,
         uf: this.form.estado
       }
       axios.post(process.env.API + 'office', newEmpresa)
