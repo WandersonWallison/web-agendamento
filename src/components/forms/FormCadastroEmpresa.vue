@@ -35,7 +35,7 @@
             <div class="md-layout-item md-small-size-50">
               <md-field  :class="getValidationClass('telefone')">
                 <label for="telefone">Telefone</label>
-                <md-input type="telefone" name="telefone" id="telefone" autocomplete="telefone" v-model="form.telefone" :disabled="sending" v-mask = "'(##) ####-#####'" />
+                <md-input type="telefone" name="telefone" id="telefone" autocomplete="telefone" v-model="form.telefone" :disabled="sending" v-mask = "'(##)####-#####'" />
                 <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
               </md-field>
             </div>
@@ -145,6 +145,7 @@ export default {
         email: this.form.email,
         cnpj: this.form.cnpj
       }
+
       axios.post(process.env.API + 'company', newEmpresa)
         .then(response => {
           alert('Empresa Cadastrada com Sucesso!!!')
