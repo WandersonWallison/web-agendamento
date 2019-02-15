@@ -3,12 +3,19 @@
     <md-dialog :md-active.sync="showEmpresa" class="div">
       <cad-Empresa/>
     </md-dialog>
-    <md-table v-model="company" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    <md-dialog :md-active.sync="showUpdateEmpresa" class="div">
+       <upd-empresa :selected="selected"></upd-empresa>
+    </md-dialog>
+    <md-table v-model="company" @md-selected="onSelect" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
         <h1 class="md-title">Empresas</h1>
         <md-button class="md-raised md-primary" @click="showEmpresa = true">
           <md-icon class='botao-red'>location_city</md-icon>
           <md-tooltip md-direction='top'>Cadastro de Empresa</md-tooltip>
+        </md-button>
+        <md-button class="md-raised md-accent" @click="validaEdicao">
+          <md-icon>edit</md-icon>
+          <md-tooltip md-direction='top'>Editar Empresa</md-tooltip>
         </md-button>
       </md-table-toolbar>
       <md-table-row
@@ -32,10 +39,13 @@
 <script>
 import axios from 'axios'
 import CadEmpresa from '../forms/FormCadastroEmpresa.vue'
+import UpdEmpresa from '../forms/FormUpdateEmpresa.vue'
 export default {
   name: 'Listacompany',
+  props: ['selected'],
   components: {
-    CadEmpresa
+    CadEmpresa,
+    UpdEmpresa
   },
   data: () => ({
     selected: {},
@@ -46,6 +56,7 @@ export default {
     showAlteraSenha: false,
     bloqueio: false,
     EmpresaId: '',
+    showUpdateEmpresa: false,
     showEmpresa: false
   }),
   mounted () {
@@ -63,6 +74,13 @@ export default {
     }),
     onSelect (item) {
       this.selected = item
+    },
+    validaEdicao () {
+      if (this.selected) {
+        this.showUpdateEmpresa = true
+      } else {
+        alert('Por favor selecionar uma empresa para edição!')
+      }
     }
   }
 }

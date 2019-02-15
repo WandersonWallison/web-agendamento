@@ -28,19 +28,18 @@
             <div class="md-layout-item md-small-size-100">
               <md-field  :class="getValidationClass('cnpj')">
                 <label for="cnpj">CNPJ</label>
-                <md-input type="cnpj" name="cnpj" id="cnpj" autocomplete="cnpj" v-model="form.cnpj" :disabled="sending" v-mask = "'##.###.###/####-##'" />
+                <md-input type="cnpj" name="cnpj" id="cnpj" autocomplete="cnpj" v-model="form.cnpj" :disabled="sending" v-mask = "'##.###.###/####-##'"/>
                 <span class="md-error" v-if="!$v.form.cnpj.required">CNPJ do Escritorio deve ser preenchido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-50">
               <md-field  :class="getValidationClass('telefone')">
-                <label for="telefone">Telefone</label>
-                <md-input type="telefone" name="telefone" id="telefone" autocomplete="telefone" v-model="form.telefone" :disabled="sending" v-mask = "'(##) ####-#####'" />
+                <label for="telefone">telefone</label>
+                <md-input type="telefone" name="telefone" id="telefone" autocomplete="telefone" v-model="form.telefone" :disabled="sending" v-mask = "'(##) ####-#####'"/>
                 <span class="md-error" v-if="!$v.form.telefone.required">telefone deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.telefone.maxlength">Telefone Inválido</span>
               </md-field>
             </div>
-          </div>
-          <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('email')">
                 <label for="email">E-mail</label>
@@ -49,6 +48,8 @@
                 <span class="md-error" v-else-if="!$v.form.email.maxlength">E-mail Inválido</span>
               </md-field>
             </div>
+          </div>
+          <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label for="site">Site</label>
@@ -60,11 +61,10 @@
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
         <div class="actions alinha-button md-layout md-alignment-center-space-between">
-          <md-button class="md-raised md-primary" type="submit" :disabled="sending">Cadastrar</md-button>
+          <md-button class="md-raised md-primary" type="submit" :disabled="sending">Atualizar</md-button>
         </div>
         </md-card-actions>
       </md-card>
-      <md-snackbar :md-active.sync="userSaved">A Empresa foi salva com sucesso!</md-snackbar>
     </form>
   </div>
 </template>
@@ -78,22 +78,25 @@ import {
 } from 'vuelidate/lib/validators'
 import {mask} from 'vue-the-mask'
 export default {
-  name: 'FormEmpresa',
-  props: ['leadProps'],
+  name: 'FormUpdateEmpresa',
+  props: ['selected'],
   mixins: [validationMixin],
-  data: () => ({
-    form: {
-      nomeEmpresa: null,
-      razaoSocial: null,
-      cnpj: null,
-      telefone: '',
-      email: null,
-      site: null
-    },
-    userSaved: false,
-    sending: false,
-    lastUser: null
-  }),
+  data () {
+    return {
+      form: {
+        nomeEmpresa: this.selected.nome,
+        razaoSocial: this.selected.razao_social,
+        cnpj: this.selected.cnpj,
+        telefone: this.selected.telefone,
+        email: this.selected.email,
+        site: this.selected.site
+      },
+      userSaved: false,
+      sending: false,
+      lastUser: null,
+      results: []
+    }
+  },
   directives: {mask},
   validations: {
     form: {
@@ -132,12 +135,12 @@ export default {
       this.form.nomeEmpresa = ''
       this.form.razaoSocial = ''
       this.form.site = ''
-      this.form.telefone = ''
+      this.form.telefone = null
       this.form.email = ''
       this.form.cnpj = ''
     },
-    saveEmpresa () {
-      let newEmpresa = {
+    updateEmpresa () {
+      let updEmpresa = {
         nome: this.form.nomeEmpresa,
         razao_social: this.form.razaoSocial,
         site: this.form.site,
@@ -145,21 +148,20 @@ export default {
         email: this.form.email,
         cnpj: this.form.cnpj
       }
-      axios.post(process.env.API + 'company', newEmpresa)
+      axios.put(process.env.API + 'company/' + this.selected.id, updEmpresa)
         .then(response => {
-          alert('Empresa Cadastrada com Sucesso!!!')
-          this.clearForm()
+          this.results = response.data
+          alert('Empresa alterada com sucesso')
         })
         .catch(error => {
-          if (error.response.data.code === 'E_UNIQUE') {
-            alert('Empresa já Cadastrado!!!  \nverifique os dados de Cadastro')
-          }
+          alert(error.response)
+          console.log(error.response.data)
         })
     },
     validateEmpresa () {
       this.$v.$touch()
       if (!this.$v.$invalid) {
-        this.saveEmpresa()
+        this.updateEmpresa()
       }
     }
   }
