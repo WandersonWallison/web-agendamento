@@ -358,7 +358,7 @@ export default {
         agentes: this.resultAgente,
         office_schedule: this.leadProps.id_office,
         data_criacao: this.data_criacao,
-        data_experacao: this.data_criacao.add(this.form.hora, 'h').add(this.form.minutos, 'minute'),
+        data_expiracao: this.data_criacao.add(this.form.hora, 'h').add(this.form.minutos, 'minute'),
         qtd_retorno: 1
       }
       let newEndereco = {
