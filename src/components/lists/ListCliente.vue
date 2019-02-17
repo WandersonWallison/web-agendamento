@@ -25,6 +25,7 @@
           <p>Data: {{ this.agendamento.data | maskData }}</p>
           <p>Hora: {{ this.agendamento.hora | maskHora }}</p>
           <p>Motivo: {{ this.agendamento.motivo }}</p>
+          <p>Retorno: {{ this.agendamento.retorno }}</p>
         </md-tab>
         <md-tab md-label="Agente">
           <p>Nome: {{ this.agendamento.nomeAgente }}</p>
@@ -34,7 +35,7 @@
         </md-tab>
       </md-tabs>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="showDialogReagendamento = false">Close</md-button>
+        <md-button class="md-primary" @click="showDialogReagendamento = false">Sair</md-button>
       </md-dialog-actions>
     </md-dialog>
     <!-- Fim do reagendamento  -->
@@ -135,6 +136,7 @@ export default {
       data: null,
       hora: null,
       motivo: null,
+      retorno: null,
       idAgente: null,
       nomeAgente: null,
       telefoneAgente: null,
@@ -327,6 +329,7 @@ export default {
       this.agendamento.data = this.selected.agendamentos[0].data
       this.agendamento.hora = this.selected.agendamentos[0].hora
       this.agendamento.motivo = this.selected.agendamentos[0].motivo
+      this.agendamento.retorno = this.selected.agendamentos[0].qtd_retorno
 
       axios.get(process.env.API + 'user/' + this.agendamento.idAgente)
         .then(response => {
