@@ -205,7 +205,8 @@ export default {
   data: () => ({
     selectedDate: null,
     disabledDates: [],
-    data_criacao: moment(new Date()),
+    data_criacao: new Date(),
+    data_expiracao: '',
     form: {
       data: null,
       horario: null,
@@ -277,6 +278,7 @@ export default {
   },
   beforeUpdate () {
     this.pegarAgenteAgendamento()
+    this.data_expiracao = new Date()
   },
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
@@ -357,8 +359,8 @@ export default {
         id_lead: this.leadProps.id,
         agentes: this.resultAgente,
         office_schedule: this.leadProps.id_office,
-        data_criacao: this.data_criacao,
-        data_expiracao: this.data_criacao.add(this.form.hora, 'h').add(this.form.minutos, 'minute'),
+        data_criacao: moment(this.data_criacao).format(),
+        data_expiracao: moment(new Date()).add(this.form.hora, 'h').add(this.form.minutos, 'minutes').format(),
         qtd_retorno: 1
       }
       let newEndereco = {
