@@ -74,7 +74,12 @@
         </div>
       </md-table-toolbar>
       <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single" :class="getClass(item)">
-        <md-table-cell md-label="" md-sort-by="id" md-numeric><div v-if="item.momento_atual === 5" @click="showDialogReagendamento2"><md-icon class='botao-red'>alarm</md-icon><md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou. Clique duas vezes para mais detalhes </md-tooltip></div></md-table-cell>
+        <md-table-cell md-label="" md-sort-by="id" md-numeric>
+          <div v-if="item.momento_atual === 5" @click="showDialogReagendamento2">
+            <md-icon class='md-icon-button md-raised md-accent'>alarm</md-icon>
+            <md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou. Clique duas vezes para mais detalhes </md-tooltip>
+        </div>
+        </md-table-cell>
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>

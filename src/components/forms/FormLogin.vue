@@ -44,16 +44,22 @@ export default {
         password: ''
       },
       leads: [],
+      schedule: [],
       dataAtual: moment(Date.now()).format('YYYY/MM/DD'),
+      dataAtualSchedule: moment(Date.now()).format(),
       results: null,
       inicio: null,
       menssage: null
     }
   },
   mounted () {
-    axios.get(process.env.API + 'leads?where={"data_expiracao":{">":' + this.dataAtual + '}}')
+    axios.get(process.env.API + 'leads?where={"data_expiracao":{"<":"' + this.dataAtual + '"}}&limit=10000')
       .then(response => {
         this.leads = response.data
+      })
+    axios.get(process.env.API + 'schedule?where={"data_expiracao":{"<":"' + this.dataAtualSchedule + '"}}')
+      .then(response => {
+        this.schedule = response.data
       })
   },
   methods: {
@@ -61,7 +67,7 @@ export default {
       let newLead = {
         id_user_editor: 0,
         momento_atual: 1,
-        data_expiracao: moment('0000/00/00').format()
+        data_expiracao: moment('00/00/0000').format()
         // obs: ''
       }
       for (var i = 0; i <= this.leads.length; i++) {
