@@ -47,16 +47,18 @@ export default {
     listaAgentes: []
   }),
   mounted () {
+    /*
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
-    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":2,"id_office":' + this.userAtual.id_office + '}').then(response => {
+    */
+    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":2}').then(response => {
       this.listaAgentes = response.data
     })
   },
   // corrigir antes de subi o "office_schedule":8" colocar a logica do escritorio que esta na sessão
   updated () {
-    axios.get(process.env.API + 'schedule?where={"ativo":true,"status":0,"office_schedule":8,"agentes":' + this.selecionado + '}').then(response => {
+    axios.get(process.env.API + 'schedule?where={"ativo":true,"status":0,"agentes":' + this.selecionado + '}').then(response => {
       this.schedules = response.data
     })
   },
