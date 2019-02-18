@@ -5,6 +5,7 @@ import Home from '../components/forms/Home.vue'
 import Agendamento from '../components/forms/FormHunter.vue'
 import Visita from '../components/forms/FormAgente'
 import FormCrudLead from '../components/forms/FormCrudLead.vue'
+import Manager from '../components/forms/Manager.vue'
 import ListaLeadAguardando from '../components/lists/ListClienteAguardandoContato.vue'
 
 Vue.use(Router)
@@ -66,6 +67,15 @@ const router = new Router({
       meta: {
         requiresAuth: true,
         permissions: false
+      }
+    },
+    {
+      path: '/Manager',
+      name: 'manager',
+      component: Manager,
+      meta: {
+        requiresAuth: true,
+        permissions: true
       }
     }
   ]
