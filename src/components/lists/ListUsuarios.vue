@@ -15,7 +15,7 @@
       md-title='Deseja Ativar ou Desativar Usuário?'
       md-confirm-text='Sim'
       md-cancel-text='Não'
-      @md-cancel='onCancel'
+     @md-cancel='onCancel'
       @md-confirm='Bloquear'
     />
 
@@ -23,18 +23,18 @@
       <cad-user/>
     </md-dialog>
 
-    <md-table v-model='people' md-sort="name" md-sort-order="asc" md-card @md-selected='onSelect' md-fixed-header>
+    <md-table v-model='people' md-sort="name" md-sort-order="asc" md-card  @md-selected="onSelect" md-fixed-header>
       <md-table-toolbar>
         <h1 class='md-title'>Lista de Usuários</h1>
         <md-button class="md-raised md-primary" @click="showUsuario = true">
           <md-icon class='botao-red'>person_add</md-icon>
           <md-tooltip md-direction='top'>Cadastro de Usuário</md-tooltip>
         </md-button>
-        <md-button @click='active = true'>
+        <md-button @click="trocarSenha()">
           <md-icon class='botao-red'>lock</md-icon>
           <md-tooltip md-direction='top'>Alterar Senha</md-tooltip>
         </md-button>
-        <md-button @click='bloqueio = true'>
+        <md-button @click="bloquearUsuario()">
           <md-icon class='botao-red'>no_encryption</md-icon>
           <md-tooltip md-direction='top'>Ativar ou Desativar</md-tooltip>
         </md-button>
@@ -50,14 +50,11 @@
         md-selectable='single'
       >
         <md-table-cell md-label='ID' md-sort-by='id' md-numeric>{{ item.id }}</md-table-cell>
-        <md-table-cell  md-label='Status' v-if="item.ativo === false " md-sort-by='status'>Desativado</md-table-cell>
-        <md-table-cell  md-label='Status' v-if="item.ativo === true " md-sort-by='status'>Ativo</md-table-cell>
+        <md-table-cell md-label='Status' v-if="item.ativo === false " md-sort-by='status'>Desativado</md-table-cell>
+        <md-table-cell md-label='Status' v-if="item.ativo === true " md-sort-by='status'>Ativo</md-table-cell>
+        <md-table-cell md-label='Perfil' md-sort-by='id_profile' md-numeric>{{ item.id_profile['name']}}</md-table-cell>
+        <md-table-cell md-label='Escritorio' md-sort-by='id_office'>{{ item.id_office['nome']}}</md-table-cell>
         <md-table-cell md-label='Nome' md-sort-by='username'>{{ item.username }}</md-table-cell>
-        <md-table-cell
-          md-label='Perfil'
-          md-sort-by='id_profile'
-          md-numeric
-        >{{ item.id_profile['name']}}</md-table-cell>
         <md-table-cell md-label='Email' md-sort-by='email'>{{ item.email }}</md-table-cell>
         <md-table-cell md-label='telefone' md-sort-by='telefone'>{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label='Celular' md-sort-by='celular'>{{ item.celular }}</md-table-cell>
@@ -88,11 +85,13 @@ export default {
 
   }),
   mounted () {
+    /*
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.escritorioId = authUser2.id_office
-
-    axios.get(process.env.API + 'user?where={"ativo": true,"id_office":' + this.escritorioId + '}').then(response => {
+    */
+    this.selected = null
+    axios.get(process.env.API + 'user?where={"ativo": true}').then(response => {
       this.people = response.data
     })
   },
@@ -102,6 +101,20 @@ export default {
     }),
     onSelect (item) {
       this.selected = item
+    },
+    trocarSenha () {
+      if (this.selected === true || this.selected !== null) {
+        this.active = true
+      } else {
+        alert('Por favor selecionar um usuário para troca de senha!')
+      }
+    },
+    bloquearUsuario () {
+      if (this.selected === true || this.selected !== null) {
+        this.bloqueio = true
+      } else {
+        alert('Por favor selecionar um usuário para bloqueio!')
+      }
     },
     Alterar () {
       let user = {
@@ -120,7 +133,6 @@ export default {
         })
     },
     Bloquear () {
-      console.log('Selected: ' + this.selected.id)
       let user
       let msn
       if (!this.selected.id) {

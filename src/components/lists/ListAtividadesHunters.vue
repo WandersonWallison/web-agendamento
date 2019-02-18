@@ -33,7 +33,7 @@
             <div v-if="item.status === 'Dados Incorretos'"><md-icon>mobile_off</md-icon>{{ ' - ' +item.status }}</div>
             <div v-if="item.status === 'Não pode falar'"><md-icon>mobile_friendly</md-icon>{{ ' - ' + item.status }}</div>
             <div v-if="item.status === 'Não Aceita Visita'"><md-icon>work_off</md-icon>{{ ' - ' + item.status }}</div>
-            <div v-if="item.status === ''"><md-icon>description</md-icon>{{ ' - Aguardado Atendimento' }}</div>
+            <div v-if="item.status === ''"><md-icon>description</md-icon>{{ ' - Aguardando ação do Hunter' }}</div>
         </md-table-cell>
       </md-table-row>
     </md-table>
@@ -53,10 +53,12 @@ export default {
     listahunters: []
   }),
   mounted () {
+    /*
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
-    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":3,"id_office":' + this.userAtual.id_office + '}').then(response => {
+    */
+    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":3}').then(response => {
       this.listahunters = response.data
     })
   },

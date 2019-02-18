@@ -1,6 +1,6 @@
 <template>
   <div class="md-dialog-container">
-    <form novalidate class="md-layout" @submit.prevent="validateEmpresa">
+    <form novalidate class="md-layout extende-form" @submit.prevent="validateEmpresa">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Cadastro de Empresa</span>
@@ -180,5 +180,9 @@ export default {
 }
 .campos-text {
   width: 100%;
+}
+.extende-form {
+  width: 100%;
+  height: 100%;
 }
 </style>

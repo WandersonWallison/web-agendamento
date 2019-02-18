@@ -315,7 +315,7 @@ export default {
         logradouro: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
-        cidade: this.selectedCidade,
+        cidade: this.form.cidade,
         cep: this.form.cep,
         uf: this.form.estado
       }
