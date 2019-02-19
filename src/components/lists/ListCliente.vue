@@ -80,6 +80,12 @@
             <md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou. Clique duas vezes para mais detalhes </md-tooltip>
         </div>
         </md-table-cell>
+        <md-table-cell md-label="Reagendamento" md-sort-by="id" md-numeric>
+          <div v-if="item.momento_atual === 5" @click="addSelectedReagendamento">
+            <md-icon class='md-accent'>restore</md-icon>
+            <md-tooltip md-direction="top">Reagendamento</md-tooltip>
+        </div>
+        </md-table-cell>
         <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
@@ -99,12 +105,18 @@
           <agenda :leadProps="leadProps"></agenda>
       </div>
     </md-dialog>
+    <md-dialog :md-active.sync="showDialogReagendamento3" class="dialog-agendamento">
+      <div class="div">
+          <reagendamento :leadProps="leadProps"></reagendamento>
+      </div>
+    </md-dialog>
   </div>
 </template>
 <script>
 import axios from 'axios'
 import moment from 'moment'
 import Agenda from '../forms/FormAgendamento.vue'
+import Reagendamento from '../forms/FormReagendamento.vue'
 const toLower = text => {
   return text.toString().toLowerCase()
 }
@@ -118,7 +130,8 @@ export default {
   listaCliente: 'ListaClientes',
   props: ['leadProps'],
   components: {
-    Agenda
+    Agenda,
+    Reagendamento
   },
   data: () => ({
     search: null,
@@ -126,12 +139,13 @@ export default {
     searched: [],
     users: [],
     showDialog: false,
+    showDialogReagendamento: false,
+    showDialogReagendamento3: false,
     leadProps: {},
     data_atendimento: Date.now(),
     userAtual: false,
     objLead: false,
     valueLead: null,
-    showDialogReagendamento: false,
     agendamento: {
       nome: null,
       email: null,
@@ -362,6 +376,14 @@ export default {
         alert('Selecione um contato da lista')
       } else {
         this.showDialog = true
+        this.leadProps = this.selected
+      }
+    },
+    addSelectedReagendamento () {
+      if (!this.selected) {
+        alert('Selecione um contato da lista')
+      } else {
+        this.showDialogReagendamento3 = true
         this.leadProps = this.selected
       }
     },
