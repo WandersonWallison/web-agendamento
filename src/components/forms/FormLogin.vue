@@ -103,6 +103,10 @@ export default {
                 this.$router.push('/agendamento')
                 this.loading = false
                 this.validaDataExpiracao()
+              } else if (response.data.user.id_profile === 4) {
+                this.$router.push('/manager')
+                this.loading = false
+                this.validaDataExpiracao()
               } else {
                 this.$router.push('/visita')
                 this.loading = false

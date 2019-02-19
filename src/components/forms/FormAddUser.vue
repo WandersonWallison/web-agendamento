@@ -23,9 +23,8 @@
               <md-field :class="getValidationClass('profile')">
                 <label for="profile">Tipo de Usuário</label>
                 <md-select name="profile" id="profile" v-model="form.profile" md-dense :disabled="sending">
-                  <md-option value="1">MANAGER</md-option>
-                  <md-option value="2">AGENTE</md-option>
-                  <md-option value="3">HUNTER</md-option>
+                  <md-option value="1">ADM</md-option>
+                  <md-option value="4">MANAGER</md-option>
                 </md-select>
                 <span class="md-error">Perfil não selecionado</span>
               </md-field>
@@ -197,7 +196,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cep')">
                 <label for="cep">CEP</label>
-                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" />
+                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'"  @change="buscarEndereco($event)"/>
                 <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
               </md-field>
@@ -207,7 +206,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estados</label>
-                <md-select v-model="form.estado" name="estado" id="estado">
+                <md-select v-model="form.estado" name="estado" id="estado" v-on="buscarCidade()">
                   <md-option value=12>Acre</md-option>
                   <md-option value=27>Alagoas</md-option>
                   <md-option value=16>Amapá</md-option>
@@ -333,30 +332,6 @@ export default {
     novoUsuario: null
   }),
   directives: {mask},
-  beforeUpdate () {
-    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
-      .then(response => {
-        this.cidades = response.data
-        this.form.cidade = this.cidades
-      })
-    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
-      .then(response => {
-        this.cep = response.data
-        if (this.cep.bairro) {
-          this.form.bairro = this.cep.bairro
-        }
-        if (this.cep.logradouro) {
-          this.form.rua = this.cep.logradouro
-        }
-        if (this.cep.complemento) {
-          this.form.observacao = this.cep.complemento
-        }
-      })
-      .catch(error => {
-        // alert('Erro no cadastro do Endereço')
-        console.log(error.response.data)
-      })
-  },
   validations: {
     form: {
       nomeAgente: {
@@ -452,6 +427,36 @@ export default {
           'md-invalid': field.$invalid && field.$dirty
         }
       }
+    },
+    buscarCidade: function () {
+      axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
+        .then(response => {
+          this.cidades = response.data
+          this.form.cidade = this.cidades
+        })
+    },
+    buscarEndereco: function () {
+      this.form.bairro = ''
+      this.form.rua = ''
+      this.form.observacao = ''
+
+      axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
+        .then(response => {
+          this.cep = response.data
+          if (this.cep.bairro) {
+            this.form.bairro = this.cep.bairro
+          }
+          if (this.cep.logradouro) {
+            this.form.rua = this.cep.logradouro
+          }
+          if (this.cep.complemento) {
+            this.form.observacao = this.cep.complemento
+          }
+        })
+        .catch(error => {
+          // alert('Erro no cadastro do Endereço')
+          console.log(error.response.data)
+        })
     },
     clearForm () {
       this.$v.$reset()

@@ -29,11 +29,12 @@
         <md-toolbar class="md-transparent" md-elevation="0">Menu</md-toolbar>
 
         <md-list>
+          <!--
           <md-list-item @click= 'mShowDash'>
             <md-icon>pie_chart</md-icon>
             <span class="md-list-item-text">Dashboard</span>
           </md-list-item>
-
+          -->
           <md-list-item @click= 'mShowHunter'>
             <md-icon>format_list_bulleted</md-icon>
             <span class="md-list-item-text">Atividades Hunter</span>
@@ -66,16 +67,16 @@
 
         </md-list>
       </md-app-drawer>
+      <md-app-content v-if="showOffice === true">
+        <br/>
+        <lista-office/>
+      </md-app-content>
       <md-app-content v-if="showDash === true">
         <dashboard/>
       </md-app-content>
       <md-app-content v-if="showUsuario === true">
         <br/>
         <lista-usuarios/>
-      </md-app-content>
-      <md-app-content v-if="showOffice === true">
-        <br/>
-        <lista-office/>
       </md-app-content>
       <md-app-content v-if="showAtAgentes === true">
         <br/>
@@ -90,7 +91,6 @@
         <list-empresa/>
       </md-app-content>
     </md-app>
-      <button-add/>
     </md-content>
   </div>
 </template>
@@ -128,11 +128,11 @@ export default {
     active: false,
     value: null,
     senha: false,
-    showDash: true,
+    showDash: false,
     showUsuario: false,
     showAtAgentes: false,
     ShowAtHunter: false,
-    showOffice: false,
+    showOffice: true,
     ShowAtEmpresa: false
   }),
   methods: {

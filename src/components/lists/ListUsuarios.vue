@@ -123,6 +123,7 @@ export default {
       axios.put(process.env.API + 'user/' + this.selected.id, user)
         .then(response => {
           this.userSaved = true
+          alert('Senha alterada com sucesso!')
           this.sending = false
           this.active = false
         })

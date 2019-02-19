@@ -7,6 +7,7 @@
         </md-toolbar>
         <md-card-content>
           <div class="md-layout md-gutter">
+            <!--
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('office')">
                 <label for="office">Escritório</label>
@@ -19,6 +20,7 @@
                 <br>
               </md-field>
             </div>
+            -->
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('profile')">
                 <label for="profile">Tipo de Usuário</label>
@@ -206,7 +208,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estados</label>
-                <md-select v-model="form.estado" name="estado" id="estado">
+                <md-select v-model="form.estado" name="estado" id="estado" v-on="buscarCidade()">
                   <md-option value=12>Acre</md-option>
                   <md-option value=27>Alagoas</md-option>
                   <md-option value=16>Amapá</md-option>
@@ -332,30 +334,6 @@ export default {
     novoUsuario: null
   }),
   directives: {mask},
-  beforeUpdate () {
-    axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
-      .then(response => {
-        this.cidades = response.data
-        this.form.cidade = this.cidades
-      })
-    axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
-      .then(response => {
-        this.cep = response.data
-        if (this.cep.bairro) {
-          this.form.bairro = this.cep.bairro
-        }
-        if (this.cep.logradouro) {
-          this.form.rua = this.cep.logradouro
-        }
-        if (this.cep.complemento) {
-          this.form.observacao = this.cep.complemento
-        }
-      })
-      .catch(error => {
-        // alert('Erro no cadastro do Endereço')
-        console.log(error.response.data)
-      })
-  },
   validations: {
     form: {
       nomeAgente: {
@@ -426,9 +404,6 @@ export default {
       },
       profile: {
         required
-      },
-      office: {
-        required
       }
     },
     selectedCidade: {
@@ -451,6 +426,13 @@ export default {
           'md-invalid': field.$invalid && field.$dirty
         }
       }
+    },
+    buscarCidade: function () {
+      axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
+        .then(response => {
+          this.cidades = response.data
+          this.form.cidade = this.cidades
+        })
     },
     clearForm () {
       this.$v.$reset()
@@ -479,15 +461,18 @@ export default {
       this.form.redeSocial = null
       this.form.observacao = null
       this.form.profile = null
-      this.form.office = null
+      // this.form.office = null
       this.selectedCidade = null
     },
-    saveEmpresa () {
+    saveUsuario () {
       let cvmValidado
       let senhaGerada
 
       cvmValidado = this.validarCVM()
       senhaGerada = this.geradorPassword()
+      const authUser = window.localStorage.getItem('Usuario')
+      const authUser2 = JSON.parse(authUser)
+      this.escritorioId = authUser2.id_office
 
       let newUsuario = {
         username: this.form.nomeAgente,
@@ -508,7 +493,7 @@ export default {
         rede_social: this.form.redeSocial,
         genero: this.form.genero,
         id_profile: this.form.profile,
-        id_office: this.form.office
+        id_office: this.escritorioId
       }
       this.novoUsuario = newUsuario
       let newEndereco = {
@@ -534,18 +519,18 @@ export default {
                 this.userSaved = true
                 this.sending = false
                 this.clearForm()
-                window.location.reload()
+                // window.location.reload()
               })
               .catch(error => {
-                alert('Erro no cadastro do Endereço')
-                console.log(error.response.data)
+                // alert('Erro no cadastro do Endereço')
+                console.log('Error Address' + error.response.data)
               })
           })
           .catch(error => {
             if (error.response.data.code === 'E_UNIQUE') {
               alert('Dados já Cadastrado \nPor favor verificar os dados de cadastro')
             }
-            console.log(error.response.data)
+            console.log('Erro user: ' + error.response.data)
           })
       } else {
         alert('Campo CVM deve ser preenchido')
@@ -554,7 +539,7 @@ export default {
     validateUser () {
       this.$v.$touch()
       if (!this.$v.$invalid) {
-        this.saveEmpresa()
+        this.saveUsuario()
       }
     },
     geradorPassword () {

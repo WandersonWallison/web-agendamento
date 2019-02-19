@@ -75,7 +75,7 @@ const router = new Router({
       component: Manager,
       meta: {
         requiresAuth: true,
-        permissions: true
+        permissions: false
       }
     }
   ]
@@ -90,6 +90,8 @@ router.beforeEach((to, from, next) => {
       } else if (authUser2.id_profile === 2 && to.meta.permissions === false) {
         next()
       } else if (authUser2.id_profile === 3 && to.meta.permissions === false) {
+        next()
+      } else if (authUser2.id_profile === 4 && to.meta.permissions === false) {
         next()
       } else {
         next('/')
