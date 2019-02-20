@@ -88,7 +88,7 @@
           <md-tooltip md-direction="top">{{ item.obs }}</md-tooltip>
         </md-table-cell>
         <md-table-cell md-label="Ações" style="text-align: center;">
-            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" >
+            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="reagendamentoRapido" >
               <md-tooltip md-direction="top">Agendar Rápido</md-tooltip>
               <md-icon>input</md-icon>
             </md-button>
@@ -115,6 +115,11 @@
     <md-dialog :md-active.sync="showDialogReagendamento3" class="dialog-agendamento">
       <div class="div">
           <reagendamento :leadProps="leadProps"></reagendamento>
+      </div>
+    </md-dialog>
+    <md-dialog :md-active.sync="showDialogReagendamento4" class="dialog-agendamento">
+      <div class="div">
+          <reagendar-rapido :leadProps="leadProps"></reagendar-rapido>
       </div>
     </md-dialog>
     <md-dialog :md-active.sync="showUpdateLead">
@@ -155,6 +160,7 @@ export default {
     showDialog: false,
     showDialogReagendamento: false,
     showDialogReagendamento3: false,
+    showDialogReagendamento4: false,
     showUpdateLead: false,
     leadProps: {},
     data_atendimento: Date.now(),
@@ -406,6 +412,14 @@ export default {
         alert('Selecione um contato da lista')
       } else {
         this.showDialogReagendamento3 = true
+        this.leadProps = this.selected
+      }
+    },
+    reagendamentoRapido () {
+      if (!this.selected) {
+        alert('Selecione um contato da lista')
+      } else {
+        this.showDialogReagendamento4 = true
         this.leadProps = this.selected
       }
     },

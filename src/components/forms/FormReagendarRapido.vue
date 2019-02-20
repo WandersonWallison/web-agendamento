@@ -3,38 +3,9 @@
     <form novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
-          <span class="md-title">Reagendamento</span>
+          <span class="md-title">Reagendar Rápido</span>
         </md-toolbar>
         <md-card-content>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-datepicker id="data" name="data" date="true" time="true" :md-disabled-dates="disabledDates" v-model="form.data" :class="getValidationClass('data')">
-                 <label>Data Agendamento</label>
-                 <span class="md-error" v-if="!$v.form.data.required">Data deve ser preenchido</span>
-              </md-datepicker>
-            </div>
-             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('horario')">
-                <label for="horario">Horário</label>
-                <md-select name="horario" id="horario" v-model="form.horario" md-dense :disabled="sending">
-                  <md-option value="1">08:00</md-option>
-                  <md-option value="2">09:00</md-option>
-                  <md-option value="3">10:00</md-option>
-                  <md-option value="4">11:00</md-option>
-                  <md-option value="5">14:00</md-option>
-                  <md-option value="6">15:00</md-option>
-                  <md-option value="7">16:00</md-option>
-                  <md-option value="8">17:00</md-option>
-                  <md-option value="9">18:00</md-option>
-                  <md-option value="10">19:00</md-option>
-                  <md-option value="11">20:00</md-option>
-                  <md-option value="12">21:00</md-option>
-                  <md-option value="13">22:00</md-option>
-                </md-select>
-                <span class="md-error">Hórario de Agendamento deve ser informado</span>
-              </md-field>
-            </div>
-          </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('hora')">
@@ -85,101 +56,11 @@
               </md-field>
             </div>
           </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cep')">
-                <label for="cep">CEP</label>
-                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" />
-                <md-button class="md-icon-button md-dense md-raised md-primary" @click="pesquisacep">
-                  <md-tooltip md-direction="top">Buscar Cep</md-tooltip>
-                  <md-icon>cached</md-icon>
-                </md-button>
-                <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('estado')">
-                <label for="estado">Estado</label>
-                <md-select name="estado" id="estado" v-model="form.estado" md-dense :disabled="sending">
-                  <md-option value=12>Acre</md-option>
-                  <md-option value=27>Alagoas</md-option>
-                  <md-option value=16>Amapá</md-option>
-                  <md-option value=13>Amazonas</md-option>
-                  <md-option value=29>Bahia</md-option>
-                  <md-option value=23>Ceará</md-option>
-                  <md-option value=53>Distrito Federal</md-option>
-                  <md-option value=32>Espírito Santo</md-option>
-                  <md-option value=52>Goiás</md-option>
-                  <md-option value=21>Maranhão</md-option>
-                  <md-option value=51>Mato Grosso</md-option>
-                  <md-option value=50>Mato Grosso do Sul</md-option>
-                  <md-option value=31>Minas Gerais</md-option>
-                  <md-option value=15>Pará</md-option>
-                  <md-option value=25>Paraíba</md-option>
-                  <md-option value=41>Paraná</md-option>
-                  <md-option value="PE">Pernambuco</md-option>
-                  <md-option value=22>Piauí</md-option>
-                  <md-option value=33>Rio de Janeiro</md-option>
-                  <md-option value=24>Rio Grande do Norte</md-option>
-                  <md-option value=43>Rio Grande do Sul</md-option>
-                  <md-option value=11>Rondônia</md-option>
-                  <md-option value=14>Roraima</md-option>
-                  <md-option value=42>Santa Catarina</md-option>
-                  <md-option value=35>São Paulo</md-option>
-                  <md-option value=28>Sergipe</md-option>
-                  <md-option value=17>Tocantins</md-option>
-                </md-select>
-                <span class="md-error">Estado não selecioando</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('rua')">
-                <label for="rua">Cidade</label>
-                <md-input id="rua" name="rua" v-model="form.cidade" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.cidade.required">Cidade deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.cidade.maxlength">Invalid Cidade</span>
-              </md-field>
-            </div>
-          </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('rua')">
-                <label for="rua">Rua</label>
-                <md-input id="rua" name="rua" v-model="form.rua" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.rua.required">Rua deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.rua.maxlength">Invalid rua</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('numero')">
-                <label for="numero">Numero</label>
-                <md-input id="numero" name="numero" v-model="form.numero" :disabled="sending" v-mask = "'#########'" />
-                <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
-              </md-field>
-            </div>
-          </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('bairro')">
-                <label for="bairro">Bairro</label>
-                <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.bairro.required">Bairro deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.bairro.maxlength">Invalid Bairro</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label for="observacao">Observação</label>
-                  <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
-                </md-field>
-            </div>
-          </div>
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
         <div class="actions md-layout md-alignment-center-space-between">
-          <md-button class="md-raised md-primary" type="submit" :disabled="sending">Agendar</md-button>
+          <md-button class="md-raised md-primary" type="submit" :disabled="sending">Reagendar</md-button>
         </div>
         </md-card-actions>
       </md-card>
@@ -210,8 +91,8 @@ export default {
       data_criacao: new Date(),
       data_expiracao: '',
       form: {
-        data: null,
-        horario: null,
+        data: this.leadProps.agendamentos[0].data,
+        horario: this.leadProps.agendamentos[0].hora,
         hora: null,
         minutos: null,
         cep: this.leadProps.enderecos[0].cep,
