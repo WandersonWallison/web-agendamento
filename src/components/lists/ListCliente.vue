@@ -12,13 +12,6 @@
     <!-- Fim da Observação -->
     <!-- Dialog do reagendamento -->
     <md-dialog :md-active.sync="showDialogReagendamento">
-      <div>
-      <md-dialog-title>Reagendamento</md-dialog-title>
-      <md-button style="margin-left: 30%" class="md-raised md-accent" @click="showEscritorio = true">
-          <md-icon>input</md-icon>
-          <md-tooltip md-direction='top'>Cadastro de Escritorio</md-tooltip>
-        </md-button>
-      </div>
       <md-tabs md-dynamic-height>
         <md-tab md-label="Cliente">
           <p>Nome: {{ this.agendamento.nome }}</p>
@@ -33,7 +26,7 @@
           <p>Motivo: {{ this.agendamento.motivo }}</p>
           <p>Retorno: {{ this.agendamento.retorno }}</p>
         </md-tab>
-        <md-tab md-label="Acessor">
+        <md-tab md-label="Assessor">
           <p>Nome: {{ this.agendamento.nomeAgente }}</p>
           <p>Telefone: {{ this.agendamento.telefoneAgente }}</p>
           <p>E-mail: {{ this.agendamento.emailAgente }}</p>
@@ -79,30 +72,38 @@
           </md-button>
         </div>
       </md-table-toolbar>
-      <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single" :class="getClass(item)">
-        <md-table-cell md-label="" md-sort-by="id" md-numeric>
-          <div v-if="item.momento_atual === 5" @click="showDialogReagendamento2">
+      <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single"  :class="getClass(item)">
+        <md-table-cell md-label="">
+          <div v-if="item.momento_atual === 5" @click="showDialogReagendamento2" >
             <md-icon class='md-icon-button md-raised md-accent'>alarm</md-icon>
             <md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou. Clique duas vezes para mais detalhes </md-tooltip>
-        </div>
+          </div>
         </md-table-cell>
-        <md-table-cell md-label="Reagendamento" md-sort-by="id" md-numeric>
-          <div v-if="item.momento_atual === 5" @click="addSelectedReagendamento">
-            <md-icon class='md-accent'>restore</md-icon>
-            <md-tooltip md-direction="top">Reagendamento</md-tooltip>
-        </div>
-        </md-table-cell>
-        <md-table-cell md-label="Código" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="Código" md-sort-by="id" >{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Observações" md-sort-by="obsevacoes">{{ item.obs }}</md-table-cell>
-        <md-table-cell>
-          <md-button class="md-icon-button butoom-06" @click="objLead=true">
-            <md-tooltip md-direction="top">Adicionar Observação</md-tooltip>
-            <md-icon>create</md-icon>
-          </md-button>
+        <md-table-cell md-label="Observações" md-sort-by="obsevacoes">{{ item.obs }}
+          <md-tooltip md-direction="top">{{ item.obs }}</md-tooltip>
+        </md-table-cell>
+        <md-table-cell md-label="Ações" style="text-align: center;">
+            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" >
+              <md-tooltip md-direction="top">Agendar Rápido</md-tooltip>
+              <md-icon>input</md-icon>
+            </md-button>
+            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="addSelectedReagendamento">
+              <md-tooltip md-direction="top">Reagendamento</md-tooltip>
+              <md-icon>restore</md-icon>
+            </md-button>
+            <md-button class="md-icon-button butoom-06" @click="objLead=true">
+              <md-tooltip md-direction="top">Adicionar Observação</md-tooltip>
+              <md-icon>insert_comment</md-icon>
+            </md-button>
+            <md-button class="md-icon-button butoom-06" @click="mupdateLead">
+              <md-tooltip md-direction="top">Editar Lead</md-tooltip>
+              <md-icon>edit</md-icon>
+            </md-button>
         </md-table-cell>
       </md-table-row>
     </md-table>
@@ -116,6 +117,9 @@
           <reagendamento :leadProps="leadProps"></reagendamento>
       </div>
     </md-dialog>
+    <md-dialog :md-active.sync="showUpdateLead">
+      <update-lead :leadProps="leadProps"></update-lead>
+    </md-dialog>
   </div>
 </template>
 <script>
@@ -124,6 +128,7 @@ import moment from 'moment'
 import Agenda from '../forms/FormAgendamento.vue'
 import Reagendamento from '../forms/FormReagendamento.vue'
 import ReagendarRapido from '../forms/FormReagendarRapido.vue'
+import UpdateLead from '../forms/FormUpdateLeadAgendamento.vue'
 const toLower = text => {
   return text.toString().toLowerCase()
 }
@@ -139,7 +144,8 @@ export default {
   components: {
     Agenda,
     Reagendamento,
-    ReagendarRapido
+    ReagendarRapido,
+    UpdateLead
   },
   data: () => ({
     search: null,
@@ -149,6 +155,7 @@ export default {
     showDialog: false,
     showDialogReagendamento: false,
     showDialogReagendamento3: false,
+    showUpdateLead: false,
     leadProps: {},
     data_atendimento: Date.now(),
     userAtual: false,
@@ -247,7 +254,7 @@ export default {
   },
   methods: {
     atendeu () {
-      if (this.selected.id) {
+      if (this.selected) {
         let newLead = {
           data_atendimento: moment(this.data_atendimento).format()
         }
@@ -258,7 +265,7 @@ export default {
             window.location.reload()
           })
           .catch(error => {
-            alert('Selecione um cliente')
+            alert('Selecione um contato')
             console.log(error.response.data)
           })
       } else {
@@ -266,7 +273,7 @@ export default {
       }
     },
     naoAtendeu () {
-      if (this.selected.id) {
+      if (this.selected) {
         let newLead = {
           data_criacao: moment(this.data_atendimento).format(),
           status: 'Não Atendeu'
@@ -278,7 +285,7 @@ export default {
             window.location.reload()
           })
           .catch(error => {
-            alert('Selecione um cliente')
+            alert('Selecione um contato')
             console.log(error.response.data)
           })
       } else {
@@ -286,7 +293,7 @@ export default {
       }
     },
     dadosIncorretos () {
-      if (this.selected.id) {
+      if (this.selected) {
         let newLead = {
           status: 'Dados Incorretos',
           ativo: false
@@ -298,7 +305,7 @@ export default {
             window.location.reload()
           })
           .catch(error => {
-            alert('Selecione um cliente')
+            alert('Selecione um contato')
             console.log(error.response.data)
           })
       } else {
@@ -306,7 +313,7 @@ export default {
       }
     },
     naoPodeFalar () {
-      if (this.selected.id) {
+      if (this.selected) {
         let newLead = {
           data_criacao: moment(this.data_atendimento).format(),
           status: 'Não pode falar'
@@ -318,7 +325,7 @@ export default {
             window.location.reload()
           })
           .catch(error => {
-            alert('Selecione um cliente')
+            alert('Selecione um contato')
             console.log(error.response.data)
           })
       } else {
@@ -326,7 +333,7 @@ export default {
       }
     },
     naoAceitaVisita () {
-      if (this.selected.id) {
+      if (this.selected) {
         let newLead = {
           status: 'Não Aceita Visita',
           ativo: false
@@ -338,7 +345,7 @@ export default {
             window.location.reload()
           })
           .catch(error => {
-            alert('Selecione um cliente')
+            alert('Selecione um contato')
             console.log(error.response.data)
           })
       } else {
@@ -368,12 +375,19 @@ export default {
         .catch(error => {
           alert('erro na busca de agente' + error)
         })
-
       if (this.selected.id) {
         this.showDialogReagendamento = true
       } else {
         this.showDialogReagendamento = false
         alert('Selecione o contato para realizar a visualização!!')
+      }
+    },
+    mupdateLead () {
+      if (!this.selected) {
+        alert('Selecione um lead para edição')
+      } else {
+        this.showUpdateLead = true
+        this.leadProps = this.selected
       }
     },
     getClass: ({ id }) => ({
@@ -407,7 +421,7 @@ export default {
     addObservacao () {
       if (this.selected) {
         let lead = {
-          obs: this.selected.obs + ' Informações Hunter :' + this.valueLead
+          obs: this.selected.obs + 'Hunter: ' + this.valueLead
         }
         axios.put(process.env.API + 'leads/' + this.selected.id, lead)
           .then(response => {
@@ -450,7 +464,7 @@ export default {
   background-color: #15da93;
 }
 .butoom-06 {
-  background-color: darkorange;
+  background-color: honeydew;
 }
 .div {
   overflow: auto;

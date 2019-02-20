@@ -38,6 +38,10 @@
           <div class="md-list-item-text">
             <span>{{ selected.id_lead.telefone }}</span>
           </div>
+          <md-icon class="md-primary">phone_android</md-icon>
+          <div class="md-list-item-text">
+            <span>{{ selected.id_lead.celular }}</span>
+          </div>
         </md-list-item>
         <md-list-item>
           <md-icon class="md-primary">email</md-icon>
@@ -252,8 +256,8 @@ export default {
     const user = JSON.parse(userLogado)
     this.id_usuario = user.id
 
-    axios.get(process.env.API + 'schedule?where={"agentes": ' + this.id_usuario + ',"status":{"!=":2}}')
-    // axios.get(process.env.API + 'schedule?where={"agentes": '+this.id_usuario+'}')
+    axios.get(process.env.API + 'schedule?where={"agentes":' + this.id_usuario + ',"status":{"!=":2}}')
+    // axios.get(process.env.API + 'schedule?where={"agentes": ' + this.id_usuario + '}')
       .then(response => {
         this.schedules = response.data
         this.selected = null
