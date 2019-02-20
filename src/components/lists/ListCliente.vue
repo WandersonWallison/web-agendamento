@@ -12,7 +12,13 @@
     <!-- Fim da Observação -->
     <!-- Dialog do reagendamento -->
     <md-dialog :md-active.sync="showDialogReagendamento">
+      <div>
       <md-dialog-title>Reagendamento</md-dialog-title>
+      <md-button style="margin-left: 30%" class="md-raised md-accent" @click="showEscritorio = true">
+          <md-icon>input</md-icon>
+          <md-tooltip md-direction='top'>Cadastro de Escritorio</md-tooltip>
+        </md-button>
+      </div>
       <md-tabs md-dynamic-height>
         <md-tab md-label="Cliente">
           <p>Nome: {{ this.agendamento.nome }}</p>
@@ -27,7 +33,7 @@
           <p>Motivo: {{ this.agendamento.motivo }}</p>
           <p>Retorno: {{ this.agendamento.retorno }}</p>
         </md-tab>
-        <md-tab md-label="Agente">
+        <md-tab md-label="Acessor">
           <p>Nome: {{ this.agendamento.nomeAgente }}</p>
           <p>Telefone: {{ this.agendamento.telefoneAgente }}</p>
           <p>E-mail: {{ this.agendamento.emailAgente }}</p>
@@ -117,6 +123,7 @@ import axios from 'axios'
 import moment from 'moment'
 import Agenda from '../forms/FormAgendamento.vue'
 import Reagendamento from '../forms/FormReagendamento.vue'
+import ReagendarRapido from '../forms/FormReagendarRapido.vue'
 const toLower = text => {
   return text.toString().toLowerCase()
 }
@@ -131,7 +138,8 @@ export default {
   props: ['leadProps'],
   components: {
     Agenda,
-    Reagendamento
+    Reagendamento,
+    ReagendarRapido
   },
   data: () => ({
     search: null,
