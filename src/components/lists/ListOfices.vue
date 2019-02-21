@@ -76,7 +76,6 @@ export default {
         alert('Por favor selecionar um escritorio para edição!')
       }
     }
-
   }
 }
 </script>

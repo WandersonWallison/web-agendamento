@@ -91,7 +91,7 @@ export default {
     this.escritorioId = authUser2.id_office
     */
     this.selected = null
-    axios.get(process.env.API + 'user?where={"ativo": true}').then(response => {
+    axios.get(process.env.API + 'user').then(response => {
       this.people = response.data
     })
   },

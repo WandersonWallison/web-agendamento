@@ -58,11 +58,9 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('site')">
+              <md-field>
                 <label for="site">Site</label>
                 <md-input id="site" name="site" v-model="form.site" :disabled="sending" />
-                <span class="md-error" v-if="!$v.form.site.required">site deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.site.maxlength">site inválido</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -107,7 +105,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cep')">
                 <label for="cep">CEP</label>
-                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" />
+                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" @change="buscarEndereco($event)"/>
                 <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep inválido</span>
               </md-field>
@@ -236,10 +234,6 @@ export default {
         required,
         minLength: minLength(1)
       },
-      site: {
-        required,
-        minLength: minLength(3)
-      },
       rua: {
         required,
         minLength: minLength(4)
@@ -298,6 +292,32 @@ export default {
       this.form.qtdVisitas = null
       this.form.cnpj = null
       this.form.tempoAceite = null
+    },
+    buscarEndereco: function () {
+      this.form.bairro = ''
+      this.form.rua = ''
+      this.form.observacao = ''
+
+      axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
+        .then(response => {
+          this.cep = response.data
+          if (this.cep.cidade) {
+            this.form.cidade = this.cep.cidade
+          }
+          if (this.cep.bairro) {
+            this.form.bairro = this.cep.bairro
+          }
+          if (this.cep.logradouro) {
+            this.form.rua = this.cep.logradouro
+          }
+          if (this.cep.complemento) {
+            this.form.observacao = this.cep.complemento
+          }
+        })
+        .catch(error => {
+          // alert('Erro no cadastro do Endereço')
+          console.log(error.response.data)
+        })
     },
     saveEmpresa () {
       let newEmpresa = {
