@@ -33,7 +33,7 @@
               <div v-if="form.profile!=3">
                 <md-field>
                   <label for="cvm">CVM</label>
-                  <md-input id="cvm" name="cvm" v-model="form.cvm" :disabled=false />
+                  <md-input id="cvm" name="cvm" v-model="form.cvm" :disabled=false v-mask = "'#########'" />
                 </md-field>
               </div>
             </div>

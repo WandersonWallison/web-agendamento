@@ -25,7 +25,7 @@
               <md-field :class="getValidationClass('profile')">
                 <label for="profile">Tipo de Usuário</label>
                 <md-select name="profile" id="profile" v-model="form.profile" md-dense :disabled="sending">
-                  <md-option value="2">AGENTE</md-option>
+                  <md-option value="2">ASSESSOR</md-option>
                   <md-option value="3">HUNTER</md-option>
                 </md-select>
                 <span class="md-error">Perfil não selecionado</span>
@@ -35,7 +35,7 @@
               <div v-if="form.profile!=3">
                 <md-field>
                   <label for="cvm">CVM</label>
-                  <md-input id="cvm" name="cvm" v-model="form.cvm" :disabled=false />
+                  <md-input id="cvm" name="cvm" v-model="form.cvm" :disabled=false v-mask = "'#########'" />
                 </md-field>
               </div>
             </div>
