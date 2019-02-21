@@ -47,8 +47,6 @@
           <md-tooltip md-direction='top'>Desativar</md-tooltip>
         </md-button>
       </md-table-toolbar>
-
-
       <md-table-row
         class="alinhamento-table"
         slot='md-table-row'
