@@ -45,6 +45,11 @@
             <span class="md-list-item-text">Atividades Assessores</span>
           </md-list-item>
 
+          <md-list-item  @click= 'mShowLeads'>
+            <md-icon>format_list_numbered</md-icon>
+            <span class="md-list-item-text">Leads</span>
+          </md-list-item>
+
           <md-list-item  @click= 'mShowUsuario'>
             <md-icon>group</md-icon>
             <span class="md-list-item-text">Usuários</span>
@@ -73,6 +78,10 @@
       </md-app-content>
       <md-app-content v-if="showDash === true">
         <dashboard/>
+      </md-app-content>
+      <md-app-content v-if="showLeads === true">
+        <br/>
+        <lista-leads/>
       </md-app-content>
       <md-app-content v-if="showUsuario === true">
         <br/>
@@ -106,6 +115,7 @@ import ListaUsuarios from '../lists/ListUsuarios.vue'
 import ListaAgendamentosRealizados from '../lists/ListAgendamentosRealizados.vue'
 import ListaAtividadesHunter from './../lists/ListAtividadesHunters.vue'
 import ListaOffice from './../lists/ListOfices.vue'
+import ListaLeads from '../lists/ListLeadAdm.vue'
 
 export default {
   name: 'Home',
@@ -120,7 +130,8 @@ export default {
     ListaUsuarios,
     ListaAgendamentosRealizados,
     ListaAtividadesHunter,
-    ListaOffice
+    ListaOffice,
+    ListaLeads
   },
   data: () => ({
     menuVisible: false,
@@ -133,7 +144,8 @@ export default {
     showAtAgentes: false,
     ShowAtHunter: false,
     showOffice: true,
-    ShowAtEmpresa: false
+    ShowAtEmpresa: false,
+    showLeads: false
   }),
   methods: {
     toggleMenu () {
@@ -147,6 +159,11 @@ export default {
     mShowUsuario () {
       this.inativaComponentes()
       this.showUsuario = true
+      this.menuVisible = false
+    },
+    mShowLeads () {
+      this.inativaComponentes()
+      this.showLeads = true
       this.menuVisible = false
     },
     mShowOffice () {
@@ -181,6 +198,7 @@ export default {
       this.showAtAgentes = false
       this.ShowAtHunter = false
       this.ShowAtEmpresa = false
+      this.showLeads = false
     }
 
   }

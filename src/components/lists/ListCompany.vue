@@ -63,7 +63,6 @@ export default {
     /* const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.EmpresaId = authUser2.id_company */
-
     axios.get(process.env.API + 'company').then(response => {
       this.company = response.data
     })

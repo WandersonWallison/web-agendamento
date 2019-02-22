@@ -111,9 +111,6 @@ export default {
       v = moment(v).format('DD/MM/YYYY')
       return v
     },
-    estado: function (v) {
-
-    },
     maskHora: function (v) {
       switch (v) {
         case 1:

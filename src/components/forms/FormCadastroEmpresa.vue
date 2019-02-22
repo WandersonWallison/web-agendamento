@@ -140,7 +140,7 @@ export default {
       let newEmpresa = {
         nome: this.form.nomeEmpresa,
         razao_social: this.form.razaoSocial,
-        site: this.form.site,
+        site: (this.form.site ? this.form.site : 'Site não informado'),
         telefone: this.form.telefone,
         email: this.form.email,
         cnpj: this.form.cnpj

@@ -23,14 +23,15 @@
                 <span class="md-error" v-else-if="!$v.form.responsavelEscritorio.maxlength">Invalid responsável</span>
               </md-field>
             </div>
-          </div>
-          <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field>
                 <label for="cnpj">CNPJ</label>
                 <md-input id="cnpj" name="cnpj" v-model="form.cnpj" :disabled="sending" v-mask = "'##.###.###/####-##'" />
               </md-field>
             </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <!--
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('tempoAceite')">
                 <label for="tempoAceite">Tempo Para Aceite</label>
@@ -42,7 +43,9 @@
                 </md-select>
                 <span class="md-error">Tempo de Aceito não selecioando</span>
               </md-field>
-            </div>
+            </div>-->
+          </div>
+          <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('qtdVisitas')">
                 <label for="qtdVisitas">Visitas por Agente</label>
@@ -53,14 +56,6 @@
                   <md-option value=4>4 Visitas</md-option>
                 </md-select>
                 <span class="md-error">Quantidades de visitas não selecioando</span>
-              </md-field>
-            </div>
-          </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
-              <md-field>
-                <label for="site">Site</label>
-                <md-input id="site" name="site" v-model="form.site" :disabled="sending" />
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -80,11 +75,27 @@
               </md-field>
             </div>
           </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field>
+                <label for="site">Site</label>
+                <md-input id="site" name="site" v-model="form.site" :disabled="sending" />
+              </md-field>
+            </div>
+          </div>
           <br>
           <md-toolbar md-elevation="0" class="md-dense">
             <span class="md-title">Endereço</span>
           </md-toolbar>
           <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('cep')">
+                <label for="cep">CEP</label>
+                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" @change="buscarEndereco($event)"/>
+                <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep inválido</span>
+              </md-field>
+            </div>
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('rua')">
                 <label for="rua">Rua</label>
@@ -93,21 +104,11 @@
                 <span class="md-error" v-else-if="!$v.form.rua.maxlength">inválido Rua</span>
               </md-field>
             </div>
-          </div>
-          <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('numero')">
                 <label for="numero">Numero</label>
                 <md-input id="numero" name="numero" v-model="form.numero" :disabled="sending" v-mask = "'########'" />
                 <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
-              </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-              <md-field :class="getValidationClass('cep')">
-                <label for="cep">CEP</label>
-                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" @change="buscarEndereco($event)"/>
-                <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
-                <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep inválido</span>
               </md-field>
             </div>
           </div>
@@ -259,9 +260,6 @@ export default {
       },
       qtdVisitas: {
         required
-      },
-      tempoAceite: {
-        required
       }
     }
   },
@@ -291,7 +289,6 @@ export default {
       this.form.email = null
       this.form.qtdVisitas = null
       this.form.cnpj = null
-      this.form.tempoAceite = null
     },
     buscarEndereco: function () {
       this.form.bairro = ''
@@ -327,7 +324,7 @@ export default {
         telefone: this.form.telefone,
         email: this.form.email,
         qtd_visita_dia: this.form.qtdVisitas,
-        tempo_aceita: this.form.tempoAceite,
+        tempo_aceita: 0,
         abertura: moment(Date.now()).format(),
         cnpj: this.form.cnpj
       }
