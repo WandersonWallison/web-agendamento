@@ -67,11 +67,11 @@ export default {
       let newLead = {
         id_user_editor: 0,
         momento_atual: 1,
-        data_expiracao: moment('00/00/0000').format()
-        // obs: ''
+        data_expiracao: moment('00/00/0000').format(),
+        obs: 'Não Atribuído'
       }
       for (var i = 0; i <= this.leads.length; i++) {
-        newLead.obs = this.leads[i].obs + ' Não Atribuído '
+        // newLead.obs = this.leads[i].obs + ' Não Atribuído '
         axios.put(process.env.API + 'leads/' + this.leads[i].id, newLead)
           .then(response => {
           })
