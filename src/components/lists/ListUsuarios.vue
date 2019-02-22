@@ -9,20 +9,16 @@
       md-confirm-text='Alterar'
       @md-confirm='Alterar'
     />
-  <md-dialog-confirm
-      :md-active.sync='bloqueio'
-      md-title='Deseja ativar usuário?'
-      md-confirm-text='Sim'
-      md-cancel-text='Não'
-      @md-confirm='Bloquear'
-    />
+
     <md-dialog-confirm
-      :md-active.sync='desbloqueio'
-      md-title='Deseja desativar usuário?'
+      :md-active.sync='bloqueio'
+      md-title='Deseja Ativar ou Desativar Usuário?'
       md-confirm-text='Sim'
       md-cancel-text='Não'
+     @md-cancel='onCancel'
       @md-confirm='Bloquear'
     />
+
     <md-dialog :md-active.sync="showUsuario" class="div">
       <cad-user/>
     </md-dialog>
@@ -38,16 +34,13 @@
           <md-icon class='botao-red'>lock</md-icon>
           <md-tooltip md-direction='top'>Alterar Senha</md-tooltip>
         </md-button>
-        <md-button @click="bloquearUsuario()" v-if="selected.ativo === false">
+        <md-button @click="bloquearUsuario()">
           <md-icon class='botao-red'>no_encryption</md-icon>
-          <md-tooltip md-direction='top'>Ativar</md-tooltip>
-        </md-button>
-        <md-button @click="desbloquearUsuario()" v-else>
-          <md-icon class='botao-red'>no_encryption</md-icon>
-          <md-tooltip md-direction='top'>Desativar</md-tooltip>
+          <md-tooltip md-direction='top'>Ativar ou Desativar</md-tooltip>
         </md-button>
       </md-table-toolbar>
 
+      <span v-if='value'>Value: {{ value }}</span>
 
       <md-table-row
         class="alinhamento-table"
@@ -86,7 +79,6 @@ export default {
     newValuePassword: null,
     showAlteraSenha: false,
     bloqueio: false,
-    desbloqueio: false,
     escritorioId: '',
     showUsuario: false
 
@@ -97,7 +89,7 @@ export default {
     const authUser2 = JSON.parse(authUser)
     this.escritorioId = authUser2.id_office
     */
-    this.selected.ativo = false
+    this.selected = null
     axios.get(process.env.API + 'user').then(response => {
       this.people = response.data
     })
@@ -121,13 +113,6 @@ export default {
         this.bloqueio = true
       } else {
         alert('Por favor selecionar um usuário para bloqueio!')
-      }
-    },
-    desbloquearUsuario () {
-      if (this.selected === true || this.selected !== null) {
-        this.desbloqueio = true
-      } else {
-        alert('Por favor selecionar um usuário para Desbloquear!')
       }
     },
     Alterar () {
