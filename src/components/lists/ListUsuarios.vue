@@ -70,7 +70,6 @@
     </md-table>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import CadUser from '../forms/FormAddUser.vue'
