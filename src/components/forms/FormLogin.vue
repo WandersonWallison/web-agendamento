@@ -71,7 +71,7 @@ export default {
         // obs: ''
       }
       for (var i = 0; i <= this.leads.length; i++) {
-        newLead.obs = this.leads[i].obs + ' Hunter: Não atuou no lead'
+        newLead.obs = this.leads[i].obs + ' Não Atribuído '
         axios.put(process.env.API + 'leads/' + this.leads[i].id, newLead)
           .then(response => {
           })
