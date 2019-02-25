@@ -49,12 +49,12 @@ export default {
     const authUser2 = JSON.parse(authUser)
 
     if (authUser2.id_profile === 1) {
-      alert(authUser2.id_profile + ' - ' + authUser2.id_office)
+       // alert(authUser2.id_profile + ' - ' + authUser2.id_office)
       axios.get(process.env.API + 'leads').then(response => {
         this.lead = response.data
       })
     } else {
-      alert(authUser2.id_profile + ' - ' + authUser2.id_office)
+      // alert(authUser2.id_profile + ' - ' + authUser2.id_office)
       axios.get(process.env.API + 'leads?where={"id_office":' + authUser2.id_office + '}').then(response => {
         this.lead = response.data
       })
