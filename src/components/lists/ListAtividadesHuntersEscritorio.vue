@@ -1,7 +1,7 @@
 <template>
   <div>
      <div>
-      <md-table v-model="leads" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+      <md-table v-model="leads" md-sort="name" md-sort-order="asc" md-card md-fixed-header class="extender-div alinhamento-table">
         <md-table-toolbar>
           <h1 class="md-title">Atividades dos Hunters</h1>
           <div class="md-layout md-gutter md-small-size-100">
@@ -38,7 +38,6 @@
       </md-table-row>
     </md-table>
      </div>
-
   </div>
 </template>
 <script>
@@ -53,12 +52,11 @@ export default {
     listahunters: []
   }),
   mounted () {
-    /*
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
-    */
-    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":3}').then(response => {
+
+    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":3,"id_office":' + this.userAtual.id_office + '}').then(response => {
       this.listahunters = response.data
     })
   },
@@ -151,7 +149,7 @@ export default {
   margin-top: 5px;
 }
 .alinhamento-table {
-  text-align: left;
+  text-align: -webkit-auto;
 }
 .md-progress-bar {
   position: relative;
@@ -159,8 +157,7 @@ export default {
   right: 0;
   left: 0;
 }
-.alinhamento {
-  align-items: center;
+.extender-div {
+  height: 500px;
 }
-
 </style>

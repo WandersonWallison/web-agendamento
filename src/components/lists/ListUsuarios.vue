@@ -26,7 +26,6 @@
     <md-dialog :md-active.sync="showUsuario" class="div">
       <cad-user/>
     </md-dialog>
-
     <md-table v-model='people' md-sort="name" md-sort-order="asc" md-card  @md-selected="onSelect" md-fixed-header>
       <md-table-toolbar>
         <h1 class='md-title'>Lista de Usuários</h1>

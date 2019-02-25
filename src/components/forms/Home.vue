@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <div class="page-container expande-div">
     <md-content>
     <md-app md-mode="reveal">
       <md-app-toolbar class="md-toobar" md-elevation="1">
@@ -143,9 +143,9 @@ export default {
     showUsuario: false,
     showAtAgentes: false,
     ShowAtHunter: false,
-    showOffice: true,
+    showOffice: false,
     ShowAtEmpresa: false,
-    showLeads: false
+    showLeads: true
   }),
   methods: {
     toggleMenu () {
@@ -200,7 +200,6 @@ export default {
       this.ShowAtEmpresa = false
       this.showLeads = false
     }
-
   }
 }
 </script>
@@ -245,5 +244,8 @@ export default {
   display: flex;
   height: 55%;
   width: 22%;
+}
+.expande-div{
+  height: 85%;
 }
 </style>

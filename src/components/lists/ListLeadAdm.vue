@@ -1,7 +1,7 @@
-<template>
-  <div>
-    <md-table v-model="lead" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-      <md-table-toolbar>
+<template class="expande-div">
+  <div class="expande-div">
+    <md-table v-model="lead" md-sort="name" md-sort-order="asc" md-card md-fixed-header class="extender-div">
+      <md-table-toolbar class="expande-div">
         <h1 class="md-title">Leads</h1>
       </md-table-toolbar>
       <md-table-row
@@ -45,12 +45,20 @@ export default {
     }
   },
   mounted () {
-    /* const authUser = window.localStorage.getItem('Usuario')
+    const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
-    this.EmpresaId = authUser2.id_lead */
-    axios.get(process.env.API + 'leads').then(response => {
-      this.lead = response.data
-    })
+
+    if (authUser2.id_profile === 1) {
+      alert(authUser2.id_profile + ' - ' + authUser2.id_office)
+      axios.get(process.env.API + 'leads').then(response => {
+        this.lead = response.data
+      })
+    } else {
+      alert(authUser2.id_profile + ' - ' + authUser2.id_office)
+      axios.get(process.env.API + 'leads?where={"id_office":' + authUser2.id_office + '}').then(response => {
+        this.lead = response.data
+      })
+    }
   },
   methods: {
     getClass: ({ id }) => ({
@@ -65,11 +73,9 @@ export default {
   margin-top: 16px;
 }
 .alinhamento-table {
-  text-align: left;
+  text-align: -webkit-auto;
 }
-.div{
-  overflow: auto;
-  height: 75%;
-  width: 85%;
+.extender-div {
+  height: 500px;
 }
 </style>
