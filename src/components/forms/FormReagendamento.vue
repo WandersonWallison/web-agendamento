@@ -214,13 +214,13 @@ export default {
         horario: null,
         hora: null,
         minutos: null,
-        cep: this.leadProps.enderecos[0].cep,
-        rua: this.leadProps.enderecos[0].logradouro,
-        numero: this.leadProps.enderecos[0].numero,
-        estado: this.leadProps.enderecos[0].uf,
-        cidade: this.leadProps.enderecos[0].cidade,
-        bairro: this.leadProps.enderecos[0].bairro,
-        observacao: this.leadProps.agendamentos[0].obs
+        observacao: this.leadProps.obs,
+        cep: null,
+        rua: null,
+        numero: null,
+        estado: null,
+        cidade: null,
+        bairro: null
       },
       dataAgendamento: '',
       datasAgendadas: [],
@@ -284,6 +284,7 @@ export default {
     this.data_expiracao = new Date()
   },
   mounted () {
+    this.buscarEndereco()
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
@@ -422,6 +423,17 @@ export default {
       } else {
         alert('Não há Agentes cadastrado para o seu escritório')
       }
+    },
+    buscarEndereco () {
+      axios.get(process.env.API + 'address?where={"schedule_address":' + this.leadProps.agendamentos[0].id + '}')
+        .then(response => {
+          this.form.cep = response.data[0].cep
+          this.form.rua = response.data[0].logradouro
+          this.form.numero = response.data[0].numero
+          this.form.estado = response.data[0].uf
+          this.form.cidade = response.data[0].cidade
+          this.form.bairro = response.data[0].bairro
+        })
     }
     /*,
     getAgente (id) {

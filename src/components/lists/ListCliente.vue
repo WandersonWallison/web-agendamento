@@ -416,10 +416,7 @@ export default {
       }
     },
     reagendamentoRapido () {
-      alert('chegou')
-      alert(this.selected.id)
       if (this.selected.id) {
-        alert('chegou no if')
         this.showDialogReagendamento4 = true
         this.leadProps = this.selected
       } else {
