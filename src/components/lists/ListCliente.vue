@@ -88,11 +88,11 @@
           <md-tooltip md-direction="top">{{ item.obs }}</md-tooltip>
         </md-table-cell>
         <md-table-cell md-label="Ações" style="text-align: center;">
-            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="reagendamentoRapido" >
+            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="reagendamentoRapido()" >
               <md-tooltip md-direction="top">Agendar Rápido</md-tooltip>
               <md-icon>input</md-icon>
             </md-button>
-            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="addSelectedReagendamento">
+            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="addSelectedReagendamento()">
               <md-tooltip md-direction="top">Reagendamento</md-tooltip>
               <md-icon>restore</md-icon>
             </md-button>
@@ -416,11 +416,14 @@ export default {
       }
     },
     reagendamentoRapido () {
-      if (!this.selected) {
-        alert('Selecione um contato da lista')
-      } else {
+      alert('chegou')
+      alert(this.selected.id)
+      if (this.selected.id) {
+        alert('chegou no if')
         this.showDialogReagendamento4 = true
         this.leadProps = this.selected
+      } else {
+        alert('Selecione um contato da lista')
       }
     },
     newUser () {

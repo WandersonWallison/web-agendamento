@@ -199,7 +199,7 @@ import {
 } from 'vuelidate/lib/validators'
 
 export default {
-  name: 'FormAgenda',
+  name: 'FormAgendamento',
   props: ['leadProps'],
   mixins: [validationMixin],
   data: () => ({
@@ -355,7 +355,7 @@ export default {
       let newAgenda = {
         data: moment(this.form.data).format(),
         hora: this.form.horario,
-        obs: this.form.observacao,
+        obs: (this.form.observacao ? this.form.observacao : 'Não informado'),
         id_lead: this.leadProps.id,
         agentes: this.resultAgente,
         office_schedule: this.leadProps.id_office,
@@ -364,7 +364,7 @@ export default {
         qtd_retorno: 1
       }
       let newEndereco = {
-        rua: this.form.rua,
+        logradouro: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
         cidade: this.form.cidade,

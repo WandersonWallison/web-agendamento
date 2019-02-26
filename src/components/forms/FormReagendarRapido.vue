@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
+    <form novalidate class="md-layout" @submit.prevent="validateAgendamento">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
        <md-toolbar md-elevation="0" class="md-dense">
           <span class="md-title">Reagendar Rápido</span>
@@ -64,19 +64,16 @@
         </div>
         </md-card-actions>
       </md-card>
-      <!--md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with sucesso!</md-snackbar -->
     </form>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-import {mask} from 'vue-the-mask'
 import axios from 'axios'
 import { validationMixin } from 'vuelidate'
 import {
-  required,
-  minLength
+  required
 } from 'vuelidate/lib/validators'
 
 export default {
@@ -91,72 +88,29 @@ export default {
       data_criacao: new Date(),
       data_expiracao: '',
       form: {
-        data: this.leadProps.agendamentos[0].data,
-        horario: this.leadProps.agendamentos[0].hora,
+        data: this.leadProps.agendamentos[0].data ? this.leadProps.agendamentos[0].data : null,
+        horario: this.leadProps.agendamentos[0].hora ? this.leadProps.agendamentos[0].hora : null,
         hora: null,
-        minutos: null,
-        cep: this.leadProps.enderecos[0].cep,
-        rua: this.leadProps.enderecos[0].logradouro,
-        numero: this.leadProps.enderecos[0].numero,
-        estado: this.leadProps.enderecos[0].uf,
-        cidade: this.leadProps.enderecos[0].cidade,
-        bairro: this.leadProps.enderecos[0].bairro,
-        observacao: this.leadProps.agendamentos[0].obs
+        minutos: null
       },
       dataAgendamento: '',
       datasAgendadas: [],
       resultAgente: null,
       listAgentes: [],
       resp: [],
-      comparativoAgendamento: [],
       agentes: [],
       results: [],
-      userSaved: false,
       sending: false,
-      lastUser: null,
-      cidades: null,
-      cep: []
+      enderecoAgendamento: null
     }
   },
-  directives: {mask},
   validations: {
     form: {
-      data: {
-        required
-      },
-      horario: {
-        required,
-        minLength: minLength(1)
-      },
       hora: {
         required
       },
       minutos: {
         required
-      },
-      rua: {
-        required,
-        minLength: minLength(4)
-      },
-      numero: {
-        required,
-        minLength: minLength(1)
-      },
-      cep: {
-        required,
-        minLength: minLength(5)
-      },
-      cidade: {
-        required,
-        minLength: minLength(3)
-      },
-      estado: {
-        required,
-        minLength: minLength(2)
-      },
-      bairro: {
-        required,
-        minLength: minLength(3)
       }
     }
   },
@@ -183,33 +137,9 @@ export default {
         }
         this.disabledDates = this.datasAgendadas
       })
+    this.buscarEndereco()
   },
   methods: {
-    pesquisacep () {
-      axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
-        .then(response => {
-          this.cep = response.data
-          if (this.cep.bairro) {
-            this.form.bairro = this.cep.bairro
-          }
-          if (this.cep.logradouro) {
-            this.form.rua = this.cep.logradouro
-          }
-          if (this.cep.complemento) {
-            this.form.observacao = this.cep.complemento
-          }
-          if (this.cep.estado) {
-            this.form.estado = this.cep.estado
-          }
-          if (this.cep.cidade) {
-            this.form.cidade = this.cep.cidade
-          }
-        })
-        .catch(error => {
-          // alert('Erro no cadastro do Endereço')
-          console.log(error.response.data)
-        })
-    },
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
       if (field) {
@@ -224,15 +154,6 @@ export default {
       this.form.horario = null
       this.form.minutos = null
       this.form.hora = null
-      this.form.email = null
-      this.form.cep = null
-      this.form.rua = null
-      this.form.numero = null
-      this.form.cidade = null
-      this.form.estado = null
-      this.form.observacao = null
-      this.form.bairro = null
-      this.selectedCidade = null
     },
     saveAgenda () {
       this.pegarAgenteAgendamento()
@@ -248,12 +169,12 @@ export default {
         qtd_retorno: this.leadProps.agendamentos[0].qtd_retorno + 1
       }
       let newEndereco = {
-        rua: this.form.rua,
-        numero: this.form.numero,
-        bairro: this.form.bairro,
-        cidade: this.form.cidade,
-        cep: this.form.cep,
-        uf: this.form.estado,
+        logradouro: this.enderecoAgendamento[0].logradouro,
+        numero: this.enderecoAgendamento[0].numero,
+        bairro: this.enderecoAgendamento[0].bairro,
+        cidade: this.enderecoAgendamento[0].cidade,
+        cep: this.enderecoAgendamento[0].cep,
+        uf: this.enderecoAgendamento[0].uf,
         schedule_address: ''
       }
       let newLead = {
@@ -264,7 +185,6 @@ export default {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
             .then(response => {
-              this.userSaved = true
               this.sending = false
               /* Axios de Atualizar o lead para momento_atual = 3  */
               axios.put(process.env.API + 'leads/' + this.leadProps.id, newLead)
@@ -285,7 +205,7 @@ export default {
           console.log(error.response.data)
         })
     },
-    validateUser () {
+    validateAgendamento () {
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.saveAgenda()
@@ -303,20 +223,13 @@ export default {
       } else {
         alert('Não há Agentes cadastrado para o seu escritório')
       }
-    }
-    /*,
-    getAgente (id) {
-      let data = moment(this.form.data).format('YYYY-MM-DD')
-      axios.get(process.env.API + 'schedule/?data=' + data) //pegar agentes p escritorio
+    },
+    buscarEndereco () {
+      axios.get(process.env.API + 'address?where={"schedule_address":' + this.leadProps.agendamentos[0].id + '}')
         .then(response => {
-          console.log(' resp do Get agent '+ response.data)
-          this.results = response.data
-        })
-        .catch(error => {
-          console.log(error)
+          this.enderecoAgendamento = response.data
         })
     }
-    */
   }
 }
 </script>

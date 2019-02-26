@@ -367,7 +367,7 @@ export default {
         qtd_retorno: this.leadProps.agendamentos[0].qtd_retorno + 1
       }
       let newEndereco = {
-        rua: this.form.rua,
+        logradouro: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
         cidade: this.form.cidade,
