@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="expande-div">
     <md-dialog-prompt
       :md-active.sync='active'
       v-model='newValuePassword'
@@ -26,10 +26,13 @@
     <md-dialog :md-active.sync="showUsuario" class="div">
       <cad-user/>
     </md-dialog>
-    <md-table v-model='people' md-sort="name" md-sort-order="asc" md-card  @md-selected="onSelect" md-fixed-header>
+    <md-dialog :md-active.sync="showUsuarioManager" class="div">
+      <cad-user-manager/>
+    </md-dialog>
+    <md-table v-model='people' md-sort="name" md-sort-order="asc" md-card  @md-selected="onSelect" md-fixed-header class="extender-div">
       <md-table-toolbar>
         <h1 class='md-title'>Lista de Usuários</h1>
-        <md-button class="md-raised md-primary" @click="showUsuario = true">
+        <md-button class="md-raised md-primary" @click="cadastrarUsuario()">
           <md-icon class='botao-red'>person_add</md-icon>
           <md-tooltip md-direction='top'>Cadastro de Usuário</md-tooltip>
         </md-button>
@@ -70,10 +73,12 @@
 <script>
 import axios from 'axios'
 import CadUser from '../forms/FormAddUser.vue'
+import CadUserManager from '../forms/FormCadastraUsuarioManger.vue'
 export default {
   name: 'ListaUsuario',
   components: {
-    CadUser
+    CadUser,
+    CadUserManager
   },
   data: () => ({
     selected: {},
@@ -85,19 +90,30 @@ export default {
     bloqueio: false,
     desbloqueio: false,
     escritorioId: '',
-    showUsuario: false
-
+    showUsuario: false,
+    showUsuarioManager: false,
+    perfilCadastro: null
   }),
   mounted () {
-    /*
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
-    this.escritorioId = authUser2.id_office
-    */
+    this.perfilCadastro = authUser2
+
+    // alert('Id Profile: ' + authUser2.id_profile)
     this.selected.ativo = false
-    axios.get(process.env.API + 'user').then(response => {
-      this.people = response.data
-    })
+    if (authUser2.id_profile === 1) {
+      // alert(authUser2.id_profile + ' - ' + authUser2.id_office)
+      // alert('ADM')
+      axios.get(process.env.API + 'user').then(response => {
+        this.people = response.data
+      })
+    } else {
+      // alert(authUser2.id_profile + ' - ' + authUser2.id_office)
+      // alert('Manager')
+      axios.get(process.env.API + 'user?where={"id_office":' + authUser2.id_office + '}').then(response => {
+        this.people = response.data
+      })
+    }
   },
   methods: {
     getClass: ({ id }) => ({
@@ -111,6 +127,17 @@ export default {
         this.active = true
       } else {
         alert('Por favor selecionar um usuário para troca de senha!')
+      }
+    },
+    cadastrarUsuario () {
+      // alert('chegou')
+      // alert('Id Profile: ' + this.perfilCadastro.id_profile)
+      if (this.perfilCadastro.id_profile === 1) {
+        // alert('ADM')
+        this.showUsuario = true
+      } else {
+        // alert('Manager')
+        this.showUsuarioManager = true
       }
     },
     bloquearUsuario () {
@@ -183,7 +210,10 @@ export default {
   margin-top: 16px;
 }
 .alinhamento-table {
-  text-align: left;
+  text-align: -webkit-auto;
+}
+.extender-div {
+  height: 500px;
 }
 .div{
   overflow: auto;

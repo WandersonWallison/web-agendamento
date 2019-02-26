@@ -1,7 +1,7 @@
 <template>
   <div>
      <div>
-      <md-table v-model="leads" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+      <md-table v-model="leads" md-sort="name" md-sort-order="asc" md-card md-fixed-header class="extender-div">
         <md-table-toolbar>
           <h1 class="md-title">Atividades dos Hunters</h1>
           <div class="md-layout md-gutter md-small-size-100">
@@ -150,9 +150,6 @@ export default {
 .md-table + .md-table {
   margin-top: 5px;
 }
-.alinhamento-table {
-  text-align: left;
-}
 .md-progress-bar {
   position: relative;
   top: 0;
@@ -161,6 +158,12 @@ export default {
 }
 .alinhamento {
   align-items: center;
+}
+.alinhamento-table {
+  text-align: -webkit-auto;
+}
+.extender-div {
+  height: 500px;
 }
 
 </style>

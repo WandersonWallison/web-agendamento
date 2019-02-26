@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="expande-div">
      <div>
       <md-table v-model="schedules" md-sort="name" md-sort-order="asc" md-card md-fixed-header class="extender-div">
       <md-table-toolbar>
@@ -130,9 +130,6 @@ export default {
 .md-table + .md-table {
   margin-top: 5px;
 }
-.alinhamento-table {
-  text-align: left;
-}
 .md-progress-bar {
   position: absolute;
   top: 0;
@@ -141,6 +138,9 @@ export default {
 }
 .alinhamento {
   align-items: center;
+}
+.alinhamento-table {
+  text-align: -webkit-auto;
 }
 .extender-div {
   height: 500px;

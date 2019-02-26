@@ -71,7 +71,7 @@
       </md-app-content>
       <md-app-content v-if="showUsuario === true">
         <br/>
-        <cad-usuario-manger/>
+       <lista-usuarios/>
       </md-app-content>
       <md-app-content v-if="showAtAgentes === true">
         <br/>
@@ -84,13 +84,14 @@
 
     </md-app>
     </md-content>
+    <button-add/>
   </div>
 </template>
 <script>
 import CadUsuarioManger from './FormCadastraUsuarioManger.vue'
 import ListCliente from '../lists/ListCliente.vue'
 import ListEmpresa from '../lists/ListCompany.vue'
-import ButtonAdd from '../buttons/ButtonAdd.vue'
+import ButtonAdd from '../buttons/ButtonManager.vue'
 import ListClienteAguardando from '../lists/ListClienteAguardandoContato.vue'
 import Dashboard from './FormDashbord.vue'
 import AlterSenha from './FormAlterPassword.vue'
@@ -144,7 +145,7 @@ export default {
     mShowUsuario () {
       this.inativaComponentes()
       this.showUsuario = true
-      this.menuVisible = true
+      this.menuVisible = false
     },
     mShowLeads () {
       this.inativaComponentes()

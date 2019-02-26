@@ -6,7 +6,7 @@
     <md-dialog :md-active.sync="showUpdateEmpresa" class="div">
        <upd-empresa :selected="selected"></upd-empresa>
     </md-dialog>
-    <md-table v-model="company" @md-selected="onSelect" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+    <md-table v-model="company" @md-selected="onSelect" md-sort="name" md-sort-order="asc" md-card md-fixed-header class="extender-div alinhamento-table">
       <md-table-toolbar>
         <h1 class="md-title">Empresas</h1>
         <md-button class="md-raised md-primary" @click="showEmpresa = true">
@@ -90,7 +90,10 @@ export default {
   margin-top: 16px;
 }
 .alinhamento-table {
-  text-align: left;
+  text-align: -webkit-auto;
+}
+.extender-div {
+  height: 500px;
 }
 .div{
   overflow: auto;
