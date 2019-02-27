@@ -403,8 +403,12 @@ export default {
       if (!this.selected) {
         alert('Selecione um contato da lista')
       } else {
-        this.showDialog = true
-        this.leadProps = this.selected
+        if (this.selected.momento_atual === 5) {
+          alert(' Lead já agendando precisa realizar um \n Reagendamento Rapido ou Ligar para o cliente \n para um reagendamento !!!')
+        } else {
+          this.showDialog = true
+          this.leadProps = this.selected
+        }
       }
     },
     addSelectedReagendamento () {
