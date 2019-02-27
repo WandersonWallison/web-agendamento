@@ -11,6 +11,7 @@
               <md-field :class="getValidationClass('hora')">
                 <label for="hora">Hora Expiração</label>
                 <md-select name="hora" id="hora" v-model="form.hora" md-dense :disabled="sending">
+                  <md-option value="0">00:00</md-option>
                   <md-option value="1">01:00</md-option>
                   <md-option value="2">02:00</md-option>
                   <md-option value="3">03:00</md-option>
