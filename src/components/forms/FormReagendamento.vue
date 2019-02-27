@@ -356,6 +356,7 @@ export default {
       this.selectedCidade = null
     },
     saveAgenda () {
+      let dataValidade
       this.pegarAgenteAgendamento()
       let newAgenda = {
         data: moment(this.form.data).format(),
@@ -380,8 +381,13 @@ export default {
       let newLead = {
         momento_atual: 3
       }
-      axios.post(process.env.API + 'schedule', newAgenda)
-        .then(response => {
+
+      dataValidade = this.validarDataAgendamento(moment(this.form.data).format())
+
+      if (dataValidade) {
+        alert('A Data do Reagendamento não pode ser, \nmenor que a data atual !!!')
+      } else {
+        axios.post(process.env.API + 'schedule', newAgenda).then(response => {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
             .then(response => {
@@ -401,10 +407,11 @@ export default {
               console.log(error.response.data)
             })
         })
-        .catch(error => {
-          alert('agenda ' + error.response.data.code)
-          console.log(error.response.data)
-        })
+          .catch(error => {
+            alert('agenda ' + error.response.data.code)
+            console.log(error.response.data)
+          })
+      }
     },
     validateUser () {
       this.$v.$touch()
@@ -435,6 +442,12 @@ export default {
           this.form.cidade = response.data[0].cidade
           this.form.bairro = response.data[0].bairro
         })
+    },
+    validarDataAgendamento (data) {
+      let dataAtual = Date()
+      dataAtual = moment(dataAtual).format('YYYY-MM-DD')
+      data = moment(data).format('YYYY-MM-DD')
+      return moment(data).isBefore(dataAtual)
     }
     /*,
     getAgente (id) {
