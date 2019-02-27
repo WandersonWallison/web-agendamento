@@ -280,6 +280,7 @@ export default {
   beforeUpdate () {
     this.pegarAgenteAgendamento()
     this.data_expiracao = new Date()
+    // this.validarDataAgendamento(moment(this.form.data).format())
   },
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
@@ -352,6 +353,7 @@ export default {
       this.selectedCidade = null
     },
     saveAgenda () {
+      let dataValidade
       this.pegarAgenteAgendamento()
       let newAgenda = {
         data: moment(this.form.data).format(),
@@ -376,8 +378,12 @@ export default {
       let newLead = {
         momento_atual: 3
       }
-      axios.post(process.env.API + 'schedule', newAgenda)
-        .then(response => {
+      dataValidade = this.validarDataAgendamento(moment(this.form.data).format())
+
+      if (dataValidade) {
+        alert('A data de Agendamento não pode ser, \n menor que a data atual')
+      } else {
+        axios.post(process.env.API + 'schedule', newAgenda).then(response => {
           newEndereco.schedule_address = response.data.id
           axios.post(process.env.API + 'address', newEndereco)
             .then(response => {
@@ -396,10 +402,11 @@ export default {
               console.log(error.response.data)
             })
         })
-        .catch(error => {
-          alert('agenda ' + error.response.data.code)
-          console.log(error.response.data)
-        })
+          .catch(error => {
+            alert('agenda ' + error.response.data.code)
+            console.log(error.response.data)
+          })
+      }
     },
     validateUser () {
       this.$v.$touch()
@@ -415,10 +422,16 @@ export default {
       } else {
         alert('Não há Agentes cadastrado para o seu escritório')
       }
+    },
+    validarDataAgendamento (data) {
+      let dataAtual = Date()
+      dataAtual = moment(dataAtual).format('YYYY-MM-DD')
+      data = moment(data).format('YYYY-MM-DD')
+      return moment(data).isBefore(dataAtual)
     }
     /*,
     getAgente (id) {
-      let data = moment(this.form.data).format('YYYY-MM-DD')
+      let data = moment(this.form.data).format('YYYY-MM-DD'
       axios.get(process.env.API + 'schedule/?data=' + data) //pegar agentes p escritorio
         .then(response => {
           console.log(' resp do Get agent '+ response.data)
