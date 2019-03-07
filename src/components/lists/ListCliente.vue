@@ -260,7 +260,7 @@ export default {
   },
   methods: {
     atendeu () {
-      if (this.selected) {
+      if (this.selected !== null && this.selected.id) {
         let newLead = {
           data_atendimento: moment(this.data_atendimento).format()
         }
@@ -268,7 +268,7 @@ export default {
           .then(response => {
             this.results = response.data
             alert('Cliente atendeu a ligação')
-            window.location.reload()
+            // window.location.reload()
           })
           .catch(error => {
             alert('Selecione um contato')
@@ -279,7 +279,7 @@ export default {
       }
     },
     naoAtendeu () {
-      if (this.selected) {
+      if (this.selected !== null && this.selected.id) {
         let newLead = {
           data_criacao: moment(this.data_atendimento).format(),
           status: 'Não Atendeu'
@@ -299,7 +299,7 @@ export default {
       }
     },
     dadosIncorretos () {
-      if (this.selected) {
+      if (this.selected !== null && this.selected.id) {
         let newLead = {
           status: 'Dados Incorretos',
           ativo: false
@@ -319,7 +319,7 @@ export default {
       }
     },
     naoPodeFalar () {
-      if (this.selected) {
+      if (this.selected !== null && this.selected.id) {
         let newLead = {
           data_criacao: moment(this.data_atendimento).format(),
           status: 'Não pode falar'
@@ -339,7 +339,7 @@ export default {
       }
     },
     naoAceitaVisita () {
-      if (this.selected) {
+      if (this.selected !== null && this.selected.id) {
         let newLead = {
           status: 'Não Aceita Visita',
           ativo: false
@@ -400,27 +400,27 @@ export default {
       'md-primary': id
     }),
     addSelected () {
-      if (!this.selected) {
-        alert('Selecione um contato da lista')
-      } else {
+      if (this.selected !== null && this.selected.id) {
         if (this.selected.momento_atual === 5) {
           alert(' Lead já agendando precisa realizar um \n Reagendamento Rapido ou Ligar para o cliente \n para um reagendamento !!!')
         } else {
           this.showDialog = true
           this.leadProps = this.selected
         }
+      } else {
+        alert('Selecione um contato da lista')
       }
     },
     addSelectedReagendamento () {
-      if (!this.selected) {
-        alert('Selecione um contato da lista')
-      } else {
+      if (this.selected !== null && this.selected.id) {
         this.showDialogReagendamento3 = true
         this.leadProps = this.selected
+      } else {
+        alert('Selecione um contato da lista')
       }
     },
     reagendamentoRapido () {
-      if (this.selected.id) {
+      if (this.selected !== null && this.selected.id) {
         this.showDialogReagendamento4 = true
         this.leadProps = this.selected
       } else {
