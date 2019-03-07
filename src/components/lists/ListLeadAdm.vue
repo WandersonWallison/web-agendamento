@@ -50,12 +50,12 @@ export default {
 
     if (authUser2.id_profile === 1) {
       // alert(authUser2.id_profile + ' - ' + authUser2.id_office)
-      axios.get(process.env.API + 'leads').then(response => {
+      axios.get(process.env.API + 'leads?&limit=10000').then(response => {
         this.lead = response.data
       })
     } else {
       // alert(authUser2.id_profile + ' - ' + authUser2.id_office)
-      axios.get(process.env.API + 'leads?where={"id_office":' + authUser2.id_office + '}').then(response => {
+      axios.get(process.env.API + 'leads?where={"id_office":' + authUser2.id_office + '} & limit=10000').then(response => {
         this.lead = response.data
       })
     }

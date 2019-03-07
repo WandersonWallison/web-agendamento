@@ -58,7 +58,7 @@ export default {
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
     */
-    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":3}').then(response => {
+    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":3} & limit=10000').then(response => {
       this.listahunters = response.data
     })
   },

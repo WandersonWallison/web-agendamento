@@ -58,7 +58,7 @@ export default {
     /* const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.escritorioId = authUser2.id_office */
-    axios.get(process.env.API + 'office').then(response => {
+    axios.get(process.env.API + 'office?&limit=10000').then(response => {
       this.office = response.data
     })
   },

@@ -60,7 +60,7 @@
         <md-table-cell md-label='Status' v-if="item.ativo === false " md-sort-by='status'>Desativado</md-table-cell>
         <md-table-cell md-label='Status' v-if="item.ativo === true " md-sort-by='status'>Ativo</md-table-cell>
         <md-table-cell md-label='Perfil' md-sort-by='id_profile' md-numeric>{{ item.id_profile['name']}}</md-table-cell>
-        <md-table-cell md-label='Escritorio' md-sort-by='id_office'>{{ item.id_office['nome']}}</md-table-cell>
+        <md-table-cell md-label='Escritorio' md-sort-by='id_office'>{{ (item.id_office['nome']?item.id_office['nome']:null)}}</md-table-cell>
         <md-table-cell md-label='Nome' md-sort-by='username'>{{ item.username }}</md-table-cell>
         <md-table-cell md-label='Email' md-sort-by='email'>{{ item.email }}</md-table-cell>
         <md-table-cell md-label='telefone' md-sort-by='telefone'>{{ item.telefone }}</md-table-cell>
@@ -104,13 +104,13 @@ export default {
     if (authUser2.id_profile === 1) {
       // alert(authUser2.id_profile + ' - ' + authUser2.id_office)
       // alert('ADM')
-      axios.get(process.env.API + 'user').then(response => {
+      axios.get(process.env.API + 'user?&limit=10000').then(response => {
         this.people = response.data
       })
     } else {
       // alert(authUser2.id_profile + ' - ' + authUser2.id_office)
       // alert('Manager')
-      axios.get(process.env.API + 'user?where={"id_office":' + authUser2.id_office + '}').then(response => {
+      axios.get(process.env.API + 'user?where={"id_office":' + authUser2.id_office + '} & limit=10000').then(response => {
         this.people = response.data
       })
     }
