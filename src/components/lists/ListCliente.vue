@@ -75,6 +75,7 @@
       <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single"  :class="getClass(item)">
         <md-table-cell md-label="">
           <div v-if="item.momento_atual === 5" @click="showDialogReagendamento2" >
+            <span style="color: red;">{{ item.agendamentos[0].qtd_retorno }}</span>
             <md-icon class='md-icon-button md-raised md-accent'>alarm</md-icon>
             <md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou. Clique duas vezes para mais detalhes </md-tooltip>
           </div>
