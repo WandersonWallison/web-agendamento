@@ -299,7 +299,7 @@ export default {
         for (let i = 0; i < this.dataAgendamento.length; i++) {
           this.datasAgendadas.push(moment(this.dataAgendamento[i].data).format('YYYY-MM-DD'))
         }
-        this.disabledDates = this.datasAgendadas
+        // this.disabledDates = this.datasAgendadas
       })
   },
   methods: {
