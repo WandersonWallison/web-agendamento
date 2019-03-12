@@ -235,7 +235,11 @@ export default {
       sending: false,
       lastUser: null,
       cidades: null,
-      cep: []
+      cep: [],
+      dataAtual: moment(Date.now()).format('YYYY-MM-DD'),
+      qtdAgente: null,
+      qtdVisitas: null,
+      qtdDatas: []
     }
   },
   directives: {mask},
@@ -289,6 +293,19 @@ export default {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
+    // Busca a quantidade de visitas no escritorio do usuario
+    axios.get(process.env.API + 'office?where={"id":' + this.userAtual.id_office + '}').then(response => {
+      this.qtdVisitas = response.data[0].qtd_visita_dia
+    })
+    // Busca o array dos usuários agentes por escritrio
+    axios.get(process.env.API + 'user?where={"id_profile": 2,"id_office":' + this.userAtual.id_office + '}')
+      .then(response => {
+        this.resp = response.data
+        this.qtdAgente = this.resp.length
+        for (let index = 0; index < this.resp.length; index++) {
+          this.listAgentes.push(this.resp[index].id)
+        }
+      })
     axios.get(process.env.API + 'user?where={"id_profile": 2,"id_office":' + this.userAtual.id_office + '}')
       .then(response => {
         this.resp = response.data
@@ -296,11 +313,19 @@ export default {
           this.listAgentes.push(this.resp[index].id)
         }
       })
-    axios.get(process.env.API + 'schedule?where={"office_schedule":' + this.userAtual.id_office + '}')
+    // Busca as Datas agendadas por escritorio
+    axios.get(process.env.API + 'schedule?where={"data":{">":"' + this.dataAtual + '"},"office_schedule":' + this.userAtual.id_office + '}')
       .then(response => {
         this.dataAgendamento = response.data
+
         for (let i = 0; i < this.dataAgendamento.length; i++) {
-          this.datasAgendadas.push(moment(this.dataAgendamento[i].data).format('YYYY-MM-DD'))
+          axios.get(process.env.API + 'schedule?where={"data":"' + moment(this.dataAgendamento[i].data).format('YYYY-MM-DD') + '"}')
+            .then(response => {
+              this.qtdDatas = response.data
+              if (this.qtdDatas.length >= (this.qtdAgente * this.qtdVisitas)) {
+                this.datasAgendadas.push(moment(this.dataAgendamento[i].data).format('YYYY-MM-DD'))
+              }
+            })
         }
         this.disabledDates = this.datasAgendadas
       })
