@@ -17,7 +17,6 @@ import Vs from 'd3-vs'
 import VueGoogleCharts from 'vue-google-charts'
 import VueApexCharts from 'vue-apexcharts'
 import VCharts from 'v-charts'
-import VCsvImport from 'vue-csv-import'
 
 Vue.config.productionTip = false
 
@@ -31,8 +30,7 @@ Vue.use(
   Vs,
   VueGoogleCharts,
   VueApexCharts,
-  VCharts,
-  VCsvImport
+  VCharts
 )
 
 /* eslint-disable no-new */
