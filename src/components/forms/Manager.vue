@@ -60,6 +60,10 @@
             <span class="md-list-item-text">Sair</span>
           </md-list-item>
 
+          <md-list-item  @click= 'mShowImportador'>
+            <md-icon>cloud_upload</md-icon>
+            <span class="md-list-item-text">Importador</span>
+          </md-list-item>
         </md-list>
       </md-app-drawer>
       <md-app-content v-if="showDash === true">
@@ -81,6 +85,9 @@
         <br/>
         <list-atv-hunter-escritorio/>
       </md-app-content>
+      <md-app-content v-if="showImportador === true">
+        <importador-lead/>
+      </md-app-content>
 
     </md-app>
     </md-content>
@@ -101,6 +108,7 @@ import ListAtvHunterEscritorio from './../lists/ListAtividadesHuntersEscritorio.
 import ListAtvAssessoresEscritorio from './../lists/ListAtividadesAssessoresEscritorio.vue'
 import ListaOffice from './../lists/ListOfices.vue'
 import ListaLeads from '../lists/ListLeadAdm.vue'
+import importadorLead from '../utils/importacaoLead.vue'
 
 export default {
   name: 'Home',
@@ -117,7 +125,8 @@ export default {
     ListaLeads,
     CadUsuarioManger,
     ListAtvHunterEscritorio,
-    ListAtvAssessoresEscritorio
+    ListAtvAssessoresEscritorio,
+    importadorLead
   },
   data: () => ({
     menuVisible: false,
@@ -131,7 +140,8 @@ export default {
     ShowAtHunter: false,
     showOffice: false,
     ShowAtEmpresa: false,
-    showLeads: true
+    showLeads: true,
+    showImportador: false
   }),
   methods: {
     toggleMenu () {
@@ -177,6 +187,11 @@ export default {
       this.showDash = true
       this.menuVisible = false
     },
+    mShowImportador () {
+      this.inativaComponentes()
+      this.showImportador = true
+      this.menuVisible = false
+    },
     inativaComponentes () {
       this.showOffice = false
       this.showDash = false
@@ -185,6 +200,7 @@ export default {
       this.ShowAtHunter = false
       this.ShowAtEmpresa = false
       this.showLeads = false
+      this.showImportador = false
     }
   }
 }

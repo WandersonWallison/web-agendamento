@@ -210,7 +210,7 @@ export default {
         numero: this.form.numero,
         bairro: this.form.bairro,
         cidade: this.selectedCidade,
-        cep: this.retiraMascara(this.form.cep),
+        cep: this.form.cep,
         uf: this.form.estado,
         leads_address: this.selected[0].id
       }
