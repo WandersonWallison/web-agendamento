@@ -81,15 +81,17 @@ export default {
       this.menssage = null
       this.results = null
       if (this.login.email !== '' && this.login.password !== '') {
-        // this.loading = true
+        this.loading = true
         axios
           .post(process.env.API + 'login', this.login)
           .then(response => {
             if (response.data.user === false) {
               this.$router.push('/')
               if (response.data.message === 'Username not found') {
+                this.loading = false
                 this.menssage = 'Usuário não encontrado!'
               } else {
+                this.loading = false
                 this.menssage = 'A senha incorreta!'
               }
             } else {

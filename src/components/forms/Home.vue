@@ -70,6 +70,11 @@
             <span class="md-list-item-text">Sair</span>
           </md-list-item>
 
+          <md-list-item  @click= 'mShowImportador'>
+            <md-icon>cloud_upload</md-icon>
+            <span class="md-list-item-text">Importador</span>
+          </md-list-item>
+
         </md-list>
       </md-app-drawer>
       <md-app-content v-if="showOffice === true">
@@ -78,6 +83,9 @@
       </md-app-content>
       <md-app-content v-if="showDash === true">
         <dashboard/>
+      </md-app-content>
+      <md-app-content v-if="showImportador === true">
+        <importador-lead/>
       </md-app-content>
       <md-app-content v-if="showLeads === true">
         <br/>
@@ -91,11 +99,11 @@
         <br/>
         <lista-agendamentos-realizados/>
       </md-app-content>
-      <md-app-content v-if="ShowAtHunter === true">
+      <md-app-content v-if="showAtHunter === true">
         <br/>
         <lista-atividades-hunter/>
       </md-app-content>
-      <md-app-content v-if="ShowAtEmpresa === true">
+      <md-app-content v-if="showAtEmpresa === true">
         <br/>
         <list-empresa/>
       </md-app-content>
@@ -116,6 +124,7 @@ import ListaAgendamentosRealizados from '../lists/ListAgendamentosRealizados.vue
 import ListaAtividadesHunter from './../lists/ListAtividadesHunters.vue'
 import ListaOffice from './../lists/ListOfices.vue'
 import ListaLeads from '../lists/ListLeadAdm.vue'
+import importadorLead from '../utils/importacaoLead.vue'
 
 export default {
   name: 'Home',
@@ -131,7 +140,8 @@ export default {
     ListaAgendamentosRealizados,
     ListaAtividadesHunter,
     ListaOffice,
-    ListaLeads
+    ListaLeads,
+    importadorLead
   },
   data: () => ({
     menuVisible: false,
@@ -142,10 +152,11 @@ export default {
     showDash: false,
     showUsuario: false,
     showAtAgentes: false,
-    ShowAtHunter: false,
+    showAtHunter: false,
     showOffice: false,
-    ShowAtEmpresa: false,
-    showLeads: true
+    showAtEmpresa: false,
+    showLeads: true,
+    showImportador: false
   }),
   methods: {
     toggleMenu () {
@@ -173,12 +184,12 @@ export default {
     },
     mShowCompany () {
       this.inativaComponentes()
-      this.ShowAtEmpresa = true
+      this.showAtEmpresa = true
       this.menuVisible = false
     },
     mShowHunter () {
       this.inativaComponentes()
-      this.ShowAtHunter = true
+      this.showAtHunter = true
       this.menuVisible = false
     },
     mShowAgente () {
@@ -191,14 +202,20 @@ export default {
       this.showDash = true
       this.menuVisible = false
     },
+    mShowImportador () {
+      this.inativaComponentes()
+      this.showImportador = true
+      this.menuVisible = false
+    },
     inativaComponentes () {
       this.showOffice = false
       this.showDash = false
       this.showUsuario = false
       this.showAtAgentes = false
-      this.ShowAtHunter = false
-      this.ShowAtEmpresa = false
+      this.showAtHunter = false
+      this.showAtEmpresa = false
       this.showLeads = false
+      this.showImportador = false
     }
   }
 }
