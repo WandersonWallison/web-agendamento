@@ -70,10 +70,10 @@
             <span class="md-list-item-text">Sair</span>
           </md-list-item>
 
-          <md-list-item  @click= 'mShowImportador'>
+          <!-- <md-list-item  @click= 'mShowImportador'>
             <md-icon>cloud_upload</md-icon>
             <span class="md-list-item-text">Importador</span>
-          </md-list-item>
+          </md-list-item> -->
 
         </md-list>
       </md-app-drawer>
