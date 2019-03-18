@@ -81,7 +81,7 @@ export default {
       this.menssage = null
       this.results = null
       if (this.login.email !== '' && this.login.password !== '') {
-        this.loading = true
+        this.loading = false
         axios
           .post(process.env.API + 'login', this.login)
           .then(response => {

@@ -1,10 +1,13 @@
 <template>
-  <div>
+  <div class="expande-div">
     <input ref="excel-upload-input" class="excel-upload-input" type="file" accept=".xlsx, .xls" @change="handleClick">
     <div @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
       <md-button class="md-raised md-primary" name="importador" :loading="loading" style="margin-left:10px; cursor:pointer;" size="mini" type="primary" @click="handleUpload">Importador de Lead</md-button>
     </div>
     <span>{{this.arquivo}}</span>
+    <div>
+      <a href="https://drive.google.com/file/d/1isg6heFM7zrGHCpJvRSAphcGGIxnJm4A/view?usp=sharing" target="_blank">Modelo para importação de leads</a>
+    </div>
     <div class="loading-overlay2" v-if="loading">
       <md-progress-spinner md-mode='indeterminate' md-diameter='50' :md-stroke='4'></md-progress-spinner>
     </div>
@@ -46,6 +49,9 @@ export default {
       if (this.excelData.results.length > 0) {
         this.loading = true
         this.importarLeads()
+      } else {
+        alert('Arquivo sem informações para importação')
+        this.arquivo = ''
       }
     },
     handleDrop (e) {
