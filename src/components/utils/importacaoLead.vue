@@ -141,6 +141,7 @@ export default {
           email: this.excelData.results[i].Email ? this.excelData.results[i].Email : this.removeAcento(this.excelData.results[i].Cliente) + this.retiraMascara(moment().format()) + '@importacao.com',
           telefone: this.maskFone('"' + this.excelData.results[i].Telefone + '"'),
           celular: this.maskFone('"' + this.excelData.results[i].Celular + '"'),
+          numero_operadora: this.excelData.results[i].NumeroXP,
           data_criacao: moment(Date.now()).format(),
           id_user_criador: this.userAtual.id,
           id_office: this.userAtual.id_office
