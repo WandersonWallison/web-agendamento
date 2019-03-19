@@ -31,6 +31,7 @@
 
 import ListCliente from '../lists/ListCliente.vue'
 import AlterSenha from './FormAlterPassword.vue'
+import axios from 'axios'
 
 export default {
   name: 'Hunter',
@@ -50,6 +51,7 @@ export default {
       this.value = 'Sim'
       this.$router.push('/')
       window.localStorage.clear()
+      axios.get(process.env.API + 'logout').then(response => {})
     }
   }
 }

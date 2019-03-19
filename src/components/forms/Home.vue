@@ -19,10 +19,11 @@
             md-content='Deseja Realmente sair do sistema'
             md-confirm-text='Sim'
             md-cancel-text='Não'
-            @md-confirm='sair'/>
+            @md-confirm='sair'>
+          </md-dialog-confirm>
 
-            <md-button class="text-principal"  @click='senha = true'>Alterar Senha</md-button>
-            <md-button class="text-principal"  @click='active = true'>Sair</md-button>
+          <md-button class="text-principal"  @click='senha = true'>Alterar Senha</md-button>
+          <md-button class="text-principal"  @click='active = true'>Sair</md-button>
         </div>
       </md-app-toolbar>
       <md-app-drawer :md-active.sync="menuVisible">
@@ -70,10 +71,13 @@
             <span class="md-list-item-text">Sair</span>
           </md-list-item>
 
-          <!-- <md-list-item  @click= 'mShowImportador'>
+          <!--
+          <md-progress-spinner v-if="carregando" class="md-accent" md-mode="indeterminate"></md-progress-spinner>
+          <md-list-item  @click= 'mShowImportador'>
             <md-icon>cloud_upload</md-icon>
             <span class="md-list-item-text">Importador</span>
-          </md-list-item> -->
+          </md-list-item>
+          -->
 
         </md-list>
       </md-app-drawer>
@@ -125,6 +129,7 @@ import ListaAtividadesHunter from './../lists/ListAtividadesHunters.vue'
 import ListaOffice from './../lists/ListOfices.vue'
 import ListaLeads from '../lists/ListLeadAdm.vue'
 import importadorLead from '../utils/importacaoLead.vue'
+import axios from 'axios'
 
 export default {
   name: 'Home',
@@ -156,7 +161,8 @@ export default {
     showOffice: false,
     showAtEmpresa: false,
     showLeads: true,
-    showImportador: false
+    showImportador: false,
+    carregando: false
   }),
   methods: {
     toggleMenu () {
@@ -166,6 +172,7 @@ export default {
       this.value = 'Sim'
       this.$router.push('/')
       window.localStorage.clear()
+      axios.get(process.env.API + 'logout').then(response => {})
     },
     mShowUsuario () {
       this.inativaComponentes()

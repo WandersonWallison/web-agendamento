@@ -25,11 +25,11 @@
         </md-button>
         -->
         <md-button class="md-icon-button" @click="showListaParaAgendamento = true">
-          <md-tooltip md-direction="left">Lead</md-tooltip>
+          <md-tooltip md-direction="left">Cadastro de Lead</md-tooltip>
           <md-icon>list_alt</md-icon>
         </md-button>
         <md-button class="md-icon-button" @click="showListaClienteAguardando = true">
-          <md-tooltip md-direction="left">Lista Leads</md-tooltip>
+          <md-tooltip md-direction="left">Atribuir Leads</md-tooltip>
           <md-icon>playlist_add_check</md-icon>
         </md-button>
         <!--

@@ -37,6 +37,7 @@ import FormAddUser from './FormAddUser'
 import Agendamento from '../lists/ListAgendamento.vue'
 import FormAddEmpresa from './FormCadastroEmpresa.vue'
 import AlterSenha from './FormAlterPassword.vue'
+import axios from 'axios'
 
 export default {
   name: 'Agente',
@@ -58,6 +59,7 @@ export default {
       this.value = 'Sim'
       this.$router.push('/')
       window.localStorage.clear()
+      axios.get(process.env.API + 'logout').then(response => {})
     }
   }
 }

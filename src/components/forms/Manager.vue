@@ -109,6 +109,7 @@ import ListAtvAssessoresEscritorio from './../lists/ListAtividadesAssessoresEscr
 import ListaOffice from './../lists/ListOfices.vue'
 import ListaLeads from '../lists/ListLeadAdm.vue'
 import importadorLead from '../utils/importacaoLead.vue'
+import axios from 'axios'
 
 export default {
   name: 'Home',
@@ -151,6 +152,7 @@ export default {
       this.value = 'Sim'
       this.$router.push('/')
       window.localStorage.clear()
+      axios.get(process.env.API + 'logout').then(response => {})
     },
     mShowUsuario () {
       this.inativaComponentes()
