@@ -36,22 +36,21 @@
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
       </md-table-row>
     </md-table>
-  <div>
-    <md-table v-model="selected" md-card>
-      <md-table-toolbar>
-        <h1 class="md-title">Detalhamento</h1>
-      </md-table-toolbar>
-
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
-         <md-card>
-      <md-card-header>
-        <div class="md-title">{{ item.nome }}</div>
-        <div class="md-subhead">{{ item.email }}</div>
-      </md-card-header>
-    </md-card>
-      </md-table-row>
-    </md-table>
-  </div>
+      <div>
+        <md-table v-model="selected" md-card>
+          <md-table-toolbar>
+            <h1 class="md-title">Detalhamento</h1>
+          </md-table-toolbar>
+          <md-table-row slot="md-table-row" slot-scope="{ item }">
+            <md-card>
+          <md-card-header>
+            <div class="md-title">{{ item.nome }}</div>
+            <div class="md-subhead">{{ item.email }}</div>
+          </md-card-header>
+        </md-card>
+          </md-table-row>
+        </md-table>
+      </div>
     <md-dialog class="md-dialog-update" :md-active.sync="showUpdateLead">
       <div class="alinhar-esquerda">
         <md-button class="md-primary" @click="showUpdateLead = false"><md-icon>clear</md-icon></md-button>

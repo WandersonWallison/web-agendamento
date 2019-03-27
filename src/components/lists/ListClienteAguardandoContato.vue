@@ -44,7 +44,7 @@
       </tr>
       </thead>
     <tbody>
-      <tr v-for="i in people" v-bind:key="i.id">
+    <tr v-for="i in people" v-bind:key="i.id">
         <td>
           <label class="form-checkbox">
             <input type="checkbox" :value="i.id" v-model="selected">
