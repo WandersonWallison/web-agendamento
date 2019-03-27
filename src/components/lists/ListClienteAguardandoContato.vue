@@ -1,49 +1,66 @@
 <template>
-  <div>
-    <md-table v-model="people" md-card @md-selected="onSelect" md-fixed-header>
-      <md-table-toolbar>
-        <h1 class="md-title">Lista de Leads</h1>
-      </md-table-toolbar>
-
-      <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
-        <!-- Inicio   -->
-        <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
-        <div class="div-separador">
-              <md-field>
-                <label for="hunter">Hunter</label>
-                <md-select name="hunter" id="hunter" v-model="selectedHunter">
-                  <md-option v-for="hunter in hunters" :key="hunter.id" :value="hunter.id">
-                    {{ hunter.username }}
-                  </md-option>
-                </md-select>
-                <br>
-              </md-field>
-        </div>
-        <div >
-            <md-datepicker v-model="selectedDate" :md-disabled-dates="disabledDates">
-              <label>Data para Conclusão</label>
-            </md-datepicker>
-        </div>
-        <!--  FIM   -->
-        <div class="md-toolbar-section-end">
-          <md-button @click="vinculaHunter = true" class="md-icon-button">
+<div id="app">
+  <div v-if="selected.length != 0">
+  <md-toolbar class="toolbar" md-elevation="1">
+      <h3 class="md-title" style="flex: 2">Lista de Leads</h3>
+     <div class="div-separador">
+       <md-field>
+      <label for="hunter">Hunter</label>
+        <md-select name="hunter" id="hunter" v-model="selectedHunter">
+          <md-option v-for="hunter in hunters" :key="hunter.id" :value="hunter.id">
+              {{ hunter.username }}
+          </md-option>
+        </md-select>
+    </md-field>
+    </div>
+    <div class="div-separador">
+        <md-datepicker v-model="selectedDate" :md-disabled-dates="disabledDates">
+        <label>Data para Conclusão</label>
+        </md-datepicker>
+    </div>
+      <md-button @click="vinculaHunter = true" class="md-icon-button">
             <md-tooltip md-direction="top">Vincular Hunter</md-tooltip>
             <md-icon>update</md-icon>
           </md-button>
-        </div>
-      </md-table-toolbar>
-
-      <md-table-row class='corrigir-texto' slot="md-table-row" slot-scope="{ item }" :md-disabled="item.nome.includes('Stave')" md-selectable="multiple" md-auto-select>
-        <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.nome }}</md-table-cell>
-        <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
-        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
-        <md-table-cell md-label="Observação" md-sort-by="observacao">{{ item.obs }}</md-table-cell>
-      </md-table-row>
-    </md-table>
+    </md-toolbar>
+  </div>
   <div>
-
-<div>
+  </div>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>
+          <label class="form-checkbox">
+          <input type="checkbox" v-model="selectAll" @click="select">
+    <i class="form-icon"></i>
+  </label>
+     </th>
+      <th>id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th>Celular</th>
+      <th>Observação</th>
+      </tr>
+      </thead>
+    <tbody>
+      <tr v-for="i in people" v-bind:key="i.id">
+        <td>
+          <label class="form-checkbox">
+            <input type="checkbox" :value="i.id" v-model="selected">
+            <i class="form-icon"></i>
+          </label>
+        </td>
+        <td>{{i.id}}</td>
+        <td>{{i.nome}}</td>
+        <td>{{i.email}}</td>
+        <td>{{i.telefone}}</td>
+        <td>{{i.celeular}}</td>
+        <td>{{i.obs}}</td>
+      </tr>
+        </tbody>
+        </table>
+  <div>
 <md-dialog-confirm
       :md-active.sync="vinculaHunter"
       md-title="Deseja realmete vinvular ao Hunter?"
@@ -53,9 +70,7 @@
       @md-cancel="onCancel"
       @md-confirm="onConfirm" />
 </div>
-  </div>
-
-  </div>
+</div>
 </template>
 
 <script>
@@ -69,6 +84,7 @@ export default {
   },
   data: () => ({
     selected: [],
+    selectAll: false,
     people: [],
     usuarios: [],
     vinculaHunter: false,
@@ -97,6 +113,14 @@ export default {
       })
   },
   methods: {
+    select () {
+      this.selected = []
+      if (!this.selectAll) {
+        for (let i in this.people) {
+          this.selected.push(this.people[i].id)
+        }
+      }
+    },
     onCancel () {
       this.value = 'Disagreed'
     },
@@ -110,7 +134,7 @@ export default {
           data_expiracao: moment(this.selectedDate).format('YYYY-MM-DD')
         }
         for (var i = 0; i <= this.selected.length; i++) {
-          axios.put(process.env.API + 'leads/' + this.selected[i].id, newLead)
+          axios.put(process.env.API + 'leads/' + this.selected[i], newLead)
             .then(response => {
               console.log(i + 'alterado')
               window.location.reload()
@@ -147,5 +171,8 @@ export default {
   }
   .div-separador{
     margin-right: 2%;
+  }
+  .toolbar{
+    background-color: rgba(255,82,82,0.2);
   }
 </style>
