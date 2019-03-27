@@ -1,43 +1,35 @@
 <template>
   <div>
     <md-table v-model="people" md-card @md-selected="onSelect">
-      <md-table-toolbar>
+       <md-table-toolbar>
         <h1 class="md-title">Lista de Leads</h1>
-        <md-button class="md-raised md-primary" @click="showDialog = true">
-          <md-tooltip md-direction="left">Cadastro de Lead</md-tooltip>
+        <md-button class="md-icon-button" @click="showDialog = true">
+          <md-tooltip md-direction="top">Cadastro de Lead</md-tooltip>
           <md-icon>contact_phone</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" @click="showUpdateLead = true">
+          <md-tooltip md-direction="top">Atualizar Lead</md-tooltip>
+          <md-icon>update</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" @click="showUpdateCliente = true">
+          <md-tooltip md-direction="top">Ativar Cliente</md-tooltip>
+          <md-icon>person</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" @click="showEndereco = true">
+          <md-tooltip md-direction="top">Adicionar Endereço</md-tooltip>
+          <md-icon>location_on</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" @click="showConta = true">
+          <md-tooltip md-direction="top">Adicionar Conta</md-tooltip>
+          <md-icon>attach_money</md-icon>
+        </md-button>
+        <md-button @click="desativar = true" class="md-icon-button">
+          <md-tooltip md-direction="top">Excluir</md-tooltip>
+          <md-icon>delete</md-icon>
         </md-button>
       </md-table-toolbar>
 
-      <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
-        <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
-        <div class="md-toolbar-section-end">
-          <div v-if="count == 1">
-            <md-button class="md-icon-button" @click="showUpdateLead = true">
-            <md-tooltip md-direction="top">Atualizar Lead</md-tooltip>
-            <md-icon>update</md-icon>
-            </md-button>
-            <md-button class="md-icon-button" @click="showUpdateCliente = true">
-            <md-tooltip md-direction="top">Ativar Cliente</md-tooltip>
-            <md-icon>person</md-icon>
-            </md-button>
-            <md-button class="md-icon-button" @click="showEndereco = true">
-            <md-tooltip md-direction="top">Adicionar Endereço</md-tooltip>
-            <md-icon>location_on</md-icon>
-            </md-button>
-            <md-button class="md-icon-button" @click="showConta = true">
-            <md-tooltip md-direction="top">Adicionar Conta</md-tooltip>
-            <md-icon>attach_money</md-icon>
-            </md-button>
-          </div>
-          <md-button @click="desativar = true" class="md-icon-button">
-            <md-tooltip md-direction="top">Excluir</md-tooltip>
-            <md-icon>delete</md-icon>
-          </md-button>
-        </div>
-      </md-table-toolbar>
-
-      <md-table-row slot="md-table-row" slot-scope="{ item }" :md-disabled="item.nome.includes('Stave')" md-selectable="multiple" md-auto-select>
+      <md-table-row slot="md-table-row" slot-scope="{ item }" :class="getClass(item)" md-selectable="single">
         <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
@@ -68,17 +60,26 @@
         <up-lead :selected="selected"></up-lead>
       </div>
     </md-dialog>
-    <md-dialog :md-active.sync="showUpdateCliente">
-      <div>
+    <md-dialog class="md-dialog-update" :md-active.sync="showUpdateCliente">
+      <div class="alinhar-esquerda">
+        <md-button class="md-primary" @click="showUpdateCliente = false"><md-icon>clear</md-icon></md-button>
+      </div>
+      <div class="div-update">
       <up-cliente :selected="selected"></up-cliente>
       </div>
     </md-dialog>
     <md-dialog :md-active.sync="showEndereco">
+      <div class="alinhar-esquerda">
+        <md-button class="md-primary" @click="showEndereco = false"><md-icon>clear</md-icon></md-button>
+      </div>
       <div class="div">
       <endereco :selected="selected"></endereco>
       </div>
     </md-dialog>
     <md-dialog :md-active.sync="showConta">
+      <div class="alinhar-esquerda">
+        <md-button class="md-primary" @click="showConta = false"><md-icon>clear</md-icon></md-button>
+      </div>
       <div class="div">
       <conta :selected="selected"></conta>
       </div>
@@ -144,6 +145,9 @@ export default {
       })
   },
   methods: {
+    getClass: ({ id }) => ({
+      'md-primary': id
+    }),
     onCancel () {
       this.value = 'Disagreed'
     },
@@ -151,13 +155,12 @@ export default {
       let newLead = {
         ativo: false
       }
-      for (var i = 0; i <= this.selected.length; i++) {
-        axios.put(process.env.API + 'leads/' + this.selected[i].id, newLead)
-          .then(response => {
-            console.log(i + 'alterado')
-            window.location.reload()
-          })
-      }
+      // for (var i = 0; i <= this.selected.length; i++) {
+      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
+        .then(response => {
+          window.location.reload()
+        })
+      // }
     },
     onSelect (items) {
       this.selected = items
@@ -188,6 +191,7 @@ export default {
   .md-dialog-update {
     width: 63%;
     height: 60%;
+    overflow: auto;
   }
   .alinhar-esquerda {
     align-items: flex-end;

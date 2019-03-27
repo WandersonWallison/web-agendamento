@@ -11,7 +11,7 @@
               <md-field :class="getValidationClass('banco')">
                 <label for="banco">Banco</label>
                 <md-select name="banco" id="banco" v-model="selectedbanco">
-                  <md-option v-for="banco in bancos" :key="banco.id" :value="banco.code +' - '+ banco.name">
+                  <md-option v-for="banco in bancos" :key="banco.id" :value="banco.name">
                     {{ banco.code +' - '+ banco.name }}
                   </md-option>
                 </md-select>
@@ -89,7 +89,7 @@ export default {
     userSaved: false,
     sending: false,
     bancos: [],
-    selectedbanco: null
+    selectedbanco: ''
   }),
   directives: {mask},
   mounted () {
@@ -100,9 +100,6 @@ export default {
   },
   validations: {
     form: {
-      banco: {
-        required
-      },
       renda: {
         required
       },
@@ -147,17 +144,17 @@ export default {
     },
     saveConta () {
       let newConta = {
-        nome: this.selectedBanco,
+        nome: this.selectedbanco,
         ag: this.form.agencia,
         n_conta: this.form.conta,
         renda: this.form.renda,
         aplicacao: this.form.aplicacao,
-        leads_bank: this.selected[0].id
+        leads_bank: this.selected.id
       }
       axios.post(process.env.API + 'bank', newConta)
         .then(response => {
           this.results = response.data
-          alert('Conta adicionado ' + this.selected[0].nome + 'com sucesso')
+          alert('Conta adicionado ' + this.selected.nome + 'com sucesso')
           window.location.reload()
           console.log(response.data)
         })

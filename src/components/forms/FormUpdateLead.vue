@@ -1,5 +1,4 @@
 <template>
-  <div class="div-update">
     <form novalidate class="md-layout" @submit.prevent="validateLead">
       <md-card class="md-layout-item md-size-100 md-small-size-100">
         <md-card-header>
@@ -53,7 +52,6 @@
         </md-card-actions>
       </md-card>
     </form>
-  </div>
 </template>
 
 <script>
@@ -74,11 +72,11 @@ export default {
   data () {
     return {
       form: {
-        nome: this.selected[0].nome,
-        email: this.selected[0].email,
-        telefone: this.selected[0].telefone,
-        celular: this.selected[0].celular,
-        obs: this.selected[0].obs
+        nome: this.selected.nome,
+        email: this.selected.email,
+        telefone: this.selected.telefone,
+        celular: this.selected.celular,
+        obs: this.selected.obs
       },
       results: []
     }
@@ -130,10 +128,11 @@ export default {
         telefone: this.form.telefone,
         celular: this.form.celular
       }
-      axios.put(process.env.API + 'leads/' + this.selected[0].id, newLead)
+      axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
         .then(response => {
           this.results = response.data
           alert('Lead alterado com sucesso')
+          window.location.reload()
         })
         .catch(error => {
           alert(error.response.data.code)
@@ -160,10 +159,5 @@ export default {
   .div-update {
     width: 100%;
     height: 100%;
-  }
-  .md-card-update {
-    margin-right: 5%;
-    margin-top:  2%;
-
   }
 </style>

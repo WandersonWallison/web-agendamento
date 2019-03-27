@@ -212,14 +212,14 @@ export default {
         cidade: this.selectedCidade,
         cep: this.form.cep,
         uf: this.form.estado,
-        leads_address: this.selected[0].id
+        leads_address: this.selected.id
       }
       axios.post(process.env.API + 'address', newEndereco)
         .then((response) => {
           this.results = response.data
-          alert('Endereço adicionado ' + this.selected[0].nome + ' com sucesso')
+          alert('Endereço adicionado ' + this.selected.nome + ' com sucesso')
           this.clearForm()
-          // window.location.reload()
+          window.location.reload()
         })
         .catch((error) => {
           alert(error.response.data.code)
