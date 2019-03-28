@@ -84,6 +84,7 @@
       </div>
     </md-dialog>
     <md-dialog-confirm
+      class="md-dialog-excluir"
       :md-active.sync="desativar"
       md-title="Deseja realmete desativar estas contatos?"
       md-content="Ele (s) não serão mais exibidos na lista"
@@ -194,5 +195,9 @@ export default {
   }
   .alinhar-esquerda {
     align-items: flex-end;
+  }
+  .md-dialog-excluir {
+    width: 34%;
+    height: 34%;
   }
 </style>
