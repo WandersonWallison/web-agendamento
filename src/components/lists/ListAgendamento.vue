@@ -34,23 +34,29 @@
 
       <md-list>
         <md-list-item>
-          <md-icon class="md-primary">phone</md-icon>
+          <md-icon class="md-primary">phone<md-tooltip md-direction="top">Telefone</md-tooltip></md-icon>
           <div class="md-list-item-text">
             <span>{{ selected.id_lead.telefone }}</span>
           </div>
-          <md-icon class="md-primary">phone_android</md-icon>
+          <md-icon class="md-primary">phone_android<md-tooltip md-direction="top">Celular</md-tooltip></md-icon>
           <div class="md-list-item-text">
             <span>{{ selected.id_lead.celular }}</span>
           </div>
         </md-list-item>
         <md-list-item>
-          <md-icon class="md-primary">email</md-icon>
+          <md-icon class="md-primary">email<md-tooltip md-direction="top">E-mail</md-tooltip></md-icon>
           <div class="md-list-item-text">
             <span>{{ selected.id_lead.email }}</span>
           </div>
         </md-list-item>
         <md-list-item>
-          <md-icon class="md-primary">description</md-icon>
+          <md-icon class="md-primary">drafts<md-tooltip md-direction="top">Observação do Agendamento</md-tooltip></md-icon>
+          <div class="md-list-item-text">
+            <span>{{ selected.obs }}</span>
+          </div>
+        </md-list-item>
+        <md-list-item>
+          <md-icon class="md-primary">description<md-tooltip md-direction="top">Obs. Lead</md-tooltip></md-icon>
           <div class="md-list-item-text">
             <span>{{ selected.id_lead.obs }}</span>
           </div>
@@ -65,19 +71,19 @@
 
       <md-list>
         <md-list-item>
-          <md-icon class="md-primary">person_pin</md-icon>
+          <md-icon class="md-primary">person_pin<md-tooltip md-direction="top">Logradouro</md-tooltip></md-icon>
           <span class="md-list-item-text">{{ selected.endereco[0].logradouro }}</span>
-          <md-icon class="md-primary">person_pin</md-icon>
+          <md-icon class="md-primary">person_pin<md-tooltip md-direction="top">Número</md-tooltip></md-icon>
           <span class="md-list-item-text">{{ selected.endereco[0].numero }}</span>
         </md-list-item>
         <md-list-item>
-          <md-icon class="md-primary">person_pin</md-icon>
+          <md-icon class="md-primary">person_pin<md-tooltip md-direction="top">Bairro</md-tooltip></md-icon>
           <span class="md-list-item-text">{{ selected.endereco[0].bairro }}</span>
-          <md-icon class="md-primary">person_pin</md-icon>
+          <md-icon class="md-primary">person_pin<md-tooltip md-direction="top">Cidade</md-tooltip></md-icon>
           <span class="md-list-item-text">{{ selected.endereco[0].cidade }}</span>
         </md-list-item>
         <md-list-item>
-          <md-icon class="md-primary">person_pin</md-icon>
+          <md-icon class="md-primary">person_pin<md-tooltip md-direction="top">Estado</md-tooltip></md-icon>
           <span class="md-list-item-text">{{ selected.endereco[0].uf | estadosBrasileiro }}</span>
         </md-list-item>
 

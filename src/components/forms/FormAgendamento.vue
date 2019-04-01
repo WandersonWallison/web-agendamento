@@ -88,6 +88,14 @@
           </div>
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100">
+                <md-field>
+                  <label for="observacao">Observação do Agendamento</label>
+                  <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
+                </md-field>
+            </div>
+          </div>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cep')">
                 <label for="cep">CEP</label>
                 <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" />
@@ -103,33 +111,33 @@
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estado</label>
                 <md-select name="estado" id="estado" v-model="form.estado" md-dense :disabled="sending">
-                  <md-option value=12>Acre</md-option>
-                  <md-option value=27>Alagoas</md-option>
-                  <md-option value=16>Amapá</md-option>
-                  <md-option value=13>Amazonas</md-option>
-                  <md-option value=29>Bahia</md-option>
-                  <md-option value=23>Ceará</md-option>
-                  <md-option value=53>Distrito Federal</md-option>
-                  <md-option value=32>Espírito Santo</md-option>
-                  <md-option value=52>Goiás</md-option>
-                  <md-option value=21>Maranhão</md-option>
-                  <md-option value=51>Mato Grosso</md-option>
-                  <md-option value=50>Mato Grosso do Sul</md-option>
-                  <md-option value=31>Minas Gerais</md-option>
-                  <md-option value=15>Pará</md-option>
-                  <md-option value=25>Paraíba</md-option>
-                  <md-option value=41>Paraná</md-option>
+                  <md-option value="AC">Acre</md-option>
+                  <md-option value="AL">Alagoas</md-option>
+                  <md-option value="AP">Amapá</md-option>
+                  <md-option value="AM">Amazonas</md-option>
+                  <md-option value="BA">Bahia</md-option>
+                  <md-option value="CE">Ceará</md-option>
+                  <md-option value="DF">Distrito Federal</md-option>
+                  <md-option value="ES">Espírito Santo</md-option>
+                  <md-option value="GO">Goiás</md-option>
+                  <md-option value="MA">Maranhão</md-option>
+                  <md-option value="MT">Mato Grosso</md-option>
+                  <md-option value="MS">Mato Grosso do Sul</md-option>
+                  <md-option value="MG">Minas Gerais</md-option>
+                  <md-option value="PA">Pará</md-option>
+                  <md-option value="PB">Paraíba</md-option>
+                  <md-option value="PR">Paraná</md-option>
                   <md-option value="PE">Pernambuco</md-option>
-                  <md-option value=22>Piauí</md-option>
-                  <md-option value=33>Rio de Janeiro</md-option>
-                  <md-option value=24>Rio Grande do Norte</md-option>
-                  <md-option value=43>Rio Grande do Sul</md-option>
-                  <md-option value=11>Rondônia</md-option>
-                  <md-option value=14>Roraima</md-option>
-                  <md-option value=42>Santa Catarina</md-option>
-                  <md-option value=35>São Paulo</md-option>
-                  <md-option value=28>Sergipe</md-option>
-                  <md-option value=17>Tocantins</md-option>
+                  <md-option value="PI">Piauí</md-option>
+                  <md-option value="RJ">Rio de Janeiro</md-option>
+                  <md-option value="RN">Rio Grande do Norte</md-option>
+                  <md-option value="RS">Rio Grande do Sul</md-option>
+                  <md-option value="RO">Rondônia</md-option>
+                  <md-option value="RR">Roraima</md-option>
+                  <md-option value="SC">Santa Catarina</md-option>
+                  <md-option value="SP">São Paulo</md-option>
+                  <md-option value="SE">Sergipe</md-option>
+                  <md-option value="TO">Tocantins</md-option>
                 </md-select>
                 <span class="md-error">Estado não selecioando</span>
               </md-field>
@@ -159,21 +167,13 @@
                 <span class="md-error" v-if="!$v.form.numero.required">Número deve ser preenchido</span>
               </md-field>
             </div>
-          </div>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
+             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('bairro')">
                 <label for="bairro">Bairro</label>
                 <md-input id="bairro" name="bairro" autocomplete="bairro" v-model="form.bairro" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.bairro.required">Bairro deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.bairro.maxlength">Invalid Bairro</span>
               </md-field>
-            </div>
-            <div class="md-layout-item md-small-size-100">
-                <md-field>
-                  <label for="observacao">Observação</label>
-                  <md-input type="observacao" name="observacao" id="observacao" autocomplete="observacao" v-model="form.observacao" :disabled="sending" />
-                </md-field>
             </div>
           </div>
         </md-card-content>
@@ -295,7 +295,7 @@ export default {
       this.qtdVisitas = response.data[0].qtd_visita_dia
     })
     // Busca o array dos usuários agentes por escritrio
-    axios.get(process.env.API + 'user?where={"id_profile": 2,"id_office":' + this.userAtual.id_office + '}')
+    axios.get(process.env.API + 'user?where={"ativo": 1,"id_profile": 2,"id_office":' + this.userAtual.id_office + '}')
       .then(response => {
         this.resp = response.data
         this.qtdAgente = this.resp.length
