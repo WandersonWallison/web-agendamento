@@ -294,8 +294,8 @@ export default {
     axios.get(process.env.API + 'office?where={"id":' + this.userAtual.id_office + '}').then(response => {
       this.qtdVisitas = response.data[0].qtd_visita_dia
     })
-    // Busca o array dos usuários agentes por escritrio
-    axios.get(process.env.API + 'user?where={"ativo": 1,"id_profile": 2,"id_office":' + this.userAtual.id_office + '}')
+    // Busca o array dos usuários agentes por escritorio
+    axios.get(process.env.API + 'user?where={"ativo": true,"id_profile": 2,"id_office":' + this.userAtual.id_office + '}')
       .then(response => {
         this.resp = response.data
         this.qtdAgente = this.resp.length
