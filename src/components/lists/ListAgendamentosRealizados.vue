@@ -9,6 +9,7 @@
               <br/>
               <md-field>
                 <select class="form-select" @change="buscarAgendamentos($event)">
+                  <option :value="0">Selecione Assessor</option>
                   <option v-for="agente in listaAgentes" :key="agente.id" :value="agente.id">
                     {{ agente.username }}
                   </option>
@@ -72,12 +73,16 @@ export default {
       this.selected = item
     },
     buscarAgendamentos: function (event) {
-      axios.get(process.env.API + 'schedule?where={"ativo":true,"agentes":' + event.target.value + '}').then(response => {
-        this.schedules = response.data
-      }).catch(error => {
-        // alert('Erro no cadastro do Endereço')
-        console.log(error.response.data)
-      })
+      if (event.target.value !== 0) {
+        axios.get(process.env.API + 'schedule?where={"ativo":true,"agentes":' + event.target.value + '}').then(response => {
+          this.schedules = response.data
+        }).catch(error => {
+          // alert('Erro no cadastro do Endereço')
+          console.log(error.response.data)
+        })
+      } else {
+        this.schedules = ''
+      }
     }
   },
   filters: {
@@ -173,15 +178,5 @@ export default {
 }
 .extender-div {
   height: 500px;
-}
-.appearance-select {
-   -webkit-appearance: none;  /* Remove estilo padrão do Chrome */
-   -moz-appearance: none; /* Remove estilo padrão do FireFox */
-   appearance: none; /* Remove estilo padrão do FireFox*/
-   background: url(http://www.webcis.com.br/images/imagens-noticias/select/ico-seta-appearance.gif) no-repeat #eeeeee;  /* Imagem de fundo (Seta) */
-   background-position: 218px center;  /*Posição da imagem do background*/
-   width: 250px; /* Tamanho do select, maior que o tamanho da div "div-select" */
-   height:30px; /* Altura do select, importante para que tenha a mesma altura em todo os navegadores */
-   border:1px solid #ddd;
 }
 </style>

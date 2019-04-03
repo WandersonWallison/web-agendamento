@@ -9,6 +9,7 @@
               <br/>
               <md-field>
                 <select class="form-select" @change="buscarLeads($event)">
+                  <option :value="-1">Selecione Hunter</option>
                   <option v-for="hunter in listahunters" :key="hunter.id" :value="hunter.id">
                     {{ hunter.username }}
                   </option>
@@ -85,14 +86,16 @@ export default {
       this.selected = item
     },
     buscarLeads: function (id) {
-      axios.get(process.env.API + 'leads?where={"ativo":true,"id_user_editor":' + id.target.value + '}')
-        .then(response => {
+      if (id.target.value === -1) {
+        this.leads = ''
+      } else {
+        axios.get(process.env.API + 'leads?where={"ativo":true,"id_user_editor":' + id.target.value + '}').then(response => {
           this.leads = response.data
-        })
-        .catch(error => {
+        }).catch(error => {
           // alert('Erro no cadastro do Endereço')
           console.log(error.response.data)
         })
+      }
     }
   },
   filters: {
