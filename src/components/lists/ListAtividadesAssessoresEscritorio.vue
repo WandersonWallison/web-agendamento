@@ -96,7 +96,7 @@ export default {
       v = moment(v).format('DD/MM/YYYY')
       return v
     },
-     montarStatus: function (v) {
+    montarStatus: function (v) {
       switch (v) {
         case 0:
           v = 'Aguardando confirmação'
