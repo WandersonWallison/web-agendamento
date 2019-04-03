@@ -8,12 +8,20 @@
             <div class="md-layout-item md-small-size-100">
               <br/>
               <md-field>
+                <select class="form-select" @change="buscarLeads($event)">
+                  <option :value="-1">Selecione Hunter</option>
+                  <option v-for="hunter in listahunters" :key="hunter.id" :value="hunter.id">
+                    {{ hunter.username }}
+                  </option>
+                </select>
+                <!--
                 <label for="hunter">Hunters</label>
                 <md-select name="hunter" id="hunter" v-model="selecionado" v-on="buscarLeads(this.selecionado)">
                   <md-option v-for="hunter in listahunters" :key="hunter.id" :value="hunter.id">
                     {{ hunter.username }}
                   </md-option>
                 </md-select>
+                -->
               </md-field>
             </div>
           </div>
@@ -76,14 +84,16 @@ export default {
       this.selected = item
     },
     buscarLeads: function (id) {
-      axios.get(process.env.API + 'leads?where={"ativo":true,"id_user_editor":' + id + '}')
-        .then(response => {
+      if (id.target.value === -1) {
+        this.leads = ''
+      } else {
+        axios.get(process.env.API + 'leads?where={"ativo":true,"id_user_editor":' + id.target.value + '}').then(response => {
           this.leads = response.data
-        })
-        .catch(error => {
+        }).catch(error => {
           // alert('Erro no cadastro do Endereço')
           console.log(error.response.data)
         })
+      }
     }
   },
   filters: {

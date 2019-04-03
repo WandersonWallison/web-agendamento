@@ -8,12 +8,20 @@
             <div class="md-layout-item md-small-size-100">
               <br/>
               <md-field>
-                 <label for="agente">Assessores</label>
+                <select class="form-select" @change="buscarAgendamentos($event)">
+                  <option :value="0">Selecione Assessor</option>
+                  <option v-for="agente in listaAgentes" :key="agente.id" :value="agente.id">
+                    {{ agente.username }}
+                  </option>
+                </select>
+                <!--
+                <label for="agente">Assessores</label>
                 <md-select name="agente" id="agente" v-model="selecionado">
                   <md-option v-for="agente in listaAgentes" :key="agente.id" :value="agente.id">
                     {{ agente.username }}
                   </md-option>
                 </md-select>
+                -->
               </md-field>
             </div>
           </div>
@@ -29,6 +37,7 @@
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.id_lead.celular }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.id_lead.telefone }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.id_lead.email }}</md-table-cell>
+        <md-table-cell md-label="Status"  md-sort-by="Agendamento">{{ item.status | montarStatus }}</md-table-cell>
       </md-table-row>
     </md-table>
      </div>
@@ -55,22 +64,56 @@ export default {
     })
   },
   // corrigir antes de subi o "office_schedule":8" colocar a logica do escritorio que esta na sessão
+  /*
   updated () {
     axios.get(process.env.API + 'schedule?where={"ativo":true,"status":0,"agentes":' + this.selecionado + '}').then(response => {
       this.schedules = response.data
     })
   },
+  */
   methods: {
     getClass: ({ id }) => ({
       'md-primary': id
     }),
     onSelect (item) {
       this.selected = item
+    },
+    buscarAgendamentos: function (event) {
+      if (event.target.value !== 0) {
+        axios.get(process.env.API + 'schedule?where={"ativo":true,"agentes":' + event.target.value + '}').then(response => {
+          this.schedules = response.data
+        }).catch(error => {
+          // alert('Erro no cadastro do Endereço')
+          console.log(error.response.data)
+        })
+      } else {
+        this.schedules = ''
+      }
     }
   },
   filters: {
     maskData: function (v) {
       v = moment(v).format('DD/MM/YYYY')
+      return v
+    },
+     montarStatus: function (v) {
+      switch (v) {
+        case 0:
+          v = 'Aguardando confirmação'
+          break
+        case 1:
+          v = 'Aceito'
+          break
+        case 2:
+          v = 'Não Aceitou'
+          break
+        case 3:
+          v = 'Cliente efetivado'
+          break
+        case 4:
+          v = 'Visita não efetivada'
+          break
+      }
       return v
     },
     maskHora: function (v) {
