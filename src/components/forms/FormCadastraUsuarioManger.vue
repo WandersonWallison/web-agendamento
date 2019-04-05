@@ -198,7 +198,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cep')">
                 <label for="cep">CEP</label>
-                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'" />
+                <md-input id="cep" name="cep" v-model="form.cep" :disabled="sending" v-mask = "'#####-###'"  @change="buscarEndereco($event)"/>
                 <span class="md-error" v-if="!$v.form.cep.required">Cep deve ser preenchido</span>
                 <span class="md-error" v-else-if="!$v.form.cep.maxlength">Cep invalido</span>
               </md-field>
@@ -208,7 +208,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estados</label>
-                <md-select v-model="form.estado" name="estado" id="estado" v-on="buscarCidade()">
+                <md-select v-model="form.estado" name="estado" id="estado">
                   <md-option value="AC">Acre</md-option>
                   <md-option value="AL">Alagoas</md-option>
                   <md-option value="AP">Amapá</md-option>
@@ -243,12 +243,9 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cidade')">
                 <label for="cidade">Cidade</label>
-                <md-select name="cidade" id="cidade" v-model="selectedCidade">
-                  <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.nome">
-                    {{ cidade.nome }}
-                  </md-option>
-                </md-select>
-                <span class="md-error">Cidade não selecionado</span>
+                <md-input id="cidade" name="cidade" v-model="form.cidade" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cidade.required">Cidade deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.cidade.maxlength">Invalid Cidade</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -329,9 +326,8 @@ export default {
     estados: [],
     cidades: [],
     cep: [],
-    selectedCidade: null,
-    selectedCep: null,
-    novoUsuario: null
+    novoUsuario: null,
+    novoEndereco: null
   }),
   directives: {mask},
   validations: {
@@ -405,11 +401,7 @@ export default {
       profile: {
         required
       }
-    },
-    selectedCidade: {
-      required
     }
-
   },
   created () {
     axios.get(process.env.API + 'office')
@@ -427,11 +419,42 @@ export default {
         }
       }
     },
+    /*
     buscarCidade: function () {
       axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
         .then(response => {
           this.cidades = response.data
           this.form.cidade = this.cidades
+        })
+    }, */
+    buscarEndereco: function () {
+      this.form.bairro = ''
+      this.form.rua = ''
+      this.form.observacao = ''
+      this.form.cidade = ''
+
+      axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
+        .then(response => {
+          this.cep = response.data
+          if (this.cep.bairro) {
+            this.form.bairro = this.cep.bairro
+          }
+          if (this.cep.logradouro) {
+            this.form.rua = this.cep.logradouro
+          }
+          if (this.cep.complemento) {
+            this.form.observacao = this.cep.complemento
+          }
+          if (this.cep.cidade) {
+            this.form.cidade = this.cep.cidade
+          }
+          if (this.cep.estado) {
+            this.form.estado = this.cep.estado
+          }
+        })
+        .catch(error => {
+          // alert('Erro no cadastro do Endereço')
+          console.log(error.response.data)
         })
     },
     clearForm () {
@@ -447,13 +470,13 @@ export default {
       this.form.senha = null
       this.form.telefone = null
       this.form.celular = null
-      this.form.dataInicio = null
+      this.form.dataInicio = ''
       this.form.cvm = null
       this.form.rg = null
       this.form.cpf = null
-      this.form.dataNascimento = null
+      this.form.dataNascimento = ''
       this.form.genero = null
-      this.form.estadoCivi = null
+      this.form.estadoCivil = null
       this.form.escolaridade = null
       this.form.nomeConjuge = null
       this.form.nomeMae = null
@@ -461,8 +484,6 @@ export default {
       this.form.redeSocial = null
       this.form.observacao = null
       this.form.profile = null
-      // this.form.office = null
-      this.selectedCidade = null
     },
     saveUsuario () {
       let cvmValidado
@@ -500,10 +521,11 @@ export default {
         logradouro: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
-        cidade: this.selectedCidade,
+        cidade: this.form.cidade,
         cep: this.form.cep,
         uf: this.form.estado
       }
+      this.novoEndereco = newEndereco
       if (cvmValidado) {
         axios.post(process.env.API + 'user', newUsuario)
           .then(response => {
@@ -519,7 +541,7 @@ export default {
                 this.userSaved = true
                 this.sending = false
                 this.clearForm()
-                // window.location.reload()
+                window.location.reload()
               })
               .catch(error => {
                 // alert('Erro no cadastro do Endereço')

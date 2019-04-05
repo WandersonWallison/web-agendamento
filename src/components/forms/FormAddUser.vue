@@ -206,8 +206,8 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('estado')">
                 <label for="estado">Estados</label>
-                <md-select v-model="form.estado" name="estado" id="estado" v-on="buscarCidade()">
-                 <md-option value="AC">Acre</md-option>
+                <md-select v-model="form.estado" name="estado" id="estado">
+                  <md-option value="AC">Acre</md-option>
                   <md-option value="AL">Alagoas</md-option>
                   <md-option value="AP">Amapá</md-option>
                   <md-option value="AM">Amazonas</md-option>
@@ -241,12 +241,9 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('cidade')">
                 <label for="cidade">Cidade</label>
-                <md-select name="cidade" id="cidade" v-model="selectedCidade">
-                  <md-option v-for="cidade in cidades" :key="cidade.id" :value="cidade.nome">
-                    {{ cidade.nome }}
-                  </md-option>
-                </md-select>
-                <span class="md-error">Cidade não selecionado</span>
+                <md-input id="cidade" name="cidade" v-model="form.cidade" :disabled="sending" />
+                <span class="md-error" v-if="!$v.form.cidade.required">Cidade deve ser preenchido</span>
+                <span class="md-error" v-else-if="!$v.form.cidade.maxlength">Invalid Cidade</span>
               </md-field>
             </div>
             <div class="md-layout-item md-small-size-100">
@@ -326,10 +323,7 @@ export default {
     offices: [],
     estados: [],
     cidades: [],
-    cep: [],
-    selectedCidade: null,
-    selectedCep: null,
-    novoUsuario: null
+    cep: []
   }),
   directives: {mask},
   validations: {
@@ -406,11 +400,7 @@ export default {
       office: {
         required
       }
-    },
-    selectedCidade: {
-      required
     }
-
   },
   created () {
     axios.get(process.env.API + 'office')
@@ -428,6 +418,7 @@ export default {
         }
       }
     },
+    /*
     buscarCidade: function () {
       axios.get('http://servicodados.ibge.gov.br/api/v1/localidades/estados/' + this.form.estado + '/municipios')
         .then(response => {
@@ -435,10 +426,12 @@ export default {
           this.form.cidade = this.cidades
         })
     },
+    */
     buscarEndereco: function () {
       this.form.bairro = ''
       this.form.rua = ''
       this.form.observacao = ''
+      this.form.cidade = ''
 
       axios.get('https://api.postmon.com.br/v1/cep/' + this.form.cep)
         .then(response => {
@@ -451,6 +444,12 @@ export default {
           }
           if (this.cep.complemento) {
             this.form.observacao = this.cep.complemento
+          }
+          if (this.cep.cidade) {
+            this.form.cidade = this.cep.cidade
+          }
+          if (this.cep.estado) {
+            this.form.estado = this.cep.estado
           }
         })
         .catch(error => {
@@ -486,7 +485,6 @@ export default {
       this.form.observacao = null
       this.form.profile = null
       this.form.office = null
-      this.selectedCidade = null
     },
     saveEmpresa () {
       let cvmValidado
@@ -516,12 +514,11 @@ export default {
         id_profile: this.form.profile,
         id_office: this.form.office
       }
-      this.novoUsuario = newUsuario
       let newEndereco = {
         logradouro: this.form.rua,
         numero: this.form.numero,
         bairro: this.form.bairro,
-        cidade: this.selectedCidade,
+        cidade: this.form.cidade,
         cep: this.form.cep,
         uf: this.form.estado
       }
