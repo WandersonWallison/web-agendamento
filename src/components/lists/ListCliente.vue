@@ -280,8 +280,8 @@ export default {
           .then(response => {
             this.results = response.data
             alert('Cliente atendeu a ligação')
-            this.updateComponent()
-            // window.location.reload()
+            // this.updateComponent()
+            window.location.reload()
           })
           .catch(error => {
             alert('Selecione um contato')
