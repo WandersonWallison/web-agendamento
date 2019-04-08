@@ -32,7 +32,8 @@ export default {
       },
       userAtual: null,
       erroUsuarios: [],
-      arquivo: null
+      arquivo: null,
+      leadsError: []
     }
   },
   mounted () {
@@ -138,7 +139,6 @@ export default {
       for (let i = 0; i < this.excelData.results.length; i++) {
         let newLead = {
           nome: this.excelData.results[i].Cliente,
-          email: this.excelData.results[i].Email ? this.excelData.results[i].Email : this.removeAcento(this.excelData.results[i].Cliente) + this.retiraMascara(moment().format()) + '@importacao.com',
           telefone: this.maskFone('"' + this.excelData.results[i].Telefone + '"'),
           celular: this.maskFone('"' + this.excelData.results[i].Celular + '"'),
           numero_operadora: this.excelData.results[i].NumeroXP,
@@ -148,10 +148,10 @@ export default {
         }
         axios.post(process.env.API + 'leads', newLead)
           .then(response => {
-
           })
           .catch(error => {
-            alert('Erro no Arquivo dados não importado')
+            this.leadsError.push(error.response.data)
+            // alert('Erro no Arquivo dados não importado')
             console.log(error.response.data)
           })
       }
@@ -178,7 +178,7 @@ export default {
       text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u')
       text = text.replace(new RegExp('[Ç]', 'gi'), 'c')
       text = text.replace(' ', '')
-      text = text.substring(0, 8)
+      text = text.substring(0, 18)
       return text
     },
     editarNomeArquivo (text) {

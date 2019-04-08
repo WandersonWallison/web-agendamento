@@ -72,40 +72,41 @@
           </md-button>
         </div>
       </md-table-toolbar>
-      <md-table-row slot="md-table-row" slot-scope='{ item }' md-selectable="single"  :class="getClass(item)">
-        <md-table-cell md-label="">
+      <md-table-row slot="md-table-row"  slot-scope='{ item }' md-selectable="single"  :class="getClass(item)">
+          <md-table-cell md-label="">
           <div v-if="item.momento_atual === 5" @click="showDialogReagendamento2" >
             <span style="color: red;">{{ item.agendamentos[0].qtd_retorno }}</span>
             <md-icon class='md-icon-button md-raised md-accent'>alarm</md-icon>
             <md-tooltip md-direction="top">Reagendar Urgente, Agente não confirmou. Clique duas vezes para mais detalhes </md-tooltip>
           </div>
-        </md-table-cell>
-        <md-table-cell md-label="Código" md-sort-by="id" >{{ item.id }}</md-table-cell>
-        <md-table-cell md-label="Nome" md-sort-by="name">{{ item.nome }}</md-table-cell>
-        <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
-        <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
-        <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
-        <md-table-cell md-label="Observações" md-sort-by="obsevacoes">{{ item.obs }}
-          <md-tooltip md-direction="top">{{ item.obs }}</md-tooltip>
-        </md-table-cell>
-        <md-table-cell md-label="Ações" style="text-align: center;">
-            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="reagendamentoRapido()" >
-              <md-tooltip md-direction="top">Agendar Rápido</md-tooltip>
-              <md-icon>input</md-icon>
-            </md-button>
-            <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="addSelectedReagendamento()">
-              <md-tooltip md-direction="top">Reagendamento</md-tooltip>
-              <md-icon>restore</md-icon>
-            </md-button>
-            <md-button class="md-icon-button butoom-06" @click="objLead=true">
-              <md-tooltip md-direction="top">Adicionar Observação</md-tooltip>
-              <md-icon>insert_comment</md-icon>
-            </md-button>
-            <md-button class="md-icon-button butoom-06" @click="mupdateLead">
-              <md-tooltip md-direction="top">Editar Lead</md-tooltip>
-              <md-icon>edit</md-icon>
-            </md-button>
-        </md-table-cell>
+          </md-table-cell>
+          <md-table-cell md-label="Código" md-sort-by="id" >{{ item.id }}</md-table-cell>
+          <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.nome }}</md-table-cell>
+          <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
+          <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
+          <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
+          <md-table-cell md-label="Status" md-sort-by="status">{{ item.status }}</md-table-cell>
+          <md-table-cell md-label="Observações" md-sort-by="obs">{{ item.obs }}
+            <md-tooltip md-direction="top">{{ item.obs }}</md-tooltip>
+          </md-table-cell>
+          <md-table-cell md-label="Ações" style="text-align: center;">
+              <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="reagendamentoRapido()" >
+                <md-tooltip md-direction="top">Agendar Rápido</md-tooltip>
+                <md-icon>input</md-icon>
+              </md-button>
+              <md-button class="md-icon-button butoom-06" v-if="item.momento_atual === 5" @click="addSelectedReagendamento()">
+                <md-tooltip md-direction="top">Reagendamento</md-tooltip>
+                <md-icon>restore</md-icon>
+              </md-button>
+              <md-button class="md-icon-button butoom-06" @click="objLead=true">
+                <md-tooltip md-direction="top">Adicionar Observação</md-tooltip>
+                <md-icon>insert_comment</md-icon>
+              </md-button>
+              <md-button class="md-icon-button butoom-06" @click="mupdateLead">
+                <md-tooltip md-direction="top">Editar Lead</md-tooltip>
+                <md-icon>edit</md-icon>
+              </md-button>
+          </md-table-cell>
       </md-table-row>
     </md-table>
     <md-dialog :md-active.sync="showDialog" class="dialog-agendamento">
@@ -145,6 +146,7 @@ const searchByName = (items, term) => {
   return items
 }
 export default {
+  name: 'listaLeadsParaAgendamentoHunter',
   listaCliente: 'ListaClientes',
   props: ['leadProps'],
   components: {
@@ -260,15 +262,25 @@ export default {
       })
   },
   methods: {
+    /**
+     * Valores dos Status
+     * 'Atendeu','Não Atendeu','Dados Incorrtos','Não Pode Falar', 'Não Aceita Visita'
+     *  */
+    updateComponent () {
+      console.log('atualizou o componente')
+      Object.assign(this.$data, this.$options.data.call(this))
+    },
     atendeu () {
       if (this.selected !== null && this.selected.id) {
         let newLead = {
-          data_atendimento: moment(this.data_atendimento).format()
+          data_atendimento: moment(this.data_atendimento).format(),
+          status: 'Atendeu'
         }
         axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
           .then(response => {
             this.results = response.data
             alert('Cliente atendeu a ligação')
+            this.updateComponent()
             // window.location.reload()
           })
           .catch(error => {
@@ -500,5 +512,8 @@ export default {
 }
 .md-dialog {
   max-width: 768px;
+}
+.fonte-linhas {
+  font-size: 12px;
 }
 </style>
