@@ -55,7 +55,7 @@ export default {
       })
     } else {
       // alert(authUser2.id_profile + ' - ' + authUser2.id_office)
-      axios.get(process.env.API + 'leads?where={"id_office":' + authUser2.id_office + '} & limit=10000').then(response => {
+      axios.get(process.env.API + 'leads?where={"id_office":' + authUser2.id_office + '}&limit=10000').then(response => {
         this.lead = response.data
       })
     }
