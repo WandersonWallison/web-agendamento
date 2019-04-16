@@ -139,7 +139,7 @@ export default {
       for (let i = 0; i < this.excelData.results.length; i++) {
         let newLead = {
           nome: this.excelData.results[i].Cliente,
-          email: this.excelData.results[i].email,
+          email: this.excelData.results[i].Email ? this.excelData.results[i].Email : this.removeAcento(this.excelData.results[i].Cliente) + this.retiraMascara(moment().format()) + '@importacao.com',
           telefone: this.maskFone('"' + this.excelData.results[i].Telefone + '"'),
           celular: this.maskFone('"' + this.excelData.results[i].Celular + '"'),
           numero_operadora: this.excelData.results[i].NumeroXP,
