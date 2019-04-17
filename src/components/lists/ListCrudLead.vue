@@ -139,7 +139,7 @@ export default {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
-    axios.get(process.env.API + 'leads?where={"ativo": true,"id_office":' + this.userAtual.id_office + '} & limit=10000')
+    axios.get(process.env.API + 'leads?where={"ativo": true,"id_office":' + this.userAtual.id_office + '}&limit=10000')
       .then(response => {
         this.people = response.data
       })

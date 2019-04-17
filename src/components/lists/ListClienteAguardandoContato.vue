@@ -55,7 +55,7 @@
         <td>{{i.nome}}</td>
         <td>{{i.email}}</td>
         <td>{{i.telefone}}</td>
-        <td>{{i.celeular}}</td>
+        <td>{{i.celular}}</td>
         <td>{{i.obs}}</td>
       </tr>
         </tbody>
