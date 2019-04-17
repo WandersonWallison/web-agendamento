@@ -55,7 +55,7 @@
         <td>{{i.nome}}</td>
         <td>{{i.email}}</td>
         <td>{{i.telefone}}</td>
-        <td>{{i.celeular}}</td>
+        <td>{{i.celular}}</td>
         <td>{{i.obs}}</td>
       </tr>
         </tbody>
@@ -103,7 +103,7 @@ export default {
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
 
-    axios.get(process.env.API + 'leads?where={"id_user_editor": 0,"id_office":' + this.userAtual.id_office + '} & limit=10000')
+    axios.get(process.env.API + 'leads?where={"id_user_editor": 0,"id_office":' + this.userAtual.id_office + '}&limit=10000')
       .then(response => {
         this.people = response.data
       })
