@@ -11,6 +11,15 @@
     <div class="loading-overlay2" v-if="loading">
       <md-progress-spinner md-mode='indeterminate' md-diameter='50' :md-stroke='4'></md-progress-spinner>
     </div>
+    <div>
+      <md-content>
+          <ul id="leadsError">
+            <li v-for="item in leadsError" v-bind:key="item.nome">
+              <label>Registro Não importado: {{ item }}</label>
+            </li>
+          </ul>
+      </md-content>
+  </div>
   </div>
 </template>
 
@@ -43,7 +52,6 @@ export default {
   },
   methods: {
     generateData ({ header, results }) {
-      console.log('teste')
       this.excelData.header = header
       this.excelData.results = results
       this.onSuccess && this.onSuccess(this.excelData)
@@ -139,38 +147,52 @@ export default {
       for (let i = 0; i < this.excelData.results.length; i++) {
         let newLead = {
           nome: this.excelData.results[i].Cliente,
-          email: this.excelData.results[i].email,
-          telefone: this.maskFone('"' + this.excelData.results[i].Telefone + '"'),
-          celular: this.maskFone('"' + this.excelData.results[i].Celular + '"'),
+          email: this.excelData.results[i].Email ? this.removerEspacos(this.excelData.results[i].Email) : this.removeAcento(this.excelData.results[i].Cliente) + this.retiraMascara(this.excelData.results[i].Celular) + '@importacao.com',
+          telefone: this.excelData.results[i].Telefone,
+          celular: this.excelData.results[i].Celular,
           numero_operadora: this.excelData.results[i].NumeroXP,
           data_criacao: moment(Date.now()).format(),
           id_user_criador: this.userAtual.id,
           id_office: this.userAtual.id_office
         }
-        axios.post(process.env.API + 'leads', newLead)
-          .then(response => {
-          })
-          .catch(error => {
-            this.leadsError.push(error.response.data)
-            // alert('Erro no Arquivo dados não importado')
-            console.log(error.response.data)
-          })
+        try {
+          axios.post(process.env.API + 'leads', newLead)
+            .then(response => {
+            })
+            .catch(error => {
+              this.leadsError.push(error.response.config.data)
+              // alert('Erro no Arquivo dados não importado\n' + this.leadsError)
+              console.log('Erro do Axios ', error.response.config.data)
+              // console.log('Erros ', error.response.data)
+            })
+        } catch (error) {
+          console.log('Erro Try', error)
+        }
       }
       this.loading = false
       this.arquivo = ''
       alert('Importação realizada com sucesso !!!')
     },
     maskFone: function (v) {
-      v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
-      v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
-      v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
+      if (v) {
+        v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
+        v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
+        v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
+      }
+      console.log('Mask', v)
       return v
     },
     retiraMascara (campo) {
+      campo = campo.replace(' ', '') // remover espaços
       campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
       return campo
     },
     removeAcento (text) {
+      text = text.replace(' ', '')
+      text = text.replace(' ', '')
+      text = text.replace(' ', '')
+      text = text.replace(' ', '')
+      text = text.replace(' ', '')
       text = text.toLowerCase()
       text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a')
       text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e')
@@ -178,13 +200,20 @@ export default {
       text = text.replace(new RegExp('[ÓÒÔÕ]', 'gi'), 'o')
       text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u')
       text = text.replace(new RegExp('[Ç]', 'gi'), 'c')
-      text = text.replace(' ', '')
-      text = text.substring(0, 18)
+      text = text.substring(0, 12)
       return text
     },
     editarNomeArquivo (text) {
       text = text.substring(12, text.length)
       return text
+    },
+    removerEspacos (campo) {
+      campo = campo.replace(' ', '')
+      campo = campo.replace(' ', '')
+      campo = campo.replace(' ', '')
+      campo = campo.replace(' ', '')
+      campo = campo.replace(' ', '')
+      return campo
     }
   }
 }
