@@ -46,10 +46,12 @@
         </div>
         <!-- Inicio do Menu suspenso do Hunter -->
         <div>
+          <!--
           <md-button class="md-icon-button md-raised md-primary" @click="atendeu">
             <md-tooltip md-direction="top">Atendeu</md-tooltip>
             <md-icon>phone</md-icon>
           </md-button>
+          -->
           <md-button class="md-icon-button butoom-03 md-accent" @click="naoAtendeu">
             <md-tooltip md-direction="top">Não Atendeu</md-tooltip>
             <md-icon>thumb_down</md-icon>
@@ -85,7 +87,14 @@
           <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
           <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
           <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
-          <md-table-cell md-label="Status" md-sort-by="status">{{ item.status }}</md-table-cell>
+          <md-table-cell md-label="Status" md-sort-by="status">
+            <md-icon v-if="item.status === 'Não Atendeu'">thumb_down
+              <md-tooltip md-direction="top">Não Atendeu</md-tooltip>
+            </md-icon>
+            <md-icon v-if="item.status === 'Não Pode Falar'">mic_off
+              <md-tooltip md-direction="top">Não Pode Falar Agendado contato para - {{ item.data_ligacao | maskData }}</md-tooltip>
+            </md-icon>
+          </md-table-cell>
           <md-table-cell md-label="Observações" md-sort-by="obs">{{ item.obs }}
             <md-tooltip md-direction="top">{{ item.obs }}</md-tooltip>
           </md-table-cell>
@@ -111,21 +120,26 @@
     </md-table>
     <md-dialog :md-active.sync="showDialog" class="dialog-agendamento">
       <div class="div">
-          <agenda :leadProps="leadProps"></agenda>
+        <agenda :leadProps="leadProps"></agenda>
       </div>
     </md-dialog>
     <md-dialog :md-active.sync="showDialogReagendamento3" class="dialog-agendamento">
       <div class="div">
-          <reagendamento :leadProps="leadProps"></reagendamento>
+        <reagendamento :leadProps="leadProps"></reagendamento>
       </div>
     </md-dialog>
     <md-dialog :md-active.sync="showDialogReagendamento4" class="dialog-agendamento">
       <div class="div">
-          <reagendar-rapido :leadProps="leadProps"></reagendar-rapido>
+        <reagendar-rapido :leadProps="leadProps"></reagendar-rapido>
       </div>
     </md-dialog>
     <md-dialog :md-active.sync="showUpdateLead">
       <update-lead :leadProps="leadProps"></update-lead>
+    </md-dialog>
+    <md-dialog :md-active.sync="showDialogProximoContato" class="dialog-proximoContato">
+      <div class="div">
+        <proximo-contato :leadProps="leadProps" ></proximo-contato>
+      </div>
     </md-dialog>
   </div>
 </template>
@@ -136,6 +150,7 @@ import Agenda from '../forms/FormAgendamento.vue'
 import Reagendamento from '../forms/FormReagendamento.vue'
 import ReagendarRapido from '../forms/FormReagendarRapido.vue'
 import UpdateLead from '../forms/FormUpdateLeadAgendamento.vue'
+import ProximoContato from '../forms/FormNaoPodeFalar.vue'
 const toLower = text => {
   return text.toString().toLowerCase()
 }
@@ -146,14 +161,15 @@ const searchByName = (items, term) => {
   return items
 }
 export default {
-  name: 'listaLeadsParaAgendamentoHunter',
+  name: 'ListaCliente',
   listaCliente: 'ListaClientes',
   props: ['leadProps'],
   components: {
     Agenda,
     Reagendamento,
     ReagendarRapido,
-    UpdateLead
+    UpdateLead,
+    ProximoContato
   },
   data: () => ({
     search: null,
@@ -165,6 +181,7 @@ export default {
     showDialogReagendamento3: false,
     showDialogReagendamento4: false,
     showUpdateLead: false,
+    showDialogProximoContato: false,
     leadProps: {},
     data_atendimento: Date.now(),
     userAtual: false,
@@ -188,17 +205,13 @@ export default {
     }
 
   }),
+  // FIXME - Codigo com problema resolver
   filters: {
-    maskFone: function (v) {
-      v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
-      v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
-      v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
-      return v
-    },
     maskData: function (v) {
       v = moment(v).format('DD/MM/YYYY')
       return v
     },
+    // TODO tem que melhor esse codigo
     maskHora: function (v) {
       switch (v) {
         case 1:
@@ -255,7 +268,7 @@ export default {
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2.id
     let dataAtual = moment(Date.now()).format('YYYY-MM-DD')
-    axios.get(process.env.API + 'leads?where={"or":[{"momento_atual":1},{"momento_atual":5}],"id_user_editor":' + this.userAtual + ',"data_expiracao":{">":"' + dataAtual + '"}}')
+    axios.get(process.env.API + 'leads?where={"or":[{"momento_atual":1},{"momento_atual":5}],"ativo":1,"id_user_editor":' + this.userAtual + ',"data_expiracao":{">":"' + dataAtual + '"}}&limit=10000')
       .then(response => {
         this.users = response.data
         this.searched = response.data
@@ -333,20 +346,8 @@ export default {
     },
     naoPodeFalar () {
       if (this.selected !== null && this.selected.id) {
-        let newLead = {
-          data_criacao: moment(this.data_atendimento).format(),
-          status: 'Não pode falar'
-        }
-        axios.put(process.env.API + 'leads/' + this.selected.id, newLead)
-          .then(response => {
-            this.results = response.data
-            alert('No Momento não pode falar')
-            window.location.reload()
-          })
-          .catch(error => {
-            alert('Selecione um contato')
-            console.log(error.response.data)
-          })
+        this.leadProps = this.selected
+        this.showDialogProximoContato = true
       } else {
         alert('Por Favor \n selecione um contato para realizar solicitação! ')
       }
@@ -452,7 +453,7 @@ export default {
     addObservacao () {
       if (this.selected) {
         let lead = {
-          obs: this.selected.obs + 'Hunter: ' + this.valueLead
+          obs: this.selected.obs + '-' + this.valueLead
         }
         axios.put(process.env.API + 'leads/' + this.selected.id, lead)
           .then(response => {
@@ -515,5 +516,9 @@ export default {
 }
 .fonte-linhas {
   font-size: 12px;
+}
+.dialog-proximoContato {
+  width: 40%;
+  height: 34%;
 }
 </style>
