@@ -40,7 +40,7 @@ export default {
   }),
   filters: {
     maskData: function (v) {
-      v = moment(v).format('DD/MM/YYYY')
+      v = moment(v).format('DD/MM/YYYY DD:MM:SS')
       return v
     }
   },
