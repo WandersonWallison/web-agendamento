@@ -92,7 +92,7 @@
               <md-tooltip md-direction="top">Não Atendeu</md-tooltip>
             </md-icon>
             <md-icon v-if="item.status === 'Não Pode Falar'">mic_off
-              <md-tooltip md-direction="top">Não Pode Falar Agendado contato para - {{ item.data_ligacao | maskData }}</md-tooltip>
+              <md-tooltip md-direction="top">Agendado contato para - {{ item.data_ligacao | maskData }} hs</md-tooltip>
             </md-icon>
           </md-table-cell>
           <md-table-cell md-label="Observações" md-sort-by="obs">{{ item.obs }}
@@ -208,7 +208,7 @@ export default {
   // FIXME - Codigo com problema resolver
   filters: {
     maskData: function (v) {
-      v = moment(v).format('DD/MM/YYYY')
+      v = moment(v).format('DD/MM/YYYY HH')
       return v
     },
     // TODO tem que melhor esse codigo

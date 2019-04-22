@@ -13,29 +13,29 @@
                  <span class="md-error" v-if="!$v.form.data.required">Data deve ser preenchido</span>
               </md-datepicker>
             </div>
-            <!--
              <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('horario')">
                 <label for="horario">Horário</label>
                 <md-select name="horario" id="horario" v-model="form.horario" md-dense :disabled="sending">
-                  <md-option value="1">08:00</md-option>
-                  <md-option value="2">09:00</md-option>
-                  <md-option value="3">10:00</md-option>
-                  <md-option value="4">11:00</md-option>
-                  <md-option value="5">14:00</md-option>
-                  <md-option value="6">15:00</md-option>
-                  <md-option value="7">16:00</md-option>
-                  <md-option value="8">17:00</md-option>
-                  <md-option value="9">18:00</md-option>
-                  <md-option value="10">19:00</md-option>
-                  <md-option value="11">20:00</md-option>
-                  <md-option value="12">21:00</md-option>
-                  <md-option value="13">22:00</md-option>
+                  <md-option value="08">08:00</md-option>
+                  <md-option value="09">09:00</md-option>
+                  <md-option value="10">10:00</md-option>
+                  <md-option value="11">11:00</md-option>
+                  <md-option value="12">14:00</md-option>
+                  <md-option value="13">14:00</md-option>
+                  <md-option value="14">14:00</md-option>
+                  <md-option value="15">15:00</md-option>
+                  <md-option value="16">16:00</md-option>
+                  <md-option value="17">17:00</md-option>
+                  <md-option value="18">18:00</md-option>
+                  <md-option value="19">19:00</md-option>
+                  <md-option value="20">20:00</md-option>
+                  <md-option value="21">21:00</md-option>
+                  <md-option value="22">22:00</md-option>
                 </md-select>
                 <span class="md-error">Hórario de Agendamento deve ser informado</span>
               </md-field>
             </div>
-            -->
           </div>
         </md-card-content>
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
@@ -96,7 +96,7 @@ export default {
     updateLead () {
       let dataValidade
       let newLead = {
-        data_ligacao: moment(this.form.data).format(),
+        data_ligacao: moment(this.form.data).add(this.form.horario, 'h').format(),
         status: 'Não Pode Falar'
         // hora: this.form.horario
       }
