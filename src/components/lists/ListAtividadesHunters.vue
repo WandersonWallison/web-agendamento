@@ -43,7 +43,7 @@
             <div v-if="item.status === 'Dados Incorretos'"><md-icon>no_sim
               <md-tooltip md-direction="top">Dados incorretos</md-tooltip>
               </md-icon>{{ ' - ' +item.status }}</div>
-            <div v-if="item.status === 'Não pode falar'"><md-icon>mic_off
+            <div v-if="item.status === 'Não Pode Falar'"><md-icon>mic_off
               <md-tooltip md-direction="top">Agendado contato para - {{ item.data_ligacao | maskDataTime }} hs</md-tooltip>
               </md-icon>{{ ' - ' + item.status }}</div>
             <div v-if="item.status === 'Não Aceita Visita'"><md-icon>voice_over_off
