@@ -37,10 +37,18 @@
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Data Expiração" md-sort-by="data_expiracao">{{ item.data_expiracao | maskData }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
-            <div v-if="item.status === 'Não Atendeu'"><md-icon>voice_over_off</md-icon>{{ ' - ' + item.status }}</div>
-            <div v-if="item.status === 'Dados Incorretos'"><md-icon>mobile_off</md-icon>{{ ' - ' +item.status }}</div>
-            <div v-if="item.status === 'Não pode falar'"><md-icon>mobile_friendly</md-icon>{{ ' - ' + item.status }}</div>
-            <div v-if="item.status === 'Não Aceita Visita'"><md-icon>work_off</md-icon>{{ ' - ' + item.status }}</div>
+            <div v-if="item.status === 'Não Atendeu'"><md-icon>thumb_down
+              <md-tooltip md-direction="top">Não Atendeu</md-tooltip>
+              </md-icon>{{ ' - ' + item.status }}</div>
+            <div v-if="item.status === 'Dados Incorretos'"><md-icon>no_sim
+              <md-tooltip md-direction="top">Dados incorretos</md-tooltip>
+              </md-icon>{{ ' - ' +item.status }}</div>
+            <div v-if="item.status === 'Não Pode Falar'"><md-icon>mic_off
+              <md-tooltip md-direction="top">Agendado contato para - {{ item.data_ligacao | maskDataTime }} hs</md-tooltip>
+              </md-icon>{{ ' - ' + item.status }}</div>
+            <div v-if="item.status === 'Não Aceita Visita'"><md-icon>voice_over_off
+              <md-tooltip md-direction="top">Não aceita visita</md-tooltip>
+              </md-icon>{{ ' - ' + item.status }}</div>
             <div v-if="item.status === ''"><md-icon>description</md-icon>{{ ' - Aguardando ação do Hunter' }}</div>
         </md-table-cell>
       </md-table-row>
@@ -97,6 +105,10 @@ export default {
     }
   },
   filters: {
+    maskDataTime: function (v) {
+      v = moment(v).format('DD/MM/YYYY HH')
+      return v
+    },
     maskData: function (v) {
       v = moment(v).format('DD/MM/YYYY')
       return v

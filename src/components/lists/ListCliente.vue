@@ -61,7 +61,7 @@
             <md-icon>no_sim</md-icon>
           </md-button>
           <md-button class="md-icon-button butoom-02" @click="naoPodeFalar">
-            <md-tooltip md-direction="top">Não pode falar</md-tooltip>
+            <md-tooltip md-direction="top">Retornar</md-tooltip>
             <md-icon>mic_off</md-icon>
           </md-button>
           <md-button class="md-icon-button butoom-04" @click="naoAceitaVisita">
