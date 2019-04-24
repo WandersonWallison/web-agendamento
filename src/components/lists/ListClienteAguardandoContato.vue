@@ -36,6 +36,7 @@
   </label>
      </th>
       <th>id</th>
+      <th>Data Criação</th>
       <th>Name</th>
       <th>Email</th>
       <th>Telefone</th>
@@ -52,11 +53,12 @@
           </label>
         </td>
         <td>{{i.id}}</td>
+        <td>{{i.data_criacao|maskData}}</td>
         <td>{{i.nome}}</td>
         <td>{{i.email}}</td>
         <td>{{i.telefone}}</td>
         <td>{{i.celular}}</td>
-        <td>{{i.obs}}</td>
+        <td>{{i.obs}}</td>   
       </tr>
         </tbody>
         </table>
@@ -97,7 +99,12 @@ export default {
       return day === 6 || day === 0
     }
   }),
-
+  filters: {
+    maskData: function (v) {
+      v = moment(v).format('DD/MM/YYYY DD:MM:SS')
+      return v
+    }
+  },
   mounted () {
     const authUser = window.localStorage.getItem('Usuario')
     const authUser2 = JSON.parse(authUser)

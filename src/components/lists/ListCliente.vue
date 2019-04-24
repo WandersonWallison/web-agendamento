@@ -83,6 +83,7 @@
           </div>
           </md-table-cell>
           <md-table-cell md-label="Código" md-sort-by="id" >{{ item.id }}</md-table-cell>
+          <md-table-cell md-label="Data Criação" md-sort-by="id" >{{ item.data_criacao|maskDataTime }}</md-table-cell>
           <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.nome }}</md-table-cell>
           <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
           <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
@@ -207,6 +208,10 @@ export default {
   }),
   // FIXME - Codigo com problema resolver
   filters: {
+    maskDataTime: function (v) {
+      v = moment(v).format('DD/MM/YYYY DD:MM:SS')
+      return v
+    },
     maskData: function (v) {
       v = moment(v).format('DD/MM/YYYY HH')
       return v
