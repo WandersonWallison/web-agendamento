@@ -58,8 +58,8 @@
         <td>{{i.email}}</td>
         <td>{{i.telefone}}</td>
         <td>{{i.celular}}</td>
-        <td>{{i.obs}}</td>   
-      </tr>
+        <td>{{i.obs}}</td>
+        </tr>
         </tbody>
         </table>
   <div>
