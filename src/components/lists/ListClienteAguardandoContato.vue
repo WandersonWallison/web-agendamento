@@ -41,6 +41,7 @@
       <th>Email</th>
       <th>Telefone</th>
       <th>Celular</th>
+      <th>Importação</th>
       <th>Observação</th>
       </tr>
       </thead>
@@ -58,6 +59,7 @@
         <td>{{i.email}}</td>
         <td>{{i.telefone}}</td>
         <td>{{i.celular}}</td>
+        <td>{{i.id_importacao}}</td>
         <td>{{i.obs}}</td>
         </tr>
         </tbody>

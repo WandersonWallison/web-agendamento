@@ -35,6 +35,7 @@
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label="E-mail" md-sort-by="email">{{ item.email }}</md-table-cell>
+        <md-table-cell md-label="Importação" md-sort-by="email">{{item.id_importacao }}</md-table-cell>
         <md-table-cell md-label="Data Expiração" md-sort-by="data_expiracao">{{ item.data_expiracao | maskData }}</md-table-cell>
         <md-table-cell md-label="Status" md-sort-by="status">
             <div v-if="item.status === 'Não Atendeu'"><md-icon>thumb_down
