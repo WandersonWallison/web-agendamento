@@ -184,8 +184,11 @@ export default {
       return v
     },
     retiraMascara (campo) {
-      campo = campo.replace(' ', '') // remover espaços
-      campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
+      console.log(campo.lenght)
+      if (campo.lenght > 11) {
+        campo = campo.replace(' ', '') // remover espaços
+        campo = campo.replace(/\D/g, '') // Remove tudo o que não é dígito
+      }
       return campo
     },
     removeAcento (text) {
