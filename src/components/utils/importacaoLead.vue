@@ -42,7 +42,8 @@ export default {
       userAtual: null,
       erroUsuarios: [],
       arquivo: null,
-      leadsError: []
+      leadsError: [],
+      valor_importacao: null
     }
   },
   mounted () {
@@ -115,6 +116,7 @@ export default {
           const data = e.target.result
           const workbook = XLSX.read(data, { type: 'array' })
           const firstSheetName = workbook.SheetNames[0]
+          this.valor_importacao = firstSheetName
           const worksheet = workbook.Sheets[firstSheetName]
           const header = this.getHeaderRow(worksheet)
           const results = XLSX.utils.sheet_to_json(worksheet)
@@ -153,17 +155,17 @@ export default {
           numero_operadora: this.excelData.results[i].NumeroXP,
           data_criacao: moment(Date.now()).format(),
           id_user_criador: this.userAtual.id,
-          id_office: this.userAtual.id_office
+          id_office: this.userAtual.id_office,
+          id_importacao: this.valor_importacao
         }
+
         try {
           axios.post(process.env.API + 'leads', newLead)
             .then(response => {
             })
             .catch(error => {
               this.leadsError.push(error.response.config.data)
-              // alert('Erro no Arquivo dados não importado\n' + this.leadsError)
               console.log('Erro do Axios ', error.response.config.data)
-              // console.log('Erros ', error.response.data)
             })
         } catch (error) {
           console.log('Erro Try', error)
@@ -179,7 +181,6 @@ export default {
         v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
         v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
       }
-      console.log('Mask', v)
       return v
     },
     retiraMascara (campo) {
