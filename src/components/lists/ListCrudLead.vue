@@ -30,8 +30,10 @@
       </md-table-toolbar>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }" :class="getClass(item)" md-selectable="single">
+        <md-table-cell md-label="Data Criação" md-sort-by="data_criacao">{{ item.data_criacao | maskData }}</md-table-cell>
         <md-table-cell md-label="Nome" md-sort-by="nome">{{ item.nome }}</md-table-cell>
         <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
+        <md-table-cell md-label="Importação" md-sort-by="email">{{item.id_importacao }}</md-table-cell>
         <md-table-cell md-label="Telefone" md-sort-by="telefone">{{ item.telefone }}</md-table-cell>
         <md-table-cell md-label="Celular" md-sort-by="celular">{{ item.celular }}</md-table-cell>
       </md-table-row>
@@ -100,6 +102,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import UpLead from '../forms/FormUpdateLead.vue'
 import UpCliente from '../forms/FormUpdateCliente.vue'
 import Endereco from '../forms-endereco/FormEndereco.vue'
@@ -132,6 +135,10 @@ export default {
       v = v.replace(/\D/g, '') // Remove tudo o que não é dígito
       v = v.replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca parênteses em volta dos dois primeiros dígitos
       v = v.replace(/(\d)(\d{4})$/, '$1-$2') // Coloca hífen entre o quarto e o quinto dígitos
+      return v
+    },
+    maskData: function (v) {
+      v = moment(v).format('DD/MM/YYYY DD:MM:SS')
       return v
     }
   },
