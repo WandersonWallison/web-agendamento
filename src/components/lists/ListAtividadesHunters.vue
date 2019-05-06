@@ -98,7 +98,7 @@ export default {
       if (id.target.value === -1) {
         this.leads = ''
       } else {
-        axios.get(process.env.API + 'leads?where={"ativo":true,"id_user_editor":' + id.target.value + '}&limit=10000').then(response => {
+        axios.get(process.env.API + 'leads?where={"ativo":true,"id_user_editor":' + id.target.value + ',"momento_atual":{"!=":4}}&limit=10000').then(response => {
           this.leads = response.data
         }).catch(error => {
           // alert('Erro no cadastro do Endereço')
