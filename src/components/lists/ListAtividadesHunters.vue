@@ -75,7 +75,7 @@ export default {
     const authUser2 = JSON.parse(authUser)
     this.userAtual = authUser2
     */
-    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":3} & limit=10000').then(response => {
+    axios.get(process.env.API + 'user?where={"ativo":true,"id_profile":3}&limit=10000').then(response => {
       this.listahunters = response.data
     })
   },
@@ -98,7 +98,7 @@ export default {
       if (id.target.value === -1) {
         this.leads = ''
       } else {
-        axios.get(process.env.API + 'leads?where={"ativo":true,"id_user_editor":' + id.target.value + '}').then(response => {
+        axios.get(process.env.API + 'leads?where={"ativo":true,"id_user_editor":' + id.target.value + '}&limit=10000').then(response => {
           this.leads = response.data
         }).catch(error => {
           // alert('Erro no cadastro do Endereço')
