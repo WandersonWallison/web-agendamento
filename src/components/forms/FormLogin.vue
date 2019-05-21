@@ -45,7 +45,7 @@ export default {
       },
       leads: [],
       schedule: [],
-      dataAtual: moment(Date.now()).format('YYYY/MM/DD'),
+      // dataAtual: moment(Date.now()).format('YYYY/MM/DD'),
       dataAtualSchedule: moment(Date.now()).format(),
       results: null,
       inicio: null,
@@ -53,30 +53,29 @@ export default {
     }
   },
   mounted () {
-    axios.get(process.env.API + 'leads?where={"data_expiracao":{"<":"' + this.dataAtual + '"}}&limit=10000')
+    /* axios.get(process.env.API + 'leads?where={"momento_atual":{"!=":4},"data_expiracao":{"<":"' + this.dataAtual + '"}}&limit=10000')
       .then(response => {
         this.leads = response.data
-      })
+    }) */
     axios.get(process.env.API + 'schedule?where={"data_expiracao":{"<":"' + this.dataAtualSchedule + '"}}')
       .then(response => {
         this.schedule = response.data
       })
   },
   methods: {
-    validaDataExpiracao () {
+    /* validaDataExpiracao () {
       let newLead = {
         id_user_editor: 0,
         momento_atual: 1,
-        data_expiracao: moment('00/00/0000').format(),
-        obs: 'Não Atribuído'
+        data_expiracao: moment('00/00/0000').format()
       }
       for (var i = 0; i <= this.leads.length; i++) {
-        // newLead.obs = this.leads[i].obs + ' Não Atribuído '
+        newLead.obs = this.leads[i].obs + ' Não Atribuído '
         axios.put(process.env.API + 'leads/' + this.leads[i].id, newLead)
           .then(response => {
           })
       }
-    },
+    }, */
     auth () {
       this.menssage = null
       this.results = null
@@ -100,19 +99,19 @@ export default {
               if (response.data.user.id_profile === 1) {
                 this.$router.push('/home')
                 this.loading = false
-                this.validaDataExpiracao()
+                // this.validaDataExpiracao()
               } else if (response.data.user.id_profile === 3) {
                 this.$router.push('/agendamento')
                 this.loading = false
-                this.validaDataExpiracao()
+                // this.validaDataExpiracao()
               } else if (response.data.user.id_profile === 4) {
                 this.$router.push('/manager')
                 this.loading = false
-                this.validaDataExpiracao()
+                // this.validaDataExpiracao()
               } else {
                 this.$router.push('/visita')
                 this.loading = false
-                this.validaDataExpiracao()
+                // this.validaDataExpiracao()
               }
             }
           })
