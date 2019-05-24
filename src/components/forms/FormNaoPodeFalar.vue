@@ -21,8 +21,8 @@
                   <md-option value="09">09:00</md-option>
                   <md-option value="10">10:00</md-option>
                   <md-option value="11">11:00</md-option>
-                  <md-option value="12">14:00</md-option>
-                  <md-option value="13">14:00</md-option>
+                  <md-option value="12">12:00</md-option>
+                  <md-option value="13">13:00</md-option>
                   <md-option value="14">14:00</md-option>
                   <md-option value="15">15:00</md-option>
                   <md-option value="16">16:00</md-option>
