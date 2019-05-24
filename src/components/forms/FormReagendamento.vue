@@ -298,7 +298,7 @@ export default {
       this.qtdVisitas = response.data[0].qtd_visita_dia
     })
     // Busca o array dos usuários agentes por escritrio
-    axios.get(process.env.API + 'user?where={"id_profile": 2,"id_office":' + this.userAtual.id_office + '}')
+    axios.get(process.env.API + 'user?where={"id_profile": 2,"ativo":1,"id_office":' + this.userAtual.id_office + '}')
       .then(response => {
         this.resp = response.data
         this.qtdAgente = this.resp.length
@@ -306,7 +306,7 @@ export default {
           this.listAgentes.push(this.resp[index].id)
         }
       })
-    axios.get(process.env.API + 'user?where={"id_profile": 2,"id_office":' + this.userAtual.id_office + '}')
+    axios.get(process.env.API + 'user?where={"id_profile": 2,"ativo":1,"id_office":' + this.userAtual.id_office + '}')
       .then(response => {
         this.resp = response.data
         for (let index = 0; index < this.resp.length; index++) {
