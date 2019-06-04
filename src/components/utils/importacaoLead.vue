@@ -146,6 +146,7 @@ export default {
       return /\.(xlsx|xls|csv)$/.test(file.name)
     },
     importarLeads () {
+      // TODO - wellington Alterar o metodo de validação do email
       for (let i = 0; i < this.excelData.results.length; i++) {
         let newLead = {
           nome: this.excelData.results[i].Cliente,
