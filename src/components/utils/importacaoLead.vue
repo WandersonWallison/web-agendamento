@@ -149,8 +149,8 @@ export default {
       for (let i = 0; i < this.excelData.results.length; i++) {
         let newLead = {
           nome: this.excelData.results[i].Cliente,
-          email: this.excelData.results[i].Email,
-          // email: this.excelData.results[i].Email ? this.removerEspacos(this.excelData.results[i].Email) : this.removeAcento(this.excelData.results[i].Cliente) + this.retiraMascara(this.excelData.results[i].Celular) + '@importacao.com',
+          // email: this.excelData.results[i].Email,
+          email: this.excelData.results[i].Email ? this.removerEspacos(this.excelData.results[i].Email) : this.removeAcento(this.excelData.results[i].Cliente) + moment(Date.now()).format('DDMMYYYY') + this.valor_importacao + '@importacao.com',
           telefone: this.excelData.results[i].Telefone,
           celular: this.excelData.results[i].Celular,
           numero_operadora: this.excelData.results[i].NumeroXP,
